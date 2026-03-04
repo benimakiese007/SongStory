@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macarena - SongStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
+    <style>
+        .selection\:bg-amber-500\/20 ::selection {
+            background-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .selection\:text-amber-200 ::selection {
+            color: rgb(253, 230, 138);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cursor-dot,
+        .cursor-outline {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fbbf24;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+        }
+
+        body.cursor-hover .cursor-outline {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: rgba(251, 191, 36, 0.1);
+            border-color: transparent;
+        }
+
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: #fbbf24;
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased selection:bg-amber-500\/20 selection:text-amber-200"
+    style="font-family: 'Inter', sans-serif;">
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="hidden sm:flex items-center gap-2 bg-white text-zinc-950 hover:bg-zinc-200 transition-colors px-4 py-1.5 rounded-full text-sm font-medium">S'abonner</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Storytelling
+                        Analysis</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Macarena</h1>
+                <p class="text-xl text-zinc-500 font-light">Damso • 2017</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Y a plus de respect, y a plus d'honneur
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Je n'fais qu'empiler mes erreurs</p>
+                        </div>
+                        <div class="hidden analysis-content">
+                            <span class="text-white font-medium block mb-1">Thème :</span>
+                            <p>Damso pose ici les bases d'un récit marqué par le regret et la perte de valeurs morales
+                                au sein d'une relation toxique.</p>
+                        </div>
+                    </div>
+                    <div class="reveal story-block" data-time="20">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">J't'ai rencontrée dans un bar, j'ai cru
+                                au hasard</p>
+                            <p class="group-hover:text-white transition-colors">T'étais pas comme les autres, t'avais
+                                pas le même regard</p>
+                        </div>
+                        <div class="hidden analysis-content">
+                            <span class="text-white font-medium block mb-1">Rencontre :</span>
+                            <p>L'illusion du coup de foudre. Damso décrit une rencontre banale qui va devenir le pivot
+                                de sa déchéance émotionnelle.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="space-y-4 text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour voir son décryptage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div
+        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                preload="metadata"></audio>
+            <div class="flex items-center gap-3 w-1/3">
+                <div
+                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 overflow-hidden">
+                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
+                </div>
+                <div class="hidden sm:block">
+                    <p class="text-white text-sm font-medium truncate">Macarena</p>
+                    <p class="text-zinc-500 text-xs truncate">Damso</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-1 w-1/3">
+                <button id="play-pause-btn"
+                    class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors">
+                    <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 w-full max-w-md">
+                    <span class="text-[10px] text-zinc-500 current-time">0:00</span>
+                    <div
+                        class="progress-bar-container relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group">
+                        <div class="progress-fill absolute h-full bg-amber-400 rounded-full w-0"></div>
+                        <div
+                            class="progress-thumb absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-zinc-500 total-time">0:00</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-end w-1/3"><iconify-icon icon="solar:volume-loud-linear"
+                    class="text-zinc-500" width="20"></iconify-icon></div>
+        </div>
+    </div>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>
