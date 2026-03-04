@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Person Shooter - SongStory</title>
+    <meta name="description"
+        content="Analyse de First Person Shooter de Drake ft. J. Cole. L'alliance entre deux légendes du rap.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>`r
+
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">`r
+ <div id="toc-sidebar"
+        class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"
+            style="position:absolute;left:calc(50% - 320px);top:98px;"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème…"
+            autocomplete="off" aria-label="Recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
+    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Partager une citation">
+        <div id="share-modal-content">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h3 style="color:#fff;font-size:15px;font-weight:500;">Partager cette citation</h3>
+                <button id="close-share-modal"
+                    style="color:#71717a;background:none;border:none;cursor:pointer;"><iconify-icon
+                        icon="solar:close-circle-linear" width="22"></iconify-icon></button>
+            </div>
+            <canvas id="share-canvas-preview"></canvas>
+            <button id="download-share-btn"
+                style="width:100%;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <iconify-icon icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image
+            </button>
+        </div>
+    </div>
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html"
+                        class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
+                    <a href="../library.html"
+                        class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                    <a href="../artists.html"
+                        class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                    <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                        propos</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="../index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="../library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="../artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="../timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="../about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Hip-Hop /
+                        Collaboration</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/drake.html"
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de Drake
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">First Person Shooter</h1>
+                <p class="text-xl text-zinc-500 font-light">Drake ft. J. Cole • 2023</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn"><iconify-icon icon="solar:eye-linear"
+                            width="14"></iconify-icon>Mode Karaoké</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+                    <!-- Intro - Mode First Person Shooter -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">First person shooter mode, we turnin'
+                                your song to a funeral</p>
+                            <p class="group-hover:text-white transition-colors">To them niggas that say they wan' off
+                                us, you better be talking 'bout workin' in cubicles</p>
+                            <p class="group-hover:text-white transition-colors">Yeah, the boy is the boy, the boy is the
+                                boy</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Introduction au sommet :</span>
+                            <p>Tiré de l'album "For All The Dogs" de Drake, ce titre réunit Drake et J. Cole. L'analogie
+                                "First Person Shooter" (jeu de tir à la première personne) montre qu'ils ont la
+                                concurrence dans le viseur. Ils sont au sommet, inatteignables, et éliminent toute
+                                compétition lyrique (transformant les chansons adverses en "funérailles").</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 22</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Verse J. Cole - Le Big 3 -->
+                    <div class="reveal story-block" data-time="45">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium">Love when they argue the
+                                hardest MC</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Is it K-Dot? Is it Aubrey?
+                                Or me?</p>
+                            <p class="group-hover:text-white transition-colors">We the big three like we started a
+                                league, but right now, I feel like Ali</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">La phrase qui a tout déclenché (Le "Big
+                                Three") :</span>
+                            <p>Le vers de J. Cole est devenu instantanément légendaire et le point de départ du plus
+                                grand beef de la décennie. Il cite les trois leaders générationnels du rap (Kendrick
+                                Lamar/K-Dot, Drake/Aubrey et lui-même) comme le "Big Three" indiscutable, tout en se
+                                positionnant momentanément au-dessus ("feel like Ali"). Paradoxalement, c'est cette
+                                déclaration de paix et de respect mutuel qui déclenchera la furie de Kendrick Lamar sur
+                                "Like That", ce dernier refusant d'être mis au même niveau.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 458</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Verse J. Cole - Suite -->
+                    <div class="reveal story-block" data-time="80">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I'm naming the album The Fall Off, it's
+                                pretty ironic 'cause it ain't no fall off for me</p>
+                            <p class="group-hover:text-white transition-colors">The Spider-Man meme is me looking at
+                                Drake</p>
+                            <p class="group-hover:text-white transition-colors">It's like we the last of the Mohicans
+                            </p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Fraternité et Longévité :</span>
+                            <p>J. Cole tease son très attendu prochain album ("The Fall Off") et célèbre sa relation
+                                avec Drake à travers le célèbre mème Spider-Man (où deux Spider-Men identiques se
+                                pointent du doigt). Cole considère que seuls lui et Drake ont survécu à l'épreuve du
+                                temps au plus haut niveau ("last of the Mohicans"), une autre pique subtile
+                                (probablement involontaire de la part de Cole, mais perçue ainsi) à l'absence perçue de
+                                régularité de Kendrick.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 112</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Verse Drake - Records -->
+                    <div class="reveal story-block" data-time="120">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Niggas talkin' 'bout when this gon' be
+                                repeated</p>
+                            <p class="group-hover:text-white transition-colors">What the fuck bro? I'm one away from
+                                Michael</p>
+                            <p class="group-hover:text-white transition-colors">Nigga, beat it, nigga, beat it, what?
+                            </p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'obsession des classements et Michael
+                                Jackson :</span>
+                            <p>Drake rappelle son palmarès absolu. Juste avant la sortie de ce morceau, Drake était à
+                                une longueur d'égaler le record de Michael Jackson pour le plus grand nombre de singles
+                                numéro 1 en solo. Ironiquement, c'est ce même morceau ("First Person Shooter") qui lui
+                                permettra d'égaler le Roi de la Pop (13 numéros 1). Il utilise le titre iconique "Beat
+                                It" de MJ pour renvoyer ses détracteurs (ou concurrents) dans les cordes.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 215</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Verse Drake - Beat Switch -->
+                    <div class="reveal story-block" data-time="160">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Who the GOAT? Who you bitches really
+                                rooting for?</p>
+                            <p class="group-hover:text-white transition-colors">Like a kid that act bad from January to
+                                November, nigga, it's just you and Cole</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Duo Suprême selon Drake :</span>
+                            <p>Après le changement de beat (plus dramatique et banger), Drake rebondit sur le vers de J.
+                                Cole. Alors que Cole incluait Kendrick généreusement dans le "Big Three", Drake réduit
+                                la course au titre de GOAT à une bataille à deux : "it's just you and Cole". Un affront
+                                direct à Kendrick Lamar, confirmant l'exclusion de ce dernier du panthéon personnel de
+                                Drake.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 340</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 relative">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Type</span><span
+                                        class="text-zinc-300">Collaboration</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Genre</span><span
+                                        class="text-zinc-300">Hip-Hop / Rap</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Album</span><span
+                                        class="text-zinc-300">For All The Dogs</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">BPM</span><span
+                                        class="text-zinc-300">~163</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="mt-24 border-t border-white/5 pt-16">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="push-ups.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Push Ups</div>
+                            <div class="rec-artist">Drake • Beef</div>
+                        </div>
+                    </a>
+                    <a href="family-matters.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Family Matters</div>
+                            <div class="rec-artist">Drake • Beef</div>
+                        </div>
+                    </a>
+                    <a href="euphoria.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Euphoria</div>
+                            <div class="rec-artist">Kendrick Lamar • Beef</div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div
+        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+                preload="metadata"></audio>
+            <div class="flex items-center gap-3 min-w-0 w-1/4">
+                <div
+                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
+                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
+                </div>
+                <div class="hidden sm:block min-w-0">
+                    <p class="text-white text-sm font-medium truncate">First Person Shooter</p>
+                    <p class="text-zinc-500 text-xs truncate">Drake ft. J. Cole</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
+                <div class="flex items-center gap-4">
+                    <button id="play-pause-btn" aria-label="Lecture / Pause"
+                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 w-full max-w-2xl">
+                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
+                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
+                    </div>
+                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 w-1/4">
+                <div class="hidden md:flex items-center gap-2 w-28">
+                    <button id="mute-btn" aria-label="Muet"
+                        class="text-zinc-500 hover:text-white transition-colors"><iconify-icon
+                            icon="solar:volume-loud-linear" width="18"></iconify-icon></button>
+                    <div id="volume-container"
+                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
+                        aria-label="Volume" tabindex="0">
+                        <div id="volume-fill"
+                            class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
+                        </div>
+                        <div id="volume-thumb"
+                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            style="left:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/seo.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/spotify.js"></script>
+    <script src="../js/applemusic.js"></script>
+    <script src="../js/streaming.js"></script>
+    <script src="../js/contribute.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/player.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const songId = 'first-person-shooter';
+            const songData = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.find(s => s.id === songId) : null;
+            if (songData && typeof SongStoryStreaming !== 'undefined') {
+                SongStoryStreaming.initUnifiedPlayer(songData);
+            }
+        });
+    </script>
+</body>
+
+</html>
+

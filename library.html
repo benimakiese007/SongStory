@@ -5,52 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibliothèque - SongStory</title>
+    <meta name="description"
+        content="Explorez notre collection complète de décryptages musicaux — Rock, Rap, Beef et plus encore.">
+    <meta property="og:title" content="Bibliothèque - SongStory">
+    <meta property="og:description" content="Explorez notre collection complète de décryptages musicaux.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
-    <style>
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cursor-dot,
-        .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #fbbf24;
-        }
-
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(251, 191, 36, 0.3);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
 <body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+
+    <div class="glossary-tooltip"></div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème… (ou /)"
+            autocomplete="off" aria-label="Champ de recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
 
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,55 +52,298 @@
                             class="text-white text-sm border-b-2 border-amber-400 py-1 transition-colors">Bibliothèque</a>
                         <a href="artists.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
                         <a href="about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
                             propos</a>
                     </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="library.html" class="text-white text-lg font-medium">Bibliothèque</a>
+            <a href="artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="glossary.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Glossaire</a>
+            <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
     <main class="py-20 lg:py-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16">
-                <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-6">Bibliothéque</h1>
+            <div class="mb-12">
+                <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-4">Bibliothèque</h1>
                 <p class="text-lg text-zinc-500 max-w-2xl font-light">Explorez notre collection complète de décryptages
                     musicaux.</p>
             </div>
 
+            <div class="mb-12">
+                <h2 class="text-zinc-500 text-sm uppercase tracking-widest font-medium mb-6">Séries & Collections</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Collection: Beef 2024 -->
+                    <button
+                        class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
+                        data-filter="beef">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-amber-400 text-xs font-medium">Série Spéciale</span>
+                            <iconify-icon icon="solar:fire-bold" class="text-amber-500" width="16"></iconify-icon>
+                        </div>
+                        <h3 class="text-white font-medium mb-1">Drake vs Kendrick</h3>
+                        <p class="text-xs text-zinc-500">Le beef qui a secoué 2024. Analyses complètes de chaque round.
+                        </p>
+                    </button>
+
+                    <!-- Collection: Storytelling -->
+                    <button
+                        class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
+                        data-filter="storytelling">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-purple-400 text-xs font-medium">Art de la Plume</span>
+                            <iconify-icon icon="solar:pen-new-square-bold" class="text-purple-500"
+                                width="16"></iconify-icon>
+                        </div>
+                        <h3 class="text-white font-medium mb-1">Maîtres du Storytelling</h3>
+                        <p class="text-xs text-zinc-500">Quand la musique devient une narration cinématographique.</p>
+                    </button>
+
+                    <!-- Collection: Classiques -->
+                    <button
+                        class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
+                        data-filter="classique">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-zinc-400 text-xs font-medium">Indémodables</span>
+                            <iconify-icon icon="solar:medal-star-bold" class="text-zinc-500" width="16"></iconify-icon>
+                        </div>
+                        <h3 class="text-white font-medium mb-1">Les Classiques</h3>
+                        <p class="text-xs text-zinc-500">Les morceaux qui ont défini leur époque et le genre.</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Pills -->
+            <div class="flex flex-wrap gap-2 mb-10">
+                <button class="filter-pill active" data-filter="all">Tout</button>
+                <button class="filter-pill" data-filter="rock">Rock</button>
+                <button class="filter-pill" data-filter="rap">Rap</button>
+                <button class="filter-pill" data-filter="beef">Beef</button>
+                <button class="filter-pill" data-filter="storytelling">Storytelling</button>
+                <button class="filter-pill" data-filter="classique">Classique</button>
+                <button class="filter-pill" data-filter="mélancolie">Mélancolie</button>
+                <button class="filter-pill" data-filter="politique">Politique</button>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="songs/bohemian-rhapsody.html"
-                    class="reveal group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all">
-                    <span class="text-xs text-amber-400 uppercase tracking-widest font-medium mb-4 block">Rock •
-                        1975</span>
+                <a href="single-song.html?id=bohemian-rhapsody"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="rock,classique,storytelling">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rock • 1975</span>
+                    </div>
                     <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
                         Bohemian Rhapsody</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Queen</p>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Queen — L'opéra-rock qui a redéfini les
+                        limites de la musique populaire.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rock</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Classique</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
+                    </div>
                 </a>
+
                 <a href="songs/macarena.html"
-                    class="reveal group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all">
-                    <span class="text-xs text-amber-400 uppercase tracking-widest font-medium mb-4 block">Rap •
-                        2017</span>
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="rap,storytelling,mélancolie,rupture">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2017</span>
+                    </div>
                     <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
                         Macarena</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Damso</p>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Damso — Décryptage d'un classique. Comment le
+                        texte contraste avec la production.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Mélancolie</span>
+                    </div>
                 </a>
+
                 <a href="songs/euphoria.html"
-                    class="reveal group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all">
-                    <span class="text-xs text-amber-400 uppercase tracking-widest font-medium mb-4 block">Beef •
-                        2024</span>
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="beef,rap,politique,confrontation">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
+                    </div>
                     <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
                         Euphoria</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Kendrick Lamar</p>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Kendrick Lamar — Analyse méthodique de la
+                        réponse chirurgicale visant Drake.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Politique</span>
+                    </div>
                 </a>
+
+                <a href="songs/black.html"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="rap,conscient,identité,politique">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2019</span>
+                    </div>
+                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                        Black</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Dave — Décryptage d'un hymne à la fierté noire
+                        et à l'identité.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Conscient</span>
+                    </div>
+                </a>
+
+                <a href="songs/fairchild.html"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="rap,conscient,storytelling,justice">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2019</span>
+                    </div>
+                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                        Fairchild</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Dave — Un récit poignant sur les inégalités
+                        sociales et la justice.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
+                    </div>
+                </a>
+
+                <a href="songs/push-ups.html"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="beef,rap,diss-track">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
+                    </div>
+                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                        Push Ups</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake — La réponse musclée de Drake à ses
+                        détracteurs.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                    </div>
+                </a>
+
+                <a href="songs/family-matters.html"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="beef,rap,diss-track">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
+                    </div>
+                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                        Family Matters</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake — La réponse massive de 7 minutes visant
+                        Kendrick Lamar.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                    </div>
+                </a>
+
+                <a href="songs/first-person-shooter.html"
+                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                    data-tags="hip-hop,collaboration,rap">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Hip-Hop • 2023</span>
+                    </div>
+                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                        First Person Shooter</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake ft. J. Cole — L'alliance au sommet entre
+                        Drake et J. Cole.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Hip-Hop</span>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
+                    </div>
+                </a>
+
             </div>
         </div>
     </main>
 
     <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
-        <p>© 2024 SongStory. Tous droits réservés.</p>
+        <p>© 2025 SongStory. Tous droits réservés.</p>
     </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pills = document.querySelectorAll('.filter-pill');
+            const collectionPills = document.querySelectorAll('.filter-pill-collection');
+            const cards = document.querySelectorAll('.chapter-card');
+
+            function filterBy(filter) {
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.tags.includes(filter)) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.classList.add('visible'), 50);
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.remove('visible');
+                    }
+                });
+            }
+
+            pills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    pills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    filterBy(pill.dataset.filter);
+                });
+            });
+
+            collectionPills.forEach(cp => {
+                cp.addEventListener('click', () => {
+                    const filter = cp.dataset.filter;
+                    const mainPill = Array.from(pills).find(p => p.dataset.filter === filter);
+                    if (mainPill) mainPill.click();
+                    else filterBy(filter);
+
+                    cp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        });
+    </script>
+    <script src="js/pwa.js"></script>
 </body>
 
 </html>
+
+

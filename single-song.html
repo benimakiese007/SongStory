@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chargement... - SongStory</title>
+    <meta name="description" content="Analyse de chanson sur SongStory.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème…"
+            autocomplete="off" aria-label="Recherche">
+        <button id="close-search-btn">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Partager une citation">
+        <div id="share-modal-content">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h3 style="color:#fff;font-size:15px;font-weight:500;">Partager cette citation</h3>
+                <button id="close-share-modal" style="color:#71717a;background:none;border:none;cursor:pointer;">
+                    <iconify-icon icon="solar:close-circle-linear" width="22"></iconify-icon>
+                </button>
+            </div>
+            <canvas id="share-canvas-preview"></canvas>
+            <button id="download-share-btn">
+                <iconify-icon icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image
+            </button>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
+                        <a href="library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Dynamic Header -->
+            <div class="mb-12" id="song-header">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Analyse Complète</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="#" id="artist-link"
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de l'artiste
+                        →</a>
+                </div>
+                <h1 id="song-title" class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">
+                    Chargement...</h1>
+                <p id="song-meta" class="text-xl text-zinc-500 font-light">Artiste • Année</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn">
+                        <iconify-icon icon="solar:eye-linear" width="14"></iconify-icon>Mode Karaoké
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <!-- Lyrics + Story Blocks (Rendered by JS) -->
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+                    <div class="py-20 text-center col-span-full">
+                        <p class="text-zinc-600">Chargement de l'analyse...</p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-5 relative">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="space-y-4 text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne de texte pour voir son décryptage ici.</p>
+                            </div>
+                        </div>
+                        <div id="song-info-card" class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                        <!-- Extended Information Block -->
+                        <div id="streaming-platform-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2x1 p-6 relative overflow-hidden transition-all duration-500">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:play-circle-linear" class="text-amber-400"
+                                    width="18"></iconify-icon>
+                                Écouter sur vos plateformes
+                            </h4>
+                            <div id="unified-player-loading" class="text-xs text-zinc-500 italic mb-4">Initialisation du
+                                lecteur universel...</div>
+                            <div id="unified-player-container" class="hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contribute -->
+            <div id="contribute-section" class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+                <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ? Vous avez une anecdote
+                    inédite ?</p>
+                <a id="contribute-link" href="contribute.html"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                    <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>
+                    Suggérer une correction
+                </a>
+            </div>
+
+            <!-- Recommendations -->
+            <section class="mt-24 border-t border-white/5 pt-16">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div id="recommendations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Waveform Player (Simplified references for template) -->
+    <div
+        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <audio id="main-audio" src="" preload="metadata"></audio>
+            <div class="flex items-center gap-3 min-w-0 w-1/4">
+                <div
+                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
+                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
+                </div>
+                <div class="hidden sm:block min-w-0">
+                    <p id="player-title" class="text-white text-sm font-medium truncate">Chargement...</p>
+                    <p id="player-artist" class="text-zinc-500 text-xs truncate">Artiste</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
+                <div class="flex items-center gap-4">
+                    <button id="play-pause-btn" aria-label="Lecture / Pause"
+                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors">
+                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 w-full max-w-2xl">
+                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
+                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
+                    </div>
+                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 w-1/4">
+                <div class="hidden md:flex items-center gap-2 w-28">
+                    <button id="mute-btn" class="text-zinc-500 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:volume-loud-linear" width="18"></iconify-icon>
+                    </button>
+                    <div id="volume-container"
+                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group">
+                        <div id="volume-fill" class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full">
+                        </div>
+                        <div id="volume-thumb"
+                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            style="left:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/pwa.js"></script>
+    <script src="js/spotify.js"></script>
+    <script src="js/applemusic.js"></script>
+    <script src="js/streaming.js"></script>
+    <script src="js/contribute.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/song-renderer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

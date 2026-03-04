@@ -5,45 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artistes - SongStory</title>
+    <meta name="description"
+        content="Rencontrez les artistes analysés sur SongStory : Queen, Damso, Kendrick Lamar et plus encore.">
+    <meta property="og:title" content="Artistes - SongStory">
+    <meta property="og:description" content="Rencontrez les voix qui façonnent notre bibliothèque.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
-    <style>
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cursor-dot,
-        .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
 <body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+
+    <div class="glossary-tooltip"></div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème… (ou /)"
+            autocomplete="off" aria-label="Champ de recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
 
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
+                <div class="flex-shrink-0">
                     <a href="index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
                 <div class="hidden md:block">
@@ -52,60 +49,202 @@
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
                         <a href="library.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="artists.html"
-                            class="text-white text-sm border-b-2 border-amber-400 py-1 transition-colors">Artistes</a>
+                        <a href="artists.html" class="text-white text-sm border-b-2 border-amber-400 py-1">Artistes</a>
+                        <a href="timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
                         <a href="about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
                             propos</a>
                     </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="py-20 lg:py-32 text-center">
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="artists.html" class="text-white text-lg font-medium">Artistes</a>
+            <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
+    <main class="py-20 lg:py-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16">
+            <div class="mb-16 text-center">
                 <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-6">Artistes</h1>
                 <p class="text-lg text-zinc-500 max-w-2xl mx-auto font-light">Rencontrez les voix qui façonnent notre
                     bibliothèque.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="reveal group cursor-pointer">
-                    <div
-                        class="aspect-square bg-zinc-900 rounded-2xl mb-4 border border-white/5 overflow-hidden flex items-center justify-center">
-                        <iconify-icon icon="solar:user-bold"
-                            class="text-zinc-700 opacity-50 group-hover:text-amber-400 transition-colors"
-                            width="48"></iconify-icon>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Queen -->
+                <a href="artists/queen.html"
+                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                Queen</h3>
+                            <p class="text-zinc-500 text-sm">Rock · Royaume-Uni</p>
+                        </div>
                     </div>
-                    <h3 class="text-white font-medium group-hover:text-amber-400 transition-colors">Queen</h3>
-                </div>
-                <div class="reveal group cursor-pointer">
-                    <div
-                        class="aspect-square bg-zinc-900 rounded-2xl mb-4 border border-white/5 overflow-hidden flex items-center justify-center">
-                        <iconify-icon icon="solar:user-bold"
-                            class="text-zinc-700 opacity-50 group-hover:text-amber-400 transition-colors"
-                            width="48"></iconify-icon>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Groupe légendaire formé en 1970, portés par
+                        Freddie Mercury. Pionniers de l'opéra-rock.</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>1 analyse disponible</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
                     </div>
-                    <h3 class="text-white font-medium group-hover:text-amber-400 transition-colors">Damso</h3>
-                </div>
-                <div class="reveal group cursor-pointer">
-                    <div
-                        class="aspect-square bg-zinc-900 rounded-2xl mb-4 border border-white/5 overflow-hidden flex items-center justify-center">
-                        <iconify-icon icon="solar:user-bold"
-                            class="text-zinc-700 opacity-50 group-hover:text-amber-400 transition-colors"
-                            width="48"></iconify-icon>
+                </a>
+
+                <!-- Damso -->
+                <a href="artists/damso.html"
+                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                Damso</h3>
+                            <p class="text-zinc-500 text-sm">Rap · Belgique</p>
+                        </div>
                     </div>
-                    <h3 class="text-white font-medium group-hover:text-amber-400 transition-colors">Kendrick Lamar</h3>
-                </div>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur belgo-congolais, figure majeure du rap
+                        francophone. Poète de l'introspection.</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>1 analyse disponible</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>
+
+                <!-- Kendrick Lamar -->
+                <a href="artists/kendrick-lamar.html"
+                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                Kendrick Lamar</h3>
+                            <p class="text-zinc-500 text-sm">Rap · États-Unis</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur de Compton, Prix Pulitzer 2018. Le
+                        rappeur le plus influent de sa génération.</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>1 analyse disponible</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>
+
+                <!-- Dave -->
+                <a href="artists/dave.html"
+                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                Dave</h3>
+                            <p class="text-zinc-500 text-sm">Rap · Royaume-Uni</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur britannique et prix Mercury. Maître du
+                        storytelling et du rap conscient.</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>2 analyses disponibles</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>
+
+                <!-- Drake -->
+                <a href="artists/drake.html"
+                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                Drake</h3>
+                            <p class="text-zinc-500 text-sm">Rap / R&B · Canada</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">La star mondiale de Toronto, redéfinissant le
+                        mélange entre hip-hop et R&B.</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>3 analyses disponibles</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>
+
             </div>
         </div>
     </main>
 
     <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
-        <p>© 2024 SongStory. Tous droits réservés.</p>
+        <p>© 2025 SongStory. Tous droits réservés.</p>
     </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/pwa.js"></script>
 </body>
 
 </html>
+

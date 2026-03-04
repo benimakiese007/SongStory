@@ -1,0 +1,165 @@
+/**
+ * SongStory — Song Renderer Module
+ * Dynamically populates single-song.html based on URL parameters.
+ */
+
+const SongStoryRenderer = {
+    currentSong: null,
+
+    init() {
+        const params = new URLSearchParams(window.location.search);
+        const songId = params.get('id');
+
+        if (!songId) {
+            console.error('No song ID provided');
+            // Optionnel: redirect or show generic message
+            return;
+        }
+
+        this.currentSong = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.find(s => s.id === songId) : null;
+
+        if (!this.currentSong) {
+            document.title = "Chanson introuvable - SongStory";
+            const wrapper = document.getElementById('narrative-wrapper');
+            if (wrapper) wrapper.innerHTML = '<div class="py-20 text-center"><h2 class="text-white text-2xl mb-4">Oups !</h2><p>Cette chanson n\'existe pas encore dans notre base.</p><a href="index.html" class="text-amber-400 mt-4 block">Retour à l\'accueil</a></div>';
+            return;
+        }
+
+        this.renderHeader();
+        this.renderNarrative();
+        this.renderInfo();
+        this.renderPlayer();
+        this.renderRecommendations();
+        this.updateSEO();
+        this.initExternalModules();
+    },
+
+    renderHeader() {
+        const titleEl = document.getElementById('song-title');
+        const metaEl = document.getElementById('song-meta');
+        const artistLink = document.getElementById('artist-link');
+
+        if (titleEl) titleEl.textContent = this.currentSong.title;
+        if (metaEl) metaEl.textContent = `${this.currentSong.artist} • ${this.currentSong.year}`;
+        if (artistLink) {
+            const artistId = this.currentSong.artist.toLowerCase().replace(/\s+/g, '-');
+            artistLink.href = `artists/${artistId}.html`;
+            artistLink.textContent = `Voir le profil de ${this.currentSong.artist} →`;
+        }
+    },
+
+    renderNarrative() {
+        const wrapper = document.getElementById('narrative-wrapper');
+        if (!wrapper || !this.currentSong.content) return;
+
+        let html = '';
+        this.currentSong.content.forEach((block, idx) => {
+            const lyricsHtml = block.lyrics.map(line =>
+                `<p class="group-hover:text-white transition-colors">${line}</p>`
+            ).join('');
+
+            html += `
+                <div class="reveal story-block" data-time="${block.time}">
+                    <div class="lyrics-text space-y-2 cursor-pointer group">
+                        ${lyricsHtml}
+                    </div>
+                    <div class="analysis-content-visible">
+                        ${block.analysis}
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:8px;">
+                        <button class="comment-toggle-btn">
+                            <iconify-icon icon="solar:chat-round-line-linear" width="12"></iconify-icon> ${Math.floor(Math.random() * 100) + 10}
+                        </button>
+                        <button class="share-quote-btn comment-toggle-btn">
+                            <iconify-icon icon="solar:share-linear" width="12"></iconify-icon>
+                        </button>
+                    </div>
+                    <div class="comment-section"></div>
+                </div>
+            `;
+        });
+        wrapper.innerHTML = html;
+    },
+
+    renderInfo() {
+        const grid = document.getElementById('info-grid');
+        if (!grid) return;
+
+        const infos = [
+            { label: 'Album', value: this.currentSong.album || 'N/A' },
+            { label: 'Genre', value: this.currentSong.genre || 'N/A' },
+            { label: 'Durée', value: this.currentSong.duration || 'N/A' },
+            { label: 'BPM', value: this.currentSong.bpm || 'N/A' }
+        ];
+
+        grid.innerHTML = infos.map(i => `
+            <div class="flex justify-between">
+                <span class="text-zinc-500">${i.label}</span>
+                <span class="text-zinc-300">${i.value}</span>
+            </div>
+        `).join('');
+
+        const contributeLink = document.getElementById('contribute-link');
+        if (contributeLink) contributeLink.href = `contribute.html?song=${this.currentSong.id}`;
+    },
+
+    renderPlayer() {
+        const audio = document.getElementById('main-audio');
+        const pTitle = document.getElementById('player-title');
+        const pArtist = document.getElementById('player-artist');
+
+        if (audio && this.currentSong.audio) audio.src = this.currentSong.audio;
+        if (pTitle) pTitle.textContent = this.currentSong.title;
+        if (pArtist) pArtist.textContent = this.currentSong.artist;
+    },
+
+    renderRecommendations() {
+        const grid = document.getElementById('recommendations-grid');
+        if (!grid) return;
+
+        // Simple algo: other songs from same genre or just random
+        const recs = SONGS_DATA.filter(s => s.id !== this.currentSong.id).slice(0, 3);
+
+        grid.innerHTML = recs.map(s => `
+            <a href="single-song.html?id=${s.id}" class="recommendation-card">
+                <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                <div>
+                    <div class="rec-title">${s.title}</div>
+                    <div class="rec-artist">${s.artist} • ${s.genre}</div>
+                </div>
+            </a>
+        `).join('');
+    },
+
+    updateSEO() {
+        document.title = `${this.currentSong.title} - SongStory`;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.content = `Analyse complète de ${this.currentSong.title} par ${this.currentSong.artist}. Découvrez le sens des paroles sur SongStory.`;
+    },
+
+    initExternalModules() {
+        // Initialize streaming player if data exists
+        if (typeof SongStoryStreaming !== 'undefined' && (this.currentSong.spotifyId || this.currentSong.appleMusicId)) {
+            SongStoryStreaming.initUnifiedPlayer(this.currentSong);
+        }
+
+        // Re-init UI features that depend on newly injected DOM
+        if (typeof SongStoryUI !== 'undefined') {
+            SongStoryUI.initScrollAnimations();
+            SongStoryUI.initComments();
+            SongStoryUI.initShareCard();
+            SongStoryUI.initTilt();
+        }
+
+        // Re-init Player markers
+        if (typeof SongStoryPlayer !== 'undefined') {
+            SongStoryPlayer.storyBlocks = document.querySelectorAll('.story-block[data-time]');
+            SongStoryPlayer.renderWaveformMarkers();
+        }
+    }
+};
+
+// Start rendering when DOM is ready (but after data.js)
+document.addEventListener('DOMContentLoaded', () => {
+    SongStoryRenderer.init();
+});

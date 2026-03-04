@@ -5,86 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SongStory - Décryptage & Analyse Musicale</title>
+
+    <!-- SEO & Open Graph -->
+    <meta name="description"
+        content="Plongez au cœur des morceaux cultes. Analyses ligne par ligne, références culturelles, et secrets de création mis en lumière.">
+    <meta property="og:title" content="SongStory - Décryptage & Analyse Musicale">
+    <meta property="og:description"
+        content="Analyses approfondies des textes musicaux. Découvrez le sens caché de vos morceaux préférés.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://songstory.app/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SongStory">
+    <meta name="twitter:description" content="Analyses approfondies des textes musicaux.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
-    <style>
-        .selection\:bg-amber-500\/20 ::selection {
-            background-color: rgba(245, 158, 11, 0.2);
-        }
-
-        .selection\:text-amber-200 ::selection {
-            color: rgb(253, 230, 138);
-        }
-
-        /* Smooth reveal animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Cursor styling from previous design but adapted */
-        .cursor-dot,
-        .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #fbbf24;
-        }
-
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(251, 191, 36, 0.3);
-        }
-
-        body.cursor-hover .cursor-outline {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: rgba(251, 191, 36, 0.1);
-            border-color: transparent;
-        }
-
-        /* Reading Progress Bar */
-        #reading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: #fbbf24;
-            z-index: 100;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 antialiased selection:bg-amber-500/20 selection:text-amber-200"
-    style="font-family: 'Inter', sans-serif;">
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+
+
+    <!-- Glossary Tooltip (global, positioned by JS) -->
+    <div class="glossary-tooltip"></div>
 
     <!-- Reading Progress Bar -->
     <div id="reading-progress"></div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème… (ou /)"
+            autocomplete="off" aria-label="Champ de recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Partager une citation">
+        <div id="share-modal-content">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h3 style="color:#fff;font-size:15px;font-weight:500;">Partager cette citation</h3>
+                <button id="close-share-modal" style="color:#71717a;background:none;border:none;cursor:pointer;">
+                    <iconify-icon icon="solar:close-circle-linear" width="22"></iconify-icon>
+                </button>
+            </div>
+            <canvas id="share-canvas-preview"></canvas>
+            <button id="download-share-btn"
+                style="width:100%;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <iconify-icon icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image
+            </button>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
@@ -104,35 +87,52 @@
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
                         <a href="artists.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
                         <a href="about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
                             propos</a>
                     </div>
                 </div>
 
                 <!-- Search & Actions -->
-                <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex relative group">
-                        <iconify-icon icon="solar:magnifer-linear"
-                            class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-amber-400 transition-colors"
-                            width="18"></iconify-icon>
-                        <input type="text" placeholder="Rechercher un titre, artiste..."
-                            class="bg-zinc-900/50 border border-white/5 text-white text-sm rounded-full pl-9 pr-4 py-1.5 focus:outline-none focus:border-amber-400/50 focus:bg-zinc-900 transition-all w-64 placeholder:text-zinc-600">
-                    </div>
-                    <button class="text-zinc-400 hover:text-white transition-colors md:hidden">
-                        <iconify-icon icon="solar:magnifer-linear" width="24"></iconify-icon>
-                    </button>
+                <div class="flex items-center gap-3">
                     <button
-                        class="hidden sm:flex items-center gap-2 bg-white text-zinc-950 hover:bg-zinc-200 transition-colors px-4 py-1.5 rounded-full text-sm font-medium">
-                        <iconify-icon icon="solar:bell-linear" width="16"></iconify-icon>
-                        S'abonner
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <button class="text-zinc-400 md:hidden">
+                    <!-- Nav auth slot replacing the static Subscribe button -->
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" role="navigation" aria-label="Menu mobile">
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="text-white text-lg font-medium">Découvrir</a>
+            <a href="library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="glossary.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Glossaire</a>
+            <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
 
     <main>
         <!-- Hero Section -->
@@ -163,6 +163,11 @@
                         Explorer les analyses
                         <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                     </a>
+                    <button
+                        class="search-trigger flex items-center gap-2 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white px-6 py-3 rounded-full text-sm font-medium transition-all">
+                        <iconify-icon icon="solar:magnifer-linear" width="16"></iconify-icon>
+                        Rechercher un morceau
+                    </button>
                 </div>
             </div>
         </section>
@@ -183,8 +188,9 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Card 1 -->
-                    <article onclick="window.location.href='songs/bohemian-rhapsody.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
+                    <article onclick="window.location.href='single-song.html?id=bohemian-rhapsody'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="rock,classique,storytelling">
                         <div
                             class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
                             <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
@@ -196,9 +202,7 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Queen</span>
-                            <span>•</span>
-                            <span>Classique</span>
+                            <span>Queen</span><span>•</span><span>Classique</span>
                         </div>
                         <h3
                             class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
@@ -209,7 +213,8 @@
 
                     <!-- Card 2 -->
                     <article onclick="window.location.href='songs/macarena.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="rap,storytelling,mélancolie,rupture">
                         <div
                             class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
                             <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
@@ -221,9 +226,7 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Damso</span>
-                            <span>•</span>
-                            <span>Storytelling</span>
+                            <span>Damso</span><span>•</span><span>Storytelling</span>
                         </div>
                         <h3
                             class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
@@ -234,7 +237,8 @@
 
                     <!-- Card 3 -->
                     <article onclick="window.location.href='songs/euphoria.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="beef,rap,politique,confrontation">
                         <div
                             class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
                             <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
@@ -246,9 +250,7 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Kendrick Lamar</span>
-                            <span>•</span>
-                            <span>Diss Track</span>
+                            <span>Kendrick Lamar</span><span>•</span><span>Diss Track</span>
                         </div>
                         <h3
                             class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
@@ -256,6 +258,127 @@
                         <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Analyse méthodique de la réponse
                             chirurgicale visant Drake.</p>
                     </article>
+
+                    <!-- Card 4 -->
+                    <article onclick="window.location.href='songs/black.html'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="rap,conscient,identité,politique">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
+                                width="48"></iconify-icon>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rap</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>Dave</span><span>•</span><span>Conscient</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            Black</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Décryptage d'un hymne à la fierté
+                            noire et à l'identité.</p>
+                    </article>
+
+                    <!-- Card 5 -->
+                    <article onclick="window.location.href='songs/fairchild.html'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="rap,conscient,storytelling,justice">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
+                                width="48"></iconify-icon>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rap</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>Dave</span><span>•</span><span>Storytelling</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            Fairchild</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Un récit poignant sur les
+                            inégalités sociales et la justice.</p>
+                    </article>
+
+                    <!-- Card Drake 1 -->
+                    <article onclick="window.location.href='songs/push-ups.html'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="beef,rap,diss-track">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
+                                width="48"></iconify-icon>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Beef</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>Drake</span><span>•</span><span>Diss Track</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            Push Ups</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">La réponse musclée de Drake à ses
+                            détracteurs.</p>
+                    </article>
+
+                    <!-- Card Drake 2 -->
+                    <article onclick="window.location.href='songs/family-matters.html'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="beef,rap,diss-track">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
+                                width="48"></iconify-icon>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Beef</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>Drake</span><span>•</span><span>Diss Track</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            Family Matters</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">La réponse massive de 7 minutes
+                            visant Kendrick Lamar.</p>
+                    </article>
+
+                    <!-- Card Drake 3 -->
+                    <article onclick="window.location.href='songs/first-person-shooter.html'"
+                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
+                        data-tags="hip-hop,collaboration,rap">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
+                                width="48"></iconify-icon>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Hip-Hop</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>Drake ft. J. Cole</span><span>•</span><span>Collaboration</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            First Person Shooter</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">L'alliance au sommet entre Drake
+                            et J. Cole.</p>
+                    </article>
+
                 </div>
             </div>
         </section>
@@ -276,14 +399,14 @@
                             Découvrez le sens profond derrière l'un des morceaux les plus complexes de l'histoire du
                             rock. Une analyse ligne par ligne de l'aveu le plus célèbre de Queen.
                         </p>
-                        <a href="songs/bohemian-rhapsody.html"
+                        <a href="single-song.html?id=bohemian-rhapsody"
                             class="inline-flex items-center gap-2 text-white border-b border-amber-400/50 pb-1 hover:border-amber-400 transition-all">
                             Lire l'analyse complète
                             <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                         </a>
                     </div>
                     <div class="aspect-video bg-zinc-900 rounded-3xl border border-white/5 flex items-center justify-center relative overflow-hidden group cursor-pointer"
-                        onclick="window.location.href='songs/bohemian-rhapsody.html'">
+                        onclick="window.location.href='single-song.html?id=bohemian-rhapsody'">
                         <iconify-icon icon="solar:play-bold"
                             class="text-white/20 group-hover:text-amber-400 transition-all duration-500"
                             width="80"></iconify-icon>
@@ -293,7 +416,7 @@
         </section>
     </main>
 
-    <!-- Sticky Player -->
+    <!-- Sticky Waveform Player -->
     <div
         class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
@@ -302,62 +425,57 @@
                 preload="metadata"></audio>
 
             <!-- Info -->
-            <div class="flex items-center gap-3 w-1/3">
+            <div class="flex items-center gap-3 min-w-0 w-1/4">
                 <div
-                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 overflow-hidden">
+                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
                     <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
                 </div>
-                <div class="hidden sm:block">
+                <div class="hidden sm:block min-w-0">
                     <p id="player-track-name" class="text-white text-sm font-medium truncate">Bohemian Rhapsody</p>
                     <p id="player-track-artist" class="text-zinc-500 text-xs truncate">Queen</p>
                 </div>
             </div>
 
-            <!-- Controls -->
-            <div class="flex flex-col items-center gap-1 w-1/3">
+            <!-- Controls + Waveform -->
+            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
                 <div class="flex items-center gap-4">
-                    <button id="prev-btn" class="text-zinc-400 hover:text-white transition-colors"><iconify-icon
-                            icon="solar:skip-previous-linear" width="20"></iconify-icon></button>
-                    <button id="play-pause-btn"
-                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors">
+                    <button id="play-pause-btn" aria-label="Lecture / Pause"
+                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400">
                         <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
                     </button>
-                    <button id="next-btn" class="text-zinc-400 hover:text-white transition-colors"><iconify-icon
-                            icon="solar:skip-next-linear" width="20"></iconify-icon></button>
                 </div>
-                <!-- Progress -->
-                <div class="flex items-center gap-2 w-full max-w-md">
-                    <span class="text-[10px] text-zinc-500 current-time">0:00</span>
-                    <div
-                        class="progress-bar-container relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group">
-                        <div
-                            class="progress-fill absolute top-0 left-0 h-full bg-amber-400 rounded-full w-0 group-hover:bg-amber-300">
-                        </div>
-                        <div class="progress-thumb absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left: 0%;"></div>
-                    </div>
-                    <span class="text-[10px] text-zinc-500 total-time">0:00</span>
+                <!-- Waveform replaces the flat progress bar -->
+                <div class="flex items-center gap-2 w-full max-w-2xl">
+                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
+                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression du morceau"
+                        tabindex="0"></div>
+                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
                 </div>
             </div>
 
-            <!-- Volume/Action -->
-            <div class="flex items-center justify-end gap-3 w-1/3">
-                <div class="hidden md:flex items-center gap-2 w-24">
-                    <button id="mute-btn" class="text-zinc-500 hover:text-white transition-colors">
+            <!-- Volume -->
+            <div class="flex items-center justify-end gap-3 w-1/4">
+                <div class="hidden md:flex items-center gap-2 w-28">
+                    <button id="mute-btn" aria-label="Muet / Son"
+                        class="text-zinc-500 hover:text-white transition-colors focus:outline-none focus:text-amber-400">
                         <iconify-icon icon="solar:volume-loud-linear" width="18"></iconify-icon>
                     </button>
                     <div id="volume-container"
-                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group">
+                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
+                        aria-label="Volume" tabindex="0">
                         <div id="volume-fill"
                             class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
                         </div>
                         <div id="volume-thumb"
                             class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left: 100%;"></div>
+                            style="left:100%"></div>
                     </div>
                 </div>
-                <button class="text-zinc-500 hover:text-white transition-colors"><iconify-icon icon="solar:share-linear"
-                        width="20"></iconify-icon></button>
+                <button
+                    class="text-zinc-500 hover:text-white transition-colors text-xs hidden sm:flex items-center gap-1"
+                    title="Raccourcis: Espace=pause, ←→=seek, ↑↓=volume, M=muet">
+                    <iconify-icon icon="solar:keyboard-linear" width="16"></iconify-icon>
+                </button>
             </div>
         </div>
     </div>
@@ -379,16 +497,19 @@
                                 icon="solar:video-frame-linear" width="24"></iconify-icon></a>
                     </div>
                 </div>
-
                 <div>
                     <h3 class="text-white text-sm font-medium mb-4">Navigation</h3>
                     <ul class="space-y-2 text-sm text-zinc-500">
-                        <li><a href="#" class="hover:text-amber-400 transition-colors">Dernières analyses</a></li>
-                        <li><a href="#" class="hover:text-amber-400 transition-colors">Index des artistes</a></li>
-                        <li><a href="#" class="hover:text-amber-400 transition-colors">Glossaire</a></li>
+                        <li><a href="library.html" class="hover:text-amber-400 transition-colors">Dernières analyses</a>
+                        </li>
+                        <li><a href="artists.html" class="hover:text-amber-400 transition-colors">Index des artistes</a>
+                        </li>
+                        <li><a href="timeline.html" class="hover:text-amber-400 transition-colors">Timeline</a>
+                        </li>
+                        <li><a href="contribute.html" class="hover:text-amber-400 transition-colors">Contribuer</a>
+                        </li>
                     </ul>
                 </div>
-
                 <div>
                     <h3 class="text-white text-sm font-medium mb-4">Newsletter</h3>
                     <form class="flex flex-col gap-2">
@@ -399,14 +520,27 @@
                     </form>
                 </div>
             </div>
-
             <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-zinc-600">© 2024 SongStory. Tous droits réservés.</p>
+                <p class="text-xs text-zinc-600">© 2025 SongStory. Tous droits réservés.</p>
+                <p class="text-xs text-zinc-700">Raccourcis clavier : <kbd
+                        style="background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;">Espace</kbd>
+                    lecture · <kbd style="background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;">←→</kbd>
+                    seek · <kbd style="background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;">/</kbd>
+                    recherche</p>
             </div>
         </div>
     </footer>
 
+    <script src="js/data.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/pwa.js"></script>
 </body>
 
 </html>
+
+
