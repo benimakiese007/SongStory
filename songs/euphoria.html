@@ -5,84 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Euphoria - SongStory</title>
+    <meta name="description"
+        content="Analyse de Euphoria de Kendrick Lamar. Décryptage du diss track historique visant Drake.">
+    <meta property="og:title" content="Euphoria — Diss Track Analysis | SongStory">
+    <meta property="og:description"
+        content="Analyse méthodique de la réponse chirurgicale de Kendrick Lamar visant Drake.">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
-    <style>
-        .selection\:bg-amber-500\/20 ::selection {
-            background-color: rgba(245, 158, 11, 0.2);
-        }
-
-        .selection\:text-amber-200 ::selection {
-            color: rgb(253, 230, 138);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cursor-dot,
-        .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #fbbf24;
-        }
-
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(251, 191, 36, 0.3);
-        }
-
-        body.cursor-hover .cursor-outline {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: rgba(251, 191, 36, 0.1);
-            border-color: transparent;
-        }
-
-        #reading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: #fbbf24;
-            z-index: 100;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 antialiased selection:bg-amber-500\/20 selection:text-amber-200"
-    style="font-family: 'Inter', sans-serif;">
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+    <div class="glossary-tooltip"></div>
     <div id="reading-progress"></div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"
+            style="position:absolute;left:calc(50% - 320px);top:98px;"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème…"
+            autocomplete="off" aria-label="Recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Partager une citation">
+        <div id="share-modal-content">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h3 style="color:#fff;font-size:15px;font-weight:500;">Partager cette citation</h3>
+                <button id="close-share-modal" style="color:#71717a;background:none;border:none;cursor:pointer;">
+                    <iconify-icon icon="solar:close-circle-linear" width="22"></iconify-icon>
+                </button>
+            </div>
+            <canvas id="share-canvas-preview"></canvas>
+            <button id="download-share-btn"
+                style="width:100%;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <iconify-icon icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image
+            </button>
+        </div>
+    </div>
 
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
+                <div class="flex-shrink-0">
                     <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
                 <div class="hidden md:block">
@@ -97,37 +72,154 @@
                             propos</a>
                     </div>
                 </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <button
+                        class="hidden sm:flex items-center gap-2 bg-white text-zinc-950 hover:bg-zinc-200 transition-colors px-4 py-1.5 rounded-full text-sm font-medium">S'abonner</button>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="../index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="../library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="../artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="../about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
     <main class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
-                <div class="flex items-center gap-3 mb-4"><span
-                        class="text-xs uppercase tracking-widest text-amber-400 font-medium">Diss Track Analysis</span>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Diss Track
+                        Analysis</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/kendrick-lamar.html"
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de Kendrick
+                        Lamar →</a>
                 </div>
                 <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Euphoria</h1>
                 <p class="text-xl text-zinc-500 font-light">Kendrick Lamar • 2024</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn">
+                        <iconify-icon icon="solar:eye-linear" width="14"></iconify-icon>Mode Karaoké
+                    </button>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div id="narrative-wrapper"
                     class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1: Intro -->
                     <div class="reveal story-block" data-time="0">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">The famous actor we once knew</p>
-                            <p class="group-hover:text-white transition-colors">Is lookin' paranoid and now is spiralin'
-                            </p>
+                            <p class="group-hover:text-white transition-colors">Everything they say about me is true</p>
+                            <p class="group-hover:text-white transition-colors">I'm a phony...</p>
                         </div>
-                        <div class="hidden analysis-content">
-                            <span class="text-white font-medium block mb-1">Analyse :</span>
-                            <p>Kendrick commence par attaquer la crédibilité d'acteur de Drake, suggérant une dissonance
-                                entre son image publique et sa réalité privée.</p>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Intro : The Wiz</span>
+                            <p>Le morceau commence par un extrait inversé de Richard Pryor dans le film <span
+                                    class="glossary-term" data-term="The Wiz"
+                                    data-def="Film musical de 1978 réinterprétant le Magicien d'Oz avec un casting entièrement noir.">The
+                                    Wiz</span>. En le remettant à l'endroit, on l'entend dire "Tout ce qu'ils disent sur
+                                moi est vrai, je suis un imposteur". C'est une attaque directe contre l'authenticité de
+                                Drake.</p>
                         </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 12</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 2: Master Manipulator -->
+                    <div class="reveal story-block" data-time="45">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Know you a master manipulator and
+                                habitual liar too</p>
+                            <p class="group-hover:text-white transition-colors">But don't tell no lie about me and I
+                                won't tell truths 'bout you</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Avertissement :</span>
+                            <p>Kendrick pose les règles du jeu. Il accuse Drake d'être un "maître manipulateur". Le
+                                "contrat" est simple : si Drake ment, Kendrick sortira des vérités compromettantes.
+                                C'est le calme avant la tempête.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 8</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 3: The Hate Section -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium">I hate the way that you
+                                walk, the way that you talk</p>
+                            <p class="group-hover:text-white transition-colors font-medium">I hate the way that you
+                                dress</p>
+                            <p class="group-hover:text-white transition-colors font-medium">I hate the way that you
+                                sneak diss, if I catch flight, it's gon' be direct</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Haine Pure :</span>
+                            <p>Ici, Kendrick parodie le morceau "10 Things I Hate About You". C'est une attaque
+                                viscérale qui dépasse la musique ; il déteste l'essence même de l'individu.
+                                L'utilisation du <span class="glossary-term" data-term="Sneak Diss"
+                                    data-def="Attaque indirecte ou cachée dans les paroles d'une chanson.">sneak
+                                    diss</span> est directement reprochée à Drake.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 24</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 4: Identity & Authenticity -->
+                    <div class="reveal story-block" data-time="150">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-amber-400">How many more Black
+                                features 'til you finally feel that you're Black enough?</p>
+                            <p class="group-hover:text-white transition-colors">I even hate when you say the word
+                                'n*gga', but that's just me, I guess</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Crise d'identité :</span>
+                            <p>L'une des attaques les plus lourdes du morceau. Kendrick questionne la légitimité
+                                culturelle de Drake, l'accusant de "performer" son identité noire à travers des
+                                collaborations et l'utilisation de certains termes, tout en étant déconnecté de la
+                                réalité de cette culture.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 42</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
                     </div>
                 </div>
 
+                <!-- Sidebar -->
                 <div class="lg:col-span-5 relative">
                     <div class="sticky top-24 space-y-6">
                         <div id="dynamic-analysis-card"
@@ -142,38 +234,103 @@
                                 <p>Cliquez sur une ligne pour l'analyser.</p>
                             </div>
                         </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Type</span><span
+                                        class="text-zinc-300">Diss Track</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Genre</span><span
+                                        class="text-zinc-300">Hip-Hop / Beef</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
+                                        class="text-zinc-300">Drake</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">BPM</span><span
+                                        class="text-zinc-300">~140</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Recommendations -->
+            <section class="mt-24 border-t border-white/5 pt-16">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="bohemian-rhapsody.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Bohemian Rhapsody</div>
+                            <div class="rec-artist">Queen • Rock</div>
+                        </div>
+                    </a>
+                    <a href="macarena.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Macarena</div>
+                            <div class="rec-artist">Damso • Rap</div>
+                        </div>
+                    </a>
+                </div>
+            </section>
         </div>
     </main>
 
+    <!-- Waveform Player -->
     <div
         class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
                 preload="metadata"></audio>
-            <div class="flex items-center gap-3 w-1/3">
-                <div class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5">
-                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon></div>
-                <div class="hidden sm:block">
+            <div class="flex items-center gap-3 min-w-0 w-1/4">
+                <div
+                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
+                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
+                </div>
+                <div class="hidden sm:block min-w-0">
                     <p class="text-white text-sm font-medium truncate">Euphoria</p>
                     <p class="text-zinc-500 text-xs truncate">Kendrick Lamar</p>
                 </div>
             </div>
-            <div class="flex flex-col items-center gap-1 w-1/3">
-                <button id="play-pause-btn"
-                    class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors"><iconify-icon
-                        icon="solar:play-bold" width="20"></iconify-icon></button>
-                <div
-                    class="progress-bar-container relative h-1 bg-zinc-800 rounded-full flex-grow w-full max-w-md cursor-pointer">
-                    <div class="progress-fill absolute h-full bg-amber-400 w-0"></div>
+            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
+                <div class="flex items-center gap-4">
+                    <button id="play-pause-btn" aria-label="Lecture / Pause"
+                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 w-full max-w-2xl">
+                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
+                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
+                    </div>
+                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
                 </div>
             </div>
-            <div class="flex items-center justify-end w-1/3"><iconify-icon icon="solar:volume-loud-linear"
-                    class="text-zinc-500" width="20"></iconify-icon></div>
+            <div class="flex items-center justify-end gap-3 w-1/4">
+                <div class="hidden md:flex items-center gap-2 w-28">
+                    <button id="mute-btn" aria-label="Muet" class="text-zinc-500 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:volume-loud-linear" width="18"></iconify-icon>
+                    </button>
+                    <div id="volume-container"
+                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
+                        aria-label="Volume" tabindex="0">
+                        <div id="volume-fill"
+                            class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
+                        </div>
+                        <div id="volume-thumb"
+                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            style="left:100%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="../js/data.js"></script>
     <script src="../js/app.js"></script>
 </body>
 
