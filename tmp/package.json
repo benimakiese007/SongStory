@@ -1,0 +1,7 @@
+{
+  "name": "test-supabase",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}

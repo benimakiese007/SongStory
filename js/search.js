@@ -80,20 +80,35 @@ const SongStorySearch = {
         }
     },
 
-    renderResults(query) {
+    async renderResults(query) {
         if (!this.searchResults || !query.trim()) {
             if (this.searchResults) this.searchResults.innerHTML = '';
             return;
         }
-        this.initFuse();
 
         const isSubpage = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
         const base = isSubpage ? '../' : '';
-
-        const songResults = this.fuseSongs ? this.fuseSongs.search(query) : [];
-        const artistResults = this.fuseArtists ? this.fuseArtists.search(query) : [];
-
         const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        let songResults = [];
+        let artistResults = [];
+
+        if (window.ss_supabase) {
+            // Supabase Search
+            const [{ data: sData }, { data: aData }] = await Promise.all([
+                window.ss_supabase.from('songs').select('*').ilike('title', `%${query}%`),
+                window.ss_supabase.from('artists').select('*').ilike('name', `%${query}%`)
+            ]);
+
+            songResults = (sData || []).map(item => ({ item }));
+            artistResults = (aData || []).map(item => ({ item }));
+        } else {
+            // Local fallback with Fuse.js
+            this.initFuse();
+            songResults = this.fuseSongs ? this.fuseSongs.search(query) : [];
+            artistResults = this.fuseArtists ? this.fuseArtists.search(query) : [];
+        }
+
         const highlight = (str, indices) => {
             if (!indices || !indices.length) return esc(str);
             let res = '', last = 0;
@@ -116,7 +131,8 @@ const SongStorySearch = {
             html += `<div class="search-result-group"><h4>Chansons</h4>`;
             songResults.forEach(({ item: s, matches }) => {
                 const titleHtml = highlight(s.title, matches?.find(m => m.key === 'title')?.indices);
-                const artistHtml = highlight(s.artist, matches?.find(m => m.key === 'artist')?.indices);
+                const artistName = s.artist || (s.artists ? s.artists.name : '');
+                const artistHtml = highlight(artistName, matches?.find(m => m.key === 'artist')?.indices);
                 html += `<a class="search-result-item" href="${base}${s.url}">
                     <div class="result-icon"><iconify-icon icon="solar:music-note-linear" width="18"></iconify-icon></div>
                     <div><div class="result-title">${titleHtml}</div><div class="result-sub">${artistHtml} • ${s.genre} • ${s.year}</div></div>

@@ -90,30 +90,46 @@
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        async function loadGlossary() {
             const grid = document.getElementById('glossary-grid');
-            if (!grid || typeof GLOSSARY === 'undefined') return;
+            if (!grid) return;
+
+            let terms = [];
+            let glossaryData = {};
+
+            if (window.ss_supabase) {
+                const { data, error } = await window.ss_supabase.from('glossary').select('*').order('term');
+                if (!error) {
+                    terms = data.map(item => item.term);
+                    data.forEach(item => glossaryData[item.term] = item.definition);
+                }
+            }
+
+            if (terms.length === 0 && typeof GLOSSARY !== 'undefined') {
+                glossaryData = GLOSSARY;
+                terms = Object.keys(GLOSSARY).sort();
+            }
+
+            if (terms.length === 0) return;
 
             grid.innerHTML = '';
-
-            // Trier les termes par ordre alphabétique
-            const terms = Object.keys(GLOSSARY).sort();
-
             terms.forEach(term => {
-                const def = GLOSSARY[term];
+                const def = glossaryData[term];
                 const card = document.createElement('div');
-                card.className = 'reveal bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all';
+                card.className = 'reveal bg-zinc-950/40 border border-white/10 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all shadow-xl';
                 card.innerHTML = `
                     <h3 class="text-amber-400 font-medium text-lg mb-2 capitalize">${term}</h3>
                     <p class="text-zinc-400 text-sm leading-relaxed">${def}</p>
                 `;
                 grid.appendChild(card);
             });
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGlossary);
     </script>
 </body>
 
 </html>
-

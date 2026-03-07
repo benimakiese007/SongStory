@@ -16,12 +16,43 @@ const CMS_CONFIG = {
 let currentTab = 'dashboard';
 let currentModFilter = 'pending';
 
-function initCMS() {
+async function initCMS() {
+    if (!window.ss_supabase) {
+        console.error('Supabase client not found');
+        return;
+    }
+
+    // Initial load
+    await Promise.all([
+        loadAllSongs(),
+        loadAllArtists(),
+        loadAllContributions()
+    ]);
+
     updateDashboardStats();
     renderSongsTable();
     renderArtistsGrid();
     renderModerationFull();
     switchTab('dashboard');
+}
+
+let SONGS_DATA_DB = [];
+let ARTISTS_DATA_DB = [];
+let CONTRIBS_DATA_DB = [];
+
+async function loadAllSongs() {
+    const { data, error } = await window.ss_supabase.from('songs').select('*').order('created_at', { ascending: false });
+    if (!error) SONGS_DATA_DB = data;
+}
+
+async function loadAllArtists() {
+    const { data, error } = await window.ss_supabase.from('artists').select('*').order('name');
+    if (!error) ARTISTS_DATA_DB = data;
+}
+
+async function loadAllContributions() {
+    const { data, error } = await window.ss_supabase.from('contributions').select('*').order('submitted_at', { ascending: false });
+    if (!error) CONTRIBS_DATA_DB = data;
 }
 
 /**
@@ -64,18 +95,17 @@ function switchTab(tabId) {
  * Dashboard Logic
  */
 function updateDashboardStats() {
-    const songsCount = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.length : 0;
-    const artistsCount = typeof ARTISTS_DATA !== 'undefined' ? ARTISTS_DATA.length : 0;
-    const allContribs = typeof SongStoryContrib !== 'undefined' ? SongStoryContrib.getAll() : [];
-    const pendingCount = allContribs.filter(c => c.status === 'pending').length;
+    const songsCount = SONGS_DATA_DB.length;
+    const artistsCount = ARTISTS_DATA_DB.length;
+    const pendingCount = CONTRIBS_DATA_DB.filter(c => c.status === 'pending').length;
 
     document.getElementById('stat-songs').textContent = songsCount;
     document.getElementById('stat-artists').textContent = artistsCount;
-    document.getElementById('stat-contribs').textContent = allContribs.length;
+    document.getElementById('stat-contribs').textContent = CONTRIBS_DATA_DB.length;
     document.getElementById('stat-pending-badge').textContent = `${pendingCount} à traiter`;
 
     // Recent Content
-    const recentSongs = [...SONGS_DATA].reverse().slice(0, 4);
+    const recentSongs = [...SONGS_DATA_DB].slice(0, 4);
     document.getElementById('recent-songs-list').innerHTML = recentSongs.map(s => `
         <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-all group">
             <div class="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden border border-white/5">
@@ -83,7 +113,7 @@ function updateDashboardStats() {
             </div>
             <div class="flex-1 min-w-0">
                 <h5 class="text-sm font-medium text-white truncate">${s.title}</h5>
-                <p class="text-xs text-zinc-500">${s.artist} • ${s.year}</p>
+                <p class="text-xs text-zinc-500">${s.artist_id} • ${s.year}</p>
             </div>
             <button class="text-zinc-600 hover:text-white" onclick="editSong('${s.id}')">
                 <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
@@ -92,19 +122,19 @@ function updateDashboardStats() {
     `).join('');
 
     // Recent Contribs
-    const recentContribs = [...allContribs].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)).slice(0, 4);
+    const recentContribs = [...CONTRIBS_DATA_DB].slice(0, 4);
     document.getElementById('recent-contribs-list').innerHTML = recentContribs.map(c => {
-        const song = SONGS_DATA.find(s => s.id === c.songId);
+        const song = SONGS_DATA_DB.find(s => s.id === (c.song_id || c.songId));
         return `
         <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all">
             <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs border border-white/5">
-                ${c.author.charAt(0)}
+                ${(c.author || 'A').charAt(0)}
             </div>
             <div class="flex-1 min-w-0">
                 <p class="text-sm text-zinc-300">
-                    <span class="text-white font-medium">${c.author}</span> a suggéré une modification pour <span class="text-amber-500">${song ? song.title : c.songId}</span>
+                    <span class="text-white font-medium">${c.author}</span> a suggéré une modification pour <span class="text-amber-500">${song ? song.title : (c.song_id || c.songId)}</span>
                 </p>
-                <p class="text-[10px] text-zinc-600 mt-1 uppercase font-bold tracking-wider">Il y a 2 heures</p>
+                <p class="text-[10px] text-zinc-600 mt-1 uppercase font-bold tracking-wider">Récent</p>
             </div>
         </div>
     `}).join('');
@@ -117,7 +147,7 @@ function renderSongsTable() {
     const tbody = document.getElementById('songs-table-body');
     if (!tbody) return;
 
-    tbody.innerHTML = SONGS_DATA.map(s => `
+    tbody.innerHTML = SONGS_DATA_DB.map(s => `
         <tr class="hover:bg-white/5 transition-all group">
             <td class="px-6 py-4">
                 <div class="flex items-center gap-3">
@@ -127,14 +157,14 @@ function renderSongsTable() {
                     <span class="text-sm text-white font-medium">${s.title}</span>
                 </div>
             </td>
-            <td class="px-6 py-4 text-sm text-zinc-400">${s.artist}</td>
+            <td class="px-6 py-4 text-sm text-zinc-400">${s.artist_id}</td>
             <td class="px-6 py-4 text-sm text-zinc-400">${s.year}</td>
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
                     <button class="p-2 text-zinc-500 hover:text-white" title="Editer" onclick="editSong('${s.id}')">
                         <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
                     </button>
-                    <button class="p-2 text-zinc-500 hover:text-red-400" title="Supprimer">
+                    <button class="p-2 text-zinc-500 hover:text-red-400" title="Supprimer" onclick="deleteItem('song', '${s.id}')">
                         <iconify-icon icon="solar:trash-bin-trash-bold" width="18"></iconify-icon>
                     </button>
                 </div>
@@ -147,7 +177,7 @@ function renderArtistsGrid() {
     const grid = document.getElementById('artists-grid');
     if (!grid) return;
 
-    grid.innerHTML = ARTISTS_DATA.map(a => `
+    grid.innerHTML = ARTISTS_DATA_DB.map(a => `
         <div class="bg-zinc-900/30 border border-white/5 p-6 rounded-2xl group hover:border-amber-500/20 transition-all">
             <div class="flex items-center gap-4 mb-4">
                 <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center border border-white/10 overflow-hidden">
@@ -159,10 +189,15 @@ function renderArtistsGrid() {
                 </div>
             </div>
             <div class="flex items-center justify-between pt-4 border-t border-white/5">
-                <span class="text-xs text-zinc-600">${a.songs.length} titres analysés</span>
-                <button class="text-xs text-amber-500 font-bold hover:text-amber-400 flex items-center gap-1">
-                    Gérer <iconify-icon icon="solar:alt-arrow-right-bold"></iconify-icon>
-                </button>
+                <span class="text-xs text-zinc-600">${a.songs ? a.songs.length : 0} titres analysés</span>
+                <div class="flex gap-2">
+                    <button onclick="editArtist('${a.id}')" class="text-xs text-amber-500 font-bold hover:text-amber-400 flex items-center gap-1" title="Éditer">
+                        <iconify-icon icon="solar:pen-bold"></iconify-icon>
+                    </button>
+                    <button onclick="deleteItem('artist', '${a.id}')" class="text-xs text-red-500/50 hover:text-red-500 font-bold flex items-center gap-1" title="Supprimer">
+                        <iconify-icon icon="solar:trash-bin-trash-bold"></iconify-icon>
+                    </button>
+                </div>
             </div>
         </div>
     `).join('');
@@ -172,8 +207,7 @@ function renderModerationFull() {
     const list = document.getElementById('contribs-list-full');
     if (!list) return;
 
-    const all = typeof SongStoryContrib !== 'undefined' ? SongStoryContrib.getAll() : [];
-    const filtered = all.filter(c => c.status === currentModFilter).sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    const filtered = CONTRIBS_DATA_DB.filter(c => c.status === currentModFilter);
 
     if (!filtered.length) {
         list.innerHTML = `<div class="col-span-2 py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
@@ -184,9 +218,10 @@ function renderModerationFull() {
     }
 
     list.innerHTML = filtered.map(c => {
-        const song = SONGS_DATA.find(s => s.id === c.songId);
-        const typeInfo = SongStoryContrib.TYPES[c.type] || { label: c.type, icon: '📌' };
-        const d = new Date(c.submittedAt).toLocaleString('fr-FR');
+        const song_id = c.song_id || c.songId;
+        const song = SONGS_DATA_DB.find(s => s.id === song_id);
+        const typeInfo = (typeof SongStoryContrib !== 'undefined' ? SongStoryContrib.TYPES[c.type] : null) || { label: c.type, icon: '📌' };
+        const d = new Date(c.submitted_at || c.submittedAt).toLocaleString('fr-FR');
         const statusCls = c.status === 'pending' ? 'status-pending' : 'status-approved';
 
         return `
@@ -199,13 +234,13 @@ function renderModerationFull() {
                     <span class="text-[10px] text-zinc-600 font-mono tracking-tighter">${c.id}</span>
                 </div>
                 
-                <h6 class="text-white font-medium text-sm mb-1">${song ? song.title : c.songId}</h6>
+                <h6 class="text-white font-medium text-sm mb-1">${song ? song.title : song_id}</h6>
                 <div class="text-xs text-zinc-500 mb-4 flex items-center gap-2">
                     <iconify-icon icon="solar:user-bold" width="12"></iconify-icon> ${c.author} 
                     <iconify-icon icon="solar:calendar-bold" width="12" class="ml-2"></iconify-icon> ${d}
                 </div>
 
-                ${c.lineRef ? `<div class="bg-amber-500/5 border-l-2 border-amber-500 p-2 mb-3 text-[11px] italic text-amber-200/70">"${c.lineRef}"</div>` : ''}
+                ${c.line_ref || c.lineRef ? `<div class="bg-amber-500/5 border-l-2 border-amber-500 p-2 mb-3 text-[11px] italic text-amber-200/70">"${c.line_ref || c.lineRef}"</div>` : ''}
                 
                 <div class="bg-zinc-950/50 p-4 rounded-xl text-sm text-zinc-300 border border-white/5 mb-6 whitespace-pre-wrap leading-relaxed">${c.text}</div>
 
@@ -244,7 +279,7 @@ function takeCmsAction(id, action) {
 }
 
 /**
- * Modal System (Minimal implementation)
+ * Modal System
  */
 function openModal(type, data = null) {
     const modal = document.getElementById('modal-container');
@@ -253,23 +288,108 @@ function openModal(type, data = null) {
 
     modal.classList.remove('hidden');
 
-    if (type === 'add-song') {
-        title.textContent = 'Ajouter un nouveau titre';
+    if (type === 'add-song' || type === 'edit-song') {
+        const isEdit = type === 'edit-song' && data;
+        const s = isEdit ? data : {};
+
+        title.innerHTML = isEdit
+            ? `<iconify-icon icon="solar:pen-bold" class="mr-2 text-amber-500"></iconify-icon> Éditer le titre`
+            : `<iconify-icon icon="solar:add-circle-bold" class="mr-2 text-amber-500"></iconify-icon> Ajouter un nouveau titre`;
+
         body.innerHTML = `
-            <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-2">
-                    <label class="block text-xs text-zinc-500 mb-1">Titre de la chanson</label>
-                    <input type="text" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+            <form id="cms-form" onsubmit="handleFormSubmit(event, 'song', '${isEdit ? s.id : ''}')" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">ID (identifiant unique URL)</label>
+                        <input type="text" id="f-id" value="${s.id || ''}" required ${isEdit ? 'readonly' : ''} class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 ${isEdit ? 'opacity-50 cursor-not-allowed' : ''}">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Titre de la chanson</label>
+                        <input type="text" id="f-title" value="${s.title || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Artiste</label>
+                        <input type="text" id="f-artist" value="${s.artist || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">ID de l'artiste</label>
+                        <input type="text" id="f-artistId" value="${s.artistId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Genre</label>
+                        <input type="text" id="f-genre" value="${s.genre || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Année</label>
+                        <input type="number" id="f-year" value="${s.year || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Durée (ex: 3:45)</label>
+                        <input type="text" id="f-duration" value="${s.duration || ''}" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Spotify ID</label>
+                        <input type="text" id="f-spotifyId" value="${s.spotifyId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Apple Music ID</label>
+                        <input type="text" id="f-appleMusicId" value="${s.appleMusicId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Tags (séparés par des virgules)</label>
+                        <input type="text" id="f-tags" value="${s.tags ? s.tags.join(', ') : ''}" placeholder="rap, storytelling, classique" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Description courte</label>
+                        <textarea id="f-desc" rows="2" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 leading-relaxed">${s.description || ''}</textarea>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs text-zinc-500 mb-1">Artiste</label>
-                    <input type="text" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                <!-- Action Buttons Injected via HTML -->
+            </form>
+        `;
+    }
+    else if (type === 'add-artist' || type === 'edit-artist') {
+        const isEdit = type === 'edit-artist' && data;
+        const a = isEdit ? data : {};
+
+        title.innerHTML = isEdit
+            ? `<iconify-icon icon="solar:pen-bold" class="mr-2 text-amber-500"></iconify-icon> Éditer l'artiste`
+            : `<iconify-icon icon="solar:user-plus-bold" class="mr-2 text-amber-500"></iconify-icon> Ajouter un nouvel artiste`;
+
+        body.innerHTML = `
+            <form id="cms-form" onsubmit="handleFormSubmit(event, 'artist', '${isEdit ? a.id : ''}')" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">ID (identifiant unique URL)</label>
+                        <input type="text" id="f-id" value="${a.id || ''}" required ${isEdit ? 'readonly' : ''} class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 ${isEdit ? 'opacity-50 cursor-not-allowed' : ''}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Nom de l'artiste</label>
+                        <input type="text" id="f-name" value="${a.name || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Genre principal</label>
+                        <input type="text" id="f-genre" value="${a.genre || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 mb-1">Pays d'origine</label>
+                        <input type="text" id="f-country" value="${a.country || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Tags (séparés par des virgules)</label>
+                        <input type="text" id="f-tags" value="${a.tags ? a.tags.join(', ') : ''}" placeholder="rap, uk, conscient" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Biographie</label>
+                        <textarea id="f-bio" rows="4" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 leading-relaxed">${a.bio || ''}</textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Influence</label>
+                        <textarea id="f-influence" rows="3" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 leading-relaxed">${a.influence || ''}</textarea>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs text-zinc-500 mb-1">Année</label>
-                    <input type="number" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
-                </div>
-            </div>
+                <!-- Action Buttons Injected via HTML -->
+            </form>
         `;
     }
 }
@@ -278,6 +398,145 @@ function closeModal() {
     document.getElementById('modal-container').classList.add('hidden');
 }
 
+/**
+ * Handle Form Submissions & JSON Generation
+ */
+async function handleFormSubmit(e, type, existingId) {
+    e.preventDefault();
+
+    if (!window.ss_supabase) {
+        showToast("Erreur: Supabase non connecté.");
+        return;
+    }
+
+    const id = document.getElementById('f-id').value.trim();
+    let dataObj = {};
+
+    if (type === 'song') {
+        const artistId = document.getElementById('f-artistId').value.trim();
+        dataObj = {
+            id: id,
+            title: document.getElementById('f-title').value.trim(),
+            artist_id: artistId,
+            genre: document.getElementById('f-genre').value.trim(),
+            year: parseInt(document.getElementById('f-year').value, 10),
+            tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t),
+            description: document.getElementById('f-desc').value.trim(),
+            url: `single-song.html?id=${id}`,
+            audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder
+            spotifyId: document.getElementById('f-spotifyId').value.trim(),
+            appleMusicId: document.getElementById('f-appleMusicId').value.trim()
+        };
+        const duration = document.getElementById('f-duration').value.trim();
+        if (duration) dataObj.duration = duration;
+
+    } else if (type === 'artist') {
+        dataObj = {
+            id: id,
+            name: document.getElementById('f-name').value.trim(),
+            genre: document.getElementById('f-genre').value.trim(),
+            country: document.getElementById('f-country').value.trim(),
+            bio: document.getElementById('f-bio').value.trim(),
+            influence: document.getElementById('f-influence').value.trim(),
+            url: `artists/${id}.html`,
+            tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t)
+        };
+    }
+
+    let error;
+    if (existingId) {
+        ({ error } = await window.ss_supabase.from(type + 's').update(dataObj).eq('id', existingId));
+    } else {
+        ({ error } = await window.ss_supabase.from(type + 's').insert([dataObj]));
+    }
+
+    if (error) {
+        alert("Erreur: " + error.message);
+    } else {
+        showToast(existingId ? "Mis à jour avec succès !" : "Ajouté avec succès !");
+        closeModal();
+        // Refresh local data and UI
+        if (type === 'song') await loadAllSongs();
+        else await loadAllArtists();
+        updateDashboardStats();
+        if (type === 'song') renderSongsTable();
+        else renderArtistsGrid();
+    }
+}
+
 function editSong(id) {
-    alert(`Édition de ${id} (Bientôt disponible)`);
+    const song = SONGS_DATA_DB.find(s => s.id === id);
+    if (song) openModal('edit-song', song);
+}
+
+function editArtist(id) {
+    const artist = ARTISTS_DATA_DB.find(a => a.id === id);
+    if (artist) openModal('edit-artist', artist);
+}
+
+async function deleteItem(type, id) {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer ${type === 'song' ? 'le titre' : 'l\'artiste'} "${id}" de la base de données ? Cette action est irréversible.`)) return;
+
+    if (!window.ss_supabase) {
+        showToast("Erreur: Supabase non connecté.");
+        return;
+    }
+
+    const { error } = await window.ss_supabase.from(type + 's').delete().eq('id', id);
+
+    if (error) {
+        alert("Erreur lors de la suppression: " + error.message);
+    } else {
+        showToast("Supprimé avec succès !");
+        if (type === 'song') {
+            await loadAllSongs();
+            renderSongsTable();
+        } else {
+            await loadAllArtists();
+            renderArtistsGrid();
+        }
+        updateDashboardStats();
+    }
+}
+
+async function takeCmsAction(id, action) {
+    if (!window.ss_supabase) return;
+
+    if (action === 'rejected') {
+        if (!confirm("Supprimer définitivement cette contribution ?")) return;
+        await window.ss_supabase.from('contributions').delete().eq('id', id);
+    } else {
+        await window.ss_supabase.from('contributions').update({ status: action }).eq('id', id);
+    }
+
+    showToast(action === 'approved' ? "Contribution approuvée !" : "Contribution supprimée.");
+    await loadAllContributions();
+    updateDashboardStats();
+    renderModerationFull();
+}
+
+/**
+ * Global UI Helpers
+ */
+function showToast(msg) {
+    const existing = document.getElementById('cms-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'cms-toast';
+    toast.className = 'fixed bottom-6 right-6 bg-green-500 text-black px-6 py-3 rounded-xl font-bold font-sans shadow-lg shadow-green-500/20 flex items-center gap-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300';
+    toast.innerHTML = `<iconify-icon icon="solar:check-circle-bold" width="20"></iconify-icon> ${msg}`;
+
+    document.body.appendChild(toast);
+
+    // Animate in
+    setTimeout(() => {
+        toast.classList.remove('translate-y-20', 'opacity-0');
+    }, 10);
+
+    // Animate out
+    setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }

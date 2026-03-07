@@ -13,6 +13,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -104,19 +106,6 @@
             <div class="mb-12">
                 <h2 class="text-zinc-500 text-sm uppercase tracking-widest font-medium mb-6">Séries & Collections</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Collection: Beef 2024 -->
-                    <button
-                        class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
-                        data-filter="beef">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-amber-400 text-xs font-medium">Série Spéciale</span>
-                            <iconify-icon icon="solar:fire-bold" class="text-amber-500" width="16"></iconify-icon>
-                        </div>
-                        <h3 class="text-white font-medium mb-1">Drake vs Kendrick</h3>
-                        <p class="text-xs text-zinc-500">Le beef qui a secoué 2024. Analyses complètes de chaque round.
-                        </p>
-                    </button>
-
                     <!-- Collection: Storytelling -->
                     <button
                         class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
@@ -141,6 +130,19 @@
                         <h3 class="text-white font-medium mb-1">Les Classiques</h3>
                         <p class="text-xs text-zinc-500">Les morceaux qui ont défini leur époque et le genre.</p>
                     </button>
+
+                    <!-- Collection: Engagés -->
+                    <button
+                        class="filter-pill-collection group relative overflow-hidden bg-zinc-900/30 border border-white/5 p-5 rounded-2xl text-left hover:bg-zinc-900/50 transition-all"
+                        data-filter="politique">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-red-400 text-xs font-medium">Plumes Militantes</span>
+                            <iconify-icon icon="solar:flag-bold" class="text-red-500" width="16"></iconify-icon>
+                        </div>
+                        <h3 class="text-white font-medium mb-1">Textes Engagés</h3>
+                        <p class="text-xs text-zinc-500">Les titres qui critiquent la société et bousculent l'ordre
+                            établi.</p>
+                    </button>
                 </div>
             </div>
 
@@ -154,141 +156,21 @@
                 <button class="filter-pill" data-filter="classique">Classique</button>
                 <button class="filter-pill" data-filter="mélancolie">Mélancolie</button>
                 <button class="filter-pill" data-filter="politique">Politique</button>
+                <button class="filter-pill flex items-center gap-1 text-amber-500 hover:text-amber-400"
+                    data-filter="favorites"
+                    style="margin-left:auto; border-color:rgba(245,158,11,0.2); background:rgba(245,158,11,0.05);">
+                    <iconify-icon icon="solar:heart-bold"></iconify-icon> Mes Favoris
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="single-song.html?id=bohemian-rhapsody"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="rock,classique,storytelling">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rock • 1975</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Bohemian Rhapsody</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Queen — L'opéra-rock qui a redéfini les
-                        limites de la musique populaire.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rock</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Classique</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
-                    </div>
-                </a>
-
-                <a href="songs/macarena.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="rap,storytelling,mélancolie,rupture">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2017</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Macarena</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Damso — Décryptage d'un classique. Comment le
-                        texte contraste avec la production.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Mélancolie</span>
-                    </div>
-                </a>
-
-                <a href="songs/euphoria.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="beef,rap,politique,confrontation">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Euphoria</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Kendrick Lamar — Analyse méthodique de la
-                        réponse chirurgicale visant Drake.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Politique</span>
-                    </div>
-                </a>
-
-                <a href="songs/black.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="rap,conscient,identité,politique">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2019</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Black</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Dave — Décryptage d'un hymne à la fierté noire
-                        et à l'identité.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Conscient</span>
-                    </div>
-                </a>
-
-                <a href="songs/fairchild.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="rap,conscient,storytelling,justice">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Rap • 2019</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Fairchild</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Dave — Un récit poignant sur les inégalités
-                        sociales et la justice.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Storytelling</span>
-                    </div>
-                </a>
-
-                <a href="songs/push-ups.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="beef,rap,diss-track">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Push Ups</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake — La réponse musclée de Drake à ses
-                        détracteurs.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                    </div>
-                </a>
-
-                <a href="songs/family-matters.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="beef,rap,diss-track">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Beef • 2024</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        Family Matters</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake — La réponse massive de 7 minutes visant
-                        Kendrick Lamar.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Beef</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                    </div>
-                </a>
-
-                <a href="songs/first-person-shooter.html"
-                    class="reveal chapter-card group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
-                    data-tags="hip-hop,collaboration,rap">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">Hip-Hop • 2023</span>
-                    </div>
-                    <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
-                        First Person Shooter</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed mb-4">Drake ft. J. Cole — L'alliance au sommet entre
-                        Drake et J. Cole.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Hip-Hop</span>
-                        <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">Rap</span>
-                    </div>
-                </a>
-
+            <div id="songs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Data will be loaded here -->
+                <div class="col-span-full py-20 text-center text-zinc-600 animate-pulse">
+                    Chargement de la bibliothèque...
+                </div>
             </div>
+
+        </div>
         </div>
     </main>
 
@@ -302,16 +184,80 @@
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const pills = document.querySelectorAll('.filter-pill');
             const collectionPills = document.querySelectorAll('.filter-pill-collection');
-            const cards = document.querySelectorAll('.chapter-card');
+            const grid = document.getElementById('songs-grid');
+
+            let allSongs = [];
+            let artistMap = {};
+
+            async function loadData() {
+                if (window.ss_supabase) {
+                    const [songsRes, artistsRes] = await Promise.all([
+                        window.ss_supabase.from('songs').select('*'),
+                        window.ss_supabase.from('artists').select('id, name')
+                    ]);
+
+                    if (!songsRes.error) allSongs = songsRes.data;
+                    if (!artistsRes.error) {
+                        artistsRes.data.forEach(a => artistMap[a.id] = a.name);
+                    }
+                }
+
+                if (allSongs.length === 0 && typeof SONGS_DATA !== 'undefined') {
+                    allSongs = SONGS_DATA;
+                    allSongs.forEach(s => artistMap[s.artistId] = s.artist);
+                }
+
+                renderSongs(allSongs);
+            }
+
+            function renderSongs(songs) {
+                if (!grid) return;
+                grid.innerHTML = songs.map(song => {
+                    const artistName = artistMap[song.artist_id] || artistMap[song.artistId] || 'Artiste inconnu';
+                    const tags = Array.isArray(song.tags) ? song.tags : [];
+                    return `
+                        <a href="single-song.html?id=${song.id}"
+                            class="reveal chapter-card visible group relative bg-zinc-900/30 border border-white/5 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all"
+                            data-tags="${tags.join(',').toLowerCase()}">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="text-xs text-amber-400 uppercase tracking-widest font-medium">${song.genre} • ${song.year}</span>
+                            </div>
+                            <h3 class="text-xl text-white font-medium mb-2 group-hover:text-amber-400 transition-colors">
+                                ${song.title}</h3>
+                            <p class="text-sm text-zinc-500 leading-relaxed mb-4">${artistName} — ${song.description}</p>
+                            <div class="flex gap-2 flex-wrap">
+                                ${tags.slice(0, 3).map(t => `<span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">${t}</span>`).join('')}
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            }
 
             function filterBy(filter) {
+                const favs = JSON.parse(localStorage.getItem('ss_favorites') || '[]');
+                const cards = document.querySelectorAll('.chapter-card');
+
                 cards.forEach(card => {
-                    if (filter === 'all' || card.dataset.tags.includes(filter)) {
+                    let isMatch = false;
+
+                    if (filter === 'all') {
+                        isMatch = true;
+                    } else if (filter === 'favorites') {
+                        const href = card.getAttribute('href');
+                        const objId = new URLSearchParams(href.split('?')[1]).get('id');
+                        isMatch = favs.includes(objId);
+                    } else {
+                        const tags = card.dataset.tags || "";
+                        isMatch = tags.includes(filter.toLowerCase());
+                    }
+
+                    if (isMatch) {
                         card.style.display = 'block';
                         setTimeout(() => card.classList.add('visible'), 50);
                     } else {
@@ -335,15 +281,14 @@
                     const mainPill = Array.from(pills).find(p => p.dataset.filter === filter);
                     if (mainPill) mainPill.click();
                     else filterBy(filter);
-
                     cp.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
             });
+
+            await loadData();
         });
     </script>
     <script src="js/pwa.js"></script>
 </body>
 
 </html>
-
-

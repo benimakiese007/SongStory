@@ -14,48 +14,58 @@ const SongStoryContrib = (() => {
         traduction: { label: 'Traduction / Contexte', icon: '🌍' },
     };
 
-    function getAll() {
-        try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-        catch { return []; }
+    async function getAll() {
+        if (!window.ss_supabase) return [];
+        const { data, error } = await window.ss_supabase.from('contributions').select('*');
+        return error ? [] : data;
     }
 
-    function save(contributions) {
-        localStorage.setItem(KEY, JSON.stringify(contributions));
-    }
-
-    function submit(data) {
+    async function submit(data) {
         if (!data.songId || !data.type || !data.text?.trim()) return { ok: false, error: 'Données invalides.' };
-        const contribs = getAll();
+
         const entry = {
             id: Date.now().toString(),
-            songId: data.songId,
-            lineRef: data.lineRef || '',
+            song_id: data.songId,
+            line_ref: data.lineRef || '',
             type: data.type,
             text: data.text.trim(),
             author: data.author || 'Anonyme',
-            status: 'pending', // pending | approved | rejected
-            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            created_at: new Date().toISOString()
         };
-        contribs.push(entry);
-        save(contribs);
-        return { ok: true, entry };
-    }
 
-    function updateStatus(id, status) {
-        const contribs = getAll();
-        const entry = contribs.find(c => c.id === id);
-        if (entry) {
-            entry.status = status;
-            save(contribs);
+        if (!window.ss_supabase) {
+            console.warn('Supabase not connected. Falling back to local storage.');
+            const localData = JSON.parse(localStorage.getItem(KEY) || '[]');
+            localData.push(entry);
+            localStorage.setItem(KEY, JSON.stringify(localData));
+            return { ok: true, entry: entry };
         }
+
+        const { data: inserted, error } = await window.ss_supabase.from('contributions').insert([entry]).select().single();
+
+        if (error) return { ok: false, error: error.message };
+        return { ok: true, entry: inserted };
     }
 
-    function remove(id) {
-        save(getAll().filter(c => c.id !== id));
+    async function updateStatus(id, status) {
+        if (!window.ss_supabase) return;
+        await window.ss_supabase.from('contributions').update({ status }).eq('id', id);
     }
 
-    function getApproved(songId) {
-        return getAll().filter(c => c.songId === songId && c.status === 'approved');
+    async function remove(id) {
+        if (!window.ss_supabase) return;
+        await window.ss_supabase.from('contributions').delete().eq('id', id);
+    }
+
+    async function getApproved(songId) {
+        if (!window.ss_supabase) return [];
+        const { data, error } = await window.ss_supabase
+            .from('contributions')
+            .select('*')
+            .eq('song_id', songId)
+            .eq('status', 'approved');
+        return error ? [] : data;
     }
 
     return { getAll, submit, updateStatus, remove, getApproved, TYPES };

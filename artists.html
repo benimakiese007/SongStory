@@ -13,6 +13,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -96,139 +98,14 @@
                     bibliothèque.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Queen -->
-                <a href="artists/queen.html"
-                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
-                            <iconify-icon icon="solar:user-bold"
-                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
-                                width="28"></iconify-icon>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Queen</h3>
-                            <p class="text-zinc-500 text-sm">Rock · Royaume-Uni</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Groupe légendaire formé en 1970, portés par
-                        Freddie Mercury. Pionniers de l'opéra-rock.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>1 analyse disponible</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-
-                <!-- Damso -->
-                <a href="artists/damso.html"
-                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
-                            <iconify-icon icon="solar:user-bold"
-                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
-                                width="28"></iconify-icon>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Damso</h3>
-                            <p class="text-zinc-500 text-sm">Rap · Belgique</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur belgo-congolais, figure majeure du rap
-                        francophone. Poète de l'introspection.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>1 analyse disponible</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-
-                <!-- Kendrick Lamar -->
-                <a href="artists/kendrick-lamar.html"
-                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
-                            <iconify-icon icon="solar:user-bold"
-                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
-                                width="28"></iconify-icon>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Kendrick Lamar</h3>
-                            <p class="text-zinc-500 text-sm">Rap · États-Unis</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur de Compton, Prix Pulitzer 2018. Le
-                        rappeur le plus influent de sa génération.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>1 analyse disponible</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-
-                <!-- Dave -->
-                <a href="artists/dave.html"
-                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
-                            <iconify-icon icon="solar:user-bold"
-                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
-                                width="28"></iconify-icon>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Dave</h3>
-                            <p class="text-zinc-500 text-sm">Rap · Royaume-Uni</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Rappeur britannique et prix Mercury. Maître du
-                        storytelling et du rap conscient.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>2 analyses disponibles</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-
-                <!-- Drake -->
-                <a href="artists/drake.html"
-                    class="reveal artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
-                            <iconify-icon icon="solar:user-bold"
-                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
-                                width="28"></iconify-icon>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Drake</h3>
-                            <p class="text-zinc-500 text-sm">Rap / R&B · Canada</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">La star mondiale de Toronto, redéfinissant le
-                        mélange entre hip-hop et R&B.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>3 analyses disponibles</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-
+            <div id="artists-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Artists will be loaded here -->
+                <div class="col-span-full py-20 text-center text-zinc-600 animate-pulse">
+                    Chargement des artistes...
+                </div>
             </div>
+
+        </div>
         </div>
     </main>
 
@@ -242,9 +119,72 @@
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/app.js"></script>
     <script src="js/pwa.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('artists-grid');
+
+            async function loadArtists() {
+                let artists = [];
+                let songCounts = {};
+
+                if (window.ss_supabase) {
+                    const [artistsRes, songsRes] = await Promise.all([
+                        window.ss_supabase.from('artists').select('*'),
+                        window.ss_supabase.from('songs').select('artist_id')
+                    ]);
+
+                    if (!artistsRes.error) artists = artistsRes.data;
+                    if (!songsRes.error) {
+                        songsRes.data.forEach(s => {
+                            songCounts[s.artist_id] = (songCounts[s.artist_id] || 0) + 1;
+                        });
+                    }
+                }
+
+                if (artists.length === 0 && typeof ARTISTS_DATA !== 'undefined') {
+                    artists = ARTISTS_DATA;
+                    // Mock counts for static data
+                    artists.forEach(a => songCounts[a.id] = 1);
+                }
+
+                renderArtists(artists, songCounts);
+            }
+
+            function renderArtists(artists, counts) {
+                if (!grid) return;
+                grid.innerHTML = artists.map(artist => `
+                    <a href="artists/${artist.id}.html"
+                        class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                        style="text-decoration:none;">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                                <iconify-icon icon="solar:user-bold"
+                                    class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                    width="28"></iconify-icon>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                    ${artist.name}</h3>
+                                <p class="text-zinc-500 text-sm">${artist.genre} · ${artist.country}</p>
+                            </div>
+                        </div>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">${artist.bio.substring(0, 120)}...</p>
+                        <div class="flex items-center justify-between text-xs text-zinc-600">
+                            <span>${counts[artist.id] || 0} analyse(s) disponible(s)</span>
+                            <iconify-icon icon="solar:arrow-right-linear"
+                                class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                width="16"></iconify-icon>
+                        </div>
+                    </a>
+                `).join('');
+            }
+
+            loadArtists();
+        });
+    </script>
 </body>
 
 </html>
-

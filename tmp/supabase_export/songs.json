@@ -1,0 +1,127 @@
+[
+  {
+    "id": "lettre-a-la-republique",
+    "title": "Lettre à la République",
+    "artist_id": "kery-james",
+    "genre": "Rap Conscient",
+    "year": 2012,
+    "tags": [
+      "rap",
+      "politique",
+      "colonialisme",
+      "histoire"
+    ],
+    "description": "Un réquisitoire implacable sur l'histoire coloniale de la France et l'intégration.",
+    "url": "single-song.html?id=lettre-a-la-republique",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "spotify_id": "1L94MwniI061h2g50CebS0",
+    "apple_music_id": "510255928",
+    "album": "92.2012",
+    "duration": "4:28",
+    "bpm": "88"
+  },
+  {
+    "id": "menace-de-mort",
+    "title": "Menace de mort",
+    "artist_id": "youssoupha",
+    "genre": "Rap",
+    "year": 2011,
+    "tags": [
+      "rap",
+      "liberté d'expression",
+      "justice",
+      "média"
+    ],
+    "description": "Une réponse chirurgicale face à l'emballement judiciaire et médiatique.",
+    "url": "single-song.html?id=menace-de-mort",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "spotify_id": "5wB5y0bWwBntn7F7LZb1M5",
+    "apple_music_id": "476239105",
+    "album": "Noir D****",
+    "duration": "4:02",
+    "bpm": "92"
+  },
+  {
+    "id": "dont-laik",
+    "title": "Don't Laïk",
+    "artist_id": "medine",
+    "genre": "Rap Conscient",
+    "year": 2015,
+    "tags": [
+      "rap",
+      "laïcité",
+      "provocation",
+      "polémique"
+    ],
+    "description": "Un texte volontairement polémique et dense sur la laïcité française.",
+    "url": "single-song.html?id=dont-laik",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    "spotify_id": "3zMv1OqS1A0zE1kEwQOXZr",
+    "apple_music_id": "958045353",
+    "album": "Démineur",
+    "duration": "3:45",
+    "bpm": "85"
+  },
+  {
+    "id": "stan",
+    "title": "Stan",
+    "artist_id": "eminem",
+    "genre": "Rap",
+    "year": 2000,
+    "tags": [
+      "rap",
+      "storytelling",
+      "obsession",
+      "célébrité"
+    ],
+    "description": "Le chef-d'œuvre narratif épistolaire qui a inventé le terme 'Stan'.",
+    "url": "single-song.html?id=stan",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "spotify_id": "3UmaczJpikHgJFyBTAJVoz",
+    "apple_music_id": "1440866782",
+    "album": "The Marshall Mathers LP",
+    "duration": "6:44",
+    "bpm": "80"
+  },
+  {
+    "id": "power",
+    "title": "Power",
+    "artist_id": "kanye-west",
+    "genre": "Hip-Hop",
+    "year": 2010,
+    "tags": [
+      "hip-hop",
+      "célébrité",
+      "ego",
+      "production"
+    ],
+    "description": "L'hymne triomphal et mégalomaniaque analysant les affres de la célébrité.",
+    "url": "single-song.html?id=power",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    "spotify_id": "2gZUPNdnz5Y45eiGxpHGSc",
+    "apple_music_id": "1440742903",
+    "album": "My Beautiful Dark Twisted Fantasy",
+    "duration": "4:52",
+    "bpm": "88"
+  },
+  {
+    "id": "back-to-back",
+    "title": "Back to Back",
+    "artist_id": "drake",
+    "genre": "Hip-Hop",
+    "year": 2015,
+    "tags": [
+      "hip-hop",
+      "beef",
+      "diss track"
+    ],
+    "description": "Le diss track légendaire de 2015 visant Meek Mill.",
+    "url": "single-song.html?id=back-to-back",
+    "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    "spotify_id": "5m9pM8pGez1u8jS4R6u8rM",
+    "apple_music_id": "1440845348",
+    "album": "Back to Back (Single)",
+    "duration": "2:50",
+    "bpm": "87"
+  }
+]

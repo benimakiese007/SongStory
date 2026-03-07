@@ -363,16 +363,19 @@
             <div id="modal-body" class="space-y-4">
                 <!-- Form content injected via JS -->
             </div>
-            <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">
-                <button onclick="closeModal()"
+            <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5" id="modal-actions-container">
+                <button type="button" onclick="closeModal()"
                     class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
-                <button
-                    class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Enregistrer</button>
+                <button type="submit" form="cms-form"
+                    class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Générer
+                    Code JSON</button>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
     <script src="js/data.js"></script>
     <script src="js/contribute.js"></script>
     <script src="js/admin.js"></script>

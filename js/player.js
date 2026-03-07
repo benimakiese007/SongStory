@@ -26,6 +26,7 @@ const SongStoryPlayer = {
         this.currentTimeEl = document.querySelector('.current-time');
         this.totalTimeEl = document.querySelector('.total-time');
         this.storyBlocks = document.querySelectorAll('.story-block[data-time]');
+        this.lyricLines = document.querySelectorAll('.lyric-line[data-time]');
 
         if (!this.audio) return;
 
@@ -107,6 +108,8 @@ const SongStoryPlayer = {
     initEvents() {
         this.audio.addEventListener('loadedmetadata', () => {
             if (this.totalTimeEl) this.totalTimeEl.textContent = this.formatTime(this.audio.duration);
+            this.storyBlocks = document.querySelectorAll('.story-block[data-time]');
+            this.lyricLines = document.querySelectorAll('.lyric-line[data-time]');
             this.renderWaveformMarkers();
         });
 
@@ -130,18 +133,40 @@ const SongStoryPlayer = {
 
         this.audio.addEventListener('timeupdate', () => {
             this.updateWaveform();
-            if (this.currentTimeEl) this.currentTimeEl.textContent = this.formatTime(this.audio.currentTime);
+            const currentTime = this.audio.currentTime;
+            if (this.currentTimeEl) this.currentTimeEl.textContent = this.formatTime(currentTime);
 
+            // Highlight current block and line
+            let activeBlock = null;
             this.storyBlocks.forEach(block => {
                 const t = parseFloat(block.dataset.time);
-                const lyricsText = block.querySelector('.lyrics-text');
-                if (this.audio.currentTime >= t && this.audio.currentTime < t + 5) {
-                    if (lyricsText && !lyricsText.classList.contains('text-white')) {
-                        this.storyBlocks.forEach(b => b.querySelector('.lyrics-text')?.classList.remove('text-white', 'font-medium'));
-                        lyricsText.classList.add('text-white', 'font-medium');
-                    }
+                if (currentTime >= t) {
+                    activeBlock = block;
                 }
+                block.classList.remove('active-story-block');
             });
+
+            if (activeBlock) {
+                activeBlock.classList.add('active-story-block');
+                const lyricsText = activeBlock.querySelector('.lyrics-text');
+                if (lyricsText && !lyricsText.classList.contains('text-white')) {
+                    this.storyBlocks.forEach(b => b.querySelector('.lyrics-text')?.classList.remove('text-white', 'font-medium'));
+                    lyricsText.classList.add('text-white', 'font-medium');
+                }
+            }
+
+            // Optional: smoother scroll to active block if needed
+        });
+
+        // Add Click to Seek on lyrics
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('lyric-line')) {
+                const time = parseFloat(e.target.dataset.time);
+                if (!isNaN(time)) {
+                    this.audio.currentTime = time;
+                    if (this.audio.paused) this.audio.play().catch(() => { });
+                }
+            }
         });
     },
 

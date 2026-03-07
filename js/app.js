@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
         SongStoryPlayer.init();
     }
 
+    // 4. Initialize SPA Router
+    if (typeof SongStoryRouter !== 'undefined') {
+        SongStoryRouter.init();
+    }
+
     // 4. Analysis Block Highlights (Specific to Song Pages)
     const storyBlocks = document.querySelectorAll('.story-block');
     const analysisCard = document.getElementById('dynamic-analysis-card');

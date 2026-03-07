@@ -1,0 +1,86 @@
+[
+  {
+    "id": "kery-james",
+    "name": "Kery James",
+    "genre": "Rap Conscient",
+    "country": "France",
+    "bio": "Alix Mathurin, dit Kery James, est une des figures historiques du rap français originel, pilier de la Mafia K'1 Fry, devenu la référence majeure du rap conscient politique en France.",
+    "influence": "Reconnu pour ses textes denses abordant le contexte social des banlieues, l'histoire coloniale de la France, et l'exigence morale.",
+    "url": "artists/kery-james.html",
+    "tags": [
+      "rap",
+      "conscient",
+      "politique"
+    ]
+  },
+  {
+    "id": "youssoupha",
+    "name": "Youssoupha",
+    "genre": "Rap",
+    "country": "France / RDC",
+    "bio": "Youssoupha Mabiki, né en 1979 à Kinshasa, est un rappeur dont le style allie une immense richesse lexicale à une approche humaniste.",
+    "influence": "Surnommé le 'Lyriciste Bantou', il a défendu un rap technique, porteur de sens, en réhabilitant la poésie au cœur du rap commercial français.",
+    "url": "artists/youssoupha.html",
+    "tags": [
+      "rap",
+      "conscient",
+      "lyriciste"
+    ]
+  },
+  {
+    "id": "medine",
+    "name": "Médine",
+    "genre": "Rap Conscient",
+    "country": "France",
+    "bio": "Médine Zaouiche, venu du Havre, est l'un des paroliers les plus tranchants du rap français. Il emploie souvent l'ironie et le sarcasme pour dénoncer l'islamophobie et le racisme.",
+    "influence": "Il pousse ses auditeurs et la société française dans leurs derniers retranchements intellectuels avec un lexique ultra-violent mais métaphorique.",
+    "url": "artists/medine.html",
+    "tags": [
+      "rap",
+      "laïcité",
+      "provocation"
+    ]
+  },
+  {
+    "id": "eminem",
+    "name": "Eminem",
+    "genre": "Rap",
+    "country": "États-Unis",
+    "bio": "Marshall Mathers est sans conteste l'un des rappeurs les plus influents au monde, alliant virtuosité technique, shock value, et introspection brutale.",
+    "influence": "Il a introduit une approche psychologique au rap à la première personne, brisant les digues entre le hip-hop et la culture de masse globale.",
+    "url": "artists/eminem.html",
+    "tags": [
+      "rap",
+      "storytelling",
+      "technique"
+    ]
+  },
+  {
+    "id": "kanye-west",
+    "name": "Kanye West",
+    "genre": "Hip-Hop",
+    "country": "États-Unis",
+    "bio": "Ye, ex-Kanye West, est un producteur, rappeur et créateur de mode qui a profondément bouleversé le paysage culturel moderne.",
+    "influence": "Il a abattu les frontières du gangsta rap pour y injecter doutes existentiels, mode, électronique et folie des grandeurs.",
+    "url": "artists/kanye-west.html",
+    "tags": [
+      "hip-hop",
+      "production",
+      "ego"
+    ]
+  },
+  {
+    "id": "drake",
+    "name": "Drake",
+    "genre": "Hip-Hop",
+    "country": "Canada",
+    "bio": "Aubrey Drake Graham est un rappeur, chanteur et acteur canadien qui a dominé les charts mondiaux depuis les années 2010.",
+    "influence": "Il a popularisé le mélange de rap mélancolique et de R&B, influençant une génération entière d'artistes avec son approche émotionnelle et introspective.",
+    "url": "artists/drake.html",
+    "tags": [
+      "hip-hop",
+      "r&b",
+      "melancholy"
+    ]
+  }
+]

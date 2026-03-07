@@ -20,6 +20,8 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -186,200 +188,15 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Card 1 -->
-                    <article onclick="window.location.href='single-song.html?id=bohemian-rhapsody'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="rock,classique,storytelling">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rock</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Queen</span><span>•</span><span>Classique</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Bohemian Rhapsody</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">L'opéra-rock qui a redéfini les
-                            limites de la musique populaire.</p>
-                    </article>
-
-                    <!-- Card 2 -->
-                    <article onclick="window.location.href='songs/macarena.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="rap,storytelling,mélancolie,rupture">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rap</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Damso</span><span>•</span><span>Storytelling</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Macarena : L'illusion amoureuse</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Décryptage d'un classique. Comment
-                            le texte contraste avec la production.</p>
-                    </article>
-
-                    <!-- Card 3 -->
-                    <article onclick="window.location.href='songs/euphoria.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="beef,rap,politique,confrontation">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Beef</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Kendrick Lamar</span><span>•</span><span>Diss Track</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Euphoria</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Analyse méthodique de la réponse
-                            chirurgicale visant Drake.</p>
-                    </article>
-
-                    <!-- Card 4 -->
-                    <article onclick="window.location.href='songs/black.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="rap,conscient,identité,politique">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rap</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Dave</span><span>•</span><span>Conscient</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Black</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Décryptage d'un hymne à la fierté
-                            noire et à l'identité.</p>
-                    </article>
-
-                    <!-- Card 5 -->
-                    <article onclick="window.location.href='songs/fairchild.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="rap,conscient,storytelling,justice">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Rap</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Dave</span><span>•</span><span>Storytelling</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Fairchild</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">Un récit poignant sur les
-                            inégalités sociales et la justice.</p>
-                    </article>
-
-                    <!-- Card Drake 1 -->
-                    <article onclick="window.location.href='songs/push-ups.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="beef,rap,diss-track">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Beef</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Drake</span><span>•</span><span>Diss Track</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Push Ups</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">La réponse musclée de Drake à ses
-                            détracteurs.</p>
-                    </article>
-
-                    <!-- Card Drake 2 -->
-                    <article onclick="window.location.href='songs/family-matters.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="beef,rap,diss-track">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Beef</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Drake</span><span>•</span><span>Diss Track</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            Family Matters</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">La réponse massive de 7 minutes
-                            visant Kendrick Lamar.</p>
-                    </article>
-
-                    <!-- Card Drake 3 -->
-                    <article onclick="window.location.href='songs/first-person-shooter.html'"
-                        class="chapter-card group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer"
-                        data-tags="hip-hop,collaboration,rap">
-                        <div
-                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50"
-                                width="48"></iconify-icon>
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 flex gap-2">
-                                <span
-                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">Hip-Hop</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-                            <span>Drake ft. J. Cole</span><span>•</span><span>Collaboration</span>
-                        </div>
-                        <h3
-                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
-                            First Person Shooter</h3>
-                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">L'alliance au sommet entre Drake
-                            et J. Cole.</p>
-                    </article>
-
+                <div id="latest-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Latest Decodes will be loaded here -->
+                    <div class="col-span-full py-20 text-center text-zinc-600 animate-pulse">
+                        Chargement des derniers décryptages...
+                    </div>
                 </div>
+
+
+            </div>
             </div>
         </section>
 
@@ -393,20 +210,21 @@
                     <div>
                         <span class="text-xs uppercase tracking-widest text-amber-400 font-medium mb-4 block">Analyse à
                             la une</span>
-                        <h2 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-6">Bohemian Rhapsody
-                            : L'Odyssée de Mercury</h2>
+                        <h2 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-6">Lettre à la
+                            République
+                            : L'Histoire en Face</h2>
                         <p class="text-lg text-zinc-400 font-light leading-relaxed mb-8">
-                            Découvrez le sens profond derrière l'un des morceaux les plus complexes de l'histoire du
-                            rock. Une analyse ligne par ligne de l'aveu le plus célèbre de Queen.
+                            Découvrez le sens profond derrière ce monument du rap conscient. Une analyse sociétale et
+                            politique de l'œuvre coup-de-poing de Kery James.
                         </p>
-                        <a href="single-song.html?id=bohemian-rhapsody"
+                        <a href="single-song.html?id=lettre-a-la-republique"
                             class="inline-flex items-center gap-2 text-white border-b border-amber-400/50 pb-1 hover:border-amber-400 transition-all">
                             Lire l'analyse complète
                             <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                         </a>
                     </div>
                     <div class="aspect-video bg-zinc-900 rounded-3xl border border-white/5 flex items-center justify-center relative overflow-hidden group cursor-pointer"
-                        onclick="window.location.href='single-song.html?id=bohemian-rhapsody'">
+                        onclick="window.location.href='single-song.html?id=lettre-a-la-republique'">
                         <iconify-icon icon="solar:play-bold"
                             class="text-white/20 group-hover:text-amber-400 transition-all duration-500"
                             width="80"></iconify-icon>
@@ -431,8 +249,8 @@
                     <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
                 </div>
                 <div class="hidden sm:block min-w-0">
-                    <p id="player-track-name" class="text-white text-sm font-medium truncate">Bohemian Rhapsody</p>
-                    <p id="player-track-artist" class="text-zinc-500 text-xs truncate">Queen</p>
+                    <p id="player-track-name" class="text-white text-sm font-medium truncate">Lettre à la République</p>
+                    <p id="player-track-artist" class="text-zinc-500 text-xs truncate">Kery James</p>
                 </div>
             </div>
 
@@ -531,16 +349,74 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
     <script src="js/data.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/app.js"></script>
     <script src="js/pwa.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('latest-grid');
+
+            async function loadLatest() {
+                let songs = [];
+                let artistMap = {};
+
+                if (window.ss_supabase) {
+                    const [songsRes, artistsRes] = await Promise.all([
+                        window.ss_supabase.from('songs').select('*').order('year', { ascending: false }).limit(3),
+                        window.ss_supabase.from('artists').select('id, name')
+                    ]);
+
+                    if (!songsRes.error) songs = songsRes.data;
+                    if (!artistsRes.error) {
+                        artistsRes.data.forEach(a => artistMap[a.id] = a.name);
+                    }
+                }
+
+                if (songs.length === 0 && typeof SONGS_DATA !== 'undefined') {
+                    songs = SONGS_DATA.slice(0, 3);
+                    songs.forEach(s => artistMap[s.artistId] = s.artist);
+                }
+
+                renderLatest(songs, artistMap);
+            }
+
+            function renderLatest(songs, artists) {
+                if (!grid) return;
+                grid.innerHTML = songs.map(song => {
+                    const artistName = artists[song.artist_id] || artists[song.artistId] || 'Artiste inconnu';
+                    return `
+                        <article onclick="window.location.href='single-song.html?id=${song.id}'"
+                            class="chapter-card visible group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
+                            <div class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                                <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                                <div class="absolute bottom-3 left-3 flex gap-2">
+                                    <span class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">${song.genre}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                                <span>${artistName}</span><span>•</span><span>${song.year}</span>
+                            </div>
+                            <h3 class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                                ${song.title}</h3>
+                            <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">${song.description}</p>
+                        </article>
+                    `;
+                }).join('');
+            }
+
+            await loadLatest();
+        });
+    </script>
+
 </body>
 
 </html>
-
-
