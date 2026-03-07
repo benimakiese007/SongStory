@@ -3,10 +3,15 @@
  * Stratégie : Cache First pour les assets, Network First pour les pages HTML
  */
 
-const CACHE_NAME = 'songstory-v1';
+const CACHE_NAME = 'songstory-v2';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
+    '/icons/icon-192.png',
+    '/icons/icon-512.png',
+    '/icons/apple-touch-icon.png',
+    '/icons/favicon-32x32.png',
+    '/icons/favicon-16x16.png',
     '/library.html',
     '/artists.html',
     '/about.html',
