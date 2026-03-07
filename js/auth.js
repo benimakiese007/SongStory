@@ -13,8 +13,13 @@ const SongStoryAuth = (() => {
     };
 
     // ─── Compte utilisateur ───────────────────────────────
-    function login(name, email) {
-        const user = { name: name.trim(), email: email.trim(), joinedAt: new Date().toISOString() };
+    function login(name, email, avatarUrl = null) {
+        const user = {
+            name: name.trim(),
+            email: email.trim(),
+            avatarUrl: avatarUrl,
+            joinedAt: new Date().toISOString()
+        };
         localStorage.setItem(KEYS.USER, JSON.stringify(user));
         _dispatchAuthChange();
         return user;
@@ -134,19 +139,46 @@ const SongStoryAuth = (() => {
         const navActions = document.querySelector('.nav-auth-slot');
         if (!navActions) return;
 
-        function render() {
-            const user = getUser();
-            if (user) {
-                const initial = user.name.charAt(0).toUpperCase();
+        async function render() {
+            let pseudo = null;
+            let supaUser = null;
+
+            // Tentative immédiate avec le cache localStorage
+            const localUser = getUser();
+            if (localUser) pseudo = localUser.name;
+
+            // Vérification/Mise à jour avec Supabase (Source de vérité)
+            if (typeof SongStorySupabaseAuth !== 'undefined') {
+                const sessionUser = await SongStorySupabaseAuth.getUser();
+                if (sessionUser) {
+                    supaUser = sessionUser;
+                    pseudo = SongStorySupabaseAuth.getPseudo(supaUser);
+                } else {
+                    // Si Supabase dit qu'on n'est PAS connecté, on nettoie le cache
+                    if (pseudo) {
+                        pseudo = null;
+                        logout(); // Nettoie localStorage.KEYS.USER
+                    }
+                }
+            }
+
+            if (pseudo) {
+                const localUser = getUser();
+                const avatar = supaUser ? SongStorySupabaseAuth.getAvatar(supaUser) : (localUser ? localUser.avatarUrl : null);
+
+                const initials = SongStorySupabaseAuth.getInitials(pseudo);
+                const avatarHtml = avatar
+                    ? `<img src="${avatar}" alt="${pseudo}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(251,191,36,0.3);">`
+                    : `<span class="nav-avatar-initial" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:rgba(251,191,36,0.1);color:#fbbf24;border-radius:50%;font-size:11px;font-weight:600;letter-spacing:-0.5px;">${initials}</span>`;
+
                 navActions.innerHTML = `
-                    <a href="${_basePath()}account.html" class="nav-avatar-btn" title="${user.name}">
-                        <span class="nav-avatar-initial">${initial}</span>
-                        <span class="nav-avatar-name hidden sm:inline">${user.name}</span>
+                    <a href="${_basePath()}account.html" class="nav-avatar-btn group transition-all duration-300" title="${pseudo}" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+                        ${avatarHtml}
                     </a>
                 `;
             } else {
                 navActions.innerHTML = `
-                    <a href="${_basePath()}account.html" class="nav-login-btn">
+                    <a href="${_basePath()}account.html" class="nav-login-btn flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -158,7 +190,12 @@ const SongStoryAuth = (() => {
         }
 
         render();
+        // Listener for future changes
         window.addEventListener('ss:authchange', render);
+
+        // Safety retry in case session takes a bit more time to hydrate on initial load
+        setTimeout(render, 500);
+        setTimeout(render, 1500);
     }
 
     function _basePath() {
@@ -177,5 +214,9 @@ const SongStoryAuth = (() => {
 
 })();
 
-// Auto-init nav quand le DOM est prêt
-document.addEventListener('DOMContentLoaded', () => SongStoryAuth.initNavUI());
+// Auto-init navigation UI for robustness
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => SongStoryAuth.initNavUI());
+} else {
+    SongStoryAuth.initNavUI();
+}

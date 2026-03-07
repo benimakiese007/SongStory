@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Matters - Drake - SongStory</title>
+    <meta name="description"
+        content="Analyse de Family Matters de Drake. La réponse massive de 7 minutes tentant de démanteler l'image de famille de Kendrick Lamar.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                    </div>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <!-- Nav auth slot -->
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-blue-400 font-medium">Diss Track — Beef
+                        2024</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/drake.html"
+                        class="text-xs text-zinc-500 hover:text-blue-400 transition-colors">Voir le profil de Drake
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Family Matters</h1>
+                <p class="text-xl text-zinc-500 font-light">Drake • 3 mai 2024</p>
+                <p class="text-sm text-zinc-600 mt-2">Cible : Kendrick Lamar • 7:36 min • Trois changements de beat</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn"><iconify-icon
+                            icon="solar:eye-linear" width="14"></iconify-icon>Mode Karaoké</button></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You the one that's always talkin' 'bout
+                                the culture</p>
+                            <p class="group-hover:text-white transition-colors">You the one that's always talkin' 'bout
+                                the vulture</p>
+                            <p class="group-hover:text-white transition-colors font-medium">I'm the one that really live
+                                it, you just wrote it</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400 font-medium">You the one
+                                that's always talkin' 'bout the children, you a pedophile too</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Inversion des Accusations</span>
+                            <p>Dans ce morceau massif, Drake tente de retourner toutes les critiques de Kendrick contre
+                                lui. Il l'accuse d'être un hypocrite qui parle de culture alors qu'il vit loin de la
+                                réalité de la rue. L'attaque la plus brutale est le "no u" (miroir) concernant les
+                                accusations de pédophilie, lançant une contre-accusation sans preuves pour semer le
+                                doute.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="120">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You claim you're for the city, but you
+                                live in a mansion</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-blue-400">Why you always
+                                talkin' 'bout the struggle from the hills?</p>
+                            <p class="group-hover:text-white transition-colors">Your girl is stayin' with a bodyguard, I
+                                know the deal</p>
+                            <p class="group-hover:text-white transition-colors">You hit your wife, Kendrick, we know how
+                                you feel</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-blue-400 font-medium block mb-1">Accusations de Violences
+                                Domestiques</span>
+                            <p>Drake lance une accusation extrêmement grave de violences conjugales contre Kendrick
+                                envers sa compagne Whitney Alford. Il suggère que l'image de "sage" et de "moraliste" de
+                                Kendrick est un masque cachant une réalité beaucoup plus sombre. C'est le pivot du
+                                morceau qui vise à détruire l'intégrité morale de son adversaire.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative">
+                    <div class="sticky top-24 space-y-6">
+                        <!-- Placeholder card -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/player.js"></script>
+
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

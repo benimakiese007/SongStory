@@ -35,30 +35,41 @@
         <div id="search-results"></div>
     </div>
 
-    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
+
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
-                        <a href="../library.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html"
-                            class="text-white text-sm border-b-2 border-amber-400 py-1">Artistes</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
-                            propos</a>
+                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
                     </div>
                 </div>
+
+                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors"
-                        aria-label="Recherche">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-label="Menu">
+                    <!-- Nav auth slot -->
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -100,29 +111,39 @@
                         Biographie
                     </h2>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-6">
-                        William Kalubi, alias Damso, est un rappeur belgo-congolais né en 1992. Révélé en 2015, il est
-                        devenu l'une des figures majeures du rap francophone contemporain grâce à son univers sombre,
-                        poétique et introspectif.
+                        Jermaine Lamarr Cole, né en 1985, est un rappeur et producteur américain emblématique de sa
+                        génération. Connu pour son intégrité et sa technique, il a marqué l'histoire avec des albums
+                        comme "2014 Forest Hills Drive".
                     </p>
                     <h3 class="text-sm text-white font-medium mb-2">Influence</h3>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-8">
-                        Damso a réinventé le rap francophone avec une approche cinématographique et des métaphores
-                        complexes qui font de chaque album une œuvre littéraire. Son écriture mêle crudité et poésie
-                        avec une maîtrise rare.
+                        Cole est souvent cité comme l'un des "Big Three" du rap moderne aux côtés de Kendrick Lamar et
+                        Drake. Son influence réside dans sa capacité à rester fidèle aux racines du hip-hop tout en
+                        dominant commercialement.
                     </p>
 
                     <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <a href="../songs/love-yourz.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
-                        <div>
-                            <div class="rec-title">Love Yourz</div>
-                            <div class="rec-artist">2014 • Rap • 2014 Forest Hills Drive</div>
-                        </div>
-                    </a>
+                    <div class="space-y-4">
+                        <a href="../songs/7-minute-drill.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear"
+                                    width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">7 Minute Drill</div>
+                                <div class="rec-artist">2024 • Rap • Beef 2024</div>
+                            </div>
+                        </a>
+                        <a href="../songs/might-delete-later.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear"
+                                    width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Might Delete Later (Retrait)</div>
+                                <div class="rec-artist">2024 • Document • Beef 2024</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <div>
@@ -139,23 +160,18 @@
                             <div class="timeline-year">2009</div>
                             <div class="timeline-event">Signé par Jay-Z sur Roc Nation</div>
                         </div>
-                        <div class="reveal timeline-item">
-                            <div class="timeline-year">2011</div>
-                            <div class="timeline-event">Premier album "Cole World"</div>
-                        </div>
                         <div class="reveal timeline-item highlight">
                             <div class="timeline-year">2014</div>
-                            <div class="timeline-event">"Ipséité" — consécration critique et commerciale. L'album
-                                contient "Macarena".</div>
-                        </div>
-                        <div class="reveal timeline-item">
-                            <div class="timeline-year">2018</div>
-                            <div class="timeline-event">"QALF" — opus conceptuel, exploration de nouveaux territoires
-                                sonores</div>
+                            <div class="timeline-event">"2014 Forest Hills Drive" — consécration critique (Triple
+                                Platine sans featurings).</div>
                         </div>
                         <div class="reveal timeline-item">
                             <div class="timeline-year">2021</div>
-                            <div class="timeline-event">L'album "The Off-Season"</div>
+                            <div class="timeline-event">L'album "The Off-Season" et passage pro en Basket (BAL)</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-event">Sortie et retrait de "7 Minute Drill" au Dreamville Fest.</div>
                         </div>
                     </div>
                 </div>
@@ -172,8 +188,9 @@
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
+
+    <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 </body>
 
 </html>
-

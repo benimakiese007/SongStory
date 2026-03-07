@@ -252,8 +252,8 @@
         <div id="auth-section-login" class="hidden">
             <div class="text-center mb-12">
                 <div
-                    class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 mb-6">
-                    <iconify-icon icon="solar:user-linear" class="text-amber-400" width="28"></iconify-icon>
+                    class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-amber-500/10 border border-amber-500/20 mb-6">
+                    <iconify-icon icon="solar:music-note-2-linear" class="text-amber-400" width="36"></iconify-icon>
                 </div>
                 <h1 class="text-3xl text-white font-medium tracking-tighter mb-3">Rejoindre SongStory</h1>
                 <p class="text-zinc-500 max-w-sm mx-auto text-sm">Sauvegardez vos analyses préférées, créez des
@@ -261,37 +261,41 @@
             </div>
 
             <div class="auth-form">
-                <!-- Tabs login/register -->
-                <div class="flex gap-2 p-1 bg-zinc-900/50 rounded-xl border border-white/5 mb-8">
-                    <button id="tab-login" class="account-tab active flex-1 text-center"
-                        onclick="switchAuthTab('login')">Se connecter</button>
-                    <button id="tab-register" class="account-tab flex-1 text-center"
-                        onclick="switchAuthTab('register')">Créer un compte</button>
-                </div>
-
-                <!-- Login form -->
-                <div id="login-form" class="flex flex-col gap-4">
-                    <div>
-                        <label
-                            class="block text-xs text-zinc-500 mb-1.5 font-medium uppercase tracking-widest">Pseudo</label>
-                        <input id="login-name" type="text" placeholder="Votre pseudo" class="auth-input"
-                            autocomplete="username">
-                    </div>
-                    <div>
-                        <label
-                            class="block text-xs text-zinc-500 mb-1.5 font-medium uppercase tracking-widest">Email</label>
-                        <input id="login-email" type="email" placeholder="votre@email.com" class="auth-input"
-                            autocomplete="email">
-                    </div>
-                    <p class="text-xs text-zinc-600">Pas de vrai mot de passe requis — vos données sont stockées
-                        localement sur cet appareil.</p>
-                    <button class="auth-btn" onclick="doLogin()">
-                        <iconify-icon icon="solar:login-2-linear" width="16"
-                            style="vertical-align:-2px;margin-right:6px;"></iconify-icon>
-                        Entrer dans SongStory
-                    </button>
-                    <p id="login-error" class="text-red-400 text-xs text-center hidden"></p>
-                </div>
+                <!-- Bouton Google -->
+                <button id="google-signin-btn" onclick="doGoogleLogin()" style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 12px;
+                    width: 100%;
+                    background: #fff;
+                    color: #1f1f1f;
+                    border: none;
+                    border-radius: 12px;
+                    padding: 14px 20px;
+                    font-size: 15px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    font-family: 'Inter', sans-serif;
+                    transition: box-shadow 0.2s, transform 0.1s;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                " onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-1px)'"
+                    onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.3)';this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                        <path fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                        <path fill="#FBBC05"
+                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                        <path fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                    </svg>
+                    Continuer avec Google
+                </button>
+                <p id="google-error" class="text-red-400 text-xs text-center mt-4 hidden"></p>
+                <p class="text-zinc-700 text-xs text-center mt-6">En vous connectant, vous acceptez nos conditions
+                    d'utilisation.</p>
             </div>
         </div>
 
@@ -299,7 +303,9 @@
         <div id="auth-section-profile" class="hidden">
             <!-- Header profil -->
             <div class="flex items-center gap-5 mb-10 pb-10 border-b border-white/5">
-                <div class="user-avatar" id="profile-avatar">A</div>
+                <div id="profile-avatar"
+                    style="width:64px;height:64px;border-radius:50%;overflow:hidden;background:rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:#fbbf24;flex-shrink:0;">
+                    A</div>
                 <div class="flex-1 min-w-0">
                     <h1 id="profile-name" class="text-2xl text-white font-medium tracking-tight"></h1>
                     <p id="profile-email" class="text-sm text-zinc-500 mt-0.5"></p>
@@ -363,42 +369,48 @@
         <p class="text-xs text-zinc-600">© 2025 SongStory.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+
     <script src="js/data.js"></script>
+    <script src="js/supabase-auth.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
-    <script src="js/router.js"></script><script src="js/app.js"></script>
+    <script src="js/router.js"></script>
+
     <script src="js/pwa.js"></script>
     <script>
-        function switchAuthTab(tab) {
-            document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-            document.getElementById('tab-register').classList.toggle('active', tab !== 'login');
+        // ── Utilitaires
+        function showErr(el, msg) { if (!el) return; el.textContent = msg; el.classList.remove('hidden'); }
+        function hideErr(el) { if (!el) return; el.classList.add('hidden'); }
+
+        // ── Connexion Google
+        async function doGoogleLogin() {
+            const btn = document.getElementById('google-signin-btn');
+            const err = document.getElementById('google-error');
+            hideErr(err);
+            if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+
+            const { error } = await SongStorySupabaseAuth.signInWithGoogle();
+
+            if (error) {
+                if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+                showErr(err, error.message || 'Erreur lors de la connexion Google.');
+            }
+            // Si pas d'erreur, Google redirigera la page via OAuth
         }
 
-        function doLogin() {
-            const name = document.getElementById('login-name').value.trim();
-            const email = document.getElementById('login-email').value.trim();
-            const err = document.getElementById('login-error');
-            if (!name) { showErr(err, 'Veuillez entrer un pseudo.'); return; }
-            if (!email || !email.includes('@')) { showErr(err, 'Veuillez entrer un email valide.'); return; }
-            err.classList.add('hidden');
-            SongStoryAuth.login(name, email);
+        // ── Déconnexion
+        async function doLogout() {
+            await SongStorySupabaseAuth.signOut();
             renderPage();
         }
 
-        function doLogout() {
-            SongStoryAuth.logout();
-            renderPage();
-        }
-
-        function showErr(el, msg) {
-            el.textContent = msg;
-            el.classList.remove('hidden');
-        }
-
+        // ── Onglets profil
         function switchTab(name) {
-            document.querySelectorAll('.account-tab').forEach((t, i) => {
+            document.querySelectorAll('#auth-section-profile .account-tab').forEach((t, i) => {
                 const tabs = ['favorites', 'playlists', 'notes'];
                 t.classList.toggle('active', tabs[i] === name);
             });
@@ -406,124 +418,83 @@
             document.getElementById('tab-' + name)?.classList.add('active');
         }
 
-        function renderPage() {
+        // ── Rendu page
+        async function renderPage() {
             const loginSection = document.getElementById('auth-section-login');
             const profileSection = document.getElementById('auth-section-profile');
+            const supaUser = await SongStorySupabaseAuth.getUser();
 
-            if (SongStoryAuth.isLoggedIn()) {
+            if (supaUser) {
                 loginSection.classList.add('hidden');
                 profileSection.classList.remove('hidden');
-                const user = SongStoryAuth.getUser();
-                document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
-                document.getElementById('profile-name').textContent = user.name;
-                document.getElementById('profile-email').textContent = user.email;
-                const d = new Date(user.joinedAt);
+
+                const pseudo = SongStorySupabaseAuth.getPseudo(supaUser);
+                const avatar = SongStorySupabaseAuth.getAvatar(supaUser);
+                const avatarEl = document.getElementById('profile-avatar');
+
+                if (avatar) {
+                    avatarEl.innerHTML = `<img src="${avatar}" alt="${pseudo}" style="width:100%;height:100%;object-fit:cover;">`;
+                } else {
+                    avatarEl.textContent = SongStorySupabaseAuth.getInitials(pseudo);
+                }
+
+                document.getElementById('profile-name').textContent = pseudo;
+                document.getElementById('profile-email').textContent = supaUser.email;
+
+                const d = new Date(supaUser.created_at);
                 document.getElementById('profile-joined').textContent = `Membre depuis le ${d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
-                renderFavorites();
-                renderPlaylists();
-                renderNotes();
+
+                renderFavorites(); renderPlaylists(); renderNotes();
             } else {
                 loginSection.classList.remove('hidden');
                 profileSection.classList.add('hidden');
             }
         }
 
+        // ── Favoris
         function renderFavorites() {
             const container = document.getElementById('favorites-list');
             const favIds = SongStoryAuth.getFavorites();
-            if (!favIds.length) {
-                container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucun favori pour l'instant. Cliquez sur ❤️ sur une page chanson.</p>`;
-                return;
-            }
+            if (!favIds.length) { container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucun favori pour l'instant. Cliquez sur ❤️ sur une page chanson.</p>`; return; }
             const songs = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA : [];
             container.innerHTML = favIds.map(id => {
                 const s = songs.find(s => s.id === id);
                 if (!s) return '';
-                return `<a href="${s.url}" class="fav-card">
-                    <div class="fav-card-icon"><iconify-icon icon="solar:music-note-linear" width="18"></iconify-icon></div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-white text-sm font-medium truncate">${s.title}</div>
-                        <div class="text-zinc-500 text-xs mt-0.5">${s.artist} · ${s.year}</div>
-                    </div>
-                    <button onclick="event.preventDefault();event.stopPropagation();removeFav('${id}')" class="text-zinc-600 hover:text-red-400 transition-colors">
-                        <iconify-icon icon="solar:heart-bold" width="16"></iconify-icon>
-                    </button>
-                </a>`;
+                return `<a href="${s.url}" class="fav-card"><div class="fav-card-icon"><iconify-icon icon="solar:music-note-linear" width="18"></iconify-icon></div><div class="flex-1 min-w-0"><div class="text-white text-sm font-medium truncate">${s.title}</div><div class="text-zinc-500 text-xs mt-0.5">${s.artist} · ${s.year}</div></div><button onclick="event.preventDefault();event.stopPropagation();removeFav('${id}')" class="text-zinc-600 hover:text-red-400 transition-colors"><iconify-icon icon="solar:heart-bold" width="16"></iconify-icon></button></a>`;
             }).join('');
         }
+        function removeFav(id) { SongStoryAuth.toggleFavorite(id); renderFavorites(); }
 
-        function removeFav(id) {
-            SongStoryAuth.toggleFavorite(id);
-            renderFavorites();
-        }
-
+        // ── Playlists
         function renderPlaylists() {
             const container = document.getElementById('playlists-list');
             const playlists = SongStoryAuth.getPlaylists();
             const songs = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA : [];
-            if (!playlists.length) {
-                container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucune playlist. Créez-en une ci-dessus !</p>`;
-                return;
-            }
-            container.innerHTML = playlists.map(pl => `
-                <div class="playlist-item">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-white text-sm font-medium">${pl.name}</span>
-                        <div class="flex items-center gap-3">
-                            <span class="text-zinc-600 text-xs">${pl.songs.length} morceau${pl.songs.length > 1 ? 'x' : ''}</span>
-                            <button onclick="deletePlaylist('${pl.id}')" class="text-zinc-600 hover:text-red-400 transition-colors text-xs">Supprimer</button>
-                        </div>
-                    </div>
-                    ${pl.songs.length ? `<div class="flex flex-col gap-1.5">
-                        ${pl.songs.map(sid => {
-                const s = songs.find(s => s.id === sid);
-                return s ? `<a href="${s.url}" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">↗ ${s.title} — ${s.artist}</a>` : '';
-            }).join('')}
-                    </div>` : ''}
-                </div>
-            `).join('');
+            if (!playlists.length) { container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucune playlist. Créez-en une ci-dessus !</p>`; return; }
+            container.innerHTML = playlists.map(pl => `<div class="playlist-item"><div class="flex items-center justify-between mb-2"><span class="text-white text-sm font-medium">${pl.name}</span><div class="flex items-center gap-3"><span class="text-zinc-600 text-xs">${pl.songs.length} morceau${pl.songs.length > 1 ? 'x' : ''}</span><button onclick="deletePlaylist('${pl.id}')" class="text-zinc-600 hover:text-red-400 transition-colors text-xs">Supprimer</button></div></div>${pl.songs.length ? '<div class="flex flex-col gap-1.5">' + pl.songs.map(sid => { const s = songs.find(s => s.id === sid); return s ? `<a href="${s.url}" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">↗ ${s.title} — ${s.artist}</a>` : ''; }).join('') + '</div>' : ''}</div>`).join('');
         }
+        function createNewPlaylist() { const input = document.getElementById('new-playlist-name'); if (!input.value.trim()) return; SongStoryAuth.createPlaylist(input.value); input.value = ''; renderPlaylists(); }
+        function deletePlaylist(id) { SongStoryAuth.deletePlaylist(id); renderPlaylists(); }
 
-        function createNewPlaylist() {
-            const input = document.getElementById('new-playlist-name');
-            if (!input.value.trim()) return;
-            SongStoryAuth.createPlaylist(input.value);
-            input.value = '';
-            renderPlaylists();
-        }
-
-        function deletePlaylist(id) {
-            SongStoryAuth.deletePlaylist(id);
-            renderPlaylists();
-        }
-
+        // ── Notes
         function renderNotes() {
             const container = document.getElementById('notes-list');
             const allNotes = SongStoryAuth.getAllNotes();
             const songs = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA : [];
-            const entries = Object.entries(allNotes).flatMap(([songId, blocks]) =>
-                Object.entries(blocks).map(([blockId, note]) => ({ songId, blockId, note }))
-            );
-            if (!entries.length) {
-                container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucune note. Connectez-vous sur une page chanson pour annoter des paroles.</p>`;
-                return;
-            }
-            container.innerHTML = entries.map(e => {
-                const song = songs.find(s => s.id === e.songId);
-                const d = new Date(e.note.savedAt);
-                return `<div class="note-item">
-                    <div class="flex items-center justify-between mb-2">
-                        <a href="${song?.url || '#'}" class="text-amber-400 text-xs hover:text-amber-300 transition-colors">${song?.title || e.songId}</a>
-                        <span class="text-zinc-600 text-xs">${d.toLocaleDateString('fr-FR')}</span>
-                    </div>
-                    <p class="text-sm text-zinc-300 leading-relaxed">${e.note.text}</p>
-                </div>`;
-            }).join('');
+            const entries = Object.entries(allNotes).flatMap(([songId, blocks]) => Object.entries(blocks).map(([blockId, note]) => ({ songId, blockId, note })));
+            if (!entries.length) { container.innerHTML = `<p class="text-zinc-600 text-sm text-center py-8">Aucune note. Annotez des paroles sur une page chanson.</p>`; return; }
+            container.innerHTML = entries.map(e => { const song = songs.find(s => s.id === e.songId); const d = new Date(e.note.savedAt); return `<div class="note-item"><div class="flex items-center justify-between mb-2"><a href="${song?.url || '#'}" class="text-amber-400 text-xs hover:text-amber-300 transition-colors">${song?.title || e.songId}</a><span class="text-zinc-600 text-xs">${d.toLocaleDateString('fr-FR')}</span></div><p class="text-sm text-zinc-300 leading-relaxed">${e.note.text}</p></div>`; }).join('');
         }
 
+        // ── Spin animation
+        const _s = document.createElement('style');
+        _s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+        document.head.appendChild(_s);
+
         document.addEventListener('DOMContentLoaded', renderPage);
+        window.addEventListener('ss:authchange', renderPage);
     </script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
-

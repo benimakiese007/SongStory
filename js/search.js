@@ -32,6 +32,9 @@ const SongStorySearch = {
             if (!this.searchOverlay) return;
             this.searchOverlay.classList.add('open');
             document.body.style.overflow = 'hidden';
+            if (this.searchOverlayInput && !this.searchOverlayInput.value) {
+                this.renderThemes();
+            }
             setTimeout(() => this.searchOverlayInput?.focus(), 50);
         };
 
@@ -64,8 +67,13 @@ const SongStorySearch = {
     initFuse() {
         if (typeof SONGS_DATA !== 'undefined' && !this.fuseSongs) {
             this.fuseSongs = new Fuse(SONGS_DATA, {
-                keys: ['title', 'artist', 'tags'],
-                threshold: 0.4,
+                keys: [
+                    { name: 'title', weight: 0.7 },
+                    { name: 'artist', weight: 0.5 },
+                    { name: 'tags', weight: 0.6 },
+                    { name: 'description', weight: 0.4 }
+                ],
+                threshold: 0.35,
                 includeMatches: true,
                 minMatchCharLength: 2,
             });
@@ -80,9 +88,22 @@ const SongStorySearch = {
         }
     },
 
+    renderThemes() {
+        const themes = ['Mélancolie', 'Politique', 'Espoir', 'Exil', 'Amour', 'Société'];
+        if (!this.searchResults) return;
+        this.searchResults.innerHTML = `
+            <div class="search-result-group">
+                <h4>Explorer par thèmes</h4>
+                <div class="flex flex-wrap gap-2 mt-4">
+                    ${themes.map(t => `<button class="theme-pill bg-zinc-900 border border-white/10 text-xs px-3 py-1.5 rounded-full hover:border-amber-400/50 transition-colors" onclick="const input = document.getElementById('search-overlay-input'); input.value='${t}'; input.dispatchEvent(new Event('input'))">${t}</button>`).join('')}
+                </div>
+            </div>
+        `;
+    },
+
     async renderResults(query) {
         if (!this.searchResults || !query.trim()) {
-            if (this.searchResults) this.searchResults.innerHTML = '';
+            this.renderThemes();
             return;
         }
 
@@ -94,16 +115,13 @@ const SongStorySearch = {
         let artistResults = [];
 
         if (window.ss_supabase) {
-            // Supabase Search
             const [{ data: sData }, { data: aData }] = await Promise.all([
                 window.ss_supabase.from('songs').select('*').ilike('title', `%${query}%`),
                 window.ss_supabase.from('artists').select('*').ilike('name', `%${query}%`)
             ]);
-
             songResults = (sData || []).map(item => ({ item }));
             artistResults = (aData || []).map(item => ({ item }));
         } else {
-            // Local fallback with Fuse.js
             this.initFuse();
             songResults = this.fuseSongs ? this.fuseSongs.search(query) : [];
             artistResults = this.fuseArtists ? this.fuseArtists.search(query) : [];
@@ -164,7 +182,6 @@ const SongStorySearch = {
                 const tag = pill.dataset.filter;
                 pills.forEach(p => p.classList.remove('active'));
                 pill.classList.add('active');
-
                 cards.forEach(card => {
                     const tags = (card.dataset.tags || '').split(',');
                     const visible = tag === 'all' || tags.includes(tag);

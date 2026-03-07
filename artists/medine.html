@@ -35,30 +35,41 @@
         <div id="search-results"></div>
     </div>
 
-    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
+
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
-                        <a href="../library.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html"
-                            class="text-white text-sm border-b-2 border-amber-400 py-1">Artistes</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
-                            propos</a>
+                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
                     </div>
                 </div>
+
+                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors"
-                        aria-label="Recherche">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-label="Menu">
+                    <!-- Nav auth slot -->
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -158,6 +169,8 @@
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
+
+    <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 </body>
 

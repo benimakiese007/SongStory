@@ -482,17 +482,96 @@ body.karaoke-mode .story-block:focus-within .analysis-content-visible {
 }
 
 .analysis-content-visible {
-    opacity: 1;
-    max-height: 200px;
-    overflow: hidden;
-    transition: opacity 0.3s ease, max-height 0.4s ease;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: var(--zinc-400);
+    display: none !important; /* Managed by pop-up bubble instead */
+}
+
+/* ── Apple Music Style Lyrics ────────────────── */
+.relative-lyrics-container {
+    perspective: 1000px;
+    padding-top: 10vh; /* space for scrolling */
+}
+
+.lyric-line {
+    opacity: 0.3;
+    transition: opacity 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: left center;
+    cursor: pointer;
     font-family: 'Inter', sans-serif;
+    padding: 0.1em 0;
+    will-change: opacity, transform;
+}
+
+@media (min-width: 768px) {
+    .lyric-line {
+        font-size: 3rem;
+        line-height: 1.2;
+    }
+}
+
+.lyric-line:hover {
+    opacity: 0.6;
+    color: #fff;
+}
+
+.lyric-line.active-lyric {
+    opacity: 1;
+    color: #fff;
+    transform: scale(1.02);
+    text-shadow: 0 4px 24px rgba(255, 255, 255, 0.15);
+}
+
+/* ── Decrypt Bubble ──────────────────────────── */
+.decrypt-bubble {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(24, 24, 27, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px 24px;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.decrypt-bubble.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.decrypt-bubble .bubble-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--amber-400);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.decrypt-bubble .bubble-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e4e4e7;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.decrypt-bubble .bubble-content p {
+    margin-bottom: 8px;
+}
+.decrypt-bubble .bubble-content p:last-child {
+    margin-bottom: 0;
 }
 
 /* ── Line Comments ───────────────────────────── */

@@ -63,12 +63,65 @@ const SongStoryRenderer = {
         if (wrapper) wrapper.innerHTML = '<div class="py-20 text-center"><h2 class="text-white text-2xl mb-4">Oups !</h2><p>Cette chanson n\'existe pas encore dans notre base.</p><a href="index.html" class="text-amber-400 mt-4 block">Retour à l\'accueil</a></div>';
     },
 
-    applyDynamicTheme() {
-        if (this.currentSong && this.currentSong.themeColor && typeof SongStoryUI !== 'undefined') {
-            SongStoryUI.setAccentColor(this.currentSong.themeColor);
-        } else if (typeof SongStoryUI !== 'undefined') {
-            SongStoryUI.setAccentColor(null); // Reset to default
+    async applyDynamicTheme() {
+        if (!this.currentSong) return;
+
+        let color = this.currentSong.themeColor;
+
+        // If no explicit theme color, try to extract it from the image
+        if (!color && typeof SongStoryUI !== 'undefined') {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            // Use artist thumb as proxy for album art if needed
+            const imgSrc = this.currentSong.image || `Images/artists/${this.currentSong.artistId}.jpg`;
+
+            try {
+                color = await this.extractDominantColor(imgSrc);
+            } catch (e) {
+                console.warn("Could not extract color:", e);
+            }
         }
+
+        if (typeof SongStoryUI !== 'undefined') {
+            SongStoryUI.setAccentColor(color);
+        }
+    },
+
+    async extractDominantColor(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 50; canvas.height = 50; // Downscale for performance
+                ctx.drawImage(img, 0, 0, 50, 50);
+
+                const data = ctx.getImageData(0, 0, 50, 50).data;
+                let r = 0, g = 0, b = 0, count = 0;
+
+                for (let i = 0; i < data.length; i += 4) {
+                    // Skip very dark or very light pixels
+                    const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    if (brightness < 30 || brightness > 220) continue;
+
+                    r += data[i];
+                    g += data[i + 1];
+                    b += data[i + 2];
+                    count++;
+                }
+
+                if (count === 0) return resolve('#fbbf24'); // Default fallback
+
+                r = Math.floor(r / count);
+                g = Math.floor(g / count);
+                b = Math.floor(b / count);
+
+                resolve(`rgb(${r}, ${g}, ${b})`);
+            };
+            img.onerror = reject;
+            img.src = src;
+        });
     },
 
     renderHeader() {
@@ -246,9 +299,10 @@ const SongStoryRenderer = {
             SongStoryUI.initTilt();
         }
 
-        // Re-init Player markers
+        // Re-init Player markers and lyrics
         if (typeof SongStoryPlayer !== 'undefined') {
             SongStoryPlayer.storyBlocks = document.querySelectorAll('.story-block[data-time]');
+            SongStoryPlayer.lyricLines = document.querySelectorAll('.lyric-line[data-time]');
             SongStoryPlayer.renderWaveformMarkers();
         }
     },

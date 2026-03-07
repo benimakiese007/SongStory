@@ -3,7 +3,12 @@
  * Orchestrates module initialization.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // 0. Load Data dynamically from Supabase
+    if (typeof window.loadAppDataFromSupabase === 'function') {
+        await window.loadAppDataFromSupabase();
+    }
+
     // 1. Initialize UI Interactions
     if (typeof SongStoryUI !== 'undefined') {
         SongStoryUI.init();
@@ -22,6 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Initialize SPA Router
     if (typeof SongStoryRouter !== 'undefined') {
         SongStoryRouter.init();
+    }
+
+    // 5. Initialize Authentication Navigation UI
+    if (typeof SongStoryAuth !== 'undefined' && typeof SongStoryAuth.initNavUI === 'function') {
+        SongStoryAuth.initNavUI();
     }
 
     // 4. Analysis Block Highlights (Specific to Song Pages)

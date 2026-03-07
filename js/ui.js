@@ -141,13 +141,38 @@ const SongStoryUI = {
 
         terms.forEach(term => {
             term.addEventListener('mouseenter', (e) => {
-                tooltip.innerHTML = `<span class="term-label">${term.dataset.term || term.textContent}</span>${term.dataset.def || ''}`;
+                tooltip.innerHTML = `<span class="term-label">${term.dataset.term || term.textContent}</span>${term.dataset.def || ''}<div class="text-[10px] text-zinc-500 mt-2 border-t border-white/5 pt-2 flex items-center gap-1"><iconify-icon icon="solar:mouse-circle-linear" width="12"></iconify-icon> Cliquer pour voir tout</div>`;
                 tooltip.classList.add('visible');
                 position(e);
             });
             term.addEventListener('mousemove', position);
             term.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+
+            // New click handler to open the global panel
+            term.addEventListener('click', (e) => {
+                const termText = (term.dataset.term || term.textContent).toLowerCase();
+                this.openGlossaryPanel(termText);
+            });
         });
+    },
+
+    openGlossaryPanel(searchQuery = '') {
+        const fab = document.getElementById('glossary-fab');
+        if (fab) fab.click(); // Trigger the existing open logic
+
+        if (searchQuery) {
+            const searchInput = document.getElementById('glossary-panel-search');
+            if (searchInput) {
+                searchInput.value = searchQuery;
+                searchInput.dispatchEvent(new Event('input'));
+
+                // Scroll to the first match in the panel
+                setTimeout(() => {
+                    const firstMatch = document.querySelector('#glossary-panel-content .mb-4');
+                    if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 350);
+            }
+        }
     },
 
     initGlobalGlossaryPanel() {
@@ -238,44 +263,74 @@ const SongStoryUI = {
         overlay.addEventListener('click', closePanel);
     },
 
-    initComments() {
+    async initComments() {
         const blocks = document.querySelectorAll('.story-block');
-        const SIMULATED = [
-            { author: 'M.B.', text: 'Cette image est tellement forte.' },
-            { author: 'A.L.', text: 'Exactement ce que je ressentais.' },
-            { author: 'T.D.', text: 'Le contraste est saisissant.' },
-            { author: 'C.R.', text: 'Genius level.' }
-        ];
+        const songId = SongStoryRenderer.currentSong?.id;
 
-        blocks.forEach((block, idx) => {
+        blocks.forEach(async (block, idx) => {
             const btn = block.querySelector('.comment-toggle-btn');
             const sec = block.querySelector('.comment-section');
+            const blockTime = block.dataset.time;
             if (!btn || !sec) return;
 
-            const picks = SIMULATED.slice(idx % SIMULATED.length, (idx % SIMULATED.length) + 2);
-            sec.innerHTML = picks.map(c => `
-                <div class="comment-item">
-                    <div class="comment-avatar">${c.author[0]}</div>
-                    <div class="comment-body">
-                        <div class="comment-author">${c.author}</div>
-                        <div class="comment-text">${c.text}</div>
-                    </div>
-                </div>`).join('') + `
-                <div class="comment-input-row">
-                    <input type="text" placeholder="Votre interprétation…">
-                    <button>Envoyer</button>
-                </div>`;
+            // Load comments
+            let comments = [];
+            if (window.ss_supabase) {
+                const { data } = await window.ss_supabase
+                    .from('comments')
+                    .select('*')
+                    .eq('song_id', songId)
+                    .eq('block_time', blockTime)
+                    .order('created_at', { ascending: true });
+                comments = data || [];
+            } else {
+                // Fallback to local simulated data + local storage
+                const localKey = `ss_comments_${songId}_${blockTime}`;
+                comments = JSON.parse(localStorage.getItem(localKey) || '[]');
+            }
 
-            const input = sec.querySelector('input');
-            sec.querySelector('button')?.addEventListener('click', () => {
-                if (!input.value.trim()) return;
-                const div = document.createElement('div');
-                div.className = 'comment-item';
-                div.innerHTML = `<div class="comment-avatar">M</div><div class="comment-body"><div class="comment-author">Vous</div><div class="comment-text">${input.value}</div></div>`;
-                sec.insertBefore(div, sec.querySelector('.comment-input-row'));
-                input.value = '';
-            });
+            const renderComments = () => {
+                sec.innerHTML = comments.map(c => `
+                    <div class="comment-item">
+                        <div class="comment-avatar">${(c.author || 'M')[0]}</div>
+                        <div class="comment-body">
+                            <div class="comment-author">${c.author || 'Utilisateur'}</div>
+                            <div class="comment-text">${c.text}</div>
+                        </div>
+                    </div>`).join('') + `
+                    <div class="comment-input-row">
+                        <input type="text" placeholder="Votre interprétation…">
+                        <button>Envoyer</button>
+                    </div>`;
 
+                const input = sec.querySelector('input');
+                sec.querySelector('button')?.addEventListener('click', async () => {
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const newComment = {
+                        author: 'Moi',
+                        text: text,
+                        song_id: songId,
+                        block_time: blockTime,
+                        created_at: new Date().toISOString()
+                    };
+
+                    if (window.ss_supabase) {
+                        await window.ss_supabase.from('comments').insert([newComment]);
+                    } else {
+                        const localKey = `ss_comments_${songId}_${blockTime}`;
+                        const localComments = JSON.parse(localStorage.getItem(localKey) || '[]');
+                        localComments.push(newComment);
+                        localStorage.setItem(localKey, JSON.stringify(localComments));
+                    }
+
+                    comments.push(newComment);
+                    renderComments();
+                });
+            };
+
+            renderComments();
             btn.addEventListener('click', (e) => { e.stopPropagation(); sec.classList.toggle('open'); });
         });
     },
@@ -285,32 +340,73 @@ const SongStoryUI = {
         const canvas = document.getElementById('share-canvas-preview');
         if (!modal || !canvas) return;
 
-        const generate = (quote, song, artist) => {
+        const generate = async (quote, song, artist, imgSrc) => {
             const ctx = canvas.getContext('2d');
-            const W = 1080, H = 566;
+            const W = 1080, H = 1350; // Vertical format for Stories
             canvas.width = W; canvas.height = H;
-            const grad = ctx.createLinearGradient(0, 0, W, H);
-            grad.addColorStop(0, '#09090b'); grad.addColorStop(1, '#18181b');
-            ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-            ctx.fillStyle = '#fbbf24'; ctx.fillRect(60, H / 2 - 50, 3, 100);
-            ctx.fillStyle = '#fff'; ctx.font = '500 32px Inter, sans-serif';
 
-            let words = quote.split(' '), line = '', lines = [], maxW = W - 180;
+            // 1. Draw Background Image (Blurred)
+            if (imgSrc) {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                await new Promise(r => { img.onload = r; img.src = imgSrc; });
+
+                // Draw and blur (simple stack blur-like effect)
+                ctx.filter = 'blur(40px) brightness(0.4)';
+                ctx.drawImage(img, -100, -100, W + 200, H + 200);
+                ctx.filter = 'none';
+            } else {
+                const grad = ctx.createLinearGradient(0, 0, W, H);
+                grad.addColorStop(0, '#09090b'); grad.addColorStop(1, '#18181b');
+                ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+            }
+
+            // 2. Glassmorphic Overlay
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.roundRect(80, 80, W - 160, H - 160, 40);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 3. Brand Watermark
+            ctx.fillStyle = 'rgba(251, 191, 36, 0.8)';
+            ctx.font = 'bold 32px Inter';
+            ctx.fillText('SONGSTORY.', 140, 160);
+
+            // 4. Quote Text
+            ctx.fillStyle = '#fff';
+            ctx.font = 'italic 500 56px Inter';
+
+            let words = quote.split(' '), line = '', lines = [], maxW = W - 280;
             words.forEach(w => {
                 if (ctx.measureText(line + w).width > maxW) { lines.push(line); line = w + ' '; }
                 else line += w + ' ';
             });
             lines.push(line);
-            lines.forEach((l, i) => ctx.fillText(l.trim(), 80, (H / 2 - (lines.length * 22)) + i * 44));
 
-            ctx.font = '400 18px Inter'; ctx.fillStyle = '#fbbf24';
-            ctx.fillText(`${song} — ${artist}`, 80, H - 72);
+            const startY = H / 2 - (lines.length * 40);
+            lines.forEach((l, i) => {
+                ctx.fillText(l.trim(), 140, startY + i * 80);
+            });
+
+            // 5. Song Info
+            ctx.font = '600 36px Inter';
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillText(song, 140, H - 220);
+            ctx.font = '400 28px Inter';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fillText(artist, 140, H - 180);
         };
 
         document.querySelectorAll('.share-quote-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const b = btn.closest('.story-block');
-                generate(b?.querySelector('.lyrics-text')?.textContent || '', document.querySelector('h1')?.textContent || '', document.querySelector('.text-zinc-500')?.textContent || '');
+                const songTitle = document.getElementById('song-title')?.textContent || 'Song';
+                const artistName = document.getElementById('song-meta')?.textContent.split('•')[0].trim() || 'Artist';
+                const imgSrc = SongStoryRenderer.currentSong?.image || `Images/artists/${SongStoryRenderer.currentSong?.artistId}.jpg`;
+
+                await generate(b?.querySelector('.lyrics-text')?.textContent || '', songTitle, artistName, imgSrc);
                 modal.classList.add('open');
             });
         });
@@ -339,14 +435,38 @@ const SongStoryUI = {
     },
 
     setAccentColor(color) {
+        const root = document.documentElement;
         if (!color) {
-            document.documentElement.style.removeProperty('--amber-400');
-            document.documentElement.style.removeProperty('--amber-500');
+            root.style.removeProperty('--amber-400');
+            root.style.removeProperty('--amber-500');
             return;
         }
-        document.documentElement.style.setProperty('--amber-400', color);
-        // Generate a slightly darker version for gradients/hovers if needed
-        document.documentElement.style.setProperty('--amber-500', color);
+
+        // Apply provided color
+        root.style.setProperty('--amber-400', color);
+
+        // Use a temporary div to get RGB values if color is in another format
+        const temp = document.createElement('div');
+        temp.style.color = color;
+        document.body.appendChild(temp);
+        const rgb = window.getComputedStyle(temp).color;
+        document.body.removeChild(temp);
+
+        // Set amber-500 as a slightly darker/more opaque version for consistent UI
+        root.style.setProperty('--amber-500', rgb);
+
+        // Inject a dynamic style for specific overrides if needed
+        let dynamicStyle = document.getElementById('dynamic-accent-style');
+        if (!dynamicStyle) {
+            dynamicStyle = document.createElement('style');
+            dynamicStyle.id = 'dynamic-accent-style';
+            document.head.appendChild(dynamicStyle);
+        }
+        dynamicStyle.textContent = `
+            ::selection { background-color: ${color}; color: #000; }
+            .active-lyric { text-shadow: 0 0 30px ${color}; }
+            .fav-toggle-btn.text-amber-500 { color: ${color} !important; }
+        `;
     },
 
     initTOC() {

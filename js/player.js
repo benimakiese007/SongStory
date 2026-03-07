@@ -136,7 +136,7 @@ const SongStoryPlayer = {
             const currentTime = this.audio.currentTime;
             if (this.currentTimeEl) this.currentTimeEl.textContent = this.formatTime(currentTime);
 
-            // Highlight current block and line
+            // Highlight current block
             let activeBlock = null;
             this.storyBlocks.forEach(block => {
                 const t = parseFloat(block.dataset.time);
@@ -145,14 +145,38 @@ const SongStoryPlayer = {
                 }
                 block.classList.remove('active-story-block');
             });
-
             if (activeBlock) {
                 activeBlock.classList.add('active-story-block');
-                const lyricsText = activeBlock.querySelector('.lyrics-text');
-                if (lyricsText && !lyricsText.classList.contains('text-white')) {
-                    this.storyBlocks.forEach(b => b.querySelector('.lyrics-text')?.classList.remove('text-white', 'font-medium'));
-                    lyricsText.classList.add('text-white', 'font-medium');
+            }
+
+            // Highlight current precise line
+            let activeLine = null;
+            let activeLineChanged = false;
+            this.lyricLines.forEach(line => {
+                const t = parseFloat(line.dataset.time);
+                if (currentTime >= t) {
+                    activeLine = line;
                 }
+            });
+
+            this.lyricLines.forEach(line => {
+                if (line === activeLine) {
+                    if (!line.classList.contains('active-lyric')) {
+                        line.classList.add('active-lyric');
+                        activeLineChanged = true;
+                    }
+                } else {
+                    line.classList.remove('active-lyric');
+                }
+            });
+
+            if (activeLineChanged && activeLine) {
+                // Smooth scroll to the active line (Apple Music style)
+                activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                this.updateDecryptBubble(activeLine);
+            } else if (!activeLine) {
+                const bubble = document.getElementById('decrypt-bubble');
+                if (bubble) bubble.classList.remove('visible');
             }
 
             // Optional: smoother scroll to active block if needed
@@ -208,11 +232,16 @@ const SongStoryPlayer = {
         const karaokeBtn = document.getElementById('karaoke-toggle');
         if (karaokeBtn) {
             karaokeBtn.addEventListener('click', () => {
-                const isActive = document.body.classList.toggle('karaoke-mode');
-                karaokeBtn.classList.toggle('active', isActive);
-                const icon = isActive ? 'solar:eye-closed-linear' : 'solar:eye-linear';
-                const label = isActive ? 'Analyses masquées' : 'Mode Karaoké';
-                karaokeBtn.innerHTML = `<iconify-icon icon="${icon}" width="14"></iconify-icon>${label}`;
+                const isKaraoke = document.body.classList.toggle('karaoke-mode'); // true = lyrics only
+                karaokeBtn.classList.toggle('active', !isKaraoke);
+
+                // If karaoke-mode is active, we are HIDING decryptions, so the button should say "SHOW"
+                const icon = isKaraoke ? 'solar:eye-linear' : 'solar:eye-closed-linear';
+                const label = isKaraoke ? 'Afficher les Décryptages' : 'Masquer les Décryptages';
+                karaokeBtn.innerHTML = `<iconify-icon icon="${icon}" width="14"></iconify-icon><span>${label}</span>`;
+
+                // Immediately update bubble visibility
+                this.updateDecryptBubble();
             });
         }
     },

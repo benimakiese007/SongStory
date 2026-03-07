@@ -56,39 +56,32 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-// Fetch — stratégie hybride
+// Fetch — stratégie Stale-While-Revalidate
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Ignorer les requêtes non-GET et les extensions tierces
     if (request.method !== 'GET') return;
     if (!url.protocol.startsWith('http')) return;
 
-    // Pour les pages HTML → Network First (contenu frais si disponible, sinon cache)
-    if (request.headers.get('accept')?.includes('text/html')) {
-        event.respondWith(
-            fetch(request)
-                .then((response) => {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
-                    return response;
-                })
-                .catch(() => caches.match(request).then(r => r || caches.match('/index.html')))
-        );
-        return;
-    }
-
-    // Pour les assets CSS/JS/fonts → Cache First (performance)
+    // Specially handle Supabase API if needed, or just standard navigation
     event.respondWith(
-        caches.match(request).then((cached) => {
-            if (cached) return cached;
-            return fetch(request).then((response) => {
-                if (response.ok) {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
-                }
-                return response;
+        caches.open(CACHE_NAME).then((cache) => {
+            return cache.match(request).then((cachedResponse) => {
+                const fetchPromise = fetch(request).then((networkResponse) => {
+                    if (networkResponse.ok) {
+                        cache.put(request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                }).catch(() => {
+                    // If network fails and no cache, return offline page or index
+                    if (request.headers.get('accept')?.includes('text/html')) {
+                        return cache.match('/index.html');
+                    }
+                });
+
+                // Return cached response immediately if available, otherwise wait for network
+                return cachedResponse || fetchPromise;
             });
         })
     );
