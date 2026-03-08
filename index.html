@@ -235,72 +235,8 @@
         </section>
     </main>
 
-    <!-- Sticky Waveform Player -->
-    <div
-        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <!-- Audio Element -->
-            <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-                preload="metadata"></audio>
-
-            <!-- Info -->
-            <div class="flex items-center gap-3 min-w-0 w-1/4">
-                <div
-                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
-                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
-                </div>
-                <div class="hidden sm:block min-w-0">
-                    <p id="player-track-name" class="text-white text-sm font-medium truncate">Lettre à la République</p>
-                    <p id="player-track-artist" class="text-zinc-500 text-xs truncate">Kery James</p>
-                </div>
-            </div>
-
-            <!-- Controls + Waveform -->
-            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
-                <div class="flex items-center gap-4">
-                    <button id="play-pause-btn" aria-label="Lecture / Pause"
-                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400">
-                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
-                    </button>
-                </div>
-                <!-- Waveform replaces the flat progress bar -->
-                <div class="flex items-center gap-2 w-full max-w-2xl">
-                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
-                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression du morceau"
-                        tabindex="0"></div>
-                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
-                </div>
-            </div>
-
-            <!-- Volume -->
-            <div class="flex items-center justify-end gap-3 w-1/4">
-                <div class="hidden md:flex items-center gap-2 w-28">
-                    <button id="mute-btn" aria-label="Muet / Son"
-                        class="text-zinc-500 hover:text-white transition-colors focus:outline-none focus:text-amber-400">
-                        <iconify-icon icon="solar:volume-loud-linear" width="18"></iconify-icon>
-                    </button>
-                    <div id="volume-container"
-                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
-                        aria-label="Volume" tabindex="0">
-                        <div id="volume-fill"
-                            class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
-                        </div>
-                        <div id="volume-thumb"
-                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left:100%"></div>
-                    </div>
-                </div>
-                <button
-                    class="text-zinc-500 hover:text-white transition-colors text-xs hidden sm:flex items-center gap-1"
-                    title="Raccourcis: Espace=pause, ←→=seek, ↑↓=volume, M=muet">
-                    <iconify-icon icon="solar:keyboard-linear" width="16"></iconify-icon>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
-    <footer class="border-t border-white/5 bg-zinc-950 pt-16 pb-32">
+    <footer class="border-t border-white/5 bg-zinc-950 pt-16 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div class="md:col-span-2">
@@ -354,14 +290,14 @@
     <script src="js/supabase-client.js"></script>
     <script src="js/data.js"></script>
     <script src="js/seo.js"></script>
-    
+
     <script src="js/supabase-auth.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
     <script src="js/router.js"></script>
-    
+
     <script src="js/pwa.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {

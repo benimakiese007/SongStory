@@ -45,7 +45,7 @@
                     icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image</button>
         </div>
     </div>
-        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -56,30 +56,43 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
                     </div>
                 </div>
 
                 <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
                     <!-- Nav auth slot -->
-                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
                             <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -109,203 +122,361 @@
                 </div>
                 <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Meet the Grahams</h1>
                 <p class="text-xl text-zinc-500 font-light">Kendrick Lamar • 3 mai 2024 (3h00 du matin)</p>
-                <p class="text-sm text-zinc-600 mt-2">Cible : La famille Graham (Drake) • 3:53 min • La lettre la plus
+                <p class="text-sm text-zinc-600 mt-2">Cible : La famille Graham (Drake) • 6:32 min • La lettre la plus
                     dévastatrice du beef</p>
-                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn"><iconify-icon
-                            icon="solar:eye-linear" width="14"></iconify-icon>Mode Karaoké</button></div>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div id="narrative-wrapper"
                     class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
 
-                    <!-- Block 1 : Lettre à Adonis -->
+                    <!-- Block 1 : Verse 1 - L'Apologie à Adonis -->
                     <div class="reveal story-block" data-time="0">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
                             <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear Adonis,</p>
-                            <p class="group-hover:text-white transition-colors">I'm sorry that man is your father</p>
-                            <p class="group-hover:text-white transition-colors font-medium text-red-400">Let me explain
-                                some things that he'll probably never</p>
-                            <p class="group-hover:text-white transition-colors">I'm sorry you never got a chance to see
-                                who your dad was</p>
-                            <p class="group-hover:text-white transition-colors">Before the world did, 'cause that's a
-                                terrible loss</p>
+                            <p class="group-hover:text-white transition-colors">I'm sorry that that man is your father,
+                                let me be honest</p>
+                            <p class="group-hover:text-white transition-colors">It takes a man to be a man, your dad is
+                                not responsive</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">I look at him
+                                and wish your grandpa would've wore a condom</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Structure Épistolaire : Lettre à
-                                l'Enfant</span>
-                            <p>Kendrick structure tout ce morceau comme une lettre adressée directement à Adonis Graham,
-                                le fils de Drake. C'est une décision artistique radicale : en passant par l'enfant, il
-                                contourne la défense de Drake et rend l'attaque irrésistiblement personnelle. L'"I'm
-                                sorry" initial n'est pas de la compassion — c'est une technique rhétorique pour
-                                légitimer ce qui suit comme une vérité nécessaire. Le "terrible loss" désigne Drake
-                                lui-même, traité comme quelqu'un de perdu avant même d'avoir commencé.</p>
+                            <span class="text-white font-medium block mb-1">Structure Épistolaire : L'Apologie à
+                                Adonis</span>
+                            <p>Kendrick ouvre ce morceau d'une noirceur absolue en s'adressant directement au fils de
+                                Drake, Adonis. C'est une manœuvre psychologique dévastatrice : en contournant Drake pour
+                                parler à son fils, il déshumanise son adversaire dès la première ligne. L'excuse ("I'm
+                                sorry") n'est pas de la compassion, mais une arme pour souligner l'irresponsabilité
+                                supposée de Drake. L'insulte finale sur le préservatif est d'une violence rare,
+                                suggérant que l'existence même de Drake est une tragédie.</p>
                         </div>
                         <div style="display:flex;gap:8px;margin-top:8px;">
                             <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 4,231</button>
+                                    width="12"></iconify-icon> 12,431</button>
                             <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
                                     width="12"></iconify-icon></button>
                         </div>
                         <div class="comment-section"></div>
                     </div>
 
-                    <!-- Block 2 : Lettre à la mère de Drake -->
-                    <div class="reveal story-block" data-time="60">
+                    <!-- Block 2 : Verse 1 - Mentorat et Identité -->
+                    <div class="reveal story-block" data-time="45">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear Sandi,</p>
-                            <p class="group-hover:text-white transition-colors">Your son is a sick man with sick issues
+                            <p class="group-hover:text-white transition-colors">And you're a good kid that need good
+                                leadership</p>
+                            <p class="group-hover:text-white transition-colors">Let me be your mentor since your daddy
+                                don't teach you shit</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Never
+                                code-switch, whether right or wrong, you're a Black man</p>
+                            <p class="group-hover:text-white transition-colors">Even if it don't benefit your goals, do
+                                some push-ups, get some discipline</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Mentorat et Critique du
+                                "Code-Switching"</span>
+                            <p>Kendrick se positionne comme le mentor qu'Adonis n'aurait pas. Il attaque l'authenticité
+                                de Drake en conseillant à son fils de ne jamais "code-switcher" (adapter son
+                                langage/comportement pour s'intégrer). C'est une critique directe de Drake, souvent
+                                accusé de changer d'accent ou de personnalité selon les tendances. Pour Kendrick, être
+                                un "homme noir" implique une intégrité immuable que Drake aurait sacrifiée pour le
+                                succès commercial.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 8,912</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 3 : Verse 1 - La Critique du Mode de Vie -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Don't cut them corners like your daddy
+                                did, fuck what Ozempic did</p>
+                            <p class="group-hover:text-white transition-colors">Don't pay to play with them Brazilians,
+                                get a gym membership</p>
+                            <p class="group-hover:text-white transition-colors">Don't have a kid to hide a kid to hide
+                                again, be sure</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Lotta
+                                superstars that's real, but your daddy ain't one of them</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Illusion de la Perfection Physique</span>
+                            <p>Ici, Kendrick s'attaque à l'image physique de Drake, mentionnant l'Ozempic (un médicament
+                                détourné pour la perte de poids) et les "Brazilians" (référence aux chirurgies
+                                esthétiques ou aux escortes). Il accuse Drake de choisir la facilité ("cut corners")
+                                plutôt que le travail acharné ("gym membership"). La ligne "hide a kid to hide again"
+                                prépare le terrain pour l'accusation d'un second enfant caché, une thématique centrale
+                                et dévastatrice du morceau.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 15,329</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 4 : Verse 2 - La Lettre à Dennis -->
+                    <div class="reveal story-block" data-time="135">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear Dennis,</p>
+                            <p class="group-hover:text-white transition-colors">You gave birth to a master manipulator
                             </p>
-                            <p class="group-hover:text-white transition-colors font-medium">I think when he lied about
-                                Adonis, he hurt everyone around him</p>
-                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">And I think the
-                                women that's around him, they all know they in a cult</p>
-                            <p class="group-hover:text-white transition-colors">He probably thinks his mommy is the only
-                                woman he ever loved</p>
+                            <p class="group-hover:text-white transition-colors">I'm blamin' you for all his gamblin'
+                                addictions</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Psychopath
+                                intuition, the man that like to play victim</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-red-400 font-medium block mb-1">La Lettre à Sandra Graham (mère de
-                                Drake)</span>
-                            <p>Kendrick s'adresse à la mère réelle de Drake, Sandra "Sandi" Graham, par son prénom — une
-                                violation extrême de la sphère privée. En disant que "son fils est un homme malade",
-                                Kendrick fait une déclaration psychologique, pas juste musicale. L'accusation de "culte"
-                                autour de Drake reprend une narrative circulant dans la culture rap : que Drake
-                                maintient des relations de pouvoir toxiques avec les femmes. La référence à la mère
-                                comme "seule femme qu'il ait jamais aimée" est une pique freudienne sur son rapport aux
-                                femmes.</p>
+                            <span class="text-red-400 font-medium block mb-1">L'Héritage Toxique : Lettre à Dennis
+                                Graham</span>
+                            <p>Kendrick change de cible pour s'adresser au père de Drake, Dennis Graham. Il le tient
+                                pour responsable des vices de son fils, notamment son addiction au jeu (Drake est connu
+                                pour ses paris massifs sur Stake). En qualifiant Drake de "maître manipulateur" avec une
+                                "intuition de psychopathe", Kendrick dresse le portrait d'un homme qui utilise son
+                                entourage pour son propre gain, tout en se faisant passer pour la victime dans ses
+                                chansons.</p>
                         </div>
                         <div style="display:flex;gap:8px;margin-top:8px;">
                             <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 5,819</button>
+                                    width="12"></iconify-icon> 7,452</button>
                             <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
                                     width="12"></iconify-icon></button>
                         </div>
                         <div class="comment-section"></div>
                     </div>
 
-                    <!-- Block 3 : L'accusation la plus grave -->
-                    <div class="reveal story-block" data-time="130">
+                    <!-- Block 5 : Verse 2 - L'Appel à Sandra -->
+                    <div class="reveal story-block" data-time="180">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I heard your daughter gotta hide from
-                                you</p>
-                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">I hope she's
-                                somewhere safe, away from your grip</p>
-                            <p class="group-hover:text-white transition-colors font-medium">I mean, if anything, we all
-                                just glad it didn't become a secret</p>
-                            <p class="group-hover:text-white transition-colors">A fourth kid you abandoned? Who got
-                                swept under the rug?</p>
-                        </div>
-                        <div class="analysis-content-visible">
-                            <span class="text-red-400 font-medium block mb-1">⚠️ L'Accusation Non Vérifiée — Enfant
-                                Secret #2</span>
-                            <p>C'est la ligne la plus controversée et potentiellement la plus dangereuse du beef.
-                                Kendrick prétend que Drake aurait une fille cachée supplémentaire. À ce jour, cette
-                                accusation reste non vérifiée et Drake l'a démenti. Kendrick mise ici sur le pouvoir
-                                rhétorique et la pression sociale pour forcer une révélation ou nuire à la réputation.
-                                C'est une escalade tactique délibérée : si vraie, elle détruit Drake; si fausse, elle le
-                                force à se défendre sans preuves claires à l'appui.</p>
-                        </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 8,421</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
-                    </div>
-
-                    <!-- Block 4 : Lettre à Drake directement -->
-                    <div class="reveal story-block" data-time="200">
-                        <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors italic text-zinc-400">And to you, Aubrey,
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear Sandra,</p>
+                            <p class="group-hover:text-white transition-colors">Your son's a sick man with sick thoughts
                             </p>
-                            <p class="group-hover:text-white transition-colors font-medium">I've watched you for years
-                            </p>
-                            <p class="group-hover:text-white transition-colors">You've made good music, but your
-                                character makes me sick</p>
-                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">You're a
-                                predator, you prey on women and children</p>
-                            <p class="group-hover:text-white transition-colors">You like 'em young, you've been exposed
-                                — they not gonna let it slide</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">I think niggas
+                                like him should die</p>
+                            <p class="group-hover:text-white transition-colors">Him and Weinstein should get fucked up
+                                in a cell for the rest they life</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">L'Accusation Directe à "Aubrey"</span>
-                            <p>En utilisant le vrai prénom de Drake ("Aubrey Drake Graham"), Kendrick brise
-                                symboliquement l'armure de sa persona. La phrase "You've made good music, but your
-                                character makes me sick" est fondamentale : elle sépare l'œuvre de l'artiste, accordant
-                                du génie à Drake tout en le condamnant moralement. L'accusation de "predator"
-                                (prédateur) lie Drake à plusieurs allégations circulant contre lui, notamment des
-                                relations avec des filles mineures — une accusation gravissime que Kendrick amplifiera
-                                dans "Not Like Us".</p>
+                            <span class="text-red-400 font-medium block mb-1">L'Ultimatum à Sandra Graham</span>
+                            <p>S'adressant à la mère de Drake, Sandra, Kendrick franchit une ligne rouge absolue en
+                                suggérant que son fils "devrait mourir" ou finir ses jours en cellule. La comparaison
+                                avec Harvey Weinstein place immédiatement Drake dans la catégorie des prédateurs sexuels
+                                sistémiques. C'est une attaque frontale contre la moralité de Drake, visant à briser le
+                                lien sacré entre une mère et son fils en exposant ce que Kendrick perçoit comme une
+                                nature profondément malveillante.</p>
                         </div>
                         <div style="display:flex;gap:8px;margin-top:8px;">
                             <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 6,782</button>
+                                    width="12"></iconify-icon> 21,043</button>
                             <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
                                     width="12"></iconify-icon></button>
                         </div>
                         <div class="comment-section"></div>
                     </div>
 
-                    <!-- Block 5 : La malédiction finale -->
-                    <div class="reveal story-block" data-time="280">
+                    <!-- Block 6 : Verse 2 - Les Allégations de Prédateur -->
+                    <div class="reveal story-block" data-time="225">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">God will expose you, He's the greatest
-                                storyteller</p>
-                            <p class="group-hover:text-white transition-colors font-medium text-red-400">History always
-                                remembers the predator</p>
-                            <p class="group-hover:text-white transition-colors">From Harvey Weinstein to Bill Cosby —
-                                they all get tired eventually</p>
-                            <p class="group-hover:text-white transition-colors font-medium">And when the industry does
-                                it, the house of cards will fall</p>
-                            <p class="group-hover:text-white transition-colors">So let's hope there's no footage of you
-                                touching little girls, Aubrey</p>
+                            <p class="group-hover:text-white transition-colors">He got sex offenders on ho-VO that he
+                                keep on a monthly allowance</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">A child should
+                                never be compromised, and he keepin' his child around them</p>
+                            <p class="group-hover:text-white transition-colors">The Embassy 'bout to get raided too,
+                                it's only a matter of time</p>
+                            <p class="group-hover:text-white transition-colors">I'm lookin' to shoot through any pervert
+                                that lives, keep the family safe</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-red-400 font-medium block mb-1">Comparaison avec Harvey Weinstein & Bill
-                                Cosby</span>
-                            <p>Kendrick place Drake dans la même catégorie que Harvey Weinstein et Bill Cosby — deux des
-                                plus grands scandales d'abus sexuels du showbiz américain. Ce rapprochement est
-                                dévastateur car il ancre les accusations dans une narrative culturelle de prédateurs
-                                puissants finalement exposés. "God will expose you" est une invocation religieuse qui
-                                donne une dimension de justice cosmique à la révélation. La fin — "espérons qu'il n'y a
-                                pas de vidéos de toi avec des petites filles" — est la ligne la plus violente de tout le
-                                beef.</p>
+                            <span class="text-red-400 font-medium block mb-1">L'Industrie de l'Exploitation</span>
+                            <p>C'est l'un des passages les plus graves. Kendrick accuse Drake d'employer des délinquants
+                                sexuels au sein d'OVO ("ho-VO") et de mettre en danger ses propres enfants par cette
+                                proximité. "The Embassy" (le manoir de Drake à Toronto) est décrit comme une cible
+                                imminente pour un raid policier, faisant écho aux affaires de trafic sexuel dans
+                                l'industrie (comme celle de Diddy). Kendrick ne traite plus Drake en rival musical, mais
+                                en criminel de la pire espèce.</p>
                         </div>
                         <div style="display:flex;gap:8px;margin-top:8px;">
                             <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 12,349</button>
+                                    width="12"></iconify-icon> 32,812</button>
                             <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
                                     width="12"></iconify-icon></button>
                         </div>
                         <div class="comment-section"></div>
                     </div>
 
-                    <!-- Block 6 : Postface — L'avertissement à l'industrie -->
-                    <div class="reveal story-block" data-time="330">
+                    <!-- Block 7 : Verse 3 - La Révélation de la Fille Cachée -->
+                    <div class="reveal story-block" data-time="270">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I wrote this letter because I need you
-                                to understand</p>
-                            <p class="group-hover:text-white transition-colors font-medium">The culture is a gift, and
-                                it don't belong to one man</p>
-                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">You built an
-                                empire on the bodies of others</p>
-                            <p class="group-hover:text-white transition-colors">But the empire's crumbling — and that's
-                                by design</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear baby girl,</p>
+                            <p class="group-hover:text-white transition-colors">I'm sorry that your father not active
+                                inside your world</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">He don't commit
+                                to much, but his music, yeah, that's for sure</p>
+                            <p class="group-hover:text-white transition-colors">He a narcissist, misogynist, livin'
+                                inside his songs</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Conclusion : La Culture Comme Propriété
-                                Collective</span>
-                            <p>Kendrick termine en revenant à sa thèse centrale : la culture hip-hop n'appartient pas à
-                                Drake. En disant "elle ne appartient pas à un seul homme", il retrouve le mythe
-                                fondateur du rap comme art politique et communautaire, s'opposant à sa commercialisation
-                                monopoliste. "L'empire s'effondre" prophétise la chute de Drake après ce beef — une
-                                prophétie qui s'est avérée partiellement vraie avec l'impact massif de "Not Like Us".
+                            <span class="text-amber-400 font-medium block mb-1">La Bombe de la Fille Cachée</span>
+                            <p>En s'adressant à une "baby girl", Kendrick lâche ce qui devait être la "bombe" ultime du
+                                beef : l'existence d'une fille cachée de 11 ans. Bien que Drake ait plus tard prétendu
+                                avoir piégé Kendrick avec cette information, l'impact émotionnel à la sortie était
+                                colossal. Kendrick peint Drake comme un père absent ("deadbeat"), incapable de s'engager
+                                dans la vie réelle au-delà de son narcissisme artistique.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 45,920</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 8 : Verse 3 - Paternité vs Absence -->
+                    <div class="reveal story-block" data-time="315">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Instead, he be in Turks payin' for sex
+                                and poppin' Percs</p>
+                            <p class="group-hover:text-white transition-colors">I wanna tell you that you're loved,
+                                you're brave, you're kind</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Give him grace,
+                                this the reason I made Mr. Morale</p>
+                            <p class="group-hover:text-white transition-colors">So our babies like you can cope later
                             </p>
                         </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Coping and "Mr. Morale"</span>
+                            <p>Kendrick lie ce morceau à son album "Mr. Morale & The Big Steppers", suggérant qu'il a
+                                créé cette œuvre pour aider les enfants de pères toxiques à guérir. Il oppose la
+                                recherche de validation superficielle de Drake (sexe, drogues à Turks & Caicos) à la
+                                vraie valeur d'un enfant : l'amour et la résilience. C'est une supériorité morale
+                                affichée, présentant Kendrick comme le guérisseur face au destructeur qu'est Drake.</p>
+                        </div>
                         <div style="display:flex;gap:8px;margin-top:8px;">
                             <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 3,012</button>
+                                    width="12"></iconify-icon> 11,203</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 9 : Verse 3 - Le Verdict du "Deadbeat" -->
+                    <div class="reveal story-block" data-time="360">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Yes, he's a hitmaker, songwriter,
+                                superstar, right</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">And a fuckin'
+                                deadbeat that should never say "more life"</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Meet the Grahams
+                            </p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-400 font-medium block mb-1">L'Ironie de "More Life"</span>
+                            <p>Kendrick détourne le slogan de Drake, "More Life", pour souligner son hypocrisie. En le
+                                traitant de "fucking deadbeat" (bon à rien/père indigne), il détruit le prestige de sa
+                                carrière commerciale. Le succès musical n'a plus de valeur face à l'échec moral. Le
+                                titre "Meet the Grahams" devient un refrain sarcastique invitant le monde à découvrir la
+                                réalité derrière le vernis de la superstar.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 28,451</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 10 : Verse 4 - L'Intégrité et le "Home" -->
+                    <div class="reveal story-block" data-time="405">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Dear Aubrey,</p>
+                            <p class="group-hover:text-white transition-colors">I know you probably thinkin' I wanted to
+                                crash your party</p>
+                            <p class="group-hover:text-white transition-colors">But you fucked up the moment you called
+                                out my family's name</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Thirty-seven,
+                                but you showin' up as a seven-year-old</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Conflit des Générations</span>
+                            <p>Enfin, Kendrick s'adresse directement à Drake (Aubrey). Il justifie la brutalité de
+                                l'attaque par le fait que Drake a mentionné sa famille en premier. L'accusation
+                                d'immaturité ("trente-sept ans, mais tu te comportes comme un enfant de sept ans") est
+                                une réflexion sur le besoin constant de validation de Drake et son incapacité à agir
+                                avec l'intégrité d'un homme adulte.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 18,342</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 11 : Verse 4 - La Litanie des Mensonges -->
+                    <div class="reveal story-block" data-time="450">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You lied about your religious views, you
+                                lied about your surgery</p>
+                            <p class="group-hover:text-white transition-colors">You lied about your accent and your past
+                                tense, all is perjury</p>
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">You lied about
+                                your son, you lied about your daughter, huh</p>
+                            <p class="group-hover:text-white transition-colors">You lied about them other kids that's
+                                out there hopin' that you come</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-400 font-medium block mb-1">L'Anatomie d'un Mensonge</span>
+                            <p>Kendrick énumère tout ce qu'il considère comme des fabrications de Drake : sa religion,
+                                son corps, son accent, son passé. Qualifier cela de "parjure" donne une dimension légale
+                                et solennelle à l'accusation. Le point culminant est le mensonge sur ses enfants,
+                                faisant de Drake une figure de trahison absolue envers sa propre lignée.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 39,120</button>
+                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
+                                    width="12"></iconify-icon></button>
+                        </div>
+                        <div class="comment-section"></div>
+                    </div>
+
+                    <!-- Block 12 : Verse 4 - Le Jugement Dernier -->
+                    <div class="reveal story-block" data-time="495">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-red-400 font-medium">Fuck a rap
+                                battle, this a long life battle with yourself</p>
+                            <p class="group-hover:text-white transition-colors">I try to empathize with you 'cause I
+                                know that you ain't been through nothin'</p>
+                            <p class="group-hover:text-white transition-colors">The Embassy 'bout to get raided, keep
+                                the family away</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Keep the family
+                                safe</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Au-delà du Rap : Une Bataille
+                                Intérieure</span>
+                            <p>Kendrick conclut en déclarant que ce n'est plus une bataille de rap, mais un combat de
+                                Drake contre lui-même. Il refuse même de considérer les difficultés de Drake comme
+                                réelles ("tu n'as rien traversé"), souligniant son privilège. Le morceau se termine sur
+                                un avertissement glacial : protéger les innocents ("keep the family safe") du chaos que
+                                Drake aurait attiré sur lui-même. C'est la fin d'une exécution publique en musique.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
+                                    width="12"></iconify-icon> 52,104</button>
                             <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
                                     width="12"></iconify-icon></button>
                         </div>
@@ -313,13 +484,14 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-5 relative">
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
                     <div class="sticky top-24 space-y-6">
                         <div id="dynamic-analysis-card"
                             class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
                             <div class="flex items-center gap-2 mb-4">
-                                <iconify-icon icon="solar:info-circle-linear" class="text-red-400"
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
                                     width="20"></iconify-icon>
                                 <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
                             </div>
@@ -330,34 +502,47 @@
                         <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
                             <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
                                 <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
-                                    width="18"></iconify-icon>Informations
+                                    width="18"></iconify-icon>
+                                Informations
                             </h4>
-                            <div class="space-y-3 text-xs">
-                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
-                                        class="text-zinc-300">3 mai 2024, 3h00</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
-                                        class="text-zinc-300">Famille Graham (Drake)</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Durée</span><span
-                                        class="text-zinc-300">3:53 min</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Format</span><span
-                                        class="text-zinc-300">Lettres épistolaires</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Sortie
-                                        simultanée</span><span class="text-zinc-300">Family Matters (Drake)</span></div>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <!-- Filled by JS -->
                             </div>
-                        </div>
-                        <div class="bg-red-950/20 border border-red-500/20 rounded-2xl p-5">
-                            <h4 class="text-sm font-medium text-red-300 mb-3 flex items-center gap-2"><iconify-icon
-                                    icon="solar:danger-triangle-linear" width="16"></iconify-icon> Contexte Critique
-                            </h4>
-                            <p class="text-xs text-zinc-400 leading-relaxed">Ce morceau a été publié à <strong
-                                    class="text-white">3h du matin</strong>, simultanément à "Family Matters" de Drake,
-                                en réponse anticipée. Certaines accusations (notamment l'enfant caché) n'ont jamais été
-                                prouvées. Drake a intenté une <strong class="text-white">action en justice</strong>
-                                contre Universal Music Group concernant ce titre.</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                    <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                            width="18"></iconify-icon>Informations
+                    </h4>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
+                                class="text-zinc-300">3 mai 2024, 3h00</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
+                                class="text-zinc-300">Famille Graham (Drake)</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Durée</span><span
+                                class="text-zinc-300">6:32 min</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Format</span><span
+                                class="text-zinc-300">Lettres épistolaires</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Sortie
+                                simultanée</span><span class="text-zinc-300">Family Matters (Drake)</span></div>
+                    </div>
+                </div>
+                <div class="bg-red-950/20 border border-red-500/20 rounded-2xl p-5">
+                    <h4 class="text-sm font-medium text-red-300 mb-3 flex items-center gap-2"><iconify-icon
+                            icon="solar:danger-triangle-linear" width="16"></iconify-icon> Contexte Critique
+                    </h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed">Ce morceau a été publié à <strong
+                            class="text-white">3h du matin</strong>, simultanément à "Family Matters" de Drake,
+                        en réponse anticipée. Certaines accusations (notamment l'enfant caché) n'ont jamais été
+                        prouvées. Drake a intenté une <strong class="text-white">action en justice</strong>
+                        contre Universal Music Group concernant ce titre.</p>
+                </div>
             </div>
+        </div>
+        </div>
         </div>
 
         <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
@@ -401,52 +586,6 @@
         </section>
     </main>
 
-    <div
-        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
-                preload="metadata"></audio>
-            <div class="flex items-center gap-3 min-w-0 w-1/4">
-                <div
-                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
-                    <iconify-icon icon="solar:music-note-bold" class="text-red-400" width="20"></iconify-icon></div>
-                <div class="hidden sm:block min-w-0">
-                    <p class="text-white text-sm font-medium truncate">Meet the Grahams</p>
-                    <p class="text-zinc-500 text-xs truncate">Kendrick Lamar</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
-                <div class="flex items-center gap-4">
-                    <button id="play-pause-btn" aria-label="Lecture / Pause"
-                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"><iconify-icon
-                            icon="solar:play-bold" width="20"></iconify-icon></button>
-                </div>
-                <div class="flex items-center gap-2 w-full max-w-2xl">
-                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
-                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
-                    </div>
-                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
-                </div>
-            </div>
-            <div class="flex items-center justify-end gap-3 w-1/4">
-                <div class="hidden md:flex items-center gap-2 w-28">
-                    <button id="mute-btn" aria-label="Muet"
-                        class="text-zinc-500 hover:text-white transition-colors"><iconify-icon
-                            icon="solar:volume-loud-linear" width="18"></iconify-icon></button>
-                    <div id="volume-container"
-                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
-                        aria-label="Volume" tabindex="0">
-                        <div id="volume-fill"
-                            class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
-                        </div>
-                        <div id="volume-thumb"
-                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left:100%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="../js/data.js"></script>
     <script src="../js/seo.js"></script>
@@ -459,7 +598,7 @@
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const songId = 'meet-the-grahams';
@@ -470,6 +609,16 @@
 
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
+
+    <!-- Decrypt Bubble Container -->
+    <div id="decrypt-bubble" class="decrypt-bubble">
+        <div class="bubble-header">
+            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
+            <span>Décryptage SongStory</span>
+        </div>
+        <div id="bubble-content" class="bubble-content"></div>
+    </div>
+
 </body>
 
 </html>

@@ -246,6 +246,38 @@ const SongStoryPlayer = {
         }
     },
 
+    updateDecryptBubble(activeLine) {
+        const bubble = document.getElementById('decrypt-bubble');
+        const content = document.getElementById('bubble-content');
+        if (!bubble || !content) return;
+
+        // If karaoke-mode is active, we are HIDING decryptions
+        if (document.body.classList.contains('karaoke-mode')) {
+            bubble.classList.remove('visible');
+            return;
+        }
+
+        // Use activeLine if provided, otherwise find it
+        let line = activeLine;
+        if (!line) {
+            line = document.querySelector('.lyric-line.active-lyric');
+        }
+
+        if (line) {
+            const block = line.closest('.story-block');
+            const analysis = block ? (block.querySelector('.analysis-content-visible') || block.querySelector('.analysis-content')) : null;
+            if (analysis && analysis.innerHTML.trim() !== '') {
+                content.innerHTML = analysis.innerHTML;
+                bubble.classList.add('visible');
+                content.scrollTop = 0;
+            } else {
+                bubble.classList.remove('visible');
+            }
+        } else {
+            bubble.classList.remove('visible');
+        }
+    },
+
     initKeyboard() {
         document.addEventListener('keydown', (e) => {
             const active = document.activeElement;
@@ -253,10 +285,11 @@ const SongStoryPlayer = {
 
             if (e.key === ' ' && e.target === document.body) {
                 e.preventDefault();
+                if (!this.audio) return;
                 this.audio.paused ? this.audio.play().catch(() => { }) : this.audio.pause();
-            } else if (e.key === 'ArrowLeft') {
+            } else if (e.key === 'ArrowLeft' && this.audio) {
                 this.audio.currentTime = Math.max(0, this.audio.currentTime - 5);
-            } else if (e.key === 'ArrowRight') {
+            } else if (e.key === 'ArrowRight' && this.audio) {
                 this.audio.currentTime = Math.min(this.audio.duration || 0, this.audio.currentTime + 5);
             }
         });

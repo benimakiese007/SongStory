@@ -482,13 +482,91 @@ body.karaoke-mode .story-block:focus-within .analysis-content-visible {
 }
 
 .analysis-content-visible {
-    display: none !important; /* Managed by pop-up bubble instead */
+    display: none !important;
+    /* Managed by pop-up bubble instead */
+}
+
+/* ── Layout Modes ────────────────────────────── */
+.layout-classic .relative-lyrics-container,
+.layout-classic .lg\:col-span-7 {
+    padding-top: 0;
+}
+
+.layout-classic #narrative-wrapper {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.125rem;
+    /* text-lg */
+    line-height: 1.625;
+    /* leading-relaxed */
+    color: var(--zinc-400);
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    /* space-y-12 */
+    padding-bottom: 5rem;
+}
+
+.layout-classic .lyric-line {
+    font-size: 1.125rem !important;
+    line-height: 1.625 !important;
+    opacity: 1 !important;
+    cursor: default;
+    transform: none !important;
+    text-align: left;
+}
+
+.layout-classic .lyric-line:hover {
+    color: white;
+}
+
+.layout-classic .analysis-content-visible {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--zinc-300);
+}
+
+body.karaoke-mode.layout-classic .analysis-content-visible {
+    display: none !important;
+}
+
+.layout-classic .decrypt-bubble {
+    display: none !important;
+}
+
+/* Immersive Overrides */
+.layout-immersive .lg\:col-span-5,
+.layout-immersive .side-analysis-sidebar {
+    display: none !important;
+}
+
+.layout-immersive .lg\:col-span-7,
+.layout-immersive .relative-lyrics-container {
+    grid-column: span 12 / span 12 !important;
+    max-width: 64rem;
+    /* max-w-4xl-ish */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.layout-immersive #narrative-wrapper {
+    text-align: center;
+}
+
+.layout-immersive .lyric-line {
+    text-align: center;
+}
+
+.layout-immersive .analysis-content-visible {
+    display: none !important;
 }
 
 /* ── Apple Music Style Lyrics ────────────────── */
 .relative-lyrics-container {
     perspective: 1000px;
-    padding-top: 10vh; /* space for scrolling */
+    padding-top: 10vh;
+    /* space for scrolling */
 }
 
 .lyric-line {
@@ -523,7 +601,7 @@ body.karaoke-mode .story-block:focus-within .analysis-content-visible {
 /* ── Decrypt Bubble ──────────────────────────── */
 .decrypt-bubble {
     position: fixed;
-    bottom: 90px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(30px);
     width: 90%;
@@ -570,6 +648,7 @@ body.karaoke-mode .story-block:focus-within .analysis-content-visible {
 .decrypt-bubble .bubble-content p {
     margin-bottom: 8px;
 }
+
 .decrypt-bubble .bubble-content p:last-child {
     margin-bottom: 0;
 }

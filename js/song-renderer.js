@@ -11,7 +11,8 @@ const SongStoryRenderer = {
         const songId = params.get('id');
 
         if (!songId) {
-            console.error('No song ID provided');
+            console.log('Static song page detected - initializing analysis handlers');
+            this.initClassicAnalysis();
             return;
         }
 
@@ -192,10 +193,13 @@ const SongStoryRenderer = {
 
             html += `
                 <div class="reveal story-block" data-time="${block.time}" id="block-${block.time}">
-                    <div class="lyrics-text space-y-2 group">
+                    <div class="lyrics-text space-y-2 group cursor-pointer">
                         ${lyricsHtml}
                     </div>
-                    <div class="analysis-content-visible">
+                    <div class="analysis-content-visible hidden">
+                        ${block.analysis}
+                    </div>
+                    <div class="analysis-content hidden">
                         ${block.analysis}
                     </div>
                     <div style="display:flex;gap:8px;margin-top:8px;">
@@ -220,21 +224,22 @@ const SongStoryRenderer = {
 
     renderInfo() {
         const grid = document.getElementById('info-grid');
-        if (!grid) return;
-
         const infos = [
             { label: 'Album', value: this.currentSong.album || 'N/A' },
             { label: 'Genre', value: this.currentSong.genre || 'N/A' },
             { label: 'Durée', value: this.currentSong.duration || 'N/A' },
-            { label: 'BPM', value: this.currentSong.bpm || 'N/A' }
+            { label: 'BPM', value: this.currentSong.bpm || 'N/A' },
+            { label: 'Année', value: this.currentSong.year || 'N/A' }
         ];
 
-        grid.innerHTML = infos.map(i => `
-            <div class="flex justify-between">
-                <span class="text-zinc-500">${i.label}</span>
-                <span class="text-zinc-300">${i.value}</span>
-            </div>
-        `).join('');
+        if (grid) {
+            grid.innerHTML = infos.map(i => `
+                <div class="flex justify-between">
+                    <span class="text-zinc-500">${i.label}</span>
+                    <span class="text-zinc-300">${i.value}</span>
+                </div>
+            `).join('');
+        }
 
         const contributeLink = document.getElementById('contribute-link');
         if (contributeLink) contributeLink.href = `contribute.html?song=${this.currentSong.id}`;
@@ -297,6 +302,7 @@ const SongStoryRenderer = {
             SongStoryUI.initComments();
             SongStoryUI.initShareCard();
             SongStoryUI.initTilt();
+            this.initClassicAnalysis();
         }
 
         // Re-init Player markers and lyrics
@@ -322,6 +328,38 @@ const SongStoryRenderer = {
         // Listen for service changes to update sidebar
         window.addEventListener('ss:streamingchange', (e) => {
             this.renderSidebarStreaming(container);
+        });
+    },
+
+    initClassicAnalysis() {
+        const storyBlocks = document.querySelectorAll('.story-block');
+        const analysisCard = document.getElementById('dynamic-analysis-card');
+        const analysisPlaceholder = document.getElementById('analysis-placeholder');
+
+        storyBlocks.forEach(block => {
+            const lyricsText = block.querySelector('.lyrics-text');
+            if (!lyricsText) return;
+
+            lyricsText.addEventListener('click', () => {
+                const analysisContent = (block.querySelector('.analysis-content') || block.querySelector('.analysis-content-visible'))?.innerHTML;
+                if (analysisCard && analysisPlaceholder && analysisContent) {
+                    analysisCard.style.opacity = '0';
+                    analysisCard.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        analysisPlaceholder.innerHTML = analysisContent;
+                        analysisCard.style.opacity = '1';
+                        analysisCard.style.transform = 'translateY(0)';
+                    }, 300);
+                }
+
+                // Also trigger bubble update for immersive mode
+                if (typeof SongStoryPlayer !== 'undefined') {
+                    SongStoryPlayer.updateDecryptBubble(block.querySelector('.lyric-line'));
+                }
+
+                storyBlocks.forEach(b => b.querySelector('.lyrics-text')?.classList.remove('text-white', 'font-medium'));
+                lyricsText.classList.add('text-white', 'font-medium');
+            });
         });
     }
 };

@@ -14,6 +14,7 @@ const SongStoryUI = {
         this.initComments();
         this.initShareCard();
         this.initTheme();
+        this.initLayout();
         this.initTOC();
         this.initTransitions();
         this.initGlobalGlossaryPanel();
@@ -431,6 +432,41 @@ const SongStoryUI = {
                 const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 apply(next); localStorage.setItem('ss-theme', next);
             });
+        });
+    },
+
+    initLayout() {
+        const apply = (layout) => {
+            document.body.classList.remove('layout-classic', 'layout-immersive');
+            document.body.classList.add(`layout-${layout}`);
+
+            // Update toggle buttons if they exist
+            document.querySelectorAll('.layout-switch').forEach(btn => {
+                const icon = btn.querySelector('iconify-icon');
+                if (icon) {
+                    icon.setAttribute('icon', layout === 'classic' ? 'solar:maximize-linear' : 'solar:quit-full-screen-linear');
+                }
+                btn.title = layout === 'classic' ? 'Passer en mode Immersif' : 'Retour au mode Classique';
+            });
+
+            // If we switch to classic, we should make sure the analysis card is ready
+            if (layout === 'classic' && typeof SongStoryPlayer !== 'undefined') {
+                // Trigger a refresh of markers if needed
+            }
+        };
+
+        // Default is classic as requested
+        const saved = localStorage.getItem('ss-layout-pref') || 'classic';
+        apply(saved);
+
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.layout-switch');
+            if (btn) {
+                const current = document.body.classList.contains('layout-classic') ? 'classic' : 'immersive';
+                const next = current === 'classic' ? 'immersive' : 'classic';
+                apply(next);
+                localStorage.setItem('ss-layout-pref', next);
+            }
         });
     },
 

@@ -161,6 +161,9 @@ function renderSongsTable() {
             <td class="px-6 py-4 text-sm text-zinc-400">${s.year}</td>
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                    <button class="p-2 text-zinc-500 hover:text-amber-500" title="Gérer le contenu" onclick="manageSongContent('${s.id}')">
+                        <iconify-icon icon="solar:notes-bold" width="18"></iconify-icon>
+                    </button>
                     <button class="p-2 text-zinc-500 hover:text-white" title="Editer" onclick="editSong('${s.id}')">
                         <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
                     </button>
@@ -424,8 +427,8 @@ async function handleFormSubmit(e, type, existingId) {
             description: document.getElementById('f-desc').value.trim(),
             url: `single-song.html?id=${id}`,
             audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder
-            spotifyId: document.getElementById('f-spotifyId').value.trim(),
-            appleMusicId: document.getElementById('f-appleMusicId').value.trim()
+            spotify_id: document.getElementById('f-spotifyId').value.trim(),
+            apple_music_id: document.getElementById('f-appleMusicId').value.trim()
         };
         const duration = document.getElementById('f-duration').value.trim();
         if (duration) dataObj.duration = duration;
@@ -516,27 +519,161 @@ async function takeCmsAction(id, action) {
 }
 
 /**
- * Global UI Helpers
+ * Content Editor Management
  */
-function showToast(msg) {
-    const existing = document.getElementById('cms-toast');
-    if (existing) existing.remove();
+async function manageSongContent(songId) {
+    const song = SONGS_DATA_DB.find(s => s.id === songId);
+    if (!song) return;
 
-    const toast = document.createElement('div');
-    toast.id = 'cms-toast';
-    toast.className = 'fixed bottom-6 right-6 bg-green-500 text-black px-6 py-3 rounded-xl font-bold font-sans shadow-lg shadow-green-500/20 flex items-center gap-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300';
-    toast.innerHTML = `<iconify-icon icon="solar:check-circle-bold" width="20"></iconify-icon> ${msg}`;
+    const modal = document.getElementById('modal-container');
+    const title = document.getElementById('modal-title');
+    const body = document.getElementById('modal-body');
+    const actions = document.getElementById('modal-actions-container');
 
-    document.body.appendChild(toast);
+    modal.classList.remove('hidden');
+    title.innerHTML = `<iconify-icon icon="solar:notes-bold" class="mr-2 text-amber-500"></iconify-icon> Contenu : ${song.title}`;
 
-    // Animate in
-    setTimeout(() => {
-        toast.classList.remove('translate-y-20', 'opacity-0');
-    }, 10);
+    // Load existing content
+    const { data: contents, error } = await window.ss_supabase
+        .from('song_contents')
+        .select('*')
+        .eq('song_id', songId)
+        .order('display_order');
 
-    // Animate out
-    setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    if (error) {
+        showToast("Erreur lors du chargement du contenu");
+        console.error(error);
+        return;
+    }
+
+    body.innerHTML = `
+        <div class="space-y-6">
+            <p class="text-xs text-zinc-500">Ajoutez les blocs de paroles et leurs analyses respectives avec le timing associé.</p>
+            <div id="content-blocks-list" class="space-y-4">
+                <!-- Blocks here -->
+            </div>
+            <button onclick="addContentBlock()" class="w-full py-3 border-2 border-dashed border-white/5 rounded-xl text-zinc-500 hover:text-white hover:border-white/10 transition-all text-sm font-medium">
+                + Ajouter un bloc (Paroles + Analyse)
+            </button>
+        </div>
+    `;
+
+    // Render blocks
+    window.currentEditingSongId = songId;
+    window.editingBlocks = contents.map(c => ({
+        id: c.id,
+        time: c.time,
+        lyrics: Array.isArray(c.lyrics) ? c.lyrics.join('\n') : c.lyrics,
+        analysis: c.analysis,
+        display_order: c.display_order
+    }));
+
+    if (window.editingBlocks.length === 0) {
+        addContentBlock(); // Add one empty block by default
+    } else {
+        renderBlocks();
+    }
+
+    actions.innerHTML = `
+        <button type="button" onclick="closeModal()" class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
+        <button type="button" onclick="saveSongContent()" class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20">Enregistrer tout le contenu</button>
+    `;
+}
+
+function renderBlocks() {
+    const list = document.getElementById('content-blocks-list');
+    list.innerHTML = window.editingBlocks.map((block, idx) => `
+        <div class="bg-zinc-950/50 border border-white/5 rounded-2xl p-4 relative group">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="flex-shrink-0">
+                    <label class="block text-[10px] uppercase text-zinc-600 font-bold mb-1">Temps (s)</label>
+                    <input type="number" value="${block.time}" onchange="updateBlockField(${idx}, 'time', this.value)" class="w-16 bg-zinc-900 border border-white/5 rounded-lg px-2 py-1.5 text-white text-xs outline-none focus:border-amber-500/50">
+                </div>
+                <div class="flex-shrink-0">
+                    <label class="block text-[10px] uppercase text-zinc-600 font-bold mb-1">Ordre</label>
+                    <input type="number" value="${block.display_order || idx}" onchange="updateBlockField(${idx}, 'display_order', this.value)" class="w-12 bg-zinc-900 border border-white/5 rounded-lg px-2 py-1.5 text-white text-xs outline-none focus:border-amber-500/50">
+                </div>
+                <div class="flex-1"></div>
+                <button onclick="removeBlock(${idx})" class="p-2 text-zinc-700 hover:text-red-500 transition-colors">
+                    <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[10px] uppercase text-zinc-600 font-bold mb-1.5">Paroles (une ligne par ligne)</label>
+                    <textarea onchange="updateBlockField(${idx}, 'lyrics', this.value)" rows="4" class="w-full bg-zinc-900 border border-white/5 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-amber-500/50 placeholder:text-zinc-700" placeholder="Entrez les paroles...">${block.lyrics || ''}</textarea>
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase text-zinc-600 font-bold mb-1.5">Analyse (Markdown/HTML supporté)</label>
+                    <textarea onchange="updateBlockField(${idx}, 'analysis', this.value)" rows="4" class="w-full bg-zinc-900 border border-white/5 rounded-xl px-3 py-2 text-sm text-zinc-400 outline-none focus:border-amber-500/50 placeholder:text-zinc-700" placeholder="L'analyse pour ce bloc...">${block.analysis || ''}</textarea>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addContentBlock() {
+    const nextOrder = window.editingBlocks.length > 0 ? Math.max(...window.editingBlocks.map(b => b.display_order)) + 10 : 0;
+    const nextTime = window.editingBlocks.length > 0 ? Math.max(...window.editingBlocks.map(b => b.time)) + 5 : 0;
+
+    window.editingBlocks.push({
+        time: nextTime,
+        lyrics: '',
+        analysis: '',
+        display_order: nextOrder
+    });
+    renderBlocks();
+}
+
+function updateBlockField(idx, field, value) {
+    if (field === 'time' || field === 'display_order') {
+        window.editingBlocks[idx][field] = parseInt(value, 10) || 0;
+    } else {
+        window.editingBlocks[idx][field] = value;
+    }
+}
+
+function removeBlock(idx) {
+    window.editingBlocks.splice(idx, 1);
+    renderBlocks();
+}
+
+async function saveSongContent() {
+    if (!window.currentEditingSongId) return;
+
+    if (!confirm("Voulez-vous vraiment écraser l'ancien contenu par celui-ci ?")) return;
+
+    // 1. Delete existing content for this song
+    const { error: delError } = await window.ss_supabase
+        .from('song_contents')
+        .delete()
+        .eq('song_id', window.currentEditingSongId);
+
+    if (delError) {
+        alert("Erreur lors de la suppression de l'ancien contenu : " + delError.message);
+        return;
+    }
+
+    // 2. Insert new blocks
+    const insertData = window.editingBlocks.map(b => ({
+        song_id: window.currentEditingSongId,
+        time: b.time,
+        lyrics: b.lyrics.split('\n').map(l => l.trim()).filter(l => l),
+        analysis: b.analysis,
+        display_order: b.display_order
+    }));
+
+    if (insertData.length > 0) {
+        const { error: insError } = await window.ss_supabase
+            .from('song_contents')
+            .insert(insertData);
+
+        if (insError) {
+            alert("Erreur lors de l'insertion du nouveau contenu : " + insError.message);
+            return;
+        }
+    }
+
+    showToast("Contenu sauvegardé avec succès !");
+    closeModal();
 }

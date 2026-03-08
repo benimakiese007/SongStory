@@ -77,6 +77,10 @@
                         aria-label="Recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
                     </button>
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage">
+                        <iconify-icon icon="solar:maximize-linear" width="20"></iconify-icon>
+                    </button>
                     <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
@@ -118,22 +122,52 @@
                 <p id="song-meta" class="text-xl text-zinc-500 font-light">Artiste • Année</p>
                 <div class="mt-6">
                     <button id="karaoke-toggle" class="karaoke-toggle-btn active">
-                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les Décryptages</span>
+                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span>
                     </button>
                 </div>
             </div>
 
-            <div class="max-w-4xl mx-auto relative relative-lyrics-container">
-                <!-- Lyrics + Story Blocks (Rendered by JS) -->
-                <div id="narrative-wrapper"
-                    class="font-sans text-3xl md:text-5xl font-extrabold leading-tight text-zinc-600 space-y-6 pb-[50vh]">
-                    <div class="py-20 text-center">
-                        <p class="text-zinc-500 text-xl font-normal">Chargement de la chanson...</p>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div class="lg:col-span-7 relative-lyrics-container">
+                    <!-- Lyrics + Story Blocks (Rendered by JS) -->
+                    <div id="narrative-wrapper" class="pb-[50vh]">
+                        <div class="py-20 text-center">
+                            <p class="text-zinc-500 text-xl font-normal">Chargement de la chanson...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classic Sidebar (Visible only in .layout-classic) -->
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Decrypt Bubble Container -->
+            <!-- Decrypt Bubble Container (Visible only in .layout-immersive) -->
             <div id="decrypt-bubble" class="decrypt-bubble">
                 <div class="bubble-header">
                     <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
@@ -163,59 +197,12 @@
         </div>
     </main>
 
-    <!-- Waveform Player (Simplified references for template) -->
-    <div
-        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <audio id="main-audio" src="" preload="metadata"></audio>
-            <div class="flex items-center gap-3 min-w-0 w-1/4">
-                <div
-                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
-                    <iconify-icon icon="solar:music-note-bold" class="text-amber-400" width="20"></iconify-icon>
-                </div>
-                <div class="hidden sm:block min-w-0">
-                    <p id="player-title" class="text-white text-sm font-medium truncate">Chargement...</p>
-                    <p id="player-artist" class="text-zinc-500 text-xs truncate">Artiste</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
-                <div class="flex items-center gap-4">
-                    <button id="play-pause-btn" aria-label="Lecture / Pause"
-                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors">
-                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
-                    </button>
-                </div>
-                <div class="flex items-center gap-2 w-full max-w-2xl">
-                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
-                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
-                    </div>
-                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
-                </div>
-            </div>
-            <div class="flex items-center justify-end gap-3 w-1/4">
-                <div class="hidden md:flex items-center gap-2 w-28">
-                    <button id="mute-btn" class="text-zinc-500 hover:text-white transition-colors">
-                        <iconify-icon icon="solar:volume-loud-linear" width="18"></iconify-icon>
-                    </button>
-                    <div id="volume-container"
-                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group">
-                        <div id="volume-fill" class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full">
-                        </div>
-                        <div id="volume-thumb"
-                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left:100%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/data.js"></script>
     <script src="js/seo.js"></script>
-    
+
     <script src="js/supabase-auth.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/pwa.js"></script>
@@ -228,7 +215,7 @@
     <script src="js/player.js"></script>
     <script src="js/song-renderer.js"></script>
     <script src="js/router.js"></script>
-    
+
     <script src="js/app.js"></script>
 </body>
 
