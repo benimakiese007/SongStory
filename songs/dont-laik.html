@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don't Laïk - Médine - SongStory</title>
+    <meta name="description"
+        content="Analyse de Don't Laïk de Médine. Un brûlot politique sur la laïcité, la religion et l'hypocrisie sociétale en France. Décryptage complet.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-emerald-500 font-medium">Rap Conscient —
+                        Politique</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/medine.html"
+                        class="text-xs text-zinc-500 hover:text-emerald-500 transition-colors">Voir le profil de Médine
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Don't Laïk</h1>
+                <p class="text-xl text-zinc-500 font-light">Médine • 2012</p>
+                <p class="text-sm text-zinc-600 mt-2">Album : Arabian Panther • 4:18 min • Thématique : Laïcité</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Nietzsche & Timing -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Dieu est mort selon Nietzsche</p>
+                            <p class="group-hover:text-white transition-colors">"Nietzsche est mort" signé Dieu</p>
+                            <p class="group-hover:text-white transition-colors text-emerald-500 font-medium">On parlera
+                                laïcité ente l'Aïd et la Saint-Matthieu</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-emerald-500 font-medium block mb-1">Nietzsche vs Dieu</span>
+                            <p>Médine ouvre avec une joute philosophique célèbre détournée. Il place d'emblée le morceau
+                                sous le signe du débat religieux et séculier. L'expression "entre l'Aïd et la
+                                Saint-Matthieu" souligne que la laïcité en France est souvent instrumentalisée ou
+                                discutée uniquement à travers le prisme des calendrier religieux, créant une tension
+                                permanente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : People of the Book vs Reality TV -->
+                    <div class="reveal story-block" data-time="20">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Nous sommes les gens du Livre</p>
+                            <p class="group-hover:text-white transition-colors">Face aux évangélistes d'Eve Angeli</p>
+                            <p class="group-hover:text-white transition-colors">Un genre de diable pour les anges de la
+                                TV Reality</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Culte de l'Image vs Spiritualité</span>
+                            <p>Médine oppose "Les gens du Livre" (terme coranique pour les croyants des religions
+                                abrahamiques) à la vacuité de la culture de masse ("Eve Angeli", "TV Reality"). Il
+                                suggère que la société moderne a remplacé la foi par des idoles superficielles, et qu'il
+                                est perçu comme un "diable" simplement parce qu'il propose une alternative spirituelle.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Provocation & Symbols -->
+                    <div class="reveal story-block" data-time="40">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Je porte la barbe, j'suis de mauvais
+                                poil</p>
+                            <p class="group-hover:text-white transition-colors">Porte le voile, t'es dans de beaux draps
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">Crucifions les
+                                laïcards comme à Golgotha</p>
+                            <p class="group-hover:text-white transition-colors">Le polygame vaut bien mieux que l'ami
+                                Strauss-Kahn</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">La Provocation par l'Image</span>
+                            <p>Médine utilise ici des images extrêmement fortes et provocatrices ("Crucifions les
+                                laïcards") pour dénoncer ce qu'il perçoit comme un acharnement contre les symboles
+                                musulmans (barbe, voile). La comparaison entre la polygamie et Dominique Strauss-Kahn
+                                (DSK) pointe du doigt l'hypocrisie d'une société qui tolère certains comportements
+                                immoraux mais en stigmatise d'autres pour des raisons religieuses.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Scarecrow & Charia -->
+                    <div class="reveal story-block" data-time="65">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Cherche pas de viande Halal dans tes
+                                lasagnes c'est que du cheval</p>
+                            <p class="group-hover:text-white transition-colors">Au croisement entre le voyou et le
+                                révérend</p>
+                            <p class="group-hover:text-white transition-colors">Si j'applique la Charia les voleurs
+                                pourront plus faire de main courante</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Épouvantail de la République</span>
+                            <p>Médine joue avec les peurs collectives. Il mentionne le scandale de la viande de cheval
+                                pour dire que la société a des problèmes d'intégrité bien plus graves que le Halal. Sa
+                                phrase sur la "Charia" est un trait d'humour noir et sarcastique : il utilise les
+                                fantasmes de l'extrême-droite pour souligner l'absurdité du débat sécuritaire.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Law vs Street -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Ils connaissent la loi, on connaît la
+                                juge</p>
+                            <p class="group-hover:text-white transition-colors">Pas de signe ostentatoire, pas même la
+                                croix de Jésus</p>
+                            <p class="group-hover:text-white transition-colors text-emerald-500 font-medium">J'suis une
+                                Djellaba à la journée de la jupe</p>
+                            <p class="group-hover:text-white transition-colors">Islamo-caillera, c'est ma prière de rue
+                            </p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-emerald-500 font-medium block mb-1">Le Conflit des Identités</span>
+                            <p>Référence à "La Journée de la Jupe" (film sur l'école et la laïcité). Médine se définit
+                                comme un paradoxe vivant. Il critique l'interdiction des signes religieux ("signes
+                                ostentatoires") qu'il juge liberticide. En s'autoproclamant "Islamo-caillera", il adopte
+                                l'étiquette péjorative que lui collent ses opposants pour mieux la subvertir.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Hook — Don't Laïk -->
+                    <div class="reveal story-block" data-time="115">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-white font-bold">Ta barbe, rebeu,
+                                dans ce pays c'est Don't Laïk</p>
+                            <p class="group-hover:text-white transition-colors">Ton voile, ma sœur, dans ce pays c'est
+                                Don't Laïk</p>
+                            <p class="group-hover:text-white transition-colors">Ta foi nigga dans ce pays c'est Don't
+                                Laïk</p>
+                            <p class="group-hover:text-white transition-colors">Madame monsieur, votre couple est Don't
+                                Laïk</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Rejet Systémique</span>
+                            <p>Le refrain détourne le "Don't Like" du rap américain pour dénoncer une laïcité
+                                d'exclusion. Pour Médine, la France est devenue un pays où l'expression de la foi est
+                                perçue comme un bug dans le système. C'est une critique d'une laïcité devenue "religion
+                                d'État" qui ne tolère plus la différence.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Chorus — Inch'Allah -->
+                    <div class="reveal story-block" data-time="140">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">On ira tous au paradis, tous au paradis
+                                on ira</p>
+                            <p class="group-hover:text-white transition-colors text-emerald-500 font-medium">On ira tous
+                                au paradis, tous au paradis Inch'Allah</p>
+                            <p class="group-hover:text-white transition-colors">On ira tous au paradis, enfin seulement
+                                ceux qui y croient</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Universalisme de la Foi</span>
+                            <p>Détournement du classique de Michel Polnareff. En ajoutant "Inch'Allah", Médine réintègre
+                                la composante musulmane dans l'imaginaire collectif français. C'est un appel à un
+                                universalisme qui inclurait toutes les croyances, plutôt que de les effacer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Femen & Crèche Baby Loup -->
+                    <div class="reveal story-block" data-time="170">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Ils n'ont ni Dieu ni maître à part
+                                Maître Kanter</p>
+                            <p class="group-hover:text-white transition-colors">Je scie l'arbre de leur laïcité avant
+                                qu'on le mette en terre</p>
+                            <p class="group-hover:text-white transition-colors">Marianne est une femen tatouée "Fuck
+                                God" sur les mamelles</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">Où était-elle
+                                dans l'affaire de la crèche?</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">Marianne vs Femen</span>
+                            <p>Médine attaque la radicalité de certains mouvements féministes (Femen) qu'il juge
+                                incompatibles avec les valeurs de respect républicain. Il fait référence à l'affaire de
+                                la crèche "Baby Loup" (licenciement d'une salariée voilée) pour montrer que la laïcité
+                                est parfois utilisée comme un outil de répression professionnelle contre les femmes
+                                musulmanes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Integrations & Education -->
+                    <div class="reveal story-block" data-time="200">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Une banane contre le racisme, du jambon
+                                pour l'intégration</p>
+                            <p class="group-hover:text-white transition-colors">Pour repousser les nazislamistes, on
+                                ferme les portes de l'éducation</p>
+                            <p class="group-hover:text-white transition-colors">"Ah bon? Pardon patron, moi y'a bon"</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Les Injonctions à l'Assimilation</span>
+                            <p>Médine dénonce les tests d'intégration absurdes (comme manger du porc) et les clichés
+                                racistes (la banane, "y'a bon"). Il souligne que l'exclusion des élèves voilées de
+                                l'école ("on ferme les portes de l'éducation") est contre-productif si le but est
+                                réellement de combattre l'obscurantisme ("nazislamistes").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : Fatwa & Freemasons -->
+                    <div class="reveal story-block" data-time="230">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-emerald-500 font-medium">J'mets des
+                                fatwas sur la tête des cons</p>
+                            <p class="group-hover:text-white transition-colors">Religion pour les francs-maçons,
+                                catéchisme pour les athées</p>
+                            <p class="group-hover:text-white transition-colors">La laïcité n'est plus qu'une ombre entre
+                                l'éclairé et l'illuminé</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Fatwa Linguistique</span>
+                            <p>Médine explique souvent que sa "fatwa" est un avis juridique musical contre la bêtise,
+                                pas un appel à la violence. Il pointe du doigt la confusion entre la vraie laïcité
+                                (respect des cultes) et un anticléricalisme agressif qui finit par ressembler à une
+                                religion dogmatique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Burquini & Proselytes -->
+                    <div class="reveal story-block" data-time="260">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Nous sommes épouvantail de la République
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Les élites sont les prosélytes des
+                                propagandistes ultra laïcs</p>
+                            <p class="group-hover:text-white transition-colors">À la journée de la femme, j'porte un
+                                Burquini</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-emerald-500 font-medium block mb-1">Le Prosélytisme Laïc</span>
+                            <p>Médine dénonce ce qu'il appelle le "prosélytisme laïc" : l'idée que les élites politiques
+                                imposent agressivement leur vision du monde. Il défend le droit des femmes de choisir
+                                leur tenue, y compris le Burquini, y voyant un combat pour la liberté individuelle face
+                                aux diktats étatiques.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 12 : Hook Repeat -->
+                    <div class="reveal story-block" data-time="300">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic">On ira tous au paradis... enfin
+                                seulement ceux qui y croient</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Paradoxe Final</span>
+                            <p>En rappelant que le paradis est pour "ceux qui y croient", Médine insiste sur le fait que
+                                la foi est une affaire personnelle et intime, loin des débats sur les lois et les
+                                décrets.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 13 : Outro — Exorcism -->
+                    <div class="reveal story-block" data-time="340">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-red-500 font-bold">Nadine Morano,
+                                Jean-François Copé, Pierre Cassen et tous les autres</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Je vous chasse de ce corps
+                                et vous condamne à l'exil pour l'éternité</p>
+                            <p class="group-hover:text-white transition-colors italic">Vade retro satana</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">L'Exorcisme Politique</span>
+                            <p>Le morceau se termine par une parodie d'exorcisme. Médine cite des figures politiques et
+                                militantes connues pour leurs positions dures contre l'Islam. Il les présente comme des
+                                démons qui habitent le "corps de Dame Laïcité". C'est un geste artistique fort pour dire
+                                que ces personnes dénaturent la valeur républicaine de la laïcité.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-emerald-500"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
+                                        class="text-zinc-300">2012</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Album</span><span
+                                        class="text-zinc-300">Arabian Panther</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Genre</span><span
+                                        class="text-zinc-300">Rap Conscient</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Controverse</span><span
+                                        class="text-zinc-300">Plaintes de politiques</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <span class="text-emerald-500 text-[10px] uppercase font-bold block mb-2">Décryptage
+                                Médine</span>
+                            <p class="text-[11px] text-zinc-500 leading-snug">Médine a déclaré que "Don't Laïk" est une
+                                déposition d'artiste visant à pointer les dérives d'une laïcité qui ne protège plus mais
+                                stigmatise. Le clip, tourné dans un environnement sombre, renforce l'idée d'un exorcisme
+                                sociétal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+            <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ?</p>
+            <a href="../contribute.html?song=dont-laik"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>Suggérer une correction
+            </a>
+        </div>
+
+        <section class="mt-24 border-t border-white/5 pt-16">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="lettre-a-la-republique.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Lettre à la République</div>
+                            <div class="rec-artist">Kery James • Rap Conscient</div>
+                        </div>
+                    </a>
+                    <a href="stan.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Stan</div>
+                            <div class="rec-artist">Eminem • Storytelling</div>
+                        </div>
+                    </a>
+                    <a href="power.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Power</div>
+                            <div class="rec-artist">Kanye West • Rap</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    
+    <script src="../js/song-renderer.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+
+    <div id="decrypt-bubble" class="decrypt-bubble">
+        <div class="bubble-header">
+            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
+            <span>Décryptage SongStory</span>
+        </div>
+        <div id="bubble-content" class="bubble-content"></div>
+    </div>
+
+</body>
+
+</html>

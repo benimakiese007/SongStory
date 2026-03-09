@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menace de Mort - Youssoupha - SongStory</title>
+    <meta name="description"
+        content="Analyse de Menace de Mort de Youssoupha. La réponse cinglante à la censure et au harcèlement judiciaire. Un plaidoyer pour la liberté d'expression.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span
+                        class="text-xs uppercase tracking-widest text-zinc-200 font-medium border border-white/20 px-2 py-0.5 rounded">Liberté
+                        d'Expression</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/youssoupha.html"
+                        class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de Youssoupha
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Menace de Mort</h1>
+                <p class="text-xl text-zinc-500 font-light">Youssoupha • 2009</p>
+                <p class="text-sm text-zinc-600 mt-2">Album : Sur les chemins du retour • 4:35 min • Plaidoyer
+                    Judiciaire</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Accusations & Art -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Les accusations sont graves mais comme
+                                d'hab' on fait avec</p>
+                            <p class="group-hover:text-white transition-colors">C'est vrai qu'on est trop hard et puis
+                                notre art est de vous vexer</p>
+                            <p class="group-hover:text-white transition-colors text-white font-medium">Pas d'menaces de
+                                mort le rap ne sort pas de douilles</p>
+                            <p class="group-hover:text-white transition-colors italic">Mais c'est le seul son hardcore
+                                depuis qu'le rock n'a plus de couilles</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Droit de Vexer</span>
+                            <p>Youssoupha assume la fonction subversive de son art. Il rappelle que le rap est un
+                                exutoire verbal, pas une violence physique ("pas de douilles"). Il lance également une
+                                pique au rock, suggérant que le rap a repris le flambeau de la contestation radicale que
+                                le rock a abandonné en se normalisant.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Indics & Slam -->
+                    <div class="reveal story-block" data-time="25">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Un nouveau record de polémique on dit
+                                qu'je chante le mal</p>
+                            <p class="group-hover:text-white transition-colors">Je vous l'avais dit qu'il y a des
+                                indics, ladies and gentleman</p>
+                            <p class="group-hover:text-white transition-colors">Et dans leur bêtise, ils confondent
+                                crime et Islam</p>
+                            <p class="group-hover:text-white transition-colors text-zinc-300 font-medium">Ils m'auraient
+                                trouvé plus gentil si je ne faisais que du "slam"</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-zinc-300 font-medium block mb-1">Le Piège de la Respectabilité</span>
+                            <p>Youssoupha souligne l'amalgame fréquent entre religion, banlieue et criminalité. Il se
+                                moque de la préférence des médias pour le "slam", perçu comme une version plus douce et
+                                acceptable du rap, alors que lui refuse de polir ses mots pour plaire au système.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Sniper & Orelsan -->
+                    <div class="reveal story-block" data-time="50">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">La Rumeur dit que les NTM sont des
+                                Sniper de la morale</p>
+                            <p class="group-hover:text-white transition-colors">Pas facile d'ignorer ça, pas facile
+                                d'opérer seul</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">À la place
+                                d'Orelsan, moi c'est clair que j'aurai le seum</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">Généalogie de la Censure</span>
+                            <p>Youssoupha cite ses prédécesseurs (NTM, Sniper, La Rumeur) pour montrer que son cas
+                                s'inscrit dans une longue tradition de harcèlement judiciaire contre le rap. La mention
+                                d'Orelsan (alors en plein procès pour "Sale Pute") montre la solidarité entre artistes
+                                face à ce qu'il perçoit comme une inquisition moderne.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : La Marseillaise vs Rap -->
+                    <div class="reveal story-block" data-time="75">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Les critiques imparables d'une France
+                                qui oublie</p>
+                            <p class="group-hover:text-white transition-colors text-white font-medium">Que les paroles
+                                de son hymne sont plus violentes que celles du gangsta rap</p>
+                            <p class="group-hover:text-white transition-colors italic">Ma liberté d'expression en chute
+                                est sous menace de mort</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Hymne aux "Sillons Impurs"</span>
+                            <p>L'argument est imparable : comment condamner la violence du rap tout en célébrant *La
+                                Marseillaise* ("Qu'un sang impur abreuve nos sillons") ? Youssoupha dénonce une
+                                indignation sélective qui utilise la morale pour masquer une censure ciblée.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Chorus — Illégal -->
+                    <div class="reveal story-block" data-time="100">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-white font-bold">Il est grand temps
+                                qu'ça déménage</p>
+                            <p class="group-hover:text-white transition-colors">Il n'y a jamais de tendance irrémédiable
+                            </p>
+                            <p class="group-hover:text-white transition-colors font-medium">Les sentences sont inégales
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-red-500">J'fais du rap et c'que
+                                t'entends est illégal</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Loi des Deux Poids</span>
+                            <p>Le refrain martèle l'idée d'une justice à deux vitesses ("sentences inégales"). En disant
+                                que son rap est "illégal", Youssoupha ne parle pas de crime, mais du fait que sa parole
+                                est traitée comme un délit par le tribunal, transformant l'artiste en hors-la-loi malgré
+                                lui.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Bethléem vs BPM -->
+                    <div class="reveal story-block" data-time="130">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Depuis l'temps je guettais ce type qui
+                                vous mène à la baguette</p>
+                            <p class="group-hover:text-white transition-colors">Parle de race en tête et puis nous
+                                traite d'analphabète</p>
+                            <p class="group-hover:text-white transition-colors text-zinc-300 font-medium">Je ne tends
+                                pas la joue comme celui qui a vu le jour à Bethléem</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-zinc-300 font-medium block mb-1">L'Antithèse de la Passivité</span>
+                            <p>Référence directe à Eric Zemmour (non nommé mais visé). Youssoupha critique son obsession
+                                pour la "race" et son mépris pour les jeunes de banlieue. Contrairement à la figure
+                                christique ("celui de Bethléem"), il refuse de tendre l'autre joue et choisit la réponse
+                                musicale virulente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Morandini & Ligne de Fracture -->
+                    <div class="reveal story-block" data-time="155">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Une seule ligne dans "À force de le
+                                dire" où j'exprime tout mon mépris</p>
+                            <p class="group-hover:text-white transition-colors">Des mots accusateurs pour les rappeurs
+                                j'en retrouve 10 000</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">C'est vrai
+                                qu'on touche le fond chez ce bouffon de Morandini</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">Le Tribunal de la Trash-TV</span>
+                            <p>Youssoupha s'attaque à la mise en scène médiatique de son procès, notamment par
+                                l'animateur Jean-Marc Morandini. Il dénonce une presse qui cherche le scandale plutôt
+                                que la vérité, transformant une punchline artistique en débat de société hystérique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Le Figaro & Malhonnêteté -->
+                    <div class="reveal story-block" data-time="180">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Et la droite se déchaîne m'affiche à la
+                                une du Figaro</p>
+                            <p class="group-hover:text-white transition-colors">Qui me confirme que certains
+                                journalistes de merde sont malhonnêtes</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Baromètre de la Haine</span>
+                            <p>Il pointe du doigt l'instrumentalisation politique de ses paroles par la presse
+                                conservatrice. Il voit dans cet acharnement une preuve de la malhonnêteté intellectuelle
+                                de ceux qui préfèrent s'attaquer à un rappeur plutôt qu'aux injustices de l'Hexagone.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Fofana & L'Inculpation -->
+                    <div class="reveal story-block" data-time="205">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">J'espère pas que mon prénom vous a
+                                subitement rappelé celui de Fofana</p>
+                            <p class="group-hover:text-white transition-colors text-red-600 font-bold">Et la Police
+                                aboie pour que le tribunal me morde</p>
+                            <p class="group-hover:text-white transition-colors">Ça suffit pour qu'un juge m'inculpe pour
+                                menace de mort</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-600 font-medium block mb-1">Le Spectres du Racisme</span>
+                            <p>Référence glaçante à l'affaire du "Ganga des Barbares" (Youssouf Fofana). Youssoupha
+                                suggère que la sévérité de la justice à son égard est liée à un climat de peur et à son
+                                patronyme. L'inculpation pour "menace de mort" est le point culminant de l'absurdité :
+                                une métaphore devient un crime aux yeux d'un juge.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : Légitime Défense -->
+                    <div class="reveal story-block" data-time="240">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-white font-medium">Bien sûr qu'il y
+                                a d'la rage dans nos propos</p>
+                            <p class="group-hover:text-white transition-colors">Mais comment rester sage vu l'image de
+                                la vie que l'on nous propose?</p>
+                            <p class="group-hover:text-white transition-colors italic">J'ai plaidé légitime défense dans
+                                ma déposition</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Prendre Position</span>
+                            <p>Youssoupha définit son rap comme un acte de "légitime défense" intellectuelle. Il refuse
+                                la passivité ("rester sage") face à une réalité sociale violente. Pour lui, faire du rap
+                                sans prendre position est une trahison des origines du genre.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Outro — Noir Désir -->
+                    <div class="reveal story-block" data-time="300">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p
+                                class="group-hover:text-white transition-colors text-zinc-500 font-bold uppercase tracking-widest">
+                                Noir désir</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-zinc-500 font-medium block mb-1">Un Noir Désir de Liberté</span>
+                            <p>La conclusion en deux mots est un hommage au groupe de rock français *Noir Désir*, connu
+                                pour ses textes poétiques et engagés, mais aussi pour avoir connu un destin tragique.
+                                C'est peut-être aussi une allusion à sa propre ambition : un désir noir, fier, qui ne
+                                pliera pas devant la menace.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-zinc-200"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-zinc-200"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
+                                        class="text-zinc-300">2009</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Jurisprudence</span><span
+                                        class="text-zinc-300">Relaxe en appel</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
+                                        class="text-zinc-300">Eric Zemmour</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Thème</span><span
+                                        class="text-zinc-300">Contestation Justice</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <span class="text-zinc-200 text-[10px] uppercase font-bold block mb-2">Victoire
+                                Judiciaire</span>
+                            <p class="text-[11px] text-zinc-500 leading-snug">Youssoupha a finalement été relaxé par la
+                                Cour d'appel de Paris, qui a reconnu que ses propos ne constituaient pas une menace mais
+                                relevaient de la liberté de création artistique, marquant une étape clé pour le rap
+                                français.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+            <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ?</p>
+            <a href="../contribute.html?song=menace-de-mort"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>Suggérer une correction
+            </a>
+        </div>
+
+        <section class="mt-24 border-t border-white/5 pt-16">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="dont-laik.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Don't Laïk</div>
+                            <div class="rec-artist">Médine • Politique</div>
+                        </div>
+                    </a>
+                    <a href="lettre-a-la-republique.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Lettre à la République</div>
+                            <div class="rec-artist">Kery James • Rap Conscient</div>
+                        </div>
+                    </a>
+                    <a href="stan.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Stan</div>
+                            <div class="rec-artist">Eminem • Storytelling</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    
+    <script src="../js/song-renderer.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+
+    <div id="decrypt-bubble" class="decrypt-bubble">
+        <div class="bubble-header">
+            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
+            <span>Décryptage SongStory</span>
+        </div>
+        <div id="bubble-content" class="bubble-content"></div>
+    </div>
+
+</body>
+
+</html>

@@ -107,7 +107,7 @@ window.loadAppDataFromSupabase = async function () {
             });
         }
 
-        // Local fallback for "7 Minute Drill"
+        // Add local fallback for "7 Minute Drill"
         if (!SONGS_DATA.find(s => s.id === '7-minute-drill')) {
             SONGS_DATA.push({
                 id: '7-minute-drill',
@@ -139,6 +139,29 @@ window.loadAppDataFromSupabase = async function () {
                     }
                 ]
             });
+        }
+
+        // Populate fallback glossary if empty
+        if (Object.keys(GLOSSARY).length === 0) {
+            GLOSSARY = {
+                "seed": "Fils ou enfant (argot). Dans ce contexte, Kendrick Lamar mentionne le fils de Drake (Adonis).",
+                "jabs": "Coups légers ou piques verbales amicales. Terme emprunté à la boxe.",
+                "DP": "Disciplinary Punishment. Une bastonnade ou punition physique infligée aux membres d'un gang qui ont enfreint les règles.",
+                "PC": "Protective Custody. Quartier de haute sécurité ou d'isolement en prison, souvent utilisé pour protéger les détenus vulnérables (ou les délateurs).",
+                "slimed": "Trahison par un proche ou vol commis envers quelqu'un par une personne de son entourage (argot issu de la culture street/rap).",
+                "BM": "Baby Mama. La mère de l'enfant d'un homme (souvent quand ils ne sont pas ou plus mariés/en couple).",
+                "BD": "Baby Daddy. Le père de l'enfant d'une femme.",
+                "GM": "General Manager. Un manager général, ici en référence à Dave Free qui gère les affaires de Kendrick.",
+                "fake tea": "Fausses rumeurs ou ragots sans aucun fondement (le 'tea' désignant les ragots en argot).",
+                "ops": "Oppositions/Opponents. Les ennemis ou les membres de gangs rivaux.",
+                "cap": "Mensonge. Dire 'no cap' signifie qu'on dit la stricte vérité.",
+                "beef": "Conflit, embrouille ou guerre ouverte entre deux rappeurs ou deux groupes.",
+                "ghostwriter": "La plume fantôme. Une personne qui écrit les textes (lyrics) pour un autre artiste sans être créditée.",
+                "drop": "Sortir ou publier un morceau, un album ou un projet musical.",
+                "bars": "Celle-ci désigne les lignes de texte d'un couplet (les rimes), particulièrement si elles sont techniquement impressionnantes.",
+                "smoke": "Des problèmes ou de la violence. 'I want all the smoke' signifie 'Je suis prêt pour la guerre/le conflit'.",
+                "drac'": "Abréviation pour un Draco, qui est un type de pistolet/arme à feu (souvent un AK-47 raccourci) très mentionné dans le rap américain."
+            };
         }
     } catch (err) {
         console.error('Error loading data from Supabase:', err);
@@ -200,5 +223,97 @@ if (typeof SONGS_DATA !== 'undefined' && !SONGS_DATA.find(s => s.id === 'family-
         bpm: '~84',
         themeColor: '#1e40af', // Deep blue
         content: [] // Will be read from HTML statically
+    });
+}
+
+// Local fallback for "Stan"
+if (typeof SONGS_DATA !== 'undefined' && !SONGS_DATA.find(s => s.id === 'stan')) {
+    SONGS_DATA.push({
+        id: 'stan',
+        title: 'Stan',
+        artist: 'Eminem',
+        artistId: 'eminem',
+        genre: 'Storytelling',
+        year: 2000,
+        tags: ['storytelling', 'classic', 'dido', 'obsession'],
+        description: 'Le chef-d\'œuvre narratif d\'Eminem sur l\'obsession d\'un fan, devenu un terme culturel universel.',
+        url: 'songs/stan.html',
+        artistUrl: 'artists/eminem.html',
+        audio: '',
+        spotifyId: '',
+        appleMusicId: '',
+        album: 'The Marshall Mathers LP',
+        duration: '6:44',
+        bpm: '~82',
+        content: []
+    });
+}
+
+// Local fallback for "Power"
+if (typeof SONGS_DATA !== 'undefined' && !SONGS_DATA.find(s => s.id === 'power')) {
+    SONGS_DATA.push({
+        id: 'power',
+        title: 'Power',
+        artist: 'Kanye West',
+        artistId: 'kanye-west',
+        genre: 'Rap',
+        year: 2010,
+        tags: ['ego', 'pouvoir', 'classic', 'king crimson'],
+        description: 'L\'hymne mégalomane de Kanye West sur le pouvoir, l\'ego et l\'autodestruction.',
+        url: 'songs/power.html',
+        artistUrl: 'artists/kanye-west.html',
+        audio: '',
+        spotifyId: '',
+        appleMusicId: '',
+        album: 'My Beautiful Dark Twisted Fantasy',
+        duration: '4:52',
+        bpm: '~76',
+        content: []
+    });
+}
+
+// Local fallback for "Don't Laïk"
+if (typeof SONGS_DATA !== 'undefined' && !SONGS_DATA.find(s => s.id === 'dont-laik')) {
+    SONGS_DATA.push({
+        id: 'dont-laik',
+        title: 'Don\'t Laïk',
+        artist: 'Médine',
+        artistId: 'medine',
+        genre: 'Rap Conscient',
+        year: 2012,
+        tags: ['laïcité', 'islam', 'politique', 'controverse'],
+        description: 'Le brûlot controversé de Médine sur la laïcité, la religion et l\'hypocrisie politique.',
+        url: 'songs/dont-laik.html',
+        artistUrl: 'artists/medine.html',
+        audio: '',
+        spotifyId: '',
+        appleMusicId: '',
+        album: 'Arabian Panther',
+        duration: '4:18',
+        bpm: '~90',
+        content: []
+    });
+}
+
+// Local fallback for "Ménace de Mort"
+if (typeof SONGS_DATA !== 'undefined' && !SONGS_DATA.find(s => s.id === 'menace-de-mort')) {
+    SONGS_DATA.push({
+        id: 'menace-de-mort',
+        title: 'Ménace de Mort',
+        artist: 'Youssoupha',
+        artistId: 'youssoupha',
+        genre: 'Rap Conscient',
+        year: 2009,
+        tags: ['liberté', 'censure', 'justice', 'polémique'],
+        description: 'La défense de Youssoupha face à la censure du rap français et la judiciarisation de la liberté d\'expression.',
+        url: 'songs/menace-de-mort.html',
+        artistUrl: 'artists/youssoupha.html',
+        audio: '',
+        spotifyId: '',
+        appleMusicId: '',
+        album: 'Sur les chemins du retour',
+        duration: '4:35',
+        bpm: '~85',
+        content: []
     });
 }

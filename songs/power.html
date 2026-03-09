@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power - Kanye West - SongStory</title>
+    <meta name="description"
+        content="Analyse de Power de Kanye West. L'hymne mégalomane sur le pouvoir, l'ego et l'autodestruction. Décryptage des bars et du sample de King Crimson.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-500 font-medium">Maximalisme — Baroque
+                        Rap</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/kanye-west.html"
+                        class="text-xs text-zinc-500 hover:text-amber-500 transition-colors">Voir le profil de Kanye
+                        West
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Power</h1>
+                <p class="text-xl text-zinc-500 font-light">Kanye West • 2010</p>
+                <p class="text-sm text-zinc-600 mt-2">Album : My Beautiful Dark Twisted Fantasy • 4:52 min • Sample :
+                    King Crimson</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Intro -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I'm living in that 21st Century, doing
+                                something mean to it</p>
+                            <p class="group-hover:text-white transition-colors">Do it better than anybody you ever seen
+                                do it</p>
+                            <p class="group-hover:text-white transition-colors">Screams from the haters, got a nice ring
+                                to it</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">I guess every
+                                superhero need his theme music</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">Le Super-héros du 21e Siècle</span>
+                            <p>Kanye arrive avec une confiance absolue après l'incident Taylor Swift de 2009. Il se
+                                place comme un architecte du siècle ("doing something mean to it"). Le sample de King
+                                Crimson ("21st Century Schizoid Man") souligne cette dualité : il est le super-héros et
+                                le paria à la fois. Les critiques des "haters" deviennent pour lui une mélodie agréable.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Hook 1 -->
+                    <div class="reveal story-block" data-time="20">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-white font-medium">No one man should
+                                have all that power</p>
+                            <p class="group-hover:text-white transition-colors">The clock's ticking, I just count the
+                                hours</p>
+                            <p class="group-hover:text-white transition-colors">Stop tripping, I'm tripping off the
+                                power</p>
+                            <p class="group-hover:text-white transition-colors italic">(21st-Century schizoid man)</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Fardeau du Pouvoir</span>
+                            <p>Le refrain est une réflexion paradoxale. Tout en affirmant son autorité, Kanye admet que
+                                le pouvoir absolu est dangereux et instable. "The clock's ticking" évoque une fin
+                                imminente, un compte à rebours vers l'autodestruction. Le sample de King Crimson insère
+                                une note de chaos mental dans cette quête de contrôle.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Verse 1 — Social Context -->
+                    <div class="reveal story-block" data-time="40">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">The system broken, the school is closed,
+                                the prison's open</p>
+                            <p class="group-hover:text-white transition-colors">We ain't got nothing to lose,
+                                motherfucker we rolling</p>
+                            <p class="group-hover:text-white transition-colors">With some light-skinned girls and some
+                                Kelly Rowlands</p>
+                            <p class="group-hover:text-white transition-colors">In this white man world, we the ones
+                                chosen</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">Système vs Liberté</span>
+                            <p>Kanye critique les institutions (écoles fermées, prisons pleines) tout en célébrant son
+                                succès. En tant qu'homme noir dans un "monde d'hommes blancs", son ascension fulgurante
+                                est vue comme une forme de rébellion ou de destinée divine ("we the ones chosen"). La
+                                mention de Kelly Rowland (Destiny's Child) renvoie à l'esthétique du succès noir des
+                                années 2000.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Hook 2 & Transition -->
+                    <div class="reveal story-block" data-time="100">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">So goodnight, cruel world, I'll see you
+                                in the morning</p>
+                            <p class="group-hover:text-white transition-colors">This is way too much, I need a moment
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-white font-medium">Till then, fuck
+                                that, the world's ours</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Évasion Fantasme</span>
+                            <p>"Goodnight, cruel world" suggère une envie de tout arrêter, de s'échapper de la pression
+                                médiatique. Mais Kanye revient vite à son attitude dominante : peu importe la douleur,
+                                "le monde est à nous". C'est un combat permanent entre son besoin de solitude et son
+                                besoin de conquête.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Verse 2 — SNL Diss -->
+                    <div class="reveal story-block" data-time="130">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">Fuck SNL and
+                                the whole cast</p>
+                            <p class="group-hover:text-white transition-colors">Tell them Yeezy said they can kiss my
+                                whole ass</p>
+                            <p class="group-hover:text-white transition-colors">I'm an asshole? You niggas got jokes</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Yeezy vs Media</span>
+                            <p>Kanye s'attaque directement à *Saturday Night Live* (SNL) qui s'était moqué de lui après
+                                les VMA 2009. Il assume son rôle d'antagoniste public ("Je suis un connard ?"). Au lieu
+                                de s'excuser, il double la mise, transformant les insultes des médias en une armure de
+                                mépris.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Verse 2 — Napoleon & Ego -->
+                    <div class="reveal story-block" data-time="155">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You short-minded niggas thoughts is
+                                Napoleon</p>
+                            <p class="group-hover:text-white transition-colors">My furs is Mongolian, my ice brought the
+                                goalies in</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">And I embody
+                                every characteristic of the egotistic</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">L'Égotisme de Napoléon</span>
+                            <p>Il compare ses détracteurs à Napoléon (souvent décrit comme petit mais ambitieux),
+                                suggérant que leur vision est limitée ("short-minded"). Kanye, lui, affiche une opulence
+                                démesurée (fourrures mongoles, diamants). Il admet être l'incarnation même de l'ego,
+                                mais justifie cela par son talent ("he's so fucking gifted").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Verse 2 — Childlike Creativity -->
+                    <div class="reveal story-block" data-time="180">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">My childlike creativity, purity and
+                                honesty</p>
+                            <p class="group-hover:text-white transition-colors">Is honestly being crowded by these grown
+                                thoughts</p>
+                            <p class="group-hover:text-white transition-colors">Reality is catching up with me</p>
+                            <p class="group-hover:text-white transition-colors">Taking my inner child, I'm fighting for
+                                custody</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Combat pour l'Enfant Intérieur</span>
+                            <p>C'est l'un des passages les plus profonds de sa discographie. Kanye regrette la perte de
+                                son innocence créative au profit des pensées d'adulte (responsabilités, jugements,
+                                paranoïa). La métaphore de la "garde d'enfant" pour son enfant intérieur montre à quel
+                                point il sent que le monde réel essaye de lui arracher sa magie artistique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Verse 2 — Diamond Encrusted Piece -->
+                    <div class="reveal story-block" data-time="205">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">As I look down at my diamond encrusted
+                                piece</p>
+                            <p class="group-hover:text-white transition-colors">Thinking: No one man should have all
+                                that power</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">Le Symbole de l'Ego</span>
+                            <p>Kanye contemple ses bijoux (probablement son collier d'Horus) et réalise que ces symboles
+                                de pouvoir sont aussi des chaînes. C'est le moment de réalisation où le luxe extrême
+                                rencontre la réflexion existentielle. La transition vers le refrain est ici teintée de
+                                regret.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Verse 3 — Political Abomination -->
+                    <div class="reveal story-block" data-time="240">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Colin Powells, Austin Powers</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">They say I was
+                                the abomination of Obama's nation</p>
+                            <p class="group-hover:text-white transition-colors">Well that's a pretty bad way to start
+                                the conversation</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Abomination d'Obama</span>
+                            <p>Faisant référence au fait que Barack Obama l'avait traité de "jackass" (abruti) après
+                                l'incident des VMA. Kanye joue sur les mots "abomination/Obama-nation". Il se sent
+                                rejeté même par les figures de pouvoir noires qu'il respectait, ce qui renforce son
+                                sentiment d'isolement total.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : Verse 3 — Killing and Surviving -->
+                    <div class="reveal story-block" data-time="265">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">At the end of the day, god damn it I'm
+                                killing this shit</p>
+                            <p class="group-hover:text-white transition-colors">How 'Ye doing? I'm surviving</p>
+                            <p class="group-hover:text-white transition-colors">I was drinking earlier, now I'm driving
+                            </p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">La Survie par le Chaos</span>
+                            <p>Malgré tout, il triomphe par sa musique. L'aveu de boire en conduisant est une autre
+                                preuve de son attitude "sans limites" et autodestructrice à cette époque. Il ne cherche
+                                plus l'approbation, juste à l'emporter sur tout le monde par la pure force créative.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Outro — Beautiful Death -->
+                    <div class="reveal story-block" data-time="310">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-red-600 font-bold">Now this will be
+                                a beautiful death</p>
+                            <p class="group-hover:text-white transition-colors">I'm jumping out the window, I'm letting
+                                everything go</p>
+                            <p class="group-hover:text-white transition-colors">You got the power to let power go?</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">Le Sacrifice Final</span>
+                            <p>L'outro est une référence au suicide symbolique de son ego. "Sauter par la fenêtre"
+                                signifie lâcher prise sur tout ce pouvoir qui le dévorait. La question finale s'adresse
+                                à lui-même et à l'auditeur : as-tu la force d'abandonner le pouvoir que tu as acquis ?
+                                Le morceau s'arrête brusquement, laissant cette question sans réponse.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-500"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
+                                        class="text-zinc-300">2010</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Album</span><span
+                                        class="text-zinc-300">MBDTF</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Producteur</span><span
+                                        class="text-zinc-300">S1, Kanye West</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Sample
+                                        Principal</span><span class="text-zinc-300">King Crimson</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <span class="text-amber-500 text-[10px] uppercase font-bold block mb-2">Contexte
+                                Historique</span>
+                            <p class="text-[11px] text-zinc-500 leading-snug">"Power" est le premier single de ce qui
+                                est considéré comme l'un des meilleurs albums de rap de tous les temps. Ce morceau
+                                marque le retour triomphal de Kanye après son exil à Hawaï, suite à la polémique des VMA
+                                avec Taylor Swift.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+            <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ?</p>
+            <a href="../contribute.html?song=power"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>Suggérer une correction
+            </a>
+        </div>
+
+        <section class="mt-24 border-t border-white/5 pt-16">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="stan.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Stan</div>
+                            <div class="rec-artist">Eminem • Storytelling</div>
+                        </div>
+                    </a>
+                    <a href="euphoria.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Euphoria</div>
+                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
+                        </div>
+                    </a>
+                    <a href="family-matters.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Family Matters</div>
+                            <div class="rec-artist">Drake • Beef 2024</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    
+    <script src="../js/song-renderer.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+
+    <div id="decrypt-bubble" class="decrypt-bubble">
+        <div class="bubble-header">
+            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
+            <span>Décryptage SongStory</span>
+        </div>
+        <div id="bubble-content" class="bubble-content"></div>
+    </div>
+
+</body>
+
+</html>

@@ -28,13 +28,15 @@ const SongStoryPlayer = {
         this.storyBlocks = document.querySelectorAll('.story-block[data-time]');
         this.lyricLines = document.querySelectorAll('.lyric-line[data-time]');
 
+        // Karaoke toggle works independently of audio player
+        this.initKaraoke();
+
         if (!this.audio) return;
 
         this.buildWaveform();
         this.renderWaveformMarkers();
         this.initEvents();
         this.initVolume();
-        this.initKaraoke();
         this.initKeyboard();
     },
 

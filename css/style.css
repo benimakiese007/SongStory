@@ -481,10 +481,10 @@ body.karaoke-mode .story-block:focus-within .analysis-content-visible {
     border-left: 2px solid transparent;
 }
 
-.analysis-content-visible {
-    display: none !important;
-    /* Managed by pop-up bubble instead */
-}
+/* Analysis visibility is managed per-layout:
+   - layout-classic: shown inline (see below)
+   - layout-immersive: hidden (see below), uses decrypt-bubble instead
+   - karaoke-mode: dynamically toggled via JS */
 
 /* ── Layout Modes ────────────────────────────── */
 .layout-classic .relative-lyrics-container,

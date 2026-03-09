@@ -171,8 +171,9 @@ const SongStoryRenderer = {
             SongStoryUI.initComments();
             SongStoryUI.initShareCard();
             SongStoryUI.initTilt();
-            // Optional: You could also call injectDynamicGlossary here on the static DOM if needed,
-            // example: SongStoryUI.injectDynamicGlossary(document.getElementById('narrative-wrapper'));
+            // Re-init Player markers and lyrics
+            // Activating Glossary Injection for Difficult Words
+            SongStoryUI.injectDynamicGlossary(document.getElementById('narrative-wrapper'));
         }
 
         // Re-init Player markers and lyrics
