@@ -94,7 +94,7 @@
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
     <script src="js/router.js"></script>
-    
+
     <script>
         async function loadGlossary() {
             const grid = document.getElementById('glossary-grid');
@@ -104,10 +104,14 @@
             let glossaryData = {};
 
             if (window.ss_supabase) {
-                const { data, error } = await window.ss_supabase.from('glossary').select('*').order('term');
-                if (!error) {
-                    terms = data.map(item => item.term);
-                    data.forEach(item => glossaryData[item.term] = item.definition);
+                try {
+                    const { data, error } = await window.ss_supabase.from('glossary').select('*').order('term');
+                    if (!error && data) {
+                        terms = data.map(item => item.term);
+                        data.forEach(item => glossaryData[item.term] = item.definition);
+                    }
+                } catch (err) {
+                    console.warn('Supabase request failed, falling back to local data:', err);
                 }
             }
 

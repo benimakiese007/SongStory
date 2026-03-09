@@ -183,14 +183,14 @@
 
     <script src="js/data.js"></script>
     <script src="js/seo.js"></script>
-    
+
     <script src="js/supabase-auth.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
     <script src="js/router.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const pills = document.querySelectorAll('.filter-pill');
@@ -202,14 +202,18 @@
 
             async function loadData() {
                 if (window.ss_supabase) {
-                    const [songsRes, artistsRes] = await Promise.all([
-                        window.ss_supabase.from('songs').select('*'),
-                        window.ss_supabase.from('artists').select('id, name')
-                    ]);
+                    try {
+                        const [songsRes, artistsRes] = await Promise.all([
+                            window.ss_supabase.from('songs').select('*'),
+                            window.ss_supabase.from('artists').select('id, name')
+                        ]);
 
-                    if (!songsRes.error) allSongs = songsRes.data;
-                    if (!artistsRes.error) {
-                        artistsRes.data.forEach(a => artistMap[a.id] = a.name);
+                        if (!songsRes.error) allSongs = songsRes.data || [];
+                        if (!artistsRes.error) {
+                            (artistsRes.data || []).forEach(a => artistMap[a.id] = a.name);
+                        }
+                    } catch (err) {
+                        console.warn('Supabase request failed, falling back to local data:', err);
                     }
                 }
 

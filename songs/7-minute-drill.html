@@ -5,86 +5,384 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>7 Minute Drill - J. Cole - SongStory</title>
+    <meta name="description"
+        content="Analyse de 7 Minute Drill de J. Cole. La réponse à Kendrick Lamar suite à Like That. Analyse des bars, du contexte et du retrait du morceau.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 antialiased">
-        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
                     </div>
                 </div>
 
-                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <!-- Nav auth slot -->
-                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors" aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear" width="20"></iconify-icon></button><button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
                             <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
+
     <main class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
-                <h1 class="text-3xl md:text-5xl text-white font-medium mb-2">7 Minute Drill</h1>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Diss Track — Beef
+                        2024</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/j-cole.html"
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de J. Cole
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">7 Minute Drill</h1>
                 <p class="text-xl text-zinc-500 font-light">J. Cole • 5 avril 2024</p>
-                <p class="text-xs text-amber-500 mt-2">🎧 Issu de l'album surprise "Might Delete Later"</p>
+                <p class="text-sm text-zinc-600 mt-2">Cible : Kendrick Lamar • 3:32 min • Retiré des plateformes</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <div class="lg:col-span-7 font-serif text-lg leading-relaxed space-y-12">
-                    <div class="story-block">
-                        <div class="lyrics-text space-y-2">
-                            <p>I got a phone call, they say that somebody was dissin'</p>
-                            <p>You want some attention? I'll give you a lesson</p>
-                            <p>Your first shit was classic, your last shit was tragic</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Light Work & PWC -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Yeah, Turn it up</p>
+                            <p class="group-hover:text-white transition-colors">Light work like it's PWC</p>
+                            <p class="group-hover:text-white transition-colors">It's a cold world, keep the heat under
+                                your seat</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">La Réponse de Cole</span>
-                            <p>J. Cole répond ici à "Like That" de Kendrick. Contrairement à Drake, il reste sur le
-                                terrain purement musical, critiquant la discographie de Kendrick. Il qualifie "To Pimp a
-                                Butterfly" d'ennuyeux et son dernier album ("Mr. Morale") de tragique. C'est un diss
-                                technique et mesuré qui sera retiré quelques jours plus tard après les excuses publiques
-                                de Cole.</p>
+                            <span class="text-white font-medium block mb-1">PricewaterhouseCoopers</span>
+                            <p>Cole commence avec une assurance tranquille. "PWC" réfère au géant de l'audit financier ;
+                                il suggère que répondre à Kendrick est une tâche administrative simple, un travail de
+                                bureau "propre". Le jeu de mots sur "Cold World" (son label/surnom) et "heat" (arme à
+                                feu) pose le décor d'une tension latente sous une apparence de calme.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Tension and Fall Off -->
+                    <div class="reveal story-block" data-time="30">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I came up in the 'Ville, so I'm good
+                                when it's tension</p>
+                            <p class="group-hover:text-white transition-colors">He still doin' shows, but fell off like
+                                the Simpsons</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">La Chute des Simpsons</span>
+                            <p>Cole s'attaque à la pertinence actuelle de Kendrick. La comparaison avec *Les Simpson*
+                                est cruelle : une série qui continue de produire mais dont beaucoup considèrent que
+                                l'âge d'or est loin derrière elle. Il remet en question la capacité de Kendrick à se
+                                renouveler artistiquement.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Album Critique 1 -->
+                    <div class="reveal story-block" data-time="60">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">Your first
+                                shit was classic, your last shit was tragic</p>
+                            <p class="group-hover:text-white transition-colors">Your second shit put niggas to sleep,
+                                but they gassed it</p>
+                            <p class="group-hover:text-white transition-colors">Your third shit was massive and that was
+                                your prime</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1.5">Le Classement Cruel</span>
+                            <p>C'est le passage le plus discuté. Cole évalue la discographie de Kendrick ainsi :
+                            <ul class="mt-2 space-y-1 text-sm list-disc list-inside">
+                                <li><strong>Classic</strong>: <span class="text-zinc-300">Section.80</span> ou <span
+                                        class="text-zinc-300">GKMC</span>.</li>
+                                <li><strong>Tragic</strong>: <span class="text-zinc-300">Mr. Morale & The Big
+                                        Steppers</span> (son dernier album).</li>
+                                <li><strong>Sleepy/Gassed</strong>: <span class="text-zinc-300">To Pimp a
+                                        Butterfly</span>. Cole suggère que cet album est surcoté par la critique
+                                    intellectuelle mais ennuyeux musicalement.</li>
+                                <li><strong>Massive/Prime</strong>: <span class="text-zinc-300">DAMN.</span>, son apogée
+                                    commerciale.</li>
+                            </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Comfortable Lead -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I was trailin' right behind, and I just
+                                now hit mine</p>
+                            <p class="group-hover:text-white transition-colors">Now I'm front of the line with a
+                                comfortable lead</p>
+                            <p class="group-hover:text-white transition-colors">How ironic, soon as I got it, now he
+                                want somethin' with me</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Inversion des Rôles</span>
+                            <p>Cole affirme qu'il a patiemment attendu son heure pendant que Kendrick dominait. Il pense
+                                avoir atteint son propre "Prime" aujourd'hui et avoir dépassé Kendrick en termes de
+                                constance et de qualité technique pure (le "Lead").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Grammys and Real Beef -->
+                    <div class="reveal story-block" data-time="120">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Fuck the Grammys, 'cause them crackers
+                                ain't never done nothin' for me</p>
+                            <p class="group-hover:text-white transition-colors">The rap beef ain't realer than the shit
+                                I seen in Cumberland</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Cumberland vs Rap</span>
+                            <p>Cole minimise l'importance de ce clash en le comparant à la violence réelle qu'il a
+                                connue à Fayetteville (Cumberland County). Il rejette également la validation des
+                                institutions (Grammys), qu'il voit comme des distractions par rapport à la réalité du
+                                terrain.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : 30 Months -->
+                    <div class="reveal story-block" data-time="150">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">He averagin' one hard verse like every
+                                30 months or somethin'</p>
+                            <p class="group-hover:text-white transition-colors">If he wasn't dissin', then we wouldn't
+                                be discussin' him</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">La Rareté vs L'Efficacité</span>
+                            <p>Une attaque sur l'inactivité de Kendrick. Cole suggère que Kendrick ne reste dans la
+                                conversation publique que parce qu'il crée des controverses (comme son couplet sur
+                                "Control" ou ici "Like That"), plutôt que par la régularité de sa musique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Nino Brown & G-Money -->
+                    <div class="reveal story-block" data-time="180">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I'm Nino with this thing, this that New
+                                Jack City meme</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">Yeah, I'm
+                                aimin' at G-Money, cryin' tears before I bust at him</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">The New Jack City Reference</span>
+                            <p>Référence bouleversante au film *New Jack City*. Nino Brown (le baron de la drogue) doit
+                                tuer son meilleur ami G-Money pour trahison. Cole se compare à Nino : il pleure parce
+                                qu'il aime Kendrick ("son frère"), mais il se sent obligé de le "descendre" musicalement
+                                pour protéger sa place de leader.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Pilates Class -->
+                    <div class="reveal story-block" data-time="220">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Cole World your instructor for Pilates
+                                class</p>
+                            <p class="group-hover:text-white transition-colors">Get a nigga stretched if I feel the
+                                disrespect, uh</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Stretch & Pilates</span>
+                            <p>Jeu de mots brillant. Le Pilates sert à s'étirer ("stretch"), mais dans l'argot du rap,
+                                "stretching someone" signifie les abattre ou les mettre dans un sac mortuaire. Cole se
+                                présente comme celui qui va "étirer" Kendrick s'il continue son manque de respect.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Falcon 9 -->
+                    <div class="reveal story-block" data-time="250">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">A Falcon 9 inside my pocket, bitch, this
+                                rocket gon' fly</p>
+                            <p class="group-hover:text-white transition-colors">My text flooded with the hunger for a
+                                toxic reply</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Elon Musk & SpaceX</span>
+                            <p>La Falcon 9 est la fusée de SpaceX. Cole compare ses paroles à une puissance
+                                technologique imparable. Il évoque aussi la pression de son entourage et des fans pour
+                                qu'il réponde violemment ("toxic reply"), soulignant son dilemme interne.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : 4 Albums / 12 Years -->
+                    <div class="reveal story-block" data-time="280">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">Four albums
+                                in 12 years, nigga, I can divide</p>
+                            <p class="group-hover:text-white transition-colors">Shit, if this is what you want, I'm
+                                indulgin' in violence</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Analyse Mathématique</span>
+                            <p>Cole rejoint la critique de Drake sur la faible productivité de Kendrick. Un album tous
+                                les trois ans en moyenne est jugé insuffisant pour quelqu'un qui se revendique comme le
+                                roi du genre face à des stakhanovistes comme Cole.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Stone Temple Pilots -->
+                    <div class="reveal story-block" data-time="300">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Fly pebbles at your dome, we the Stone
+                                Temple Pilots</p>
+                            <p class="group-hover:text-white transition-colors italic">This is merely a warning shot to
+                                back niggas down</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Warning Shot (Avertissement)</span>
+                            <p>Cole termine sur l'idée que ce n'est qu'un coup de semonce. Le jeu de mots sur *Stone
+                                Temple Pilots* (groupe de grunge) suggère l'utilisation de "pierres" (balles/mots)
+                                visant la tête. Pourtant, le ton final reste celui d'un homme qui ne veut pas vraiment
+                                faire cette guerre.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
+                                        class="text-zinc-300">5 avril 2024</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
+                                        class="text-zinc-300">Kendrick Lamar</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">BPM</span><span
+                                        class="text-zinc-300">~90 / 84</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Mixtape</span><span
+                                        class="text-zinc-300">Might Delete Later</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <span class="text-amber-400 text-[10px] uppercase font-bold block mb-2">Note
+                                Historique</span>
+                            <p class="text-[11px] text-zinc-500 leading-snug">Deux jours après sa sortie, Cole s'est
+                                excusé publiquement au Dreamville Fest, qualifiant ce diss de "pire erreur de sa vie".
+                                Le morceau a été retiré des plateformes le 12 avril 2024.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+            <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ?</p>
+            <a href="../contribute.html?song=7-minute-drill"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>Suggérer une correction
+            </a>
+        </div>
+
+        <section class="mt-24 border-t border-white/5 pt-16">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="push-ups.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Push Ups</div>
+                            <div class="rec-artist">Drake • Beef 2024</div>
+                        </div>
+                    </a>
+                    <a href="euphoria.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Euphoria</div>
+                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
+                        </div>
+                    </a>
+                    <a href="family-matters.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Family Matters</div>
+                            <div class="rec-artist">Drake • Beef 2024</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/player.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 
-    <!-- Decrypt Bubble Container -->
     <div id="decrypt-bubble" class="decrypt-bubble">
         <div class="bubble-header">
             <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>

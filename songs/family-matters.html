@@ -4,14 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirection... - SongStory</title>
-    <script>
-        window.location.href = "../single-song.html?id=family-matters";
-    </script>
-    <meta http-equiv="refresh" content="0; url=../single-song.html?id=family-matters">
+    <title>Family Matters - Drake - SongStory</title>
+    <meta name="description"
+        content="Analyse de Family Matters de Drake. La réponse massive de 7 minutes à Kendrick Lamar, ciblant ses accusations et retournant ses attaques.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+<body class="bg-zinc-950 text-zinc-400 antialiased layout-classic" style="font-family:'Inter',sans-serif;">
     <div id="toc-sidebar" class="toc-sidebar"></div>
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,16 +32,16 @@
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
                         <a href="../index.html"
-                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                            class="text-white text-sm hover:text-amber-400 transition-colors">DÃ©couvrir</a>
                         <a href="../library.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">BibliothÃ¨que</a>
                         <a href="../artists.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
                         <a href="../timeline.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
                         <a href="../glossary.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Ã€
                             propos</a>
                     </div>
                 </div>
@@ -72,69 +79,590 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="text-xs uppercase tracking-widest text-blue-400 font-medium">Diss Track — Beef
+                    <span class="text-xs uppercase tracking-widest text-blue-400 font-medium">Diss Track â€” Beef
                         2024</span>
-                    <span class="text-xs text-zinc-600">•</span>
+                    <span class="text-xs text-zinc-600">â€¢</span>
                     <a href="../artists/drake.html"
                         class="text-xs text-zinc-500 hover:text-blue-400 transition-colors">Voir le profil de Drake
-                        →</a>
+                        â†’</a>
                 </div>
-                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Family Matters</h1>
-                <p class="text-xl text-zinc-500 font-light">Drake • 3 mai 2024</p>
-                <p class="text-sm text-zinc-600 mt-2">Cible : Kendrick Lamar • 7:36 min • Trois changements de beat</p>
+                <h1 id="song-title" class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Family
+                    Matters</h1>
+                <div id="song-meta">
+                    <p class="text-xl text-zinc-500 font-light">Drake â€¢ 3 mai 2024</p>
+                </div>
+                <p class="text-sm text-zinc-600 mt-2">Cible : Kendrick Lamar â€¢ 7:36 min â€¢ Trois changements de beat
+                </p>
                 <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
                             icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
-                            Décryptages</span></button></div>
+                            DÃ©cryptages</span></button></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div id="narrative-wrapper"
                     class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
 
+                    <!-- Block 1 : L'Intro â€” Ligne Rouge Franchie -->
                     <div class="reveal story-block" data-time="0">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">You the one that's always talkin' 'bout
-                                the culture</p>
-                            <p class="group-hover:text-white transition-colors">You the one that's always talkin' 'bout
-                                the vulture</p>
-                            <p class="group-hover:text-white transition-colors font-medium">I'm the one that really live
-                                it, you just wrote it</p>
-                            <p class="group-hover:text-white transition-colors text-blue-400 font-medium">You the one
-                                that's always talkin' 'bout the children, you a pedophile too</p>
+                            <p class="group-hover:text-white transition-colors italic">Maybe in this song, you shouldn't
+                                start by saying</p>
+                            <p class="group-hover:text-white transition-colors">Nigga, I said it, I know that you mad
+                            </p>
+                            <p class="group-hover:text-white transition-colors">I've emptied the clip over friendlier
+                                jabs</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">You mentioned
+                                my seed, now deal with his dad</p>
+                            <p class="group-hover:text-white transition-colors">I gotta go bad, I gotta go bad</p>
+                            <p class="group-hover:text-white transition-colors text-zinc-600 italic text-base">Mm, mm,
+                                yeah</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Inversion des Accusations</span>
-                            <p>Dans ce morceau massif, Drake tente de retourner toutes les critiques de Kendrick contre
-                                lui. Il l'accuse d'être un hypocrite qui parle de culture alors qu'il vit loin de la
-                                réalité de la rue. L'attaque la plus brutale est le "no u" (miroir) concernant les
-                                accusations de pédophilie, lançant une contre-accusation sans preuves pour semer le
-                                doute.</p>
+                            <span class="text-white font-medium block mb-1">L'Escalade InÃ©vitable</span>
+                            <p>Drake commence par une concession ironique ("maybe you shouldn't start by saying") avant
+                                de lÃ¢cher immÃ©diatement le terme interdit. Il justifie la brutalitÃ© de sa rÃ©ponse :
+                                Kendrick a franchi une ligne rouge en mentionnant son fils ("my seed") dans "Euphoria".
+                                Pour Drake, ce n'est plus un Ã©change de piques ("friendlier jabs"), mais une guerre
+                                totale oÃ¹ il doit dÃ©chaÃ®ner son cÃ´tÃ© le plus sombre ("go bad").</p>
                         </div>
                     </div>
 
-                    <div class="reveal story-block" data-time="120">
+                    <!-- Block 2 : Hook + Transition -->
+                    <div class="reveal story-block" data-time="28">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">You claim you're for the city, but you
-                                live in a mansion</p>
-                            <p class="group-hover:text-white transition-colors font-medium text-blue-400">Why you always
-                                talkin' 'bout the struggle from the hills?</p>
-                            <p class="group-hover:text-white transition-colors">Your girl is stayin' with a bodyguard, I
-                                know the deal</p>
-                            <p class="group-hover:text-white transition-colors">You hit your wife, Kendrick, we know how
-                                you feel</p>
+                            <p class="group-hover:text-white transition-colors text-zinc-400 font-medium">Drop, drop,
+                                drop, drop</p>
+                            <p class="group-hover:text-white transition-colors">Drop a fifty bag for the mob in the spot
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Drop a fifty bag, 29 for the thot</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Uh, I was really,
+                                really tryna keep it PG</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">I was really,
+                                really tryna keep it PG</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-blue-400 font-medium block mb-1">Accusations de Violences
+                            <span class="text-white font-medium block mb-1">Le Hook â€” GÃ©nÃ©rositÃ© et
+                                Avertissement</span>
+                            <p>Drake installe une atmosphÃ¨re festive et menaÃ§ante Ã  la fois. Balancer un "fifty bag"
+                                Ã 
+                                son gang et "29 pour la thot" montre son insouciance face au conflit. Le refrain
+                                rÃ©pÃ©tÃ©
+                                ("tryna keep it PG") est ironique : c'est la derniÃ¨re fois qu'il prÃ©tendra se retenir.
+                                Tout ce qui suit sera sans filtre.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : CrÃ©dibilitÃ© de Rue -->
+                    <div class="reveal story-block" data-time="48">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">If you had a set, they'd give your ass a
+                                DP</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400 font-medium">But you
+                                civilian gang, in real life, you PC</p>
+                            <p class="group-hover:text-white transition-colors">You know who really bang a set? My nigga
+                                YG</p>
+                            <p class="group-hover:text-white transition-colors">You know who really bang a set? My nigga
+                                Chuck T</p>
+                            <p class="group-hover:text-white transition-colors">You know who even bang a set out there
+                                is CB</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">And, nigga, Cole losin'
+                                sleep on this, it ain't me</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-blue-400 font-medium block mb-1">L'Illusion de la Rue</span>
+                            <p>Drake attaque la crÃ©dibilitÃ© de rue de Kendrick avec des termes de prison : "DP"
+                                (Disciplinary Punishment, bastonnade rÃ©servÃ©e aux traÃ®tres) et "PC" (Protective
+                                Custody,
+                                le couloir des dÃ©lateurs). Puis il cite de vrais affiliÃ©s Bloods/Crips (YG, Chuck T,
+                                CB)
+                                pour souligner le contraste. La petite pique sur J. Cole ("Cole losin' sleep on this, it
+                                ain't me") signifie que c'est Kendrick, et non Drake, qui a perdu son amitiÃ© avec Cole
+                                dans ce conflit.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Paperwork, AP, Metro -->
+                    <div class="reveal story-block" data-time="72">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You better have some paperwork or that
+                                shit fake tea</p>
+                            <p class="group-hover:text-white transition-colors">Can't be rappin' 'bout no rattin' that
+                                we can't read</p>
+                            <p class="group-hover:text-white transition-colors">I mean, it's true a nigga slimed me for
+                                my AP</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400">Just like how Metro nigga
+                                slimed him for his main squeeze</p>
+                            <p class="group-hover:text-white transition-colors">Out here beggin' for attention, nigga,
+                                say please</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Trahisons et Preuve</span>
+                            <p>Drake exige des preuves ("paperwork") pour les accusations de dÃ©lation portÃ©es par
+                                Kendrick, sinon c'est du "fake tea" (des ragots sans fondement). Il admet qu'un de ses
+                                proches l'a "slimÃ©" (trahi) pour voler son AP (montre Audemars Piguet). Il retourne
+                                l'argument : Metro Boomin aussi s'est fait "slimer" par rapport Ã  sa relation amoureuse
+                                â€” tous deux ont Ã©tÃ© trahis par leur cercle, donc Kendrick n'a pas de leÃ§on Ã 
+                                donner.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Activisme de FaÃ§ade + Vie Intime -->
+                    <div class="reveal story-block" data-time="92">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Always rappin' like you 'bout to get the
+                                slaves freed</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">You just
+                                actin' like an activist, it's make-believe</p>
+                            <p class="group-hover:text-white transition-colors">Don't even go back to your hood and
+                                plant no money trees</p>
+                            <p class="group-hover:text-white transition-colors">Say you hate the girls I fuck, but what
+                                you really mean?</p>
+                            <p class="group-hover:text-white transition-colors">I been with Black and white and
+                                everything that's in between</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Activisme de Vitrine</span>
+                            <p>Drake qualifie l'activisme de Kendrick de thÃ©Ã¢tre â€” il ne retourne jamais Ã  Compton
+                                pour
+                                vÃ©ritablement aider la communautÃ© ("plant no money trees" â€” rÃ©fÃ©rence directe au
+                                titre
+                                "Money Trees" de GKMC). Quand Kendrick critique les femmes que Drake frÃ©quente, Drake
+                                lui rÃ©pond : ses prÃ©fÃ©rences personnelles ne regardent que lui. La phrase "Black and
+                                white and everything in between" anticipe l'attaque suivante sur le colorisme.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : IdentitÃ© / Whitney / Dave Free -->
+                    <div class="reveal story-block" data-time="112">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You the Black messiah wifin' up a mixed
+                                queen</p>
+                            <p class="group-hover:text-white transition-colors">And hit vanilla cream to help out with
+                                your self-esteem</p>
+                            <p class="group-hover:text-white transition-colors">On some Bobby shit, I wanna know what
+                                Whitney need</p>
+                            <p class="group-hover:text-white transition-colors">All that puppy love was over in y'all
+                                late teens</p>
+                            <p class="group-hover:text-white transition-colors">Why you never hold your son and tell
+                                him, "Say cheese"?</p>
+                            <p class="group-hover:text-white transition-colors">We could've left the kids out of this,
+                                don't blame me</p>
+                            <p class="group-hover:text-white transition-colors">You a dog and you know it, you just play
+                                sweet</p>
+                            <p class="group-hover:text-white transition-colors">Your baby mama captions always
+                                screamin', "Save me"</p>
+                            <p class="group-hover:text-white transition-colors">You did her dirty all your life, you
+                                tryna make peace</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Messie et ses Contradictions</span>
+                            <p>Drake expose une contradiction fondamentale : Kendrick se pose en dÃ©fenseur radical de
+                                la
+                                Blackness mais est mariÃ© Ã  une femme mÃ©tisse (Whitney Alford). En comparant leur
+                                relation Ã  celle de Bobby Brown et Whitney Houston (toxique et destructrice), Drake
+                                suggÃ¨re une faÃ§ade. Il pointe aussi l'absence de photos publiques de Kendrick avec ses
+                                enfants, tout en rappelant que c'est Kendrick qui a commencÃ© Ã  les mentionner. Les
+                                captions de la mÃ¨re de ses enfants ("Save me") impliquent une dÃ©tresse privÃ©e.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : L'Accusation Dave Free - Bombe -->
+                    <div class="reveal story-block" data-time="140">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium text-white">I heard that one
+                                of 'em little kids might be Dave Free</p>
+                            <p class="group-hover:text-white transition-colors">Don't make it Dave Free's</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-bold">'Cause if your GM
+                                is your BM secret BD</p>
+                            <p class="group-hover:text-white transition-colors">Then this is all makin' plenty fuckin'
+                                sense to me</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">La Bombe â€” Dave Free</span>
+                            <p>Le moment le plus viral du morceau. Drake lance une rumeur explosive : l'un des enfants
+                                de Kendrick ne serait pas le sien, mais celui de Dave Free, son meilleur ami d'enfance
+                                et co-fondateur de pgLang. Le jeu sur les acronymes : "GM" (General Manager, le rÃ´le de
+                                Dave Free dans l'entourage), "BM" (Baby Mama), "BD" (Baby Daddy). Si celui qui gÃ¨re ta
+                                carriÃ¨re est le pÃ¨re secret de ton enfant, toute la dynamique de pouvoir autour de
+                                Kendrick serait Ã  revisiter.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Interlude ChorÃ©graphique -->
+                    <div class="reveal story-block" data-time="158">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors text-zinc-400 italic">Ay, let that shorty
+                                breathe</p>
+                            <p class="group-hover:text-white transition-colors">Shake that ass, bitch, hands on your
+                                knees</p>
+                            <p class="group-hover:text-white transition-colors">Shake that ass for Drake, now shake that
+                                ass for free</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Break â€” Provocation Pure</span>
+                            <p>Moment de lÃ©gÃ¨retÃ© calculÃ©e aprÃ¨s la bombe Dave Free. Drake laisse l'accusation
+                                rÃ©sonner
+                                en insistant un interlude festif et provocateur. "Shake that ass for free" est un double
+                                sens : gratis, mais aussi en rÃ©fÃ©rence Ã  Dave Free â€” un jeu de mots qui rappelle
+                                immÃ©diatement la rÃ©vÃ©lation prÃ©cÃ©dente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Beat Switch 1 â€” Abel / Mini Drac' -->
+                    <div class="reveal story-block" data-time="170">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Well, not that kind
+                                of free, I'm talkin' 'bout my nigga Dave</p>
+                            <p class="group-hover:text-white transition-colors">Your man a lil' K, we call that shit a
+                                mini Drac'</p>
+                            <p class="group-hover:text-white transition-colors">He always said I overlooked him, I was
+                                starin' straight</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400 font-medium">These bars go
+                                over Kenny head no matter what I say</p>
+                            <p class="group-hover:text-white transition-colors">I know you like to keep it short, so let
+                                me paraphrase</p>
+                            <p class="group-hover:text-white transition-colors">Knew it was smoke when Abel hit us with
+                                the serenade</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Nigga said, "Uh,
+                                uh" / Almost started reachin' for my waist</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-blue-400 font-medium block mb-1">Premier Beat Switch â€” La Taille et The
+                                Weeknd</span>
+                            <p>Le premier changement de beat marque un pivot. Drake joue sur la petite taille de
+                                Kendrick avec "mini Drac'" et "bars go over Kenny head" (doublement : au-dessus de sa
+                                comprÃ©hension ET littÃ©ralement au-dessus de sa tÃªte). Il confirme ensuite que la
+                                rupture
+                                avec The Weeknd a commencÃ© quand Abel a collaborÃ© avec Kendrick sur son album ("la
+                                sÃ©rÃ©nade") â€” ce qui, pour Drake, Ã©tait une dÃ©claration de guerre implicite.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : Beat Switch 2 â€” DeuxiÃ¨me couplet brutal -->
+                    <div class="reveal story-block" data-time="202">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Let's stop playin'
+                                around and take this shit serious, man</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">If Drake shooters doin'
+                                TikToks, nigga</p>
+                            <p class="group-hover:text-white transition-colors">Realest shooter in your gang / That's
+                                P's brother, y'all ain't getting shit shot, nigga</p>
+                            <p class="group-hover:text-white transition-colors">I can't listen to the stick talk in
+                                falsetto</p>
+                            <p class="group-hover:text-white transition-colors">Save it for a hip-hop nigga, you don't
+                                even be at home, dog</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400">You a souvenir
+                                out-the-gift-shop, nigga</p>
+                            <p class="group-hover:text-white transition-colors">Still mad about that one ho / We ain't
+                                even fuck, I just lip-locked with her</p>
+                            <p class="group-hover:text-white transition-colors">I get active when it's wartime / I ain't
+                                even really let my dick drop, nigga</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">SÃ©rieux du Conflit â€” RÃ©ponse aux
+                                Menaces</span>
+                            <p>Drake change de registre pour rÃ©pondre aux provocations physiques de Kendrick. Il moque
+                                les "shooters" de Kendrick qui font des TikToks au lieu de rester discrets. Il qualifie
+                                Kendrick de "souvenir out-the-gift-shop" â€” une piÃ¨ce dÃ©corative, pas un vrai acteur
+                                de
+                                la rue. Il clarifie aussi une rumeur : il n'a jamais couchÃ© avec la femme dont Kendrick
+                                est jaloux, il l'a juste embrassÃ©e. Drake minimise l'ensemble avec une froideur
+                                calculÃ©e.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Rick Ross / Old Job -->
+                    <div class="reveal story-block" data-time="232">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">What the fuck I heard Rick drop, nigga?
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Talkin' somethin' 'bout a nose job,
+                                nigga</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">Ozempic got a
+                                side effect of jealousy / The doctor never told y'all niggas</p>
+                            <p class="group-hover:text-white transition-colors">Put a nigga in the bars, let a nigga rot
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-blue-400">Kind of like your old job,
+                                nigga</p>
+                            <p class="group-hover:text-white transition-colors">House sittin' on some land / But it's
+                                out where no one even really know y'all niggas</p>
+                            <p class="group-hover:text-white transition-colors">Bitches gotta drive two hours 'fore you
+                                pay 'em / Just to give a blowjob, nigga</p>
+                            <p class="group-hover:text-white transition-colors">Must've snorted up a snowball</p>
+                            <p class="group-hover:text-white transition-colors">'Cause my last record deal was 400 M's /
+                                These days, that's a low ball, nigga</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-500 font-medium block mb-1">Rick Ross BalayÃ©</span>
+                            <p>Drake rÃ©pond Ã  Rick Ross (qui l'avait accusÃ© de s'Ãªtre refait le nez) avec humour :
+                                c'est
+                                l'Ozempic de Ross qui crÃ©e sa jalousie. Plus sÃ©rieusement, "kind of like your old job"
+                                est une pique cruelle rappelant que Ross Ã©tait agent correctionnel (CO) avant de rapper
+                                â€” "mettre quelqu'un dans les barreaux" Ã©tait littÃ©ralement son ancien mÃ©tier. Drake
+                                enfonce le clou sur son isolement (sa villa est injoignable, les filles font 2h de
+                                route) et sa richesse Ã©crasante (400 millions de dollars = un "low ball").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 12 : Liste des ennemis / good kid m.A.A.d city -->
+                    <div class="reveal story-block" data-time="265">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Who's next on the list?</p>
+                            <p class="group-hover:text-white transition-colors">Which one of my so-called niggas / Need
+                                a shell from the clip?</p>
+                            <p class="group-hover:text-white transition-colors">Always knew I had to smoke y'all niggas
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium italic">good
+                                kid, m.A.A.d city van</p>
+                            <p class="group-hover:text-white transition-colors">We'll pop the latch and make the door
+                                slide</p>
+                            <p class="group-hover:text-white transition-colors">Tears runnin' down my cheek</p>
+                            <p class="group-hover:text-white transition-colors text-red-500">Laughin' at you pussies
+                                dyin', it's a war cry</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Retourner l'Iconographie de
+                                Kendrick</span>
+                            <p>Drake retourne l'univers visuel et lyrical de Kendrick contre lui. Le "good kid, m.A.A.d
+                                city van" est une rÃ©fÃ©rence directe Ã  la pochette et Ã  la narration de l'album de
+                                Kendrick â€” Drake s'en rÃ©approprie l'imagerie pour peindre un tableau de violence
+                                froide.
+                                "Tears runnin' down my cheek / Laughin'" est une image psychopathique : il pleure de
+                                rire en regardant ses ennemis tomber.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 13 : The Weeknd â€” Beef confirmÃ© -->
+                    <div class="reveal story-block" data-time="288">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic">Weeknd music gettin' played in
+                                all the spots</p>
+                            <p class="group-hover:text-white transition-colors">Where boys got a little more pride</p>
+                            <p class="group-hover:text-white transition-colors">That's why all your friends dippin' to
+                                Atlanta / Payin' just to find a tour guide</p>
+                            <p class="group-hover:text-white transition-colors text-white font-medium">Abel, run your
+                                fuckin' bread</p>
+                            <p class="group-hover:text-white transition-colors">Need to buy some more chains for some
+                                more guys</p>
+                            <p class="group-hover:text-white transition-colors">Let me find another street nigga / I can
+                                take to the game courtside</p>
+                            <p class="group-hover:text-white transition-colors">Let me get a used Ferrari for a rapper /
+                                Take the nigga on a horse ride</p>
+                            <p class="group-hover:text-white transition-colors text-red-400">Anything to take the
+                                spotlight off the fact</p>
+                            <p class="group-hover:text-white transition-colors text-red-400">The boss is a drugged-out
+                                lil' punk sissy from the Northside</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">The Weeknd â€” Rupture DÃ©finitive</span>
+                            <p>Drake confirme le beef avec Abel Tesfaye. Il note ironiquement que la musique de The
+                                Weeknd tourne dans des endroits oÃ¹ "les gars ont plus de fiertÃ©" â€” une pique sur le
+                                fait
+                                que son audience est perÃ§ue comme plus fÃ©minine ou plus mainstream. La section
+                                centrale
+                                est une liste de cadeaux habituellement faits par quelqu'un qui essaie d'acheter la
+                                loyautÃ© de son entourage. "Drugged-out lil' punk sissy from the Northside" est une
+                                attaque totale sur l'image et la rÃ©putation d'Abel (Northside est le quartier de
+                                Toronto
+                                d'oÃ¹ vient The Weeknd).</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 14 : A$AP Rocky / Fenty / Pluto -->
+                    <div class="reveal story-block" data-time="322">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Rakim talkin' shit again / Gassed 'cause
+                                you hit my BM first</p>
+                            <p class="group-hover:text-white transition-colors text-blue-400">I ain't even know you
+                                rapped still / 'Cause they only talkin' 'bout your 'fit again</p>
+                            <p class="group-hover:text-white transition-colors">Probably gotta have a kid again / 'Fore
+                                you think of droppin' any shit again</p>
+                            <p class="group-hover:text-white transition-colors">Even when you do drop, they gon' say /
+                                You should've modeled 'cause it's mid again</p>
+                            <p class="group-hover:text-white transition-colors italic">Smokin' Fenty 'bout they /
+                                Should've put you on the first one, tryna get it in</p>
+                            <p class="group-hover:text-white transition-colors">Ask Fring if this a good idea</p>
+                            <p class="group-hover:text-white transition-colors">The next time you cuddled in that bed
+                                again</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">"Leave the boy alone /
+                                'Fore you get your head split again"</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-blue-400 font-medium block mb-1">A$AP Rocky â€” Le Mannequin Jaloux</span>
+                            <p>Drake s'en prend Ã  A$AP Rocky (Rakim Mayers), l'accusant d'Ãªtre jaloux simplement parce
+                                qu'il a Ã©tÃ© avec Rihanna avant lui. Il moque l'absence de sorties musicales de Rocky
+                                ("je savais mÃªme plus que tu rappais encore") et prÃ©dit que sa prochaine sortie sera
+                                "mid" (moyenne). "Smokin' Fenty" est Rihanna en personne qui est d'accord qu'il aurait
+                                dÃ» Ãªtre sur Fenty Beauty. "Ask Fring" est une allusion Ã  Breaking Bad â€” et Ã  une
+                                personne rÃ©elle dans l'entourage de Rihanna qui lui conseillerait de laisser tomber ce
+                                beef.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 15 : Future / Savage / Ross + Coalition -->
+                    <div class="reveal story-block" data-time="358">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Pluto shit make me sick to my stomach /
+                                We ain't never really been through it</p>
+                            <p class="group-hover:text-white transition-colors text-zinc-400">Leland Wayne, he a fuckin'
+                                lame / So I know he had to be an influence</p>
+                            <p class="group-hover:text-white transition-colors">These niggas had a plan and they finally
+                                / Found a way to rope you into it</p>
+                            <p class="group-hover:text-white transition-colors">Two separate albums dissin' / I just did
+                                a Kim to it, nigga, skim through it</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Me and Savage had the hoes
+                                drippin' wet at shows / Almost had to swim to it</p>
+                            <p class="group-hover:text-white transition-colors">K-Dot shit is only hittin' hard when /
+                                Baby Keem put his pen to it</p>
+                            <p class="group-hover:text-white transition-colors">Ross callin' me the white boy / And the
+                                shit kind of got a ring to it</p>
+                            <p class="group-hover:text-white transition-colors italic">'Cause all these rappers wavin'
+                                white flags / While the whole fuckin' club sing to it</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Coalition â€” Futur, Metro, Keem</span>
+                            <p>Future ("Pluto") aurait trahi Drake. "Leland Wayne" = Lil Wayne, accusÃ© d'avoir
+                                influencÃ©
+                                Kendrick contre Drake avec ses griefs personnels contre Cash Money. Drake dit avoir
+                                ignorÃ© deux albums de diss en faisant un "Kim" â€” comme Kim Kardashian qui scrolle et
+                                ne
+                                prend pas le temps de se battre avec les irrelevants. Il souligne que les meilleurs
+                                morceaux de Kendrick ("K-Dot") sont Ã©crits par Baby Keem. Et finalement : si Ross
+                                l'appelle "white boy", c'est que tous les autres rappers lÃ¨vent le drapeau blanc
+                                pendant
+                                que ses fans fÃªtent sa victoire.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 16 : Grammy / Pharrell / Tupac / TDE -->
+                    <div class="reveal story-block" data-time="398">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium">Murder scene on your man
+                                tonight / Then come to the vigil with the candlelight</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">Body after fuckin'
+                                body and you know Rick / Readin' my Miranda rights</p>
+                            <p class="group-hover:text-white transition-colors">Ay, Kendrick just opened his mouth /
+                                Someone go hand him a Grammy right now</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">Where is your uncle at? /
+                                'Cause I wanna talk to the man of the house</p>
+                            <p class="group-hover:text-white transition-colors">West Coast niggas do fades, right? /
+                                Come get this ass whoopin', I'm handin' 'em out</p>
+                            <p class="group-hover:text-white transition-colors">You wanna take up for Pharrell? / Then
+                                come get his legacy out of my house</p>
+                            <p class="group-hover:text-white transition-colors">A cease-and-desist is for hoes / Can't
+                                listen to lies that come out of your mouth</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">You called the
+                                Tupac estate / And begged 'em to sue me and get that shit down</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Grammy, Pharrell et la LÃ¢chetÃ©
+                                LÃ©gale</span>
+                            <p>Drake enchaÃ®ne les accusations. "Venir au vigil avec la bougie aprÃ¨s le meurtre" =
+                                l'hypocrisie d'un Kendrick qui prÃªche mais menace en coulisses. Il se moque des Grammy
+                                de Kendrick de maniÃ¨re sarcastique. "L'oncle" fait rÃ©fÃ©rence Ã  une dispute familiale
+                                dans l'entourage de Kendrick. Drake rÃ©vÃ¨le ensuite un acte qu'il juge honteux :
+                                Kendrick
+                                aurait contactÃ© l'estate de Tupac pour le faire poursuivre en justice et retirer ses
+                                morceaux (notamment son AI tupac) â€” Drake compare cela Ã  utiliser sa femme de mÃ©nage
+                                juridique pour un combat de rue.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 17 : TDE / Colorisme / MJ / Fin -->
+                    <div class="reveal story-block" data-time="438">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I'm losin' perspective on beef / Boi-1da
+                                send beat and I'll kill you for fun</p>
+                            <p class="group-hover:text-white transition-colors text-red-500">Your daddy got robbed by
+                                Top / You Stunna and Wayne, like father, like son</p>
+                            <p class="group-hover:text-white transition-colors">Anthony set up the plays, Kojo be
+                                chargin' / You double for nothin'</p>
+                            <p class="group-hover:text-white transition-colors">We already know it's a twenty-v-one / We
+                                already know why you went number one</p>
+                            <p class="group-hover:text-white transition-colors font-medium">It's clearly because of The
+                                Boy / You right about "Fuck the big three"</p>
+                            <p class="group-hover:text-white transition-colors">It's only Big D, and there's video proof
+                            </p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">The blacker the berry,
+                                the sweeter the juice / We get that you like to put gin in your juice</p>
+                            <p class="group-hover:text-white transition-colors">We get that you think that you Bishop in
+                                Juice</p>
+                            <p class="group-hover:text-white transition-colors">When you put your hands on your girl /
+                                Is it self-defense 'cause she bigger than you?</p>
+                            <p class="group-hover:text-white transition-colors">Why did you move to New York? / Proposed
+                                in 2015 / But don't wanna make her your actual wife</p>
+                            <p class="group-hover:text-white transition-colors">Your darkest secrets are comin' to light
+                                / It's all on your face, like what happened to Mike</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">Oh, shit,
+                                it's all makin' sense / Maybe I'm Prince and you actually Mike</p>
+                            <p class="group-hover:text-white transition-colors">Michael was prayin' his features would
+                                change / So people believe that he's actually white</p>
+                            <p class="group-hover:text-white transition-colors">Top would make you do features for
+                                change / Get on pop records and rap for the whites</p>
+                            <p class="group-hover:text-white transition-colors">And, wait, you say your brother Jermaine
+                                / But you wanted him to stay out of the light</p>
+                            <p class="group-hover:text-white transition-colors">I get off the plane and nothin' has
+                                changed</p>
+                            <p class="group-hover:text-white transition-colors italic">I head to Delilah with all of my
+                                ice (x3)</p>
+                            <p class="group-hover:text-white transition-colors">This shit gotta be over by now / For
+                                anyone out here that's callin' it right</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">L'ExÃ©cution Finale â€” TDE, MJ et "You're
+                                Dead"</span>
+                            <p>Drake rÃ©vÃ¨le que le pÃ¨re de Kendrick a Ã©tÃ© "volÃ©" par Anthony Tiffith (Top Dawg),
+                                tout
+                                comme Lil Wayne fut exploitÃ© par Birdman â€” une dynamique toxique qui se rÃ©pÃ¨te. Il
+                                affirme que le numÃ©ro 1 de Kendrick n'Ã©tait dÃ» qu'Ã  l'effet de nouveautÃ© contre
+                                Drake.
+                                La mÃ©taphore Michael Jackson est la plus Ã©laborÃ©e : Kendrick est "Michael" (qui a
+                                changÃ©
+                                ses traits pour paraÃ®tre plus blanc, et laissÃ© Jermaine dans l'ombre), Drake est
+                                "Prince" (qui est restÃ© lui-mÃªme, souverain sans compromis). Top Dawg aurait forcÃ©
+                                Kendrick Ã  faire des collaborations pop "pour les blancs". Puis Drake clÃ´t avec son
+                                insignifiance face Ã  lui : il sort de l'avion, rien n'a changÃ©, il file chez Delilah
+                                (club trÃ¨s rÃ©putÃ© Ã  LA) avec ses bijoux.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 18 : Outro â€” "You're Dead" -->
+                    <div class="reveal story-block" data-time="456">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p
+                                class="group-hover:text-white transition-colors text-red-500 font-bold text-2xl tracking-widest">
+                                You're dead</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 uppercase tracking-widest">
+                                You're dead, you're dead</p>
+                            <p class="group-hover:text-white transition-colors">There's nowhere to hide, there's nowhere
+                                to hide</p>
+                            <p class="group-hover:text-white transition-colors">You know what I mean</p>
+                            <p class="group-hover:text-white transition-colors font-medium">They hired a crisis
+                                management team</p>
+                            <p class="group-hover:text-white transition-colors">To clean up the fact that you beat on
+                                your queen</p>
+                            <p class="group-hover:text-white transition-colors">The picture you paint, it ain't what it
+                                seem</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-bold text-xl">You're
+                                dead</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">L'Accusation Finale â€” Violences
                                 Domestiques</span>
-                            <p>Drake lance une accusation extrêmement grave de violences conjugales contre Kendrick
-                                envers sa compagne Whitney Alford. Il suggère que l'image de "sage" et de "moraliste" de
-                                Kendrick est un masque cachant une réalité beaucoup plus sombre. C'est le pivot du
-                                morceau qui vise à détruire l'intégrité morale de son adversaire.</p>
+                            <p>L'outro le plus glaÃ§ant du rap de 2024. Drake porte l'accusation la plus grave :
+                                Kendrick
+                                aurait physiquement agressÃ© sa compagne Whitney Alford, et son Ã©quipe aurait engagÃ©
+                                une
+                                agence de gestion de crise pour Ã©touffer l'affaire. "The picture you paint, it ain't
+                                what it seem" â€” toute l'image de sage moraliste construite par Kendrick serait une
+                                faÃ§ade. "You're dead" rÃ©pÃ©tÃ© comme une condamnation : sur ce point, si l'accusation
+                                est
+                                vraie, c'est la fin de toute crÃ©dibilitÃ© de Kendrick. La rÃ©pÃ©tition crÃ©e un effet
+                                de
+                                verdict irrÃ©vocable.</p>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
                     <div class="sticky top-24 space-y-6">
                         <div id="dynamic-analysis-card"
@@ -156,7 +684,14 @@
                                 Informations
                             </h4>
                             <div id="info-grid" class="space-y-3 text-xs">
-                                <!-- Filled by JS -->
+                                <div class="flex justify-between"><span class="text-zinc-500">Artiste</span><span
+                                        class="text-zinc-300">Drake</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">AnnÃ©e</span><span
+                                        class="text-zinc-300">2024</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">DurÃ©e</span><span
+                                        class="text-zinc-300">7:36 min</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Cibles</span><span
+                                        class="text-zinc-300">Kendrick, Ross, Weeknd, Rocky...</span></div>
                             </div>
                         </div>
                     </div>
@@ -168,6 +703,7 @@
     <script src="../js/data.js"></script>
     <script src="../js/ui.js"></script>
     <script src="../js/player.js"></script>
+    <script src="../js/song-renderer.js"></script>
 
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
@@ -176,7 +712,7 @@
     <div id="decrypt-bubble" class="decrypt-bubble">
         <div class="bubble-header">
             <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
-            <span>Décryptage SongStory</span>
+            <span>DÃ©cryptage SongStory</span>
         </div>
         <div id="bubble-content" class="bubble-content"></div>
     </div>

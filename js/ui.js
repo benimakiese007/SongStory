@@ -17,7 +17,6 @@ const SongStoryUI = {
         this.initLayout();
         this.initTOC();
         this.initTransitions();
-        this.initGlobalGlossaryPanel();
     },
 
     /**
@@ -148,120 +147,7 @@ const SongStoryUI = {
             });
             term.addEventListener('mousemove', position);
             term.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
-
-            // New click handler to open the global panel
-            term.addEventListener('click', (e) => {
-                const termText = (term.dataset.term || term.textContent).toLowerCase();
-                this.openGlossaryPanel(termText);
-            });
         });
-    },
-
-    openGlossaryPanel(searchQuery = '') {
-        const fab = document.getElementById('glossary-fab');
-        if (fab) fab.click(); // Trigger the existing open logic
-
-        if (searchQuery) {
-            const searchInput = document.getElementById('glossary-panel-search');
-            if (searchInput) {
-                searchInput.value = searchQuery;
-                searchInput.dispatchEvent(new Event('input'));
-
-                // Scroll to the first match in the panel
-                setTimeout(() => {
-                    const firstMatch = document.querySelector('#glossary-panel-content .mb-4');
-                    if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 350);
-            }
-        }
-    },
-
-    initGlobalGlossaryPanel() {
-        if (document.getElementById('global-glossary-panel')) return;
-
-        // Ensure GLOSSARY data is available
-        const glossaryData = typeof GLOSSARY !== 'undefined' ? GLOSSARY : [];
-
-        // 1. Inject FAB (Floating Action Button)
-        const fab = document.createElement('button');
-        fab.id = 'glossary-fab';
-        fab.className = 'fixed bottom-24 right-6 w-12 h-12 bg-amber-500 text-zinc-950 rounded-full flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all z-40 focus:outline-none focus:ring-2 focus:ring-amber-300';
-        fab.innerHTML = '<iconify-icon icon="solar:book-bookmark-bold" width="24"></iconify-icon>';
-        fab.setAttribute('aria-label', 'Ouvrir le glossaire');
-        document.body.appendChild(fab);
-
-        // 2. Inject Panel HTML
-        const panelHTML = `
-            <div id="global-glossary-panel" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-zinc-950/95 backdrop-blur-2xl border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
-                <div class="p-6 border-b border-white/10 flex items-center justify-between">
-                    <h3 class="text-white text-lg font-medium flex items-center gap-2">
-                        <iconify-icon icon="solar:book-bookmark-linear" class="text-amber-500"></iconify-icon>
-                        Glossaire Rap & Musique
-                    </h3>
-                    <button id="close-glossary-panel" class="text-zinc-500 hover:text-white transition-colors">
-                        <iconify-icon icon="solar:close-circle-linear" width="24"></iconify-icon>
-                    </button>
-                </div>
-                <div class="p-4 border-b border-white/5 bg-zinc-900/30">
-                    <div class="relative">
-                        <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" width="18"></iconify-icon>
-                        <input type="text" id="glossary-panel-search" placeholder="Rechercher un terme..." class="w-full bg-zinc-950 border border-white/10 text-white text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-amber-500/50 transition-colors">
-                    </div>
-                </div>
-                <div id="glossary-panel-content" class="flex-1 overflow-y-auto p-6 space-y-6">
-                    <!-- Terms injected here -->
-                </div>
-            </div>
-            <div id="glossary-panel-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', panelHTML);
-
-        const panel = document.getElementById('global-glossary-panel');
-        const overlay = document.getElementById('glossary-panel-overlay');
-        const closeBtn = document.getElementById('close-glossary-panel');
-        const contentArea = document.getElementById('glossary-panel-content');
-        const searchInput = document.getElementById('glossary-panel-search');
-
-        // Populate logic
-        const renderTerms = (termsToRender) => {
-            if (termsToRender.length === 0) {
-                contentArea.innerHTML = '<p class="text-zinc-500 text-sm text-center py-8">Aucun terme trouvé.</p>';
-                return;
-            }
-            contentArea.innerHTML = termsToRender.map(item => `
-                <div class="mb-4">
-                    <h4 class="text-amber-400 font-medium text-base mb-1">${item.term}</h4>
-                    <p class="text-zinc-400 text-sm leading-relaxed">${item.definition}</p>
-                </div>
-            `).join('');
-        };
-
-        renderTerms(glossaryData);
-
-        // Search logic
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = glossaryData.filter(item =>
-                item.term.toLowerCase().includes(query) ||
-                item.definition.toLowerCase().includes(query)
-            );
-            renderTerms(filtered);
-        });
-
-        // Toggle logic
-        const openPanel = () => {
-            panel.classList.remove('translate-x-full');
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-        };
-
-        const closePanel = () => {
-            panel.classList.add('translate-x-full');
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-        };
-
-        fab.addEventListener('click', openPanel);
-        closeBtn.addEventListener('click', closePanel);
-        overlay.addEventListener('click', closePanel);
     },
 
     async initComments() {

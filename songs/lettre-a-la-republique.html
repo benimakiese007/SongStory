@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lettre à la République - Kery James - SongStory</title>
+    <meta name="description"
+        content="Analyse de Lettre à la République de Kery James. Un réquisitoire puissant sur le passé colonial, l'identité et les fractures de la société française.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <!-- Nav auth slot -->
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Classique — Rap
+                        Conscient</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../artists/kery-james.html"
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de Kery
+                        James
+                        →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Lettre à la République
+                </h1>
+                <p class="text-xl text-zinc-500 font-light">Kery James • 2012</p>
+                <p class="text-sm text-zinc-600 mt-2">Album : 92.2012 • 4:02 min</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper"
+                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Passé Colonial -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">À tous ces racistes à la tolérance
+                                hypocrite</p>
+                            <p class="group-hover:text-white transition-colors">Qui ont bâti leur nation sur le sang</p>
+                            <p class="group-hover:text-white transition-colors">Maintenant s'érigent en donneurs de
+                                leçons</p>
+                            <p class="group-hover:text-white transition-colors">Pilleurs de richesses, tueurs
+                                d'africains</p>
+                            <p class="group-hover:text-white transition-colors">Colonisateurs, tortionnaires d'algériens
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Ce passé colonial c'est le vôtre</p>
+                            <p class="group-hover:text-white transition-colors">C'est vous qui avez choisi de lier votre
+                                histoire à la nôtre</p>
+                            <p class="group-hover:text-white transition-colors">Maintenant vous devez assumer</p>
+                            <p class="group-hover:text-white transition-colors">L'odeur du sang vous poursuit même si
+                                vous vous parfumez</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Fardeau de l'Histoire</span>
+                            <p>Kery James s'adresse directement à l'État et aux élites. Il rappelle que la prospérité de
+                                la France est indissociable de son histoire coloniale (Algérie, Afrique). Il dénonce
+                                l'hypocrisie de ceux qui jugent les minorités sans assumer leur responsabilité
+                                historique dans les flux migratoires et les fractures sociales actuelles.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Refrain -->
+                    <div class="reveal story-block" data-time="30">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium">Nous les Arabes et les Noirs
+                            </p>
+                            <p class="group-hover:text-white transition-colors font-medium">On est pas là par hasard</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-400">Toute arrivée
+                                a son départ !</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Pas là par hasard</span>
+                            <p>Cette phrase est le pivot du morceau. Elle souligne que la présence des populations
+                                issues de l'immigration n'est pas un accident géographique, mais la conséquence directe
+                                des choix politiques et économiques de la France pendant et après la colonisation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Main d'oeuvre cheap -->
+                    <div class="reveal story-block" data-time="45">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Vous avez souhaité l'immigration</p>
+                            <p class="group-hover:text-white transition-colors">Grâce à elle vous vous êtes gavés,
+                                jusqu'à l'indigestion</p>
+                            <p class="group-hover:text-white transition-colors">Je crois que la France n'a jamais fait
+                                la charité</p>
+                            <p class="group-hover:text-white transition-colors">Les immigrés c'n'est que la main
+                                d'oeuvre bon marché</p>
+                            <p class="group-hover:text-white transition-colors">Gardez pour vous votre illusion
+                                républicaine</p>
+                            <p class="group-hover:text-white transition-colors">De la douce France bafouée par
+                                l'immigration africaine</p>
+                            <p class="group-hover:text-white transition-colors">Demandez aux tirailleurs sénégalais et
+                                aux harkis</p>
+                            <p class="group-hover:text-white transition-colors">Qui a profité d'qui?</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Mythe de la Charité</span>
+                            <p>Le texte casse le mythe de l'immigration comme un acte de bonté de la République. Il
+                                rappelle que les immigrés ont été appelés par la France pour reconstruire le pays
+                                (Trente Glorieuses) et ont servi de chair à canon durant les guerres mondiales
+                                (Tirailleurs, Harkis).</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Hands of Lies -->
+                    <div class="reveal story-block" data-time="75">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">La République n'est innocente que dans
+                                vos songes</p>
+                            <p class="group-hover:text-white transition-colors">Et vous n'avez les mains blanches que de
+                                vos mensonges</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Innocence Perdue</span>
+                            <p>Kery utilise une métaphore puissante : la "blancheur" des mains des dirigeants n'est pas
+                                due à leur vertu, mais au camouflage de leurs actions passées par le mensonge
+                                institutionnel.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Rejet et Intégration -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Mais pensez vous qu'avec le temps</p>
+                            <p class="group-hover:text-white transition-colors">Les Négros muteraient, finiraient par
+                                devenir Blancs?</p>
+                            <p class="group-hover:text-white transition-colors">Mais la nature humaine a balayé vos
+                                projets</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">On ne
+                                s'intègre pas dans le rejet</p>
+                            <p class="group-hover:text-white transition-colors">On ne s'intègre pas dans les ghettos
+                                français, parqués</p>
+                            <p class="group-hover:text-white transition-colors">Entre immigrés, faut être sensés</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">La Géographie de l'Exclusion</span>
+                            <p>L'artiste souligne l'absurdité du discours sur l'intégration quand celle-ci est censée se
+                                produire dans des zones d'exclusion (les "ghettos"). Si la République refuse l'autre,
+                                l'autre ne peut s'intégrer à un ensemble qui le rejette.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Pyromane et Pompier -->
+                    <div class="reveal story-block" data-time="120">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Comment pointer du doigt le replie
+                                communautaire</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">Que vous avez initié
+                                depuis les bidonvilles de Nanterre</p>
+                            <p class="group-hover:text-white transition-colors">Pyromane et pompier, votre mémoire est
+                                sélective</p>
+                            <p class="group-hover:text-white transition-colors">On n'est pas venu en paix, votre
+                                histoire est agressive</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Pyromane et Pompier</span>
+                            <p>Kery dénonce le fait que l'État s'offusque aujourd'hui du "communautarisme" alors qu'il
+                                l'a lui-même organisé par le passé via les bidonvilles (Nanterre étant un symbole
+                                historique) et les cités dortoirs. La "mémoire sélective" permet aux dirigeants
+                                d'occulter leur rôle dans la création de ces fractures.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Conquête et Indépendance -->
+                    <div class="reveal story-block" data-time="150">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Ici, on est mieux que là-bas, on le sait
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Parce que décoloniser pour vous c'est
+                                déstabiliser</p>
+                            <p class="group-hover:text-white transition-colors">Et plus j'observe l'histoire ben moins
+                                j'me sens redevable</p>
+                            <p class="group-hover:text-white transition-colors">Je sais c'que c'est d'être Noir depuis
+                                l'époque du cartable</p>
+                            <p class="group-hover:text-white transition-colors">Bien que je n'sois pas ingrat, j'n'ai
+                                pas envie de vous dire merci</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Parce qu'au fond c'que j'ai,
+                                ici, je l'ai conquis</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Le Droit du Sol et l'Effort</span>
+                            <p>Refusant l'étiquette de "redevable", Kery explique que sa réussite et sa présence sont le
+                                fruit d'un combat, d'une "conquête" sur un terrain hostile, et non d'une fleur faite par
+                                l'État. Il aborde aussi la persistance du racisme dès l'enfance ("l'époque du
+                                cartable").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : Les Voyous en Costard -->
+                    <div class="reveal story-block" data-time="180">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Abuseurs de biens sociaux, détourneurs
+                                de fond</p>
+                            <p class="group-hover:text-white transition-colors text-red-500 font-medium">De vrais voyous
+                                en costard, bande d'hypocrites!</p>
+                            <p class="group-hover:text-white transition-colors">Est-ce que les Français ont les
+                                dirigeants qu'ils méritent?</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">Corruption vs Criminalité de rue</span>
+                            <p>L'un des passages les plus célèbres. Kery dégrade l'autorité morale des politiques en les
+                                mettant au même niveau, voire plus bas, que les délinquants de cité. Il mentionne les
+                                scandales financiers (Clearstream) pour souligner l'immoralité au sommet de l'État.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 9 : Islamophobie -->
+                    <div class="reveal story-block" data-time="210">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">En pleine crise économique, il faut un
+                                coupable</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400">Et c'est en direction des
+                                musulmans que tous vos coups partent</p>
+                            <p class="group-hover:text-white transition-colors font-medium">J'n'ai pas peur de l'écrire,
+                                la France est islamophobe</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Le Bouc Émissaire Musulman</span>
+                            <p>Analyse lucide des années 2010. Kery James affirme que le débat sur l'Islam en France est
+                                une diversion utilisée par les dominants pour occulter les problématiques économiques et
+                                la précarité qui touche toutes les communautés.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 10 : Syndrome de Stockholm -->
+                    <div class="reveal story-block" data-time="240">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Mon respect s'fait violer au pays dit
+                                des Droits de l'Homme</p>
+                            <p class="group-hover:text-white transition-colors italic">Difficile de se sentir Français
+                                sans le syndrome de Stockholm</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Amour Forcé</span>
+                            <p>La référence au syndrome de Stockholm illustre le paradoxe de se sentir obligé d'aimer un
+                                pays qui, selon l'artiste, "viole" son respect et ses droits fondamentaux au quotidien.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Block 11 : Le Miroir -->
+                    <div class="reveal story-block" data-time="270">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Loin des artistes transparents, j'écris
+                                c'texte comme un miroir</p>
+                            <p class="group-hover:text-white transition-colors">Que la France s'y regarde si elle veut
+                                s'y voir</p>
+                            <p class="group-hover:text-white transition-colors">Elle verra s'envoler l'illusion qu'elle
+                                se fait d'elle-même</p>
+                            <p class="group-hover:text-white transition-colors text-amber-400 font-medium">J'suis pas en
+                                manque d'affection, comprends que j'n'attends plus qu'elle m'aime!</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Briser l'Illusion</span>
+                            <p>Kery James conclut sur une note de dignité. Il ne mendie plus l'acceptation. Son texte
+                                est un outil de révélation, un miroir tendu à une société qui refuse de voir ses propres
+                                laideurs. Il finit avec une affirmation de respect de soi-même qui dépasse le besoin
+                                d'affection nationale.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
+                    <div class="sticky top-24 space-y-6">
+                        <div id="dynamic-analysis-card"
+                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
+                                    width="20"></iconify-icon>
+                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
+                            </div>
+                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
+                                <p>Cliquez sur une ligne pour l'analyser.</p>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
+                                    width="18"></iconify-icon>
+                                Informations
+                            </h4>
+                            <div id="info-grid" class="space-y-3 text-xs">
+                                <div class="flex justify-between"><span class="text-zinc-500">Artiste</span><span
+                                        class="text-zinc-300">Kery James</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Année</span><span
+                                        class="text-zinc-300">2012</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Album</span><span
+                                        class="text-zinc-300">92.2012</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Thème</span><span
+                                        class="text-zinc-300">Politique, Colonialisme, Identité</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+            <p class="text-zinc-500 text-sm mb-4">Une erreur dans les paroles ou l'analyse ?</p>
+            <a href="../contribute.html?song=lettre-a-la-republique"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-white/10 text-white text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <iconify-icon icon="solar:pen-new-round-linear" width="18"></iconify-icon>Suggérer une correction
+            </a>
+        </div>
+
+        <section class="mt-24 border-t border-white/5 pt-16">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="push-ups.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Push Ups</div>
+                            <div class="rec-artist">Drake • Beef 2024</div>
+                        </div>
+                    </a>
+                    <a href="euphoria.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Euphoria</div>
+                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
+                        </div>
+                    </a>
+                    <a href="not-like-us.html" class="recommendation-card">
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Not Like Us</div>
+                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/player.js"></script>
+
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+
+    <!-- Decrypt Bubble Container -->
+    <div id="decrypt-bubble" class="decrypt-bubble">
+        <div class="bubble-header">
+            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
+            <span>Décryptage SongStory</span>
+        </div>
+        <div id="bubble-content" class="bubble-content"></div>
+    </div>
+
+</body>
+
+</html>

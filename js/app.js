@@ -4,11 +4,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 0. Load Data dynamically from Supabase
-    if (typeof window.loadAppDataFromSupabase === 'function') {
-        await window.loadAppDataFromSupabase();
-    }
-
     // 1. Initialize UI Interactions
     if (typeof SongStoryUI !== 'undefined') {
         SongStoryUI.init();

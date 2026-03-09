@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Euphoria - Kendrick Lamar - SongStory</title>
     <meta name="description"
-        content="Analyse de Euphoria de Kendrick Lamar. 7 minutes de démolition systématique contre Drake, avril 2024.">
+        content="Analyse détaillée de Euphoria de Kendrick Lamar. La réponse cinglante à Drake, disséquant son identité, ses mensonges et son impact sur la culture.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
@@ -22,340 +22,348 @@
     <div class="glossary-tooltip"></div>
     <div id="reading-progress"></div>
 
-    <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
-        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"
-            style="position:absolute;left:calc(50% - 320px);top:98px;"></iconify-icon>
-        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème…"
-            autocomplete="off" aria-label="Recherche">
-        <button id="close-search-btn"
-            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
-            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
-        </button>
-        <div id="search-results"></div>
-    </div>
-    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Partager une citation">
-        <div id="share-modal-content">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                <h3 style="color:#fff;font-size:15px;font-weight:500;">Partager cette citation</h3>
-                <button id="close-share-modal"
-                    style="color:#71717a;background:none;border:none;cursor:pointer;"><iconify-icon
-                        icon="solar:close-circle-linear" width="22"></iconify-icon></button>
-            </div>
-            <canvas id="share-canvas-preview"></canvas>
-            <button id="download-share-btn"
-                style="width:100%;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.4);color:#a855f7;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;"><iconify-icon
-                    icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image</button>
-        </div>
-    </div>
-
-        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
                     </div>
                 </div>
 
-                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <!-- Nav auth slot -->
-                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors" aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear" width="20"></iconify-icon></button><button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
+                            width="20"></iconify-icon></button><button class="theme-switch"
+                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
                             <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
-    <div id="mobile-menu">
-        <div class="flex flex-col gap-6">
-            <a href="../index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
-            <a href="../library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
-            <a href="../artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
-            <a href="../timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
-            <a href="../about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
-        </div>
-    </div>
 
     <main class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="text-xs uppercase tracking-widest text-purple-400 font-medium">Diss Track — Beef
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">Diss Track — Beef
                         2024</span>
                     <span class="text-xs text-zinc-600">•</span>
                     <a href="../artists/kendrick-lamar.html"
-                        class="text-xs text-zinc-500 hover:text-purple-400 transition-colors">Voir le profil de Kendrick
+                        class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Voir le profil de Kendrick
+                        Lamar
                         →</a>
                 </div>
                 <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Euphoria</h1>
                 <p class="text-xl text-zinc-500 font-light">Kendrick Lamar • 30 avril 2024</p>
-                <p class="text-sm text-zinc-600 mt-2">Cible : Drake • 7 min 02 • ~95 bars</p>
-                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les Décryptages</span></button></div>
+                <p class="text-sm text-zinc-600 mt-2">Cibles : Drake • 6:23 min</p>
+                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
+                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
+                            Décryptages</span></button></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div id="narrative-wrapper"
-                    class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+                    class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
 
+                    <!-- Block 1 : Sample Wiz -->
                     <div class="reveal story-block" data-time="0">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I'm not really into astrology, but I'm a
-                                Gemini</p>
-                            <p class="group-hover:text-white transition-colors font-medium">Two sides, one of me is
-                                about to get you bodied</p>
-                            <p class="group-hover:text-white transition-colors">The other half is just calm, I analyze
-                                everybody</p>
-                            <p class="group-hover:text-white transition-colors text-purple-400 font-medium">I hate the
-                                way that you walk, the way that you talk, I hate your nose job, your chains, your
-                                everything</p>
+                            <p class="group-hover:text-white transition-colors">Eurt si em tuoba yas yeht gnihtyrevE</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Everything they say about me
+                                is true</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Ouverture : La Destruction Totale</span>
-                            <p>Kendrick commence par une haine déclarée, inhabituellement directe. La référence aux
-                                Gémeaux attaque le côté "double" de Drake — sa réputation d'être inauthentique.
-                                L'énumération finale (façon de marcher, de parler, chirurgie esthétique) brise toute
-                                distance artistique : c'est un rejet viscéral de l'être humain, pas seulement du
-                                rappeur.</p>
+                            <span class="text-white font-medium block mb-1">Le Magicien d'Oz</span>
+                            <p>Kendrick commence par un sample inversé du film "The Wiz". Une fois remis à l'endroit, on
+                                entend : "Tout ce qu'ils disent de moi est vrai". C'est un clin d'œil génial : Drake,
+                                comme l'acteur principal du Magicien d'Oz, n'est qu'une façade, un manipulateur qui se
+                                cache derrière des artifices. Kendrick annonce qu'il ne va pas mentir, mais simplement
+                                dire la vérité sur Drake.</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 831</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
 
-                    <div class="reveal story-block" data-time="45">
+                    <!-- Block 2 : Actor & Spiral -->
+                    <div class="reveal story-block" data-time="25">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">You are not a rapper, you an actor</p>
-                            <p class="group-hover:text-white transition-colors font-medium text-purple-400">The culture
-                                is not your friend, it never was</p>
-                            <p class="group-hover:text-white transition-colors">All of these artists that love you, it's
-                                a facade</p>
-                            <p class="group-hover:text-white transition-colors">They just don't wanna be the target of
-                                your gossip campaign</p>
+                            <p class="group-hover:text-white transition-colors">The famous actor we once knew is lookin'
+                                paranoid and now spiralin'</p>
+                            <p class="group-hover:text-white transition-colors">You're movin' just like a degenerate,
+                                every antic is feelin' distasteful</p>
+                            <p class="group-hover:text-white transition-colors">I calculate you're not as calculated, I
+                                can even predict your angle</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-purple-400 font-medium block mb-1">L'Accusation Fondamentale :
-                                L'Inauthenticité</span>
-                            <p>Le cœur idéologique du beef. Kendrick n'accuse pas Drake d'être mauvais — il l'accuse
-                                d'être un imposteur qui a volé une culture. "La culture n'est pas ton ami" est une
-                                exclusion symbolique du hip-hop. La théorie des artistes qui le soutiennent par peur
-                                ébranle toute sa popularité : elle n'est que terreur, pas admiration.</p>
+                            <span class="text-amber-400 font-medium block mb-1">L'Acteur et la Spirale</span>
+                            <p>Kendrick s'attaque immédiatement à la carrière passée d'acteur de Drake (Degrassi). Il
+                                décrit un homme aux abois, "paranoïaque" et en "spirale" descendante. Il qualifie son
+                                comportement de "dégénéré", suggérant que Drake a perdu le contrôle de son image et de
+                                sa raison.</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 1,204</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
 
-                    <div class="reveal story-block" data-time="110">
+                    <!-- Block 3 : Scam Artist -->
+                    <div class="reveal story-block" data-time="50">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">Embed yourself in cultures, try to
-                                figure out their pain</p>
-                            <p class="group-hover:text-white transition-colors font-medium">Before you appropriate it,
-                                at least say where you got it from</p>
-                            <p class="group-hover:text-white transition-colors">You stay in Toronto, but you rep L.A. —
-                                that's not your home</p>
-                            <p class="group-hover:text-white transition-colors text-purple-400 font-medium">Pick a side,
-                                nigga, you can't be everywhere at once</p>
+                            <p class="group-hover:text-white transition-colors">You're not a rap artist, you a scam
+                                artist with the hopes of being accepted</p>
+                            <p class="group-hover:text-white transition-colors">Tommy Hilfiger stood out, but FUBU never
+                                had been your collection</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">L'Appropriation Culturelle
-                                Géographique</span>
-                            <p>Kendrick accuse Drake de se revendiquer de Los Angeles (lieu saint du rap West Coast)
-                                alors qu'il est canadien. Drake portait souvent des tenues Lakers/Clippers et se
-                                présentait comme representant de la côte Ouest. "Tu ne peux pas être partout" est un
-                                reproche d'opportunisme identitaire — Drake change d'identité culturelle selon ce qui
-                                est commercialement avantageux.</p>
+                            <span class="text-white font-medium block mb-1">L'Escroc des Arts</span>
+                            <p>Ici, K-Dot remet en question l'essence même de Drake dans le hip-hop. Il n'est pas un
+                                artiste, mais un "escroc" (scam artist) qui cherche désespérément à être accepté par la
+                                culture noire. La comparaison entre Tommy Hilfiger et FUBU souligne le fait que Drake
+                                appartient au monde des marques de luxe "blanches" et n'a jamais été à l'aise dans le
+                                hip-hop authentiquement noir.</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 763</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
 
+                    <!-- Block 4 : Master Manipulator -->
+                    <div class="reveal story-block" data-time="70">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Know you a master manipulator and
+                                habitual liar too</p>
+                            <p class="group-hover:text-white transition-colors font-medium">But don't tell no lie about
+                                me and I won't tell truths 'bout you</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Le Mensonge et la Vérité</span>
+                            <p>C'est le pacte de guerre. Kendrick prévient : s'il continue de mentir (comme dans "Taylor
+                                Made Freestyle" ou "Push Ups"), Kendrick commencera à révéler des vérités gênantes.
+                                C'est une menace voilée sur des dossiers que Kendrick possèderait sur la vie privée du
+                                rappeur de Toronto.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Reaper -->
+                    <div class="reveal story-block" data-time="95">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I ain't thinkin' about no reaper</p>
+                            <p class="group-hover:text-white transition-colors">Nigga, I'm reapin' what I sow, okay</p>
+                            <p class="group-hover:text-white transition-colors">Got a Benjamin and a Jackson all in my
+                                house like I'm Joe, okay</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Fable du Reaper</span>
+                            <p>Kendrick répond à Drake qui se fait appeler "The Boy" ou parfois associé à la mort dans
+                                ses lyrics. Il dit ne pas craindre la faucheuse, car lui récolte simplement ce qu'il a
+                                semé : le respect et l'intégrité, contrairement à Drake qui serait en train de récolter
+                                les fruits de sa manipulation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Pac Grave -->
+                    <div class="reveal story-block" data-time="125">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I didn't point down enough, today, I'll
+                                show you I learned from those mistakes</p>
+                            <p class="group-hover:text-white transition-colors font-medium">I'd rather do that than let
+                                a Canadian nigga make Pac turn in his grave</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Héritage de Pac</span>
+                            <p>Une attaque sur l'utilisation de l'IA par Drake pour recréer la voix de 2Pac dans "Taylor
+                                Made Freestyle". Pour Kendrick, c'est une insulte sacrilège à la légende de la West
+                                Coast. Il se pose en gardien de l'héritage de Pac, refusant qu'un étranger (le Canadien)
+                                salisse sa mémoire.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : Language Barriers -->
+                    <div class="reveal story-block" data-time="155">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">You know I got language barriers, huh
+                            </p>
+                            <p class="group-hover:text-white transition-colors">It's no accent you can sell me, huh</p>
+                            <p class="group-hover:text-white transition-colors">Yeah, Cole and Aubrey know I'm a selfish
+                                nigga, the crown is heavy, huh</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Les Barrières de la Langue</span>
+                            <p>Kendrick se moque de la propension de Drake à adopter des accents différents (UK drill,
+                                patois jamaïcain, etc.) pour paraître "cool" ou "authentique". Il qualifie cela de
+                                barrière linguistique : Kendrick parle la langue de la vérité et de la rue, une langue
+                                que Drake ne peut qu'imiter maladroitement.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 : The Big Hate -->
                     <div class="reveal story-block" data-time="190">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I get it now, you need me, you wouldn't
-                                be shit without me</p>
-                            <p class="group-hover:text-white transition-colors font-medium">Baby, I don't want your
-                                child, I don't want your DNA</p>
-                            <p class="group-hover:text-white transition-colors text-purple-400 font-medium">I think
-                                about what Pusha said and realize your kid</p>
-                            <p class="group-hover:text-white transition-colors font-medium">Might have to deal with the
-                                sins of his father</p>
+                            <p class="group-hover:text-white transition-colors font-medium">I hate the way that you
+                                walk, the way that you talk, I hate the way that you dress</p>
+                            <p class="group-hover:text-white transition-colors">I hate the way that you sneak diss, if I
+                                catch flight, it's gon' be direct</p>
+                            <p class="group-hover:text-white transition-colors">We hate the bitches you fuck, 'cause
+                                they confuse themself with real women</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-purple-400 font-medium block mb-1">Référence à Pusha T & l'Enfant
-                                Caché</span>
-                            <p>En 2018, Pusha T avait révélé dans "The Story of Adidon" que Drake avait un fils caché,
-                                Adonis Graham. Kendrick ressort cette blessure différemment : il ne fait pas qu'humilier
-                                avec l'enfant secret — il suggère que l'enfant devra compenser les fautes morales de son
-                                père. Une attaque existentielle sur son legacy paternel et son legs moral.</p>
+                            <span class="text-amber-400 font-medium block mb-1">Le Plus Grand Haineux</span>
+                            <p>Ce passage est devenu viral. Kendrick liste tout ce qu'il déteste chez Drake, du physique
+                                à la manière de s'habiller. C'est une haine viscérale, presque "gratuite" mais
+                                totalement assumée. Il en finit avec les "sous-entendus" (sneak diss) : désormais, les
+                                attaques seront directes.</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 2,016</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
 
-                    <div class="reveal story-block" data-time="270">
+                    <!-- Block 9 : Black Enough -->
+                    <div class="reveal story-block" data-time="220">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I've seen your album sales, I've seen
-                                your tour numbers</p>
-                            <p class="group-hover:text-white transition-colors">I respect the business, but the art is
-                                dead within ya</p>
-                            <p class="group-hover:text-white transition-colors text-purple-400 font-medium">You might be
-                                a fan, but you're not a rapper</p>
-                            <p class="group-hover:text-white transition-colors font-medium">You should go link up with
-                                them people on the other side — they can't write their own songs either</p>
+                            <p class="group-hover:text-white transition-colors">How many more fairytale stories 'bout
+                                your life 'til we had enough?</p>
+                            <p class="group-hover:text-white transition-colors">How many more Black features 'til you
+                                finally feel that you're Black enough?</p>
+                            <p class="group-hover:text-white transition-colors">I like Drake with the melodies, I don't
+                                like Drake when he act tough</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-purple-400 font-medium block mb-1">L'Accusation de Ghostwriting — Coup de
-                                Grâce</span>
-                            <p>Le ghostwriting (textes écrits par d'autres) hante Drake depuis l'affaire Meek
-                                Mill/Quentin Miller (2015). Kendrick l'élève au niveau existentiel : "l'art est mort en
-                                toi". Ce n'est pas une accusation ponctuelle — c'est une déclaration que le processus
-                                créatif lui est fondamentalement étranger. La référence aux "gens de l'autre côté" (pop
-                                stars qui ne s'écrivent pas) achève l'exclusion du hip-hop.</p>
+                            <span class="text-white font-medium block mb-1">La Culture Contre le Fairytale</span>
+                            <p>Kendrick interroge l'identité de Drake. Il lui reproche de s'inventer une vie de gangster
+                                ("fairy tales") et d'utiliser des artistes noirs respectés pour valider son propre
+                                statut racial ("Black features"). C'est une remise en question profonde de
+                                l'appartenance de Drake à la culture noire.</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 3,847</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
 
-                    <div class="reveal story-block" data-time="360">
+                    <!-- Block 10 : The Boy -->
+                    <div class="reveal story-block" data-time="255">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">I tell you what, I got a thousand bars
-                                left</p>
-                            <p class="group-hover:text-white transition-colors font-medium text-purple-400">You better
-                                get a thousand heads, I'm going for your legacy</p>
-                            <p class="group-hover:text-white transition-colors">And when it's over, you gon' look in the
-                                mirror with me</p>
-                            <p class="group-hover:text-white transition-colors">And you gon' say "that's not me" when
-                                you see what I see</p>
+                            <p class="group-hover:text-white transition-colors">I'm knowin' they call you The Boy, but
+                                where is a man? 'Cause I ain't seen him yet</p>
+                            <p class="group-hover:text-white transition-colors italic">Matter fact, I ain't even bleed
+                                him yet, can I bleed him? Bet</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Conclusion : L'Attaque sur le Legacy</span>
-                            <p>Kendrick ne vise pas juste la victoire dans un clash — il vise à réécrire l'histoire de
-                                Drake pour toujours. "Ton legacy" dans le rap est ce qui reste après la carrière :
-                                Kendrick veut que Drake soit rappelé comme un imposteur. "1 000 bars" est une
-                                déclaration de guerre prolongée — ce morceau de 7 minutes n'est qu'un début. L'image du
-                                miroir symbolise la confrontation forcée avec sa propre vraie nature.</p>
+                            <span class="text-amber-400 font-medium block mb-1">L'Absence de l'Homme</span>
+                            <p>Un jeu de mots sur le surnom de Drake, "The Boy". Kendrick demande où se cache l'homme
+                                dans tout cela, critiquant le manque de maturité et de responsabilité de Drake,
+                                notamment en tant que père (qu'il abordera plus tard dans "Meet the Grahams").</p>
                         </div>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button class="comment-toggle-btn"><iconify-icon icon="solar:chat-round-line-linear"
-                                    width="12"></iconify-icon> 1,567</button>
-                            <button class="share-quote-btn comment-toggle-btn"><iconify-icon icon="solar:share-linear"
-                                    width="12"></iconify-icon></button>
-                        </div>
-                        <div class="comment-section"></div>
                     </div>
-                </div>
 
-                
-                <div class="lg:col-span-5 side-analysis-sidebar hidden lg:block">
-                    <div class="sticky top-24 space-y-6">
-                        <div id="dynamic-analysis-card"
-                            class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
-                            <div class="flex items-center gap-2 mb-4">
-                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="20"></iconify-icon>
-                                <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
-                            </div>
-                            <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
-                                <p>Cliquez sur une ligne pour l'analyser.</p>
-                            </div>
+                    <!-- Block 11 : Splits -->
+                    <div class="reveal story-block" data-time="285">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Let's speak on percentage, show me your
+                                splits, I'll make sure I double back with you</p>
+                            <p class="group-hover:text-white transition-colors">You were signed to a nigga that's signed
+                                to a nigga that said he was signed to that nigga</p>
                         </div>
-                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
-                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
-                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500" width="18"></iconify-icon>
-                                Informations
-                            </h4>
-                            <div id="info-grid" class="space-y-3 text-xs">
-                                <!-- Filled by JS -->
-                            </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Les 50% de TDE</span>
+                            <p>En réponse à "Push Ups" où Drake affirmait que Kendrick donnait 50% à Top Dawg, Kendrick
+                                retourne l'argument. Il est prêt à comparer les contrats. Il suggère que Drake lui-même
+                                est prisonnier de contrats complexes ("le gars du gars du gars") chez Cash Money/Young
+                                Money.</p>
                         </div>
                     </div>
-                </div>
-        
-                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
-                            <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
-                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
-                                    width="18"></iconify-icon>Informations
-                            </h4>
-                            <div class="space-y-3 text-xs">
-                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
-                                        class="text-zinc-300">30 avril 2024</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
-                                        class="text-zinc-300">Drake</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Durée</span><span
-                                        class="text-zinc-300">7:02 min</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Bars</span><span
-                                        class="text-zinc-300">~95 bars</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Premier diss de
-                                        Kendrick</span><span class="text-zinc-300">✓</span></div>
-                            </div>
+
+                    <!-- Block 12 : Son to Raise -->
+                    <div class="reveal story-block" data-time="315">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">That's hoe shit, I got a son to raise,
+                                but I can see you don't know nothin' 'bout that</p>
+                            <p class="group-hover:text-white transition-colors">Wakin' him up, know nothin' 'bout that
+                            </p>
+                            <p class="group-hover:text-white transition-colors">And tell him to pray, know nothin' 'bout
+                                that</p>
                         </div>
-                        <div class="bg-purple-950/20 border border-purple-500/20 rounded-2xl p-6">
-                            <h4 class="text-sm font-medium text-white tracking-tight mb-4">🔥 Chronologie Beef 2024</h4>
-                            <div class="space-y-2 text-xs">
-                                <div class="flex gap-2"><span class="text-zinc-600 w-14 flex-shrink-0">Mar
-                                        22</span><span class="text-zinc-400">Like That (Kendrick)</span></div>
-                                <div class="flex gap-2"><span class="text-zinc-600 w-14 flex-shrink-0">Avr
-                                        13</span><span class="text-zinc-400">Push Ups (Drake)</span></div>
-                                <div class="flex gap-2"><span class="text-zinc-600 w-14 flex-shrink-0">Avr
-                                        19</span><span class="text-zinc-400">Taylor Made (Drake)</span></div>
-                                <div class="flex gap-2"><span class="text-purple-400 font-bold w-14 flex-shrink-0">Avr
-                                        30</span><span class="text-purple-300 font-bold">→ Euphoria (Kendrick)</span>
-                                </div>
-                                <div class="flex gap-2"><span class="text-zinc-600 w-14 flex-shrink-0">Mai 3</span><span
-                                        class="text-zinc-400">6:16 in LA + Family Matters</span></div>
-                                <div class="flex gap-2"><span class="text-zinc-600 w-14 flex-shrink-0">Mai 3</span><span
-                                        class="text-zinc-400">Meet the Grahams (Kendrick)</span></div>
-                                <div class="flex gap-2"><span class="text-purple-400 font-bold w-14 flex-shrink-0">Mai
-                                        4</span><span class="text-purple-300 font-bold">Not Like Us 🏆</span></div>
-                            </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Éducation d'un Fils</span>
+                            <p>Kendrick oppose sa vie de famille et ses valeurs paternelles au lifestyle de "club" de
+                                Drake. Il l'accuse d'ignorer ce que signifie réellement élever un enfant avec des
+                                valeurs et de la discipline. C'est une attaque personnelle qui touche au rôle de père.
+                            </p>
                         </div>
                     </div>
+
+                    <!-- Block 13 : AI Film -->
+                    <div class="reveal story-block" data-time="345">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Am I battlin' ghost or AI? Nigga feelin'
+                                like Joel Hale Osteen</p>
+                            <p class="group-hover:text-white transition-colors font-medium">Funny, he was in a film
+                                called "AI"</p>
+                            <p class="group-hover:text-white transition-colors italic">And my sixth sense tellin' me to
+                                off him</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'AI et l'Esprit</span>
+                            <p>Référence à Haley Joel Osment (le petit garçon du Sixième Sens et de AI). Kendrick fait
+                                un jeu de mots avec Joel Osteen (le télévangéliste milliardaire/manipulateur). Il se
+                                demande s'il combat un fantôme (ghost-writing) ou une IA, renvoyant Drake à son propre
+                                manque d'âme artistique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 14 : Crodie -->
+                    <div class="reveal story-block" data-time="375">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium">Don't speak on the family,
+                                crodie</p>
+                            <p class="group-hover:text-white transition-colors">It can get deep in the family, crodie
+                            </p>
+                            <p class="group-hover:text-white transition-colors">Talk about me and my family, crodie?</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Crodie et le West Coast Love</span>
+                            <p>Kendrick s'approprie le terme "crodie" (slang de Toronto souvent utilisé par Drake). Il
+                                prévient son rival de ne pas mentionner sa famille. Il affirme que s'il franchit cette
+                                ligne, les conséquences seront réelles et violentes. C'est le moment où le beef bascule
+                                vers l'hostilité pure.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 15 : New Ho King -->
+                    <div class="reveal story-block" data-time="405">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I be at New Ho King eatin' fried rice
+                                with a dip sauce and blammy, crodie</p>
+                            <p class="group-hover:text-white transition-colors italic">Tell me you're cheesin', fam</p>
+                            <p class="group-hover:text-white transition-colors">We can do this right now on the camera,
+                                crodie</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Fried Rice de New Ho King</span>
+                            <p>Pour prouver qu'il connaît Toronto mieux que Drake ne le pense, Kendrick mentionne un
+                                restaurant chinois célèbre de la ville. C'est une manière de dire "je peux venir chez
+                                toi, je connais tes repères, et je n'ai pas peur".</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -372,28 +380,31 @@
             <div class="max-w-7xl mx-auto px-4">
                 <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a href="meet-the-grahams.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
-                        <div>
-                            <div class="rec-title">Meet the Grahams</div>
-                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
-                        </div>
-                    </a>
                     <a href="not-like-us.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                        <div class="rec-thumb bg-red-500/10 text-red-500"><iconify-icon icon="solar:music-note-linear"
+                                width="20"></iconify-icon>
                         </div>
                         <div>
                             <div class="rec-title">Not Like Us</div>
-                            <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
+                            <div class="rec-artist">Kendrick Lamar • 2024</div>
                         </div>
                     </a>
-                    <a href="family-matters.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                    <a href="meet-the-grahams.html" class="recommendation-card">
+                        <div class="rec-thumb bg-zinc-800 text-zinc-400"><iconify-icon icon="solar:music-note-linear"
+                                width="20"></iconify-icon>
                         </div>
                         <div>
-                            <div class="rec-title">Family Matters</div>
-                            <div class="rec-artist">Drake • Beef 2024</div>
+                            <div class="rec-title">Meet the Grahams</div>
+                            <div class="rec-artist">Kendrick Lamar • 2024</div>
+                        </div>
+                    </a>
+                    <a href="push-ups.html" class="recommendation-card">
+                        <div class="rec-thumb bg-blue-500/10 text-blue-500"><iconify-icon icon="solar:music-note-linear"
+                                width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="rec-title">Push Ups</div>
+                            <div class="rec-artist">Drake • 2024</div>
                         </div>
                     </a>
                 </div>
@@ -401,79 +412,18 @@
         </section>
     </main>
 
-    <div
-        class="fixed bottom-0 left-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-white/5 py-3 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
-                preload="metadata"></audio>
-            <div class="flex items-center gap-3 min-w-0 w-1/4">
-                <div
-                    class="w-10 h-10 bg-zinc-900 rounded-md flex items-center justify-center border border-white/5 flex-shrink-0">
-                    <iconify-icon icon="solar:music-note-bold" class="text-purple-400" width="20"></iconify-icon>
-                </div>
-                <div class="hidden sm:block min-w-0">
-                    <p class="text-white text-sm font-medium truncate">Euphoria</p>
-                    <p class="text-zinc-500 text-xs truncate">Kendrick Lamar</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center gap-2 flex-grow min-w-0">
-                <div class="flex items-center gap-4">
-                    <button id="play-pause-btn" aria-label="Lecture / Pause"
-                        class="w-10 h-10 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                        <iconify-icon icon="solar:play-bold" width="20"></iconify-icon>
-                    </button>
-                </div>
-                <div class="flex items-center gap-2 w-full max-w-2xl">
-                    <span class="text-[10px] text-zinc-500 current-time flex-shrink-0">0:00</span>
-                    <div id="waveform" class="waveform-container" role="slider" aria-label="Progression" tabindex="0">
-                    </div>
-                    <span class="text-[10px] text-zinc-500 total-time flex-shrink-0">0:00</span>
-                </div>
-            </div>
-            <div class="flex items-center justify-end gap-3 w-1/4">
-                <div class="hidden md:flex items-center gap-2 w-28">
-                    <button id="mute-btn" aria-label="Muet"
-                        class="text-zinc-500 hover:text-white transition-colors"><iconify-icon
-                            icon="solar:volume-loud-linear" width="18"></iconify-icon></button>
-                    <div id="volume-container"
-                        class="relative h-1 bg-zinc-800 rounded-full flex-grow cursor-pointer group" role="slider"
-                        aria-label="Volume" tabindex="0">
-                        <div id="volume-fill"
-                            class="absolute top-0 left-0 h-full bg-zinc-400 rounded-full w-full group-hover:bg-zinc-300">
-                        </div>
-                        <div id="volume-thumb"
-                            class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            style="left:100%"></div>
-                    </div>
-                </div>
-            </div>
+    <footer class="border-t border-white/5 py-12 bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-zinc-600 text-xs">© 2024 SongStory. Une plateforme d'analyse lyrique premium.</p>
         </div>
-    </div>
+    </footer>
 
     <script src="../js/data.js"></script>
-    <script src="../js/seo.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/pwa.js"></script>
-    <script src="../js/spotify.js"></script>
-    <script src="../js/applemusic.js"></script>
-    <script src="../js/streaming.js"></script>
-    <script src="../js/contribute.js"></script>
     <script src="../js/ui.js"></script>
-    <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const songId = 'euphoria';
-            const songData = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.find(s => s.id === songId) : null;
-            if (songData && typeof SongStoryStreaming !== 'undefined') SongStoryStreaming.initUnifiedPlayer(songData);
-        });
-    </script>
-
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 
-    <!-- Decrypt Bubble Container -->
     <div id="decrypt-bubble" class="decrypt-bubble">
         <div class="bubble-header">
             <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>

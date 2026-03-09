@@ -10,58 +10,32 @@ const SongStoryRenderer = {
         const params = new URLSearchParams(window.location.search);
         const songId = params.get('id');
 
-        if (!songId) {
-            console.log('Static song page detected - initializing analysis handlers');
-            this.initClassicAnalysis();
-            return;
+        // --- REDIRECT: If we land on single-song.html?id=X, send to the static songs/X.html ---
+        if (songId && window.location.pathname.includes('single-song.html')) {
+            const base = window.location.href.replace(/single-song\.html.*$/, '');
+            window.location.replace(`${base}songs/${songId}.html`);
+            return; // Stop here, the page will redirect
         }
 
-        // Fetch song and its content from Supabase
-        if (window.ss_supabase) {
-            const { data: song, error } = await window.ss_supabase
-                .from('songs')
-                .select('*, artists(*), song_contents(*)')
-                .eq('id', songId)
-                .single();
+        // Infer ID from filename (e.g. songs/push-ups.html -> push-ups)
+        const currentSongId = window.location.pathname.split('/').pop().replace('.html', '');
 
-            if (error || !song) {
-                console.error('Error fetching song:', error);
-                this.renderNotFound();
-                return;
-            }
+        // Init interactive features on the existing static HTML
+        this.initClassicAnalysis();
 
-            // Map Supabase structure to the expected currentSong structure
-            this.currentSong = {
-                ...song,
-                artist: song.artists.name,
-                artistId: song.artists.id,
-                audio: song.audio_url, // Map audio_url back to audio
-                content: song.song_contents.sort((a, b) => a.display_order - b.display_order)
-            };
+        // Attempt to find metadata in local SONGS_DATA for the player/theme
+        this.currentSong = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.find(s => s.id === currentSongId) : null;
+
+        if (this.currentSong) {
+            this.renderHeader();
+            this.renderPlayer();
+            this.updateSEO();
+            this.applyDynamicTheme();
+            this.initExternalModules();
         } else {
-            // Fallback to local data if Supabase is not configured
-            this.currentSong = typeof SONGS_DATA !== 'undefined' ? SONGS_DATA.find(s => s.id === songId) : null;
+            console.warn(`No entry in data.js for id: "${currentSongId}". Audio/theme won't auto-init.`);
+            this.initExternalModules();
         }
-
-        if (!this.currentSong) {
-            this.renderNotFound();
-            return;
-        }
-
-        this.renderHeader();
-        this.renderNarrative();
-        this.renderInfo();
-        this.renderPlayer();
-        this.renderRecommendations();
-        this.updateSEO();
-        this.applyDynamicTheme();
-        this.initExternalModules();
-    },
-
-    renderNotFound() {
-        document.title = "Chanson introuvable - SongStory";
-        const wrapper = document.getElementById('narrative-wrapper');
-        if (wrapper) wrapper.innerHTML = '<div class="py-20 text-center"><h2 class="text-white text-2xl mb-4">Oups !</h2><p>Cette chanson n\'existe pas encore dans notre base.</p><a href="index.html" class="text-amber-400 mt-4 block">Retour à l\'accueil</a></div>';
     },
 
     async applyDynamicTheme() {
@@ -126,40 +100,23 @@ const SongStoryRenderer = {
     },
 
     renderHeader() {
-        const titleEl = document.getElementById('song-title');
+        // Title and artist are statically in HTML — only manage the favorites button
         const metaEl = document.getElementById('song-meta');
-        const artistLink = document.getElementById('artist-link');
-
-        if (titleEl) titleEl.textContent = this.currentSong.title;
-        if (artistLink) {
-            const artistId = this.currentSong.artistId || this.currentSong.artist.toLowerCase().replace(/\s+/g, '-');
-            artistLink.href = `artists/${artistId}.html`;
-            artistLink.textContent = `Voir le profil de ${this.currentSong.artist} →`;
-        }
-
-        // Add Favorites logic
         const favs = JSON.parse(localStorage.getItem('ss_favorites') || '[]');
         const isFav = favs.includes(this.currentSong.id);
         const favIcon = isFav ? 'solar:heart-bold' : 'solar:heart-linear';
         const favColor = isFav ? 'text-amber-500' : 'text-zinc-500';
 
-        if (metaEl) {
-            metaEl.innerHTML = `
-                <div class="flex items-center gap-4">
-                    <span>${this.currentSong.artist} • ${this.currentSong.year}</span>
-                    <button class="fav-toggle-btn hover:text-amber-400 transition-colors flex items-center gap-1 ${favColor}" data-id="${this.currentSong.id}" title="Ajouter aux favoris">
-                        <iconify-icon icon="${favIcon}" width="22"></iconify-icon>
-                    </button>
-                </div>
-            `;
-
-            // Re-attach event listener
-            setTimeout(() => {
-                const btn = document.querySelector('.fav-toggle-btn');
-                if (btn) {
-                    btn.addEventListener('click', (e) => this.toggleFavorite(e, this.currentSong.id));
-                }
-            }, 0);
+        // Inject favorites button next to the existing meta text
+        const existingFavBtn = document.querySelector('.fav-toggle-btn');
+        if (!existingFavBtn && metaEl) {
+            const favBtn = document.createElement('button');
+            favBtn.className = `fav-toggle-btn hover:text-amber-400 transition-colors flex items-center gap-1 ${favColor}`;
+            favBtn.dataset.id = this.currentSong.id;
+            favBtn.title = 'Ajouter aux favoris';
+            favBtn.innerHTML = `<iconify-icon icon="${favIcon}" width="22"></iconify-icon>`;
+            favBtn.addEventListener('click', (e) => this.toggleFavorite(e, this.currentSong.id));
+            metaEl.appendChild(favBtn);
         }
     },
 
@@ -181,97 +138,9 @@ const SongStoryRenderer = {
         localStorage.setItem('ss_favorites', JSON.stringify(favs));
     },
 
-    renderNarrative() {
-        const wrapper = document.getElementById('narrative-wrapper');
-        if (!wrapper || !this.currentSong.content) return;
-
-        let html = '';
-        this.currentSong.content.forEach((block, idx) => {
-            const lyricsHtml = block.lyrics.map(line =>
-                `<p class="lyric-line hover:text-white transition-colors cursor-pointer" data-time="${block.time}">${line}</p>`
-            ).join('');
-
-            html += `
-                <div class="reveal story-block" data-time="${block.time}" id="block-${block.time}">
-                    <div class="lyrics-text space-y-2 group cursor-pointer">
-                        ${lyricsHtml}
-                    </div>
-                    <div class="analysis-content-visible hidden">
-                        ${block.analysis}
-                    </div>
-                    <div class="analysis-content hidden">
-                        ${block.analysis}
-                    </div>
-                    <div style="display:flex;gap:8px;margin-top:8px;">
-                        <button class="comment-toggle-btn">
-                            <iconify-icon icon="solar:chat-round-line-linear" width="12"></iconify-icon> ${Math.floor(Math.random() * 100) + 10}
-                        </button>
-                        <button class="share-quote-btn comment-toggle-btn">
-                            <iconify-icon icon="solar:share-linear" width="12"></iconify-icon>
-                        </button>
-                    </div>
-                    <div class="comment-section"></div>
-                </div>
-            `;
-        });
-        wrapper.innerHTML = html;
-
-        // Auto-inject glossary terms into the newly rendered content
-        if (typeof SongStoryUI !== 'undefined') {
-            SongStoryUI.injectDynamicGlossary(wrapper);
-        }
-    },
-
-    renderInfo() {
-        const grid = document.getElementById('info-grid');
-        const infos = [
-            { label: 'Album', value: this.currentSong.album || 'N/A' },
-            { label: 'Genre', value: this.currentSong.genre || 'N/A' },
-            { label: 'Durée', value: this.currentSong.duration || 'N/A' },
-            { label: 'BPM', value: this.currentSong.bpm || 'N/A' },
-            { label: 'Année', value: this.currentSong.year || 'N/A' }
-        ];
-
-        if (grid) {
-            grid.innerHTML = infos.map(i => `
-                <div class="flex justify-between">
-                    <span class="text-zinc-500">${i.label}</span>
-                    <span class="text-zinc-300">${i.value}</span>
-                </div>
-            `).join('');
-        }
-
-        const contributeLink = document.getElementById('contribute-link');
-        if (contributeLink) contributeLink.href = `contribute.html?song=${this.currentSong.id}`;
-    },
-
-    renderPlayer() {
-        const audio = document.getElementById('main-audio');
-        const pTitle = document.getElementById('player-title');
-        const pArtist = document.getElementById('player-artist');
-
-        if (audio && this.currentSong.audio) audio.src = this.currentSong.audio;
-        if (pTitle) pTitle.textContent = this.currentSong.title;
-        if (pArtist) pArtist.textContent = this.currentSong.artist;
-    },
-
-    renderRecommendations() {
-        const grid = document.getElementById('recommendations-grid');
-        if (!grid) return;
-
-        // Simple algo: other songs from same genre or just random
-        const recs = SONGS_DATA.filter(s => s.id !== this.currentSong.id).slice(0, 3);
-
-        grid.innerHTML = recs.map(s => `
-            <a href="single-song.html?id=${s.id}" class="recommendation-card">
-                <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
-                <div>
-                    <div class="rec-title">${s.title}</div>
-                    <div class="rec-artist">${s.artist} • ${s.genre}</div>
-                </div>
-            </a>
-        `).join('');
-    },
+    // renderNarrative() removed. Lyrics and decryptions are now fully static in HTML.
+    // renderInfo() removed. Info blocks are now fully static in HTML.
+    // renderRecommendations() removed. Suggested songs are now fully static in HTML.
 
     updateSEO() {
         document.title = `${this.currentSong.title} - SongStory`;
@@ -281,7 +150,7 @@ const SongStoryRenderer = {
 
     initExternalModules() {
         // Initialize streaming player if data exists
-        if (typeof SongStoryStreaming !== 'undefined' && (this.currentSong.spotifyId || this.currentSong.appleMusicId)) {
+        if (this.currentSong && typeof SongStoryStreaming !== 'undefined' && (this.currentSong.spotifyId || this.currentSong.appleMusicId)) {
             SongStoryStreaming.initUnifiedPlayer(this.currentSong);
 
             // Also populate the sidebar card if it exists
@@ -296,13 +165,14 @@ const SongStoryRenderer = {
             }
         }
 
-        // Re-init UI features that depend on newly injected DOM
+        // Re-init UI features that depend on DOM
         if (typeof SongStoryUI !== 'undefined') {
             SongStoryUI.initScrollAnimations();
             SongStoryUI.initComments();
             SongStoryUI.initShareCard();
             SongStoryUI.initTilt();
-            this.initClassicAnalysis();
+            // Optional: You could also call injectDynamicGlossary here on the static DOM if needed,
+            // example: SongStoryUI.injectDynamicGlossary(document.getElementById('narrative-wrapper'));
         }
 
         // Re-init Player markers and lyrics
