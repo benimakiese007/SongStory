@@ -200,8 +200,8 @@ function renderSongsTable() {
         <tr class="hover:bg-white/5 transition-all group">
             <td class="px-6 py-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center border border-white/5">
-                        <iconify-icon icon="solar:music-note-bold" class="text-zinc-500"></iconify-icon>
+                    <div class="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center border border-white/5 overflow-hidden">
+                        ${s.cover_url ? `<img src="${s.cover_url}" class="w-full h-full object-cover">` : `<iconify-icon icon="solar:music-note-bold" class="text-zinc-500"></iconify-icon>`}
                     </div>
                     <span class="text-sm text-white font-medium">${s.title}</span>
                 </div>
@@ -344,10 +344,10 @@ async function renderCoversGallery() {
                 <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 gap-2">
                     <p class="text-[10px] text-white font-medium truncate w-full text-center">${c.filename}</p>
                     <div class="flex gap-2">
-                        <button onclick="copyToClipboardText('${c.url}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
+                        <button onclick="copyToClipboardText('${c.url.replace(/'/g, "\\'")}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
                             <iconify-icon icon="solar:copy-bold" width="16"></iconify-icon>
                         </button>
-                        <button onclick="deleteCover('${c.filename}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
+                        <button onclick="deleteCover('${c.filename.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
                             <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
                         </button>
                     </div>
@@ -444,11 +444,11 @@ function openModal(type, data = null) {
                     </div>
                     <div>
                         <label class="block text-xs text-zinc-500 mb-1">Spotify ID</label>
-                        <input type="text" id="f-spotifyId" value="${s.spotifyId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                        <input type="text" id="f-spotifyId" value="${s.spotifyId || ''}" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
                     </div>
                     <div>
                         <label class="block text-xs text-zinc-500 mb-1">Apple Music ID</label>
-                        <input type="text" id="f-appleMusicId" value="${s.appleMusicId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                        <input type="text" id="f-appleMusicId" value="${s.appleMusicId || ''}" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs text-zinc-500 mb-1">Image de la Cover</label>
@@ -722,7 +722,7 @@ async function openGalleryPicker() {
         }
 
         list.innerHTML = covers.map(c => `
-            <div onclick="selectCoverForSong('${c.url}')" class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-amber-500/50 transition-all aspect-square relative group">
+            <div onclick="selectCoverForSong('${c.url.replace(/'/g, "\\'")}')" class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-amber-500/50 transition-all aspect-square relative group">
                 <img src="${c.url}" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
@@ -1086,4 +1086,32 @@ function copyToClipboard(elementId) {
     navigator.clipboard.writeText(copyText.value).then(() => {
         showToast("Copié dans le presse-papier !");
     });
+}
+
+/**
+ * Toast Notifications
+ */
+function showToast(message) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed bottom-6 right-6 z-[100] flex flex-col gap-2';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'bg-zinc-900 border border-white/10 text-white px-4 py-3 rounded-xl text-sm font-medium shadow-2xl flex items-center gap-2 transform translate-y-10 opacity-0 transition-all duration-300';
+    toast.innerHTML = `<iconify-icon icon="solar:check-circle-bold" class="text-amber-500" width="18"></iconify-icon> <span>${message}</span>`;
+    
+    container.appendChild(toast);
+    
+    requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-10', 'opacity-0');
+    });
+    
+    setTimeout(() => {
+        toast.classList.add('translate-y-10', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }

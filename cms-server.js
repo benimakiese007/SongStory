@@ -172,21 +172,28 @@ function updateStaticCards(song) {
 }
 
 function generateLibraryCard(song) {
-    const coverHtml = song.cover_url
-        ? `<img src="${song.cover_url}" alt="${song.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
-        : `<iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>`;
+    const songUrl = `songs/${song.id}.html`;
+    
+    let coverHtml;
+    if (song.cover_url) {
+        coverHtml = `                    <div class="aspect-video w-full mb-4 overflow-hidden rounded-xl border border-white/5 bg-zinc-900">
+                        <img src="${song.cover_url}" alt="${song.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>`;
+    } else {
+        coverHtml = `                    <div class="w-full aspect-square bg-zinc-800 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-white/5">
+                        <iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>
+                    </div>`;
+    }
 
-    return `                <a href="songs/${song.id}.html"
+    return `                <a href="${songUrl}"
                     class="song-card reveal visible group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
                     data-genre="${song.genre}" data-tags="${song.tags ? song.tags.join(',') : ''}">
+${coverHtml}
                     <div class="flex items-center justify-between mb-4">
                         <div
                             class="px-2 py-1 rounded-md bg-amber-400/10 text-amber-400 text-[10px] font-medium uppercase tracking-wider">
                             ${song.genre}</div>
                         <span class="text-zinc-600 text-[10px] font-medium">${song.year}</span>
-                    </div>
-                    <div class="w-full aspect-square bg-zinc-800 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-white/5">
-                        ${coverHtml}
                     </div>
                     <h3
                         class="text-white font-medium text-lg leading-tight group-hover:text-amber-400 transition-colors mb-1">
@@ -205,11 +212,20 @@ function generateLibraryCard(song) {
 }
 
 function generateHomeCard(song) {
-    return `                    <article onclick="window.location.href='songs/${song.id}.html'"
+    const songUrl = `songs/${song.id}.html`;
+    
+    let coverHtml;
+    if (song.cover_url) {
+        coverHtml = `<img src="${song.cover_url}" alt="${song.title} Cover" class="w-full h-full object-cover">`;
+    } else {
+        coverHtml = `<iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>`;
+    }
+
+    return `                    <article onclick="window.location.href='${songUrl}'"
                         class="reveal chapter-card visible group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
                         <div
                             class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-                            ${song.cover_url ? `<img src="${song.cover_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">` : `<iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>`}
+                            ${coverHtml}
                             <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
                             <div class="absolute bottom-3 left-3 flex gap-2">
                                 <span
