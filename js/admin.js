@@ -16,18 +16,14 @@ const CMS_CONFIG = {
 let currentTab = 'dashboard';
 let currentModFilter = 'pending';
 
-async function initCMS() {
-    if (!window.ss_supabase) {
-        console.error('Supabase client not found');
-        return;
-    }
+const API_URL = 'http://localhost:3000/api';
 
-    // Initial load
-    await Promise.all([
-        loadAllSongs(),
-        loadAllArtists(),
-        loadAllContributions()
-    ]);
+async function initCMS() {
+    checkServerStatus();
+    setInterval(checkServerStatus, 5000);
+
+    // Initial load from server
+    await syncFromServer(true);
 
     updateDashboardStats();
     renderSongsTable();
@@ -36,23 +32,68 @@ async function initCMS() {
     switchTab('dashboard');
 }
 
+async function checkServerStatus() {
+    try {
+        const resp = await fetch(`${API_URL}/data`);
+        updateStatus(resp.ok);
+    } catch (e) {
+        updateStatus(false);
+    }
+}
+
+function updateStatus(online) {
+    const dot = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+    if (!dot || !text) return;
+
+    if (online) {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-green-500';
+        text.textContent = 'Server Online';
+        text.className = 'text-[10px] font-bold text-green-500 uppercase tracking-widest';
+    } else {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse';
+        text.textContent = 'Server Offline';
+        text.className = 'text-[10px] font-bold text-zinc-500 uppercase tracking-widest';
+    }
+}
+
+async function syncFromServer(silent = false) {
+    try {
+        const resp = await fetch(`${API_URL}/data`);
+        if (!resp.ok) throw new Error("Server error");
+        const data = await resp.json();
+        SONGS_DATA_DB = data.songs;
+        ARTISTS_DATA_DB = data.artists;
+        window.SONGS_DATA = data.songs;
+        window.ARTISTS_DATA = data.artists;
+
+        updateDashboardStats();
+        if (currentTab === 'songs') renderSongsTable();
+        if (currentTab === 'artists') renderArtistsGrid();
+
+        if (!silent) showToast("Données synchronisées !");
+    } catch (err) {
+        console.error("Sync Error:", err);
+        if (!silent) showToast("Erreur de synchronisation.");
+    }
+}
+
 let SONGS_DATA_DB = [];
 let ARTISTS_DATA_DB = [];
 let CONTRIBS_DATA_DB = [];
 
 async function loadAllSongs() {
-    const { data, error } = await window.ss_supabase.from('songs').select('*').order('created_at', { ascending: false });
-    if (!error) SONGS_DATA_DB = data;
+    await syncFromServer();
 }
 
 async function loadAllArtists() {
-    const { data, error } = await window.ss_supabase.from('artists').select('*').order('name');
-    if (!error) ARTISTS_DATA_DB = data;
+    await syncFromServer();
 }
 
 async function loadAllContributions() {
-    const { data, error } = await window.ss_supabase.from('contributions').select('*').order('submitted_at', { ascending: false });
-    if (!error) CONTRIBS_DATA_DB = data;
+    // contributions are harder to handle static without a file, 
+    // maybe we just skip for now or use a contributions.json
+    CONTRIBS_DATA_DB = [];
 }
 
 /**
@@ -115,9 +156,14 @@ function updateDashboardStats() {
                 <h5 class="text-sm font-medium text-white truncate">${s.title}</h5>
                 <p class="text-xs text-zinc-500">${s.artist_id} • ${s.year}</p>
             </div>
-            <button class="text-zinc-600 hover:text-white" onclick="editSong('${s.id}')">
-                <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
-            </button>
+            <div class="flex items-center gap-2">
+                <button class="text-zinc-600 hover:text-amber-500" onclick="generateStaticHTML('${s.id}')" title="Générer HTML">
+                    <iconify-icon icon="solar:code-bold" width="18"></iconify-icon>
+                </button>
+                <button class="text-zinc-600 hover:text-white" onclick="editSong('${s.id}')" title="Éditer">
+                    <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
+                </button>
+            </div>
         </div>
     `).join('');
 
@@ -161,6 +207,9 @@ function renderSongsTable() {
             <td class="px-6 py-4 text-sm text-zinc-400">${s.year}</td>
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                    <button class="p-2 text-zinc-500 hover:text-amber-500" title="Générer HTML" onclick="generateStaticHTML('${s.id}')">
+                        <iconify-icon icon="solar:code-bold" width="18"></iconify-icon>
+                    </button>
                     <button class="p-2 text-zinc-500 hover:text-amber-500" title="Gérer le contenu" onclick="manageSongContent('${s.id}')">
                         <iconify-icon icon="solar:notes-bold" width="18"></iconify-icon>
                     </button>
@@ -300,7 +349,7 @@ function openModal(type, data = null) {
             : `<iconify-icon icon="solar:add-circle-bold" class="mr-2 text-amber-500"></iconify-icon> Ajouter un nouveau titre`;
 
         body.innerHTML = `
-            <form id="cms-form" onsubmit="handleFormSubmit(event, 'song', '${isEdit ? s.id : ''}')" class="space-y-4">
+            <form id="cms-form" onsubmit="handleFormSubmit(event, 'song')" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="md:col-span-2">
                         <label class="block text-xs text-zinc-500 mb-1">ID (identifiant unique URL)</label>
@@ -311,12 +360,8 @@ function openModal(type, data = null) {
                         <input type="text" id="f-title" value="${s.title || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
                     </div>
                     <div>
-                        <label class="block text-xs text-zinc-500 mb-1">Artiste</label>
-                        <input type="text" id="f-artist" value="${s.artist || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-zinc-500 mb-1">ID de l'artiste</label>
-                        <input type="text" id="f-artistId" value="${s.artistId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                        <label class="block text-xs text-zinc-500 mb-1">ID de l'artiste (ex: pnl, nekfeu)</label>
+                        <input type="text" id="f-artistId" value="${s.artist_id || s.artistId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
                     </div>
                     <div>
                         <label class="block text-xs text-zinc-500 mb-1">Genre</label>
@@ -337,6 +382,23 @@ function openModal(type, data = null) {
                     <div>
                         <label class="block text-xs text-zinc-500 mb-1">Apple Music ID</label>
                         <input type="text" id="f-appleMusicId" value="${s.appleMusicId || ''}" required class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Image de la Cover</label>
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-zinc-950 border border-white/5 overflow-hidden flex items-center justify-center shrink-0">
+                                <img id="cover-preview" src="${s.cover_url || ''}" class="w-full h-full object-cover ${s.cover_url ? '' : 'hidden'}">
+                                <iconify-icon id="cover-icon" icon="solar:music-note-linear" class="text-zinc-800 ${s.cover_url ? 'hidden' : ''}" width="24"></iconify-icon>
+                            </div>
+                            <div class="flex-1">
+                                <input type="file" id="f-coverFile" accept="image/*" class="hidden" onchange="previewCover(this)">
+                                <button type="button" onclick="document.getElementById('f-coverFile').click()" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white text-sm hover:border-amber-500/50 transition-all text-left">
+                                    <iconify-icon icon="solar:cloud-upload-bold" class="mr-2"></iconify-icon>
+                                    ${s.cover_url ? 'Changer l\'image...' : 'Choisir une image...'}
+                                </button>
+                                <input type="hidden" id="f-coverUrl" value="${s.cover_url || ''}">
+                            </div>
+                        </div>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs text-zinc-500 mb-1">Tags (séparés par des virgules)</label>
@@ -360,7 +422,7 @@ function openModal(type, data = null) {
             : `<iconify-icon icon="solar:user-plus-bold" class="mr-2 text-amber-500"></iconify-icon> Ajouter un nouvel artiste`;
 
         body.innerHTML = `
-            <form id="cms-form" onsubmit="handleFormSubmit(event, 'artist', '${isEdit ? a.id : ''}')" class="space-y-4">
+            <form id="cms-form" onsubmit="handleFormSubmit(event, 'artist')" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="md:col-span-2">
                         <label class="block text-xs text-zinc-500 mb-1">ID (identifiant unique URL)</label>
@@ -404,38 +466,78 @@ function closeModal() {
 /**
  * Handle Form Submissions & JSON Generation
  */
-async function handleFormSubmit(e, type, existingId) {
+async function handleFormSubmit(e, formType) {
     e.preventDefault();
 
-    if (!window.ss_supabase) {
-        showToast("Erreur: Supabase non connecté.");
-        return;
-    }
+    if (formType === 'song') {
+        const id = document.getElementById('f-id').value.trim();
+        const isEditing = SONGS_DATA_DB.some(s => s.id === id);
 
-    const id = document.getElementById('f-id').value.trim();
-    let dataObj = {};
+        // Upload cover if new file selected
+        let coverUrl = document.getElementById('f-coverUrl').value;
+        const fileInput = document.getElementById('f-coverFile');
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const base64 = await toBase64(file);
+            const uploadResp = await fetch(`${API_URL}/upload-cover`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: file.name, base64 })
+            });
+            const uploadResult = await uploadResp.json();
+            coverUrl = uploadResult.url;
+        }
 
-    if (type === 'song') {
-        const artistId = document.getElementById('f-artistId').value.trim();
-        dataObj = {
-            id: id,
+        const songObj = {
+            id,
             title: document.getElementById('f-title').value.trim(),
-            artist_id: artistId,
+            artist_id: document.getElementById('f-artistId').value, // Corrected from f-artist
             genre: document.getElementById('f-genre').value.trim(),
-            year: parseInt(document.getElementById('f-year').value, 10),
-            tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t),
-            description: document.getElementById('f-desc').value.trim(),
-            url: `single-song.html?id=${id}`,
-            audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder
+            year: parseInt(document.getElementById('f-year').value),
+            url: `songs/${id}.html`,
+            audio_url: '', // Placeholder, as per original
             spotify_id: document.getElementById('f-spotifyId').value.trim(),
-            apple_music_id: document.getElementById('f-appleMusicId').value.trim()
+            apple_music_id: document.getElementById('f-appleMusicId').value.trim(),
+            cover_url: coverUrl,
+            tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t),
+            description: document.getElementById('f-desc').value.trim() // Added description
         };
-        const duration = document.getElementById('f-duration').value.trim();
-        if (duration) dataObj.duration = duration;
 
-    } else if (type === 'artist') {
-        dataObj = {
-            id: id,
+        const duration = document.getElementById('f-duration').value.trim();
+        if (duration) songObj.duration = duration;
+
+        // Update local list
+        let newSongsList;
+        if (isEditing) {
+            newSongsList = SONGS_DATA_DB.map(s => s.id === id ? songObj : s);
+        } else {
+            newSongsList = [songObj, ...SONGS_DATA_DB];
+        }
+
+        // Save to server
+        const saveResp = await fetch(`${API_URL}/save-song`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                song: songObj,
+                songs: newSongsList,
+                artists: ARTISTS_DATA_DB,
+                glossary: window.GLOSSARY || {}
+            })
+        });
+
+        if (saveResp.ok) {
+            showToast("Titre enregistré !");
+            await syncFromServer();
+            renderSongsTable();
+            closeModal();
+        }
+    } else if (formType === 'artist') {
+        const id = document.getElementById('f-id').value.trim();
+        const isEditing = ARTISTS_DATA_DB.some(a => a.id === id);
+
+        const artistObj = {
+            id,
             name: document.getElementById('f-name').value.trim(),
             genre: document.getElementById('f-genre').value.trim(),
             country: document.getElementById('f-country').value.trim(),
@@ -444,26 +546,58 @@ async function handleFormSubmit(e, type, existingId) {
             url: `artists/${id}.html`,
             tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t)
         };
-    }
 
-    let error;
-    if (existingId) {
-        ({ error } = await window.ss_supabase.from(type + 's').update(dataObj).eq('id', existingId));
-    } else {
-        ({ error } = await window.ss_supabase.from(type + 's').insert([dataObj]));
-    }
+        // Update local list
+        let newArtistsList;
+        if (isEditing) {
+            newArtistsList = ARTISTS_DATA_DB.map(a => a.id === id ? artistObj : a);
+        } else {
+            newArtistsList = [artistObj, ...ARTISTS_DATA_DB];
+        }
 
-    if (error) {
-        alert("Erreur: " + error.message);
-    } else {
-        showToast(existingId ? "Mis à jour avec succès !" : "Ajouté avec succès !");
-        closeModal();
-        // Refresh local data and UI
-        if (type === 'song') await loadAllSongs();
-        else await loadAllArtists();
-        updateDashboardStats();
-        if (type === 'song') renderSongsTable();
-        else renderArtistsGrid();
+        // Save to server
+        const saveResp = await fetch(`${API_URL}/save-song`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                song: null,
+                songs: SONGS_DATA_DB,
+                artists: newArtistsList,
+                glossary: window.GLOSSARY || {}
+            })
+        });
+
+        if (saveResp.ok) {
+            showToast("Artiste enregistré !");
+            await syncFromServer();
+            renderArtistsGrid();
+            closeModal();
+        }
+    }
+}
+
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+function previewCover(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById('cover-preview');
+            const icon = document.getElementById('cover-icon');
+            if (preview && icon) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                icon.classList.add('hidden');
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
     }
 }
 
@@ -478,26 +612,34 @@ function editArtist(id) {
 }
 
 async function deleteItem(type, id) {
-    if (!confirm(`Êtes-vous sûr de vouloir supprimer ${type === 'song' ? 'le titre' : 'l\'artiste'} "${id}" de la base de données ? Cette action est irréversible.`)) return;
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer ${type === 'song' ? 'le titre' : 'l\'artiste'} "${id}" ? Cette action modifiera vos fichiers locaux.`)) return;
 
-    if (!window.ss_supabase) {
-        showToast("Erreur: Supabase non connecté.");
-        return;
+    let newSongs = SONGS_DATA_DB;
+    let newArtists = ARTISTS_DATA_DB;
+
+    if (type === 'song') {
+        newSongs = SONGS_DATA_DB.filter(s => s.id !== id);
+    } else {
+        newArtists = ARTISTS_DATA_DB.filter(a => a.id !== id);
     }
 
-    const { error } = await window.ss_supabase.from(type + 's').delete().eq('id', id);
+    // Save to server
+    const saveResp = await fetch(`${API_URL}/save-song`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            song: null,
+            songs: newSongs,
+            artists: newArtists,
+            glossary: window.GLOSSARY || {}
+        })
+    });
 
-    if (error) {
-        alert("Erreur lors de la suppression: " + error.message);
-    } else {
+    if (saveResp.ok) {
         showToast("Supprimé avec succès !");
-        if (type === 'song') {
-            await loadAllSongs();
-            renderSongsTable();
-        } else {
-            await loadAllArtists();
-            renderArtistsGrid();
-        }
+        await syncFromServer();
+        renderSongsTable();
+        renderArtistsGrid();
         updateDashboardStats();
     }
 }
@@ -533,18 +675,10 @@ async function manageSongContent(songId) {
     modal.classList.remove('hidden');
     title.innerHTML = `<iconify-icon icon="solar:notes-bold" class="mr-2 text-amber-500"></iconify-icon> Contenu : ${song.title}`;
 
-    // Load existing content
-    const { data: contents, error } = await window.ss_supabase
-        .from('song_contents')
-        .select('*')
-        .eq('song_id', songId)
-        .order('display_order');
-
-    if (error) {
-        showToast("Erreur lors du chargement du contenu");
-        console.error(error);
-        return;
-    }
+    // Load existing content (from local data if available, otherwise empty)
+    // For a fully static CMS, song_contents would be part of SONGS_DATA_DB or separate JSON files.
+    // For now, we'll simulate it as an empty array if not explicitly loaded.
+    const contents = song.contents || []; // Assuming song.contents might hold this data
 
     body.innerHTML = `
         <div class="space-y-6">
@@ -561,7 +695,7 @@ async function manageSongContent(songId) {
     // Render blocks
     window.currentEditingSongId = songId;
     window.editingBlocks = contents.map(c => ({
-        id: c.id,
+        id: c.id, // Keep ID if it exists, for potential future use
         time: c.time,
         lyrics: Array.isArray(c.lyrics) ? c.lyrics.join('\n') : c.lyrics,
         analysis: c.analysis,
@@ -640,40 +774,168 @@ function removeBlock(idx) {
 
 async function saveSongContent() {
     if (!window.currentEditingSongId) return;
+    if (!confirm("Voulez-vous enregistrer ces modifications dans les fichiers locaux ?")) return;
 
-    if (!confirm("Voulez-vous vraiment écraser l'ancien contenu par celui-ci ?")) return;
+    // This part is tricky because song_contents isn't in data.js
+    // For a fully static CMS, we should probably add SONG_CONTENTS to data.js
+    // Or save to individual JSON files.
+    // Let's assume for now we just want to NOT crash and maybe log it.
+    showToast("Sauvegarde du contenu (lyrics/analyse) non encore migrée en local.");
+}
 
-    // 1. Delete existing content for this song
-    const { error: delError } = await window.ss_supabase
-        .from('song_contents')
-        .delete()
-        .eq('song_id', window.currentEditingSongId);
+/**
+ * Static HTML Generation Logic
+ */
+function generateStaticHTML(songId) {
+    const song = SONGS_DATA_DB.find(s => s.id === songId);
+    if (!song) return;
 
-    if (delError) {
-        alert("Erreur lors de la suppression de l'ancien contenu : " + delError.message);
+    const coverHtml = song.cover_url
+        ? `<img src="${song.cover_url}" alt="${song.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
+        : `<iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>`;
+
+    // 1. Library Card (library.html)
+    const libraryCode = `
+                <!-- ${song.title} -->
+                <a href="songs/${song.id}.html"
+                    class="song-card reveal visible group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    data-genre="${song.genre}" data-tags="${song.tags ? song.tags.join(',') : ''}">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="px-2 py-1 rounded-md bg-amber-400/10 text-amber-400 text-[10px] font-medium uppercase tracking-wider">
+                            ${song.genre}</div>
+                        <span class="text-zinc-600 text-[10px] font-medium">${song.year}</span>
+                    </div>
+                    <div class="w-full aspect-square bg-zinc-800 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-white/5">
+                        ${coverHtml}
+                    </div>
+                    <h3
+                        class="text-white font-medium text-lg leading-tight group-hover:text-amber-400 transition-colors mb-1">
+                        ${song.title}</h3>
+                    <p class="text-zinc-500 text-sm mb-4">${song.artist_id}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${(song.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full bg-zinc-800/50 text-zinc-500 text-[10px]">${t}</span>`).join('\n                        ')}
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-zinc-600">${song.duration || '--'}</span>
+                        <iconify-icon icon="solar:play-bold"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>`.trim();
+
+    // 2. Home Card (index.html)
+    const homeCode = `
+                    <!-- ${song.title} -->
+                    <article onclick="window.location.href='songs/${song.id}.html'"
+                        class="reveal chapter-card visible group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
+                        <div
+                            class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
+                            ${song.cover_url ? `<img src="${song.cover_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">` : `<iconify-icon icon="solar:music-note-linear" class="text-zinc-700 opacity-50" width="48"></iconify-icon>`}
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <span
+                                    class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">${song.genre}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
+                            <span>${song.artist_id}</span><span>•</span><span>${song.year}</span>
+                        </div>
+                        <h3
+                            class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">
+                            ${song.title}</h3>
+                        <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">${song.description || ''}</p>
+                    </article>`.trim();
+
+    document.getElementById('code-library').value = libraryCode;
+    document.getElementById('code-home').value = homeCode;
+    document.getElementById('code-modal-container').classList.remove('hidden');
+}
+
+
+/**
+ * Sync logic: Import static data from js/data.js into Supabase
+ */
+async function syncFromStaticData() {
+    if (!window.ss_supabase) {
+        showToast("Supabase non connecté.");
         return;
     }
 
-    // 2. Insert new blocks
-    const insertData = window.editingBlocks.map(b => ({
-        song_id: window.currentEditingSongId,
-        time: b.time,
-        lyrics: b.lyrics.split('\n').map(l => l.trim()).filter(l => l),
-        analysis: b.analysis,
-        display_order: b.display_order
-    }));
+    if (!confirm("Voulez-vous importer les titres et artistes de 'js/data.js' dans la base de données ? Les éléments existants seront mis à jour.")) return;
 
-    if (insertData.length > 0) {
-        const { error: insError } = await window.ss_supabase
-            .from('song_contents')
-            .insert(insertData);
+    const btn = document.getElementById('sync-btn');
+    const originalContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<iconify-icon icon="solar:refresh-bold" width="16" class="animate-spin"></iconify-icon> Importation...`;
 
-        if (insError) {
-            alert("Erreur lors de l'insertion du nouveau contenu : " + insError.message);
-            return;
+    try {
+        // 1. Sync Artists
+        const artistsToSync = (window.ARTISTS_DATA || []).map(a => ({
+            id: a.id,
+            name: a.name,
+            genre: 'Rap', // Fallback
+            country: 'FR', // Fallback
+            bio: '',
+            influence: '',
+            url: `artists/${a.id}.html`,
+            tags: []
+        }));
+
+        if (artistsToSync.length > 0) {
+            const { error: aErr } = await window.ss_supabase.from('artists').upsert(artistsToSync);
+            if (aErr) throw aErr;
         }
-    }
 
-    showToast("Contenu sauvegardé avec succès !");
-    closeModal();
+        // 2. Sync Songs
+        const songsToSync = (window.SONGS_DATA || []).map(s => ({
+            id: s.id,
+            title: s.title,
+            artist_id: s.artistId || s.artist,
+            genre: s.genre,
+            year: s.year,
+            audio_url: s.audio || '',
+            url: `songs/${s.id}.html`,
+            description: '',
+            tags: [],
+            spotify_id: '',
+            apple_music_id: '',
+            cover_url: ''
+        }));
+
+        if (songsToSync.length > 0) {
+            const { error: sErr } = await window.ss_supabase.from('songs').upsert(songsToSync);
+            if (sErr) throw sErr;
+        }
+
+        showToast("Synchronisation terminée !");
+
+        // Reload data
+        await Promise.all([
+            loadAllSongs(),
+            loadAllArtists()
+        ]);
+        updateDashboardStats();
+        renderSongsTable();
+        renderArtistsGrid();
+
+    } catch (err) {
+        console.error("Sync Error:", err);
+        alert("Erreur lors de l'import : " + (err.message || err));
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+    }
+}
+
+/**
+ * Utility: Copy to Clipboard
+ */
+function copyToClipboard(elementId) {
+    const copyText = document.getElementById(elementId);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value).then(() => {
+        showToast("Copié dans le presse-papier !");
+    });
 }

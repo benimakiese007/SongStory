@@ -13,8 +13,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="manifest" href="../manifest.json">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
     <meta name="theme-color" content="#09090b">
 </head>
 
@@ -25,23 +25,23 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2">
-                    <a href="../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
+                    <a href="../../index.html" class="text-white text-lg font-medium tracking-tighter">SONGSTORY.</a>
                 </div>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html"
+                        <a href="../../index.html"
                             class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html"
+                        <a href="../../library.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html"
+                        <a href="../../artists.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html"
+                        <a href="../../timeline.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html"
+                        <a href="../../glossary.html"
                             class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                        <a href="../../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
                             propos</a>
                     </div>
                 </div>
@@ -77,25 +77,47 @@
 
     <main class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-xs uppercase tracking-widest text-blue-400 font-medium">Diss Track — Beef
-                        2024</span>
-                    <span class="text-xs text-zinc-600">•</span>
-                    <a href="../artists/drake.html"
-                        class="text-xs text-zinc-500 hover:text-blue-400 transition-colors">Voir le profil de Drake
-                        →</a>
+            <!-- Refined Header Section -->
+            <div class="flex flex-col md:flex-row gap-8 md:items-end mb-16">
+                <!-- Cover Image (Smaller and fixed aspect) -->
+                <div class="w-full md:w-80 flex-shrink-0 group">
+                    <div
+                        class="aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl relative">
+                        <img src="../../Images/Family Matters Cover.webp" alt="Family Matters Cover"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
                 </div>
-                <h1 id="song-title" class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Family
-                    Matters</h1>
-                <div id="song-meta">
-                    <p class="text-xl text-zinc-500 font-light">Drake • 3 mai 2024</p>
+
+                <!-- Info Section -->
+                <div class="flex-grow pb-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span
+                            class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-medium uppercase tracking-widest">Diss
+                            Track — Beef 2024</span>
+                        <span class="text-zinc-800">•</span>
+                        <a href="../../artists/drake.html"
+                            class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de Drake
+                            →</a>
+                    </div>
+
+                    <h1 id="song-title" class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-4">Family
+                        Matters</h1>
+
+                    <div class="flex items-center gap-4 text-zinc-500 font-light">
+                        <span class="text-xl">Drake</span>
+                        <span class="text-zinc-800">•</span>
+                        <span class="text-xl">3 mai 2024</span>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap gap-4 items-center">
+                        <p class="text-sm text-zinc-600">Cible : Kendrick Lamar • 7:36 min • Trois changements de beat
+                        </p>
+                        <button id="karaoke-toggle" class="karaoke-toggle-btn active shrink-0 text-xs">
+                            <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                            <span>Masquer les Décryptages</span>
+                        </button>
+                    </div>
                 </div>
-                <p class="text-sm text-zinc-600 mt-2">Cible : Kendrick Lamar • 7:36 min • Trois changements de beat
-                </p>
-                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
-                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
-                            Décryptages</span></button></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
@@ -700,13 +722,13 @@
             </div>
         </div>
     </main>
-    <script src="../js/data.js"></script>
-    <script src="../js/ui.js"></script>
-    <script src="../js/player.js"></script>
-    <script src="../js/song-renderer.js"></script>
+    <script src="../../js/data.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/player.js"></script>
+    <script src="../../js/song-renderer.js"></script>
 
-    <script src="../js/supabase-auth.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="../../js/supabase-auth.js"></script>
+    <script src="../../js/app.js"></script>
 
     <!-- Decrypt Bubble Container -->
     <div id="decrypt-bubble" class="decrypt-bubble">
