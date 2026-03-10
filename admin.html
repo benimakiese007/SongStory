@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -200,6 +200,10 @@
                     <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
                     Artistes
                 </button>
+                <button onclick="switchTab('covers')" class="nav-link" id="btn-covers">
+                    <iconify-icon icon="solar:gallery-bold-duotone"></iconify-icon>
+                    Covers
+                </button>
                 <div class="pt-4 pb-2 px-4 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Communauté
                 </div>
                 <button onclick="switchTab('moderation')" class="nav-link" id="btn-moderation">
@@ -356,6 +360,24 @@
                             id="mod-filter-approved" onclick="filterModeration('approved')">Approuvées</button>
                     </div>
                     <div id="contribs-list-full" class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+
+                <!-- Covers Management Section -->
+                <section id="view-covers" class="hidden">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-white font-bold text-lg">Galerie des Covers</h3>
+                            <p class="text-xs text-zinc-500 mt-1">Gérez les images de couverture pour vos titres.</p>
+                        </div>
+                        <button onclick="document.getElementById('f-coverFile').click()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+                             <iconify-icon icon="solar:upload-bold" width="16"></iconify-icon>
+                             Uploader une Cover
+                        </button>
+                    </div>
+
+                    <div id="covers-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         <!-- Populated via JS -->
                     </div>
                 </section>

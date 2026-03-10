@@ -4,11 +4,12 @@
  */
 
 const CMS_CONFIG = {
-    tabs: ['dashboard', 'songs', 'artists', 'moderation'],
+    tabs: ['dashboard', 'songs', 'artists', 'covers', 'moderation'],
     titles: {
         dashboard: 'Tableau de Bord',
         songs: 'Gestion des Titres',
         artists: 'Gestion des Artistes',
+        covers: 'Galerie des Covers',
         moderation: 'Modération des Contributions'
     }
 };
@@ -130,6 +131,8 @@ function switchTab(tabId) {
         const el = document.getElementById(`view-${t}`);
         if (el) el.classList.toggle('hidden', t !== tabId);
     });
+
+    if (tabId === 'covers') renderCoversGallery();
 }
 
 /**
@@ -317,6 +320,70 @@ function filterModeration(status) {
 }
 
 /**
+ * Covers Management
+ */
+async function renderCoversGallery() {
+    const gallery = document.getElementById('covers-gallery');
+    if (!gallery) return;
+
+    try {
+        const resp = await fetch(`${API_URL}/list-covers`);
+        const covers = await resp.json();
+
+        if (covers.length === 0) {
+            gallery.innerHTML = `<div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                <iconify-icon icon="solar:gallery-wide-bold-duotone" width="48" class="text-zinc-800 mb-2"></iconify-icon>
+                <p class="text-zinc-600">Aucune cover trouvée dans Images/Title Cover.</p>
+            </div>`;
+            return;
+        }
+
+        gallery.innerHTML = covers.map(c => `
+            <div class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden group relative aspect-square">
+                <img src="${c.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 gap-2">
+                    <p class="text-[10px] text-white font-medium truncate w-full text-center">${c.filename}</p>
+                    <div class="flex gap-2">
+                        <button onclick="copyToClipboardText('${c.url}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
+                            <iconify-icon icon="solar:copy-bold" width="16"></iconify-icon>
+                        </button>
+                        <button onclick="deleteCover('${c.filename}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
+                            <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error("Error loading covers:", err);
+        showToast("Erreur lors du chargement des covers.");
+    }
+}
+
+async function deleteCover(filename) {
+    if (!confirm(`Supprimer définitivement la cover "${filename}" ?`)) return;
+
+    try {
+        const resp = await fetch(`${API_URL}/delete-cover`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename })
+        });
+        if (resp.ok) {
+            showToast("Cover supprimée.");
+            renderCoversGallery();
+        }
+    } catch (err) {
+        showToast("Erreur lors de la suppression.");
+    }
+}
+
+function copyToClipboardText(text) {
+    navigator.clipboard.writeText(text);
+    showToast("Lien copié !");
+}
+
+/**
  * CMS Actions
  */
 function takeCmsAction(id, action) {
@@ -395,6 +462,10 @@ function openModal(type, data = null) {
                                 <button type="button" onclick="document.getElementById('f-coverFile').click()" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white text-sm hover:border-amber-500/50 transition-all text-left">
                                     <iconify-icon icon="solar:cloud-upload-bold" class="mr-2"></iconify-icon>
                                     ${s.cover_url ? 'Changer l\'image...' : 'Choisir une image...'}
+                                </button>
+                                <button type="button" onclick="openGalleryPicker()" class="w-full mt-2 bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-zinc-400 text-xs hover:text-white hover:border-white/10 transition-all text-left">
+                                    <iconify-icon icon="solar:gallery-bold" class="mr-2"></iconify-icon>
+                                    Parcourir la galerie...
                                 </button>
                                 <input type="hidden" id="f-coverUrl" value="${s.cover_url || ''}">
                             </div>
@@ -598,7 +669,84 @@ function previewCover(input) {
             }
         }
         reader.readAsDataURL(input.files[0]);
+        
+        // If we are in the covers tab, we might want to auto-upload
+        if (currentTab === 'covers') {
+            uploadStandaloneCover(input.files[0]);
+        }
     }
+}
+
+async function uploadStandaloneCover(file) {
+    const base64 = await toBase64(file);
+    try {
+        const resp = await fetch(`${API_URL}/upload-cover`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: file.name, base64 })
+        });
+        if (resp.ok) {
+            showToast("Cover uploadée !");
+            renderCoversGallery();
+        }
+    } catch (err) {
+        showToast("Erreur lors de l'upload.");
+    }
+}
+
+async function openGalleryPicker() {
+    const galleryContainer = document.createElement('div');
+    galleryContainer.id = 'gallery-picker';
+    galleryContainer.className = 'fixed inset-0 bg-black/90 backdrop-blur-xl z-[70] flex flex-col p-8';
+    galleryContainer.innerHTML = `
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl text-white font-bold">Sélectionner une Cover</h3>
+            <button onclick="document.getElementById('gallery-picker').remove()" class="text-zinc-500 hover:text-white">
+                <iconify-icon icon="solar:close-circle-bold" width="32"></iconify-icon>
+            </button>
+        </div>
+        <div id="gallery-picker-list" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 overflow-y-auto flex-1 pb-8">
+            <div class="col-span-full py-10 text-center animate-pulse text-zinc-500">Chargement...</div>
+        </div>
+    `;
+    document.body.appendChild(galleryContainer);
+
+    try {
+        const resp = await fetch(`${API_URL}/list-covers`);
+        const covers = await resp.json();
+        const list = document.getElementById('gallery-picker-list');
+        
+        if (covers.length === 0) {
+            list.innerHTML = `<p class="col-span-full text-center text-zinc-500 py-20">Aucune image dans la galerie.</p>`;
+            return;
+        }
+
+        list.innerHTML = covers.map(c => `
+            <div onclick="selectCoverForSong('${c.url}')" class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-amber-500/50 transition-all aspect-square relative group">
+                <img src="${c.url}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+        `).join('');
+    } catch (err) {
+        galleryContainer.remove();
+        showToast("Erreur de chargement.");
+    }
+}
+
+function selectCoverForSong(url) {
+    const preview = document.getElementById('cover-preview');
+    const icon = document.getElementById('cover-icon');
+    const hidden = document.getElementById('f-coverUrl');
+    
+    if (preview && hidden) {
+        preview.src = url;
+        preview.classList.remove('hidden');
+        if (icon) icon.classList.add('hidden');
+        hidden.value = url;
+    }
+    
+    const picker = document.getElementById('gallery-picker');
+    if (picker) picker.remove();
 }
 
 function editSong(id) {

@@ -77,7 +77,8 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             try {
                 const { filename, base64 } = JSON.parse(body);
-                const coverDir = path.join(__dirname, 'Images', 'covers');
+                // Unified cover storage
+                const coverDir = path.join(__dirname, 'Images', 'Title Cover');
                 if (!fs.existsSync(coverDir)) fs.mkdirSync(coverDir, { recursive: true });
 
                 const filePath = path.join(coverDir, filename);
@@ -85,7 +86,49 @@ const server = http.createServer((req, res) => {
                 fs.writeFileSync(filePath, base64Data, 'base64');
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ url: `Images/covers/${filename}` }));
+                res.end(JSON.stringify({ url: `Images/Title Cover/${filename}` }));
+            } catch (err) {
+                console.error(err);
+                res.writeHead(500);
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+    }
+    // API: List Covers
+    else if (req.url === '/api/list-covers' && req.method === 'GET') {
+        try {
+            const coverDir = path.join(__dirname, 'Images', 'Title Cover');
+            if (!fs.existsSync(coverDir)) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify([]));
+                return;
+            }
+            const files = fs.readdirSync(coverDir).filter(f => /\.(webp|png|jpg|jpeg|gif)$/i.test(f));
+            const covers = files.map(f => ({
+                filename: f,
+                url: `Images/Title Cover/${f}`
+            }));
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(covers));
+        } catch (err) {
+            console.error(err);
+            res.writeHead(500);
+            res.end(JSON.stringify({ error: err.message }));
+        }
+    }
+    // API: Delete Cover
+    else if (req.url === '/api/delete-cover' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { filename } = JSON.parse(body);
+                const filePath = path.join(__dirname, 'Images', 'Title Cover', filename);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+                res.writeHead(200);
+                res.end(JSON.stringify({ success: true }));
             } catch (err) {
                 console.error(err);
                 res.writeHead(500);
