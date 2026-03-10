@@ -57,9 +57,13 @@ const server = http.createServer((req, res) => {
                 content += `window.loadAppDataFromSupabase = async () => console.log('Static mode enabled - No Supabase sync needed.');\n`;
                 fs.writeFileSync(dataPath, content, 'utf-8');
 
-                // 2. Update Static Cards in index.html and library.html if needed
+                // 2. Update Static Cards in index.html, library.html, and artists.html if needed
                 // For now, we update the HTML files sequentially
-                updateStaticCards(song);
+                if (song) updateStaticCards(song);
+                if (artists) {
+                    updateArtistCards(artists);
+                    artists.forEach(artist => updateIndividualArtistPage(artist));
+                }
 
                 res.writeHead(200);
                 res.end(JSON.stringify({ success: true }));
@@ -116,6 +120,72 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ error: err.message }));
         }
     }
+    // API: List Profile Pictures
+    else if (req.url === '/api/list-pp' && req.method === 'GET') {
+        try {
+            const ppDir = path.join(__dirname, 'Images', 'Profile Picture - Artist');
+            if (!fs.existsSync(ppDir)) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify([]));
+                return;
+            }
+            const files = fs.readdirSync(ppDir).filter(f => /\.(webp|png|jpg|jpeg|gif)$/i.test(f));
+            const pps = files.map(f => ({
+                filename: f,
+                url: `Images/Profile Picture - Artist/${f}`
+            }));
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(pps));
+        } catch (err) {
+            console.error(err);
+            res.writeHead(500);
+            res.end(JSON.stringify({ error: err.message }));
+        }
+    }
+    // API: Delete Profile Picture
+    else if (req.url === '/api/delete-pp' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { filename } = JSON.parse(body);
+                const filePath = path.join(__dirname, 'Images', 'Profile Picture - Artist', filename);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+                res.writeHead(200);
+                res.end(JSON.stringify({ success: true }));
+            } catch (err) {
+                console.error(err);
+                res.writeHead(500);
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+    }
+    // API: Upload Artist Photo
+    else if (req.url === '/api/upload-artist' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { filename, base64 } = JSON.parse(body);
+                // Unified artist storage
+                const artistDir = path.join(__dirname, 'Images', 'Profile Picture - Artist');
+                if (!fs.existsSync(artistDir)) fs.mkdirSync(artistDir, { recursive: true });
+
+                const filePath = path.join(artistDir, filename);
+                const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
+                fs.writeFileSync(filePath, base64Data, 'base64');
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ url: `Images/Profile Picture - Artist/${filename}` }));
+            } catch (err) {
+                console.error(err);
+                res.writeHead(500);
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+    }
     // API: Delete Cover
     else if (req.url === '/api/delete-cover' && req.method === 'POST') {
         let body = '';
@@ -169,6 +239,97 @@ function updateStaticCards(song) {
 
         fs.writeFileSync(filePath, content, 'utf-8');
     });
+}
+
+function updateArtistCards(artists) {
+    const filePath = path.join(__dirname, 'artists.html');
+    if (!fs.existsSync(filePath)) return;
+
+    let content = fs.readFileSync(filePath, 'utf-8');
+
+    artists.forEach(artist => {
+        const cardHtml = generateArtistCard(artist);
+        const commentTag = `<!-- Artist: ${artist.id} -->`;
+        const regex = new RegExp(`${commentTag}[\\s\\S]*?<!-- End Artist: ${artist.id} -->`, 'g');
+
+        if (content.includes(commentTag)) {
+            content = content.replace(regex, `${commentTag}\n${cardHtml}\n                <!-- End Artist: ${artist.id} -->`);
+        }
+    });
+
+    fs.writeFileSync(filePath, content, 'utf-8');
+}
+
+function updateIndividualArtistPage(artist) {
+    if (!artist.id) return;
+    const filePath = path.join(__dirname, 'artists', `${artist.id}.html`);
+    if (!fs.existsSync(filePath)) return;
+
+    let content = fs.readFileSync(filePath, 'utf-8');
+
+    let avatarHtml;
+    if (artist.photo_url) {
+        avatarHtml = `                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+                    <img src="../${artist.photo_url}" alt="${artist.name}" class="w-full h-full object-cover">
+                </div>`;
+    } else {
+        avatarHtml = `                <div class="w-32 h-32 md:w-40 md:h-40 bg-zinc-900 rounded-full flex items-center justify-center border border-white/10 shrink-0 mx-auto mb-6">
+                    <iconify-icon icon="solar:user-bold" class="text-zinc-700" width="60"></iconify-icon>
+                </div>`;
+    }
+
+    const artistInfoHtml = `            <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
+${avatarHtml}
+                <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">${artist.name}</h1>
+                <p class="text-lg text-zinc-500 font-light mb-6">${artist.genre} • ${artist.country}</p>
+                <p class="text-base text-zinc-400 leading-relaxed">${artist.bio || ''}</p>
+            </div>`;
+
+
+    const startTag = '<!-- ARTIST_INFO_START -->';
+    const endTag = '<!-- ARTIST_INFO_END -->';
+    const regex = new RegExp(`${startTag}[\\s\\S]*?${endTag}`, 'g');
+
+    if (content.match(regex)) {
+        content = content.replace(regex, `${startTag}\n${artistInfoHtml}\n            ${endTag}`);
+        fs.writeFileSync(filePath, content, 'utf-8');
+        console.log(`Updated statically: ${filePath}`);
+    }
+}
+
+function generateArtistCard(artist) {
+    let avatarHtml;
+    if (artist.photo_url) {
+        avatarHtml = `                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
+                            <img src="${artist.photo_url}" alt="${artist.name}" class="w-full h-full object-cover">
+                        </div>`;
+    } else {
+        avatarHtml = `                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;">
+                            <iconify-icon icon="solar:user-bold"
+                                class="text-zinc-600 group-hover:text-amber-400 transition-colors"
+                                width="28"></iconify-icon>
+                        </div>`;
+    }
+
+    return `                <a href="artists/${artist.id}.html"
+                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
+                    style="text-decoration:none;">
+                    <div class="flex items-center gap-4 mb-4">
+${avatarHtml}
+                        <div>
+                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
+                                ${artist.name}</h3>
+                            <p class="text-zinc-500 text-sm">${artist.genre} · ${artist.country}</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">${artist.bio || ''}</p>
+                    <div class="flex items-center justify-between text-xs text-zinc-600">
+                        <span>${artist.songs ? artist.songs.length : 0} analyse(s) disponible(s)</span>
+                        <iconify-icon icon="solar:arrow-right-linear"
+                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            width="16"></iconify-icon>
+                    </div>
+                </a>`;
 }
 
 function generateLibraryCard(song) {

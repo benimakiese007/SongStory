@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -10,7 +10,6 @@
     <meta property="og:title" content="MC Solaar — Profil Artiste | SongStory">
     <meta property="og:description" content="Découvrez MC Solaar : biographie, carrière et morceaux analysés.">
     <meta property="og:type" content="profile">
-    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,33 +34,38 @@
         <div id="search-results"></div>
     </div>
 
-        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="flex items-center gap-2"><img src="../Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto"><span class="sr-only">SONGSTORY</span></a>
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
                     </div>
                 </div>
 
-                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <!-- Nav auth slot -->
                     <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
@@ -69,7 +73,8 @@
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -86,20 +91,16 @@
         </div>
     </div>
 
-    <section class="artist-hero">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="artist-avatar mx-auto">
-                <iconify-icon icon="solar:user-bold" width="48" class="text-zinc-500"></iconify-icon>
-            </div>
-            <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">MC Solaar</h1>
-            <p class="text-lg text-zinc-500 font-light mb-2">Rap · France</p>
-            <div class="flex items-center justify-center gap-3 text-xs text-zinc-600">
-                <span>1 analyse disponible</span>
-                <span>·</span>
-                <span>Actif depuis 2014</span>
-            </div>
+    <!-- ARTIST_INFO_START -->
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+            <img src="../Images/Profile Picture - Artist/MC Solaar PP.webp" alt="MC Solaar" class="w-full h-full object-cover">
         </div>
-    </section>
+        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">MC Solaar</h1>
+        <p class="text-lg text-zinc-500 font-light mb-6">Rap • France</p>
+        <p class="text-base text-zinc-400 leading-relaxed">Le poète du rap français, pionnier du lyrisme et du style "cool" qui a marqué toute une époque.</p>
+    </div>
+    <!-- ARTIST_INFO_END -->
 
     <main class="pb-24">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,29 +112,26 @@
                         Biographie
                     </h2>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-6">
-                        William Kalubi, alias Damso, est un rappeur belgo-congolais né en 1992. Révélé en 2015, il est
-                        devenu l'une des figures majeures du rap francophone contemporain grâce à son univers sombre,
-                        poétique et introspectif.
+                        Claude M'Barali, alias MC Solaar, né en 1969, est l'un des premiers rappeurs à avoir connu un succès massif en France. Reconnu pour sa plume ciselée et son absence de violence gratuite, il a su populariser le hip-hop grâce à des textes riches en jeux de mots et en métaphores poétiques.
                     </p>
                     <h3 class="text-sm text-white font-medium mb-2">Influence</h3>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-8">
-                        Damso a réinventé le rap francophone avec une approche cinématographique et des métaphores
-                        complexes qui font de chaque album une œuvre littéraire. Son écriture mêle crudité et poésie
-                        avec une maîtrise rare.
+                        Solaar a ouvert la voie à un rap élégant et intellectuel, influençant de nombreux artistes par sa capacité à marier les sonorités jazz et hip-hop. Son impact sur la langue française dans la musique urbaine est fondamental et durable.
                     </p>
 
                     <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <a href="../songs/solaar-pleure.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
-                        <div>
-                            <div class="rec-title">Solaar pleure</div>
-                            <div class="rec-artist">2001 • Rap • Cinquième As</div>
-                        </div>
-                    </a>
+                    <div class="space-y-4">
+                        <a href="../songs/solaar-pleure.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Solaar pleure</div>
+                                <div class="rec-artist">2001 • Rap • Cinquième As</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <div>
@@ -144,29 +142,27 @@
                     <div class="artist-timeline">
                         <div class="reveal timeline-item">
                             <div class="timeline-year">1969</div>
-                            <div class="timeline-event">Naissance à Dakar, Sénégal</div>
-                        </div>
-                        <div class="reveal timeline-item">
-                            <div class="timeline-year">1991</div>
-                            <div class="timeline-event">Succès retentissant de "Bouge de là"</div>
-                        </div>
-                        <div class="reveal timeline-item">
-                            <div class="timeline-year">1994</div>
-                            <div class="timeline-event">L'album chef-d'œuvre "Prose Combat"</div>
+                            <div class="timeline-event">Naissance à Dakar, Sénégal.</div>
                         </div>
                         <div class="reveal timeline-item highlight">
-                            <div class="timeline-year">1997</div>
-                            <div class="timeline-event">"Ipséité" — consécration critique et commerciale. L'album
-                                contient "Macarena".</div>
+                            <div class="timeline-year">1991</div>
+                            <div class="timeline-event">Succès retentissant du titre "Bouge de là".</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">1994</div>
+                            <div class="timeline-event">L'album chef-d'œuvre "Prose Combat" sort et devient un classique mondial.</div>
                         </div>
                         <div class="reveal timeline-item">
                             <div class="timeline-year">2001</div>
-                            <div class="timeline-event">"QALF" — opus conceptuel, exploration de nouveaux territoires
-                                sonores</div>
+                            <div class="timeline-event">Confirmation majeure avec l'album "Cinquième As".</div>
                         </div>
                         <div class="reveal timeline-item">
+                            <div class="timeline-year">2017</div>
+                            <div class="timeline-event">Retour salué par la critique avec "Géopoétique".</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
                             <div class="timeline-year">2024</div>
-                            <div class="timeline-event">Sortie du projet "Triptyque : Lumière céleste"</div>
+                            <div class="timeline-event">Sortie du projet "Triptyque : Lumière céleste".</div>
                         </div>
                     </div>
                 </div>
@@ -183,10 +179,8 @@
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
-
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 </body>
 
 </html>
-

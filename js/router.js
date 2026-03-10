@@ -36,6 +36,7 @@ const SongStoryRouter = {
         }
 
         e.preventDefault();
+        e.stopPropagation(); // Prevent initTransitions from also handling this click
 
         // Prevent reloading the exact same page
         const currentPath = window.location.pathname + window.location.search;
@@ -64,7 +65,6 @@ const SongStoryRouter = {
             }
 
             // Fetch the new page
-            // Note: In development/local servers, this path resolution might need adjustment depending on the root
             const response = await fetch(path);
             if (!response.ok) throw new Error('Network response was not ok');
 
@@ -78,8 +78,22 @@ const SongStoryRouter = {
             const newMain = doc.querySelector('main');
             if (mainContent && newMain) {
                 mainContent.innerHTML = newMain.innerHTML;
-                mainContent.className = newMain.className; // Transfer classes too
+                mainContent.className = newMain.className;
                 mainContent.style.opacity = '1';
+            }
+
+            // Replace <nav> content (to update active link highlight)
+            const currentNav = document.querySelector('nav');
+            const newNav = doc.querySelector('nav');
+            if (currentNav && newNav) {
+                currentNav.innerHTML = newNav.innerHTML;
+            }
+
+            // Replace #mobile-menu content
+            const currentMobile = document.getElementById('mobile-menu');
+            const newMobile = doc.getElementById('mobile-menu');
+            if (currentMobile && newMobile) {
+                currentMobile.innerHTML = newMobile.innerHTML;
             }
 
             // Replace <title>
@@ -106,21 +120,21 @@ const SongStoryRouter = {
     reinitScripts(path) {
         // We need to re-attach UI event listeners for the new DOM elements inside <main>
         if (typeof SongStoryUI !== 'undefined') {
-            // Re-init generic UI (tilt, reveals)
+            // Re-init generic UI (tilt, reveals, mobile menu, theme switch)
             SongStoryUI.init();
+        }
+
+        // Re-init search triggers for new nav elements
+        if (typeof SongStorySearch !== 'undefined') {
+            SongStorySearch.init();
         }
 
         // Specific page scripts
         if (path.includes('single-song.html')) {
-            // Because single-song relies on URL params, and we just updated the URL,
-            // we can safely call the render script if it's available globally.
             if (typeof renderSong === 'function') {
                 renderSong();
             }
-            // Reattach analysis click events
             this._attachAnalysisEvents();
-        } else if (path.includes('library.html') || path.includes('artists.html')) {
-            // Reattach filters if necessary
         }
     },
 

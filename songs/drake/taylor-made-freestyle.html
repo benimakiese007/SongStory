@@ -1,4 +1,7 @@
-﻿<head>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taylor Made Freestyle - Drake - SongStory</title>
@@ -7,18 +10,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="manifest" href="../../manifest.json">
     <meta name="theme-color" content="#09090b">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+<body class="bg-zinc-950 text-zinc-400 antialiased layout-classic" style="font-family:'Inter',sans-serif;">
     <div id="toc-sidebar" class="toc-sidebar"></div>
-    <div class="glossary-tooltip"></div>
-    <div id="reading-progress"></div>
-
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -30,43 +29,30 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../../index.html"
-                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../../library.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../../artists.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../../timeline.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../../glossary.html"
-                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
-                            propos</a>
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
                     </div>
                 </div>
 
                 <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button
-                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
-                        aria-label="Ouvrir la recherche">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span
-                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
                     <!-- Nav auth slot -->
-                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors"
-                        aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear"
-                            width="20"></iconify-icon></button><button class="theme-switch"
-                        aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                    <button class="layout-switch text-zinc-400 hover:text-white transition-colors" aria-label="Changer d'affichage"><iconify-icon icon="solar:maximize-linear" width="20"></iconify-icon></button><button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
                             <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
-                        aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -76,153 +62,164 @@
 
     <main class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-xs uppercase tracking-widest text-amber-500 font-medium">Diss Track — Beef
-                        2024</span>
-                    <span class="text-xs text-zinc-600">•</span>
-                    <a href="../../artists/drake.html"
-                        class="text-xs text-zinc-500 hover:text-amber-500 transition-colors">Voir le profil de Drake
-                        →</a>
+            <!-- Refined Header Section -->
+            <div class="flex flex-col md:flex-row gap-8 md:items-end mb-16">
+                <!-- Cover Image (Smaller and fixed aspect) -->
+                <div class="w-full md:w-80 flex-shrink-0 group">
+                    <div class="aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl relative">
+                        <img src="../../Images/Title Cover/Taylor Made Freestyle Cover.webp" alt="Taylor Made Freestyle Cover"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
                 </div>
-                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Taylor Made Freestyle</h1>
-                <p class="text-xl text-zinc-500 font-light">Drake • 19 avril 2024</p>
-                <div class="flex items-center gap-4 mt-2">
-                    <p class="text-sm text-zinc-600">Cible : Kendrick Lamar • 3:30 min</p>
-                    <span class="text-xs px-2 py-0.5 rounded bg-red-500/10 text-red-500 border border-red-500/20">âš ï¸
-                        Retiré des plateformes (Legal/Estate)</span>
+
+                <!-- Info Section -->
+                <div class="flex-grow pb-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-medium uppercase tracking-widest">Diss Track — Beef 2024</span>
+                        <span class="text-zinc-800">•</span>
+                        <a href="../../artists/drake.html" class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de Drake →</a>
+                    </div>
+
+                    <h1 id="song-title" class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-4">Taylor Made Freestyle</h1>
+
+                    <div class="flex items-center gap-4 text-zinc-500 font-light">
+                        <span class="text-xl">Drake</span>
+                        <span class="text-zinc-800">•</span>
+                        <span class="text-xl">19 avril 2024</span>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap gap-4 items-center">
+                        <p class="text-sm text-zinc-600">Cible : Kendrick Lamar • 3:30 min</p>
+                        <span class="text-xs px-2 py-0.5 rounded bg-red-500/10 text-red-500 border border-red-500/20">⚠️ Retiré des plateformes (Legal/Estate)</span>
+                        <button id="karaoke-toggle" class="karaoke-toggle-btn active shrink-0 text-xs">
+                            <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                            <span>Masquer les Décryptages</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="mt-6"><button id="karaoke-toggle" class="karaoke-toggle-btn active"><iconify-icon
-                            icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
-                            Décryptages</span></button></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div id="narrative-wrapper"
                     class="lg:col-span-7 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
-
-                    <!-- Block 1 : AI Tupac - The Motivation -->
+                    <!-- Block 1 -->
                     <div class="reveal story-block" data-time="0">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors italic text-zinc-400">(A.I. Tupac Voice)
-                            </p>
-                            <p class="group-hover:text-white transition-colors">Kendrick, we need ya, the West Coast
-                                savior</p>
-                            <p class="group-hover:text-white transition-colors">Engravin' your name in some hip-hop
-                                history</p>
-                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">Fuck this
-                                Canadian light-skinned, Dot</p>
-                            <p class="group-hover:text-white transition-colors">We need a no-debated West Coast victory,
-                                man</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">[2Pac (AI):]</p>
+                            <p class="group-hover:text-white transition-colors">Killuminati</p>
+                            <p class="group-hover:text-white transition-colors">Dons rise again</p>
+                            <p class="group-hover:text-white transition-colors">You can see it in my eyes again</p>
+                            <p class="group-hover:text-white transition-colors">Kendrick, we need ya, the West Coast savior</p>
+                            <p class="group-hover:text-white transition-colors">Engraving your name in some hip-hop history</p>
+                            <p class="group-hover:text-white transition-colors">If you deal with this viciously</p>
+                            <p class="group-hover:text-white transition-colors">You seem a little nervous about all the publicity</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">Fuck this Canadian lightskin, Dot</p>
+                            <p class="group-hover:text-white transition-colors">We need a no-debated West Coast victory, man</p>
                         </div>
                         <div class="analysis-content-visible">
                             <span class="text-white font-medium block mb-1">L'Usage de l'IA & L'Héritage de Tupac</span>
-                            <p>Drake utilise une IA pour imiter Tupac Shakur, le "Saint Patron" du rap de la West Coast.
-                                En faisant dire à Tupac que Kendrick doit "sauver" la côte ouest d'un "métis canadien",
-                                Drake humilie Kendrick deux fois : il utilise son idole contre lui et souligne son
-                                silence après "Push Ups". C'est une manœuvre psychologique visant à forcer Kendrick à
-                                sortir de sa réserve sous peine de paraître indigne de l'héritage de Pac.</p>
+                            <p>Drake utilise une IA pour imiter Tupac Shakur, le "Saint Patron" du rap de la West Coast. En faisant dire à Tupac que Kendrick doit "sauver" la côte ouest d'un "métis canadien", Drake humilie Kendrick deux fois : il utilise son idole contre lui et souligne son silence après "Push Ups". C'est une manœuvre psychologique visant à forcer Kendrick à sortir de sa réserve sous peine de paraître indigne de l'héritage de Pac.</p>
                         </div>
                     </div>
-
-                    <!-- Block 2 : AI Tupac - The "Spiritual" Mockery -->
+                    <!-- Block 2 -->
                     <div class="reveal story-block" data-time="45">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">They told me the spirit of Makaveli is
-                                alive</p>
-                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">In a nigga
-                                under 5-foot-5, so it's gotta be you</p>
-                            <p class="group-hover:text-white transition-colors">Talk about him likin' young girls,
-                                that's a gift from me</p>
+                            <p class="group-hover:text-white transition-colors">Call him a bitch for me</p>
+                            <p class="group-hover:text-white transition-colors">Talk about him likin' young girls, that's a gift from me</p>
+                            <p class="group-hover:text-white transition-colors">Heard it on the Budden Podcast, it's gotta be true</p>
+                            <p class="group-hover:text-white transition-colors">They told me the spirit of Makaveli is alive</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">In a nigga under 5'5", so it's gotta be you</p>
+                            <p class="group-hover:text-white transition-colors">I would beef the whole fuckin' game</p>
+                            <p class="group-hover:text-white transition-colors">It was me and Snoop Dogg, had my fuckin' shirt off in the House of Blues</p>
+                            <p class="group-hover:text-white transition-colors">K, you gotta fuck this nigga girl, he gotta get abused</p>
+                            <p class="group-hover:text-white transition-colors">All that shit 'bout burning tattoos, he is not amused</p>
+                            <p class="group-hover:text-white transition-colors">That's jail talk for real thugs, you gotta be you</p>
+                            <p class="group-hover:text-white transition-colors">Gotta leave this motherfucker broken and bruised before we really lose</p>
+                            <p class="group-hover:text-white transition-colors">You asked for the smoke, now it seem you too busy for the smoke</p>
+                            <p class="group-hover:text-white transition-colors">I won't lie, the people confused</p>
+                            <p class="group-hover:text-white transition-colors">Now you 'bout to give this shit another week?</p>
+                            <p class="group-hover:text-white transition-colors">And fall back to home girl who runnin' numbers up? I woulda refused</p>
+                            <p class="group-hover:text-white transition-colors">Fuck these industry relationships, she not in your shoes</p>
+                            <p class="group-hover:text-white transition-colors">You supposed to be the boogeyman, go do what you do</p>
+                            <p class="group-hover:text-white transition-colors">Unless this is a moment that you tell us this not really you</p>
+                            <p class="group-hover:text-white transition-colors">In that case, there's nothing left to say, I'll just pass it to Snoop</p>
                         </div>
                         <div class="analysis-content-visible">
                             <span class="text-white font-medium block mb-1">Makaveli & La Petite Taille</span>
-                            <p>Drake (via Pac) tourne en dérision les comparaisons fréquentes entre Kendrick et Tupac.
-                                En précisant "en dessous de 1m65" (5-foot-5), il ramène le débat à l'humiliation
-                                physique de "Push Ups". Il donne aussi ironiquement des "conseils" sur la manière
-                                d'attaquer Drake (les rumeurs sur les jeunes filles), pré-validant ses propres
-                                faiblesses pour mieux les désamorcer.</p>
+                            <p>Drake (via Pac) tourne en dérision les comparaisons fréquentes entre Kendrick et Tupac. En précisant "en dessous de 1m65" (5-foot-5), il ramène le débat à l'humiliation physique de "Push Ups". Il donne aussi ironiquement des "conseils" sur la manière d'attaquer Drake (les rumeurs sur les jeunes filles), pré-validant ses propres faiblesses pour mieux les désamorcer.</p>
                         </div>
                     </div>
-
-                    <!-- Block 3 : AI Snoop Dogg - Passing the Torch -->
+                    <!-- Block 3 -->
                     <div class="reveal story-block" data-time="90">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors italic text-zinc-400">(A.I. Snoop Dogg
-                                Voice)</p>
-                            <p class="group-hover:text-white transition-colors">Nephew, what the fuck you really 'bout
-                                to do?</p>
-                            <p class="group-hover:text-white transition-colors">We passed you the torch at the House of
-                                Blues</p>
-                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">But still,
-                                you gotta show this fuckin' owl who's boss on the West</p>
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">[Snoop Dogg (AI):]</p>
+                            <p class="group-hover:text-white transition-colors">Nephew, what the fuck you really 'bout to do?</p>
+                            <p class="group-hover:text-white transition-colors">We passed you the torch at the House of Blues</p>
+                            <p class="group-hover:text-white transition-colors">And now you gotta do some dirty work, you know how to move, right? Right?</p>
+                            <p class="group-hover:text-white transition-colors">I know you never been to jail or wore jumpsuits and shower shoes</p>
+                            <p class="group-hover:text-white transition-colors">Never shot nobody, never stabbed nobody</p>
+                            <p class="group-hover:text-white transition-colors">Never did nothing violent to no one, it's the homies that empower you</p>
+                            <p class="group-hover:text-white transition-colors">But still, you gotta show this fuckin' owl who's boss on the West</p>
+                            <p class="group-hover:text-white transition-colors">Now's a time to really make a power move</p>
+                            <p class="group-hover:text-white transition-colors">'Cause right now it's looking like you writin' out the game plan on how to lose</p>
+                            <p class="group-hover:text-white transition-colors">How to bark up the wrong tree and then get your head popped in a crowded room</p>
+                            <p class="group-hover:text-white transition-colors">World is watching this chess game, but are you out of moves?</p>
+                            <p class="group-hover:text-white transition-colors">Dot, you know that the D-O-G never fuckin' doubted you</p>
+                            <p class="group-hover:text-white transition-colors">But right now it seem like you posted up without a clue</p>
+                            <p class="group-hover:text-white transition-colors">Of what the fuck you 'bout to do</p>
                         </div>
                         <div class="analysis-content-visible">
                             <span class="text-white font-medium block mb-1">Snoop Dogg & Le Passage de Flambeau</span>
-                            <p>Drake utilise ensuite l'IA de Snoop Dogg pour rappeler un moment historique de 2011 où
-                                Snoop et Game ont officiellement passé le flambeau à Kendrick sur scène. En faisant
-                                demander à Snoop "qu'est-ce que tu vas faire ?", Drake suggère que Kendrick est en train
-                                de gâcher cet héritage en restant silencieux face à "l'Hibou" (le logo d'OVO).</p>
+                            <p>Drake utilise ensuite l'IA de Snoop Dogg pour rappeler un moment historique de 2011 où Snoop et Game ont officiellement passé le flambeau à Kendrick sur scène. En faisant demander à Snoop "qu'est-ce que tu vas faire ?", Drake suggère que Kendrick est en train de gâcher cet héritage en restant silencieux face à "l'Hibou" (le logo d'OVO).</p>
                         </div>
                     </div>
-
-                    <!-- Block 4 : Drake Verse - The Altitude -->
-                    <div class="reveal story-block" data-time="150">
+                    <!-- Block 4 -->
+                    <div class="reveal story-block" data-time="135">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors italic text-zinc-400">[Drake:]</p>
                             <p class="group-hover:text-white transition-colors">Yeah, unc', that's the truth</p>
-                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">Shittin' on
-                                you niggas from a whole different altitude</p>
-                            <p class="group-hover:text-white transition-colors">High up in the sky like I'm Howard
-                                Hughes</p>
-                            <p class="group-hover:text-white transition-colors">The first one really only took me an
-                                hour or two</p>
+                            <p class="group-hover:text-white transition-colors">I'm definitely 'bout to come around the Lang gang and let my fuckin' bowel move</p>
+                            <p class="group-hover:text-white transition-colors">Shittin' on you niggas from a whole different altitude</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">High up in the sky like I'm Howard Hughes</p>
+                            <p class="group-hover:text-white transition-colors">The first one really only took me an hour or two</p>
+                            <p class="group-hover:text-white transition-colors">The next one is really 'bout to bring out the coward in you</p>
                         </div>
                         <div class="analysis-content-visible">
                             <span class="text-white font-medium block mb-1">Le Détachement & Howard Hughes</span>
-                            <p>Drake entre enfin avec sa propre voix. Il se compare à Howard Hughes, milliardaire
-                                excentrique et pionnier de l'aviation connu pour son isolement et sa vision d'en haut.
-                                Il minimise l'effort de ses attaques ("une heure ou deux"), traitant le beef comme une
-                                distraction mineure pour quelqu'un de son envergure financière et mondiale.</p>
+                            <p>Drake entre enfin avec sa propre voix. Il se compare à Howard Hughes, milliardaire excentrique et pionnier de l'aviation connu pour son isolement et sa vision d'en haut. Il minimise l'effort de ses attaques ("une heure ou deux"), traitant le beef comme une distraction mineure pour quelqu'un de son envergure financière et mondiale.</p>
                         </div>
                     </div>
-
-                    <!-- Block 5 : Drake Verse - Taylor Swift & Top -->
-                    <div class="reveal story-block" data-time="190">
+                    <!-- Block 5 -->
+                    <div class="reveal story-block" data-time="180">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">But now we gotta wait a fuckin' week
-                                'cause Taylor Swift is your new Top</p>
-                            <p class="group-hover:text-white transition-colors">And if you 'bout to drop she got to
-                                approve</p>
-                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">This girl
-                                really 'bout to make you act like you not in a feud</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">But now we gotta wait a fuckin' week 'cause Taylor Swift is your new Top</p>
+                            <p class="group-hover:text-white transition-colors">And if you 'bout to drop, she gotta approve</p>
+                            <p class="group-hover:text-white transition-colors">This girl really 'bout to make you act like you not in a feud</p>
+                            <p class="group-hover:text-white transition-colors">She tailor-made your schedule with Ant, you out of the loop</p>
                         </div>
                         <div class="analysis-content-visible">
-                            <span class="text-amber-500 font-medium block mb-1">Le Piège de Taylor Swift</span>
-                            <p>C'est l'explication du titre. Taylor Swift lançait son album "The Tortured Poets
-                                Department" cette semaine-là. Drake suggère que Kendrick (et son label) n'osent rien
-                                sortir pour ne pas être écrasés par les chiffres de Taylor. Il affirme qu'elle est le
-                                "nouveau boss" de Kendrick (nouvelle allusion à "Top" de TDE), le réduisant à un pion
-                                marketing incapable de mener son propre combat selon son calendrier.</p>
+                            <span class="text-white font-medium block mb-1">Le Piège de Taylor Swift</span>
+                            <p>C'est l'explication du titre. Taylor Swift lançait son album "The Tortured Poets Department" cette semaine-là. Drake suggère que Kendrick (et son label) n'osent rien sortir pour ne pas être écrasés par les chiffres de Taylor. Il affirme qu'elle est le "nouveau boss" de Kendrick (nouvelle allusion à "Top" de TDE), le réduisant à un pion marketing incapable de mener son propre combat selon son calendrier.</p>
                         </div>
                     </div>
-
-                    <!-- Block 6 : Drake Verse - Tone Change & Outro -->
-                    <div class="reveal story-block" data-time="240">
+                    <!-- Block 6 -->
+                    <div class="reveal story-block" data-time="225">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">Hate all you corporate industry puppets,
-                                I'm not in a mood</p>
-                            <p class="group-hover:text-white transition-colors">Since "Like That," your tone changed a
-                                little, you not as enthused</p>
-                            <p class="group-hover:text-white transition-colors italic">I was really, really tryna keep
-                                it PG...</p>
+                            <p class="group-hover:text-white transition-colors text-amber-500 font-medium">Hate all you corporate industry puppets, I'm not in the mood</p>
+                            <p class="group-hover:text-white transition-colors">I love it when you niggas talk loose like I'm not in the room</p>
+                            <p class="group-hover:text-white transition-colors">Since "Like That," your tone changed a little, you not as enthused</p>
+                            <p class="group-hover:text-white transition-colors">How are you not in the booth? It feel like you kinda removed</p>
+                            <p class="group-hover:text-white transition-colors">You tryna let this shit die down, nah, nah, nah</p>
+                            <p class="group-hover:text-white transition-colors">Not this time, nigga, you followin' through</p>
+                            <p class="group-hover:text-white transition-colors">I guess you need another week to figure out how to improve</p>
+                            <p class="group-hover:text-white transition-colors">What the fuck is taking so long? We waitin' on you</p>
+                            <p class="group-hover:text-white transition-colors">The rest of y'all are definitely involved, y'all gettin' it too</p>
+                            <p class="group-hover:text-white transition-colors">Soon as you get the courage to drop, I'm out on the loose, on the loose</p>
+                            <p class="group-hover:text-white transition-colors">Yeah, shout out to Taylor Swift</p>
                         </div>
                         <div class="analysis-content-visible">
                             <span class="text-white font-medium block mb-1">Pantin Corporatiste & Escalade</span>
-                            <p>Drake conclut en qualifiant ses adversaires de "pantins corporatistes", retournant
-                                ironiquement l'accusation souvent portée contre lui. Il remarque que depuis la sortie de
-                                "Push Ups", l'enthousiasme de Kendrick semble avoir disparu. Il réitère sa menace de fin
-                                de "Push Ups" : il essayait d'être "PG" (tous publics), mais la suite sera beaucoup plus
-                                violente.</p>
+                            <p>Drake conclut en qualifiant ses adversaires de "pantins corporatistes", retournant ironiquement l'accusation souvent portée contre lui. Il remarque que depuis la sortie de "Push Ups", l'enthousiasme de Kendrick semble avoir disparu. Il réitère sa menace de fin de "Push Ups" : il essayait d'être "PG" (tous publics), mais la suite sera beaucoup plus violente.</p>
                         </div>
                     </div>
                 </div>
@@ -233,8 +230,7 @@
                             class="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-500">
                             <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
                             <div class="flex items-center gap-2 mb-4">
-                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400"
-                                    width="20"></iconify-icon>
+                                <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="20"></iconify-icon>
                                 <h4 class="text-sm font-medium text-white tracking-tight">Analyse de la ligne</h4>
                             </div>
                             <div id="analysis-placeholder" class="text-sm text-zinc-400 leading-relaxed">
@@ -254,19 +250,14 @@
 
                         <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
                             <h4 class="text-sm font-medium text-white tracking-tight mb-4 flex items-center gap-2">
-                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500"
-                                    width="18"></iconify-icon>
+                                <iconify-icon icon="solar:music-library-2-linear" class="text-zinc-500" width="18"></iconify-icon>
                                 Informations
                             </h4>
                             <div class="space-y-3 text-xs">
-                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span
-                                        class="text-zinc-300">19 avril 2024</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span
-                                        class="text-zinc-300">Kendrick Lamar</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Technologie</span><span
-                                        class="text-zinc-300">A.I. Voice Cloning</span></div>
-                                <div class="flex justify-between"><span class="text-zinc-500">Statut</span><span
-                                        class="text-red-400">Supprimé (Legal issue)</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Date</span><span class="text-zinc-300">19 avril 2024</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Cible</span><span class="text-zinc-300">Kendrick Lamar</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Technologie</span><span class="text-zinc-300">A.I. Voice Cloning</span></div>
+                                <div class="flex justify-between"><span class="text-zinc-500">Statut</span><span class="text-red-400">Supprimé (Legal issue)</span></div>
                             </div>
                         </div>
                     </div>
@@ -287,24 +278,21 @@
                 <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <a href="push-ups.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
                         <div>
                             <div class="rec-title">Push Ups</div>
                             <div class="rec-artist">Drake • Beef 2024</div>
                         </div>
                     </a>
                     <a href="euphoria.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
                         <div>
                             <div class="rec-title">Euphoria</div>
                             <div class="rec-artist">Kendrick Lamar • Beef 2024</div>
                         </div>
                     </a>
                     <a href="family-matters.html" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
+                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
                         <div>
                             <div class="rec-title">Family Matters</div>
                             <div class="rec-artist">Drake • Beef 2024</div>
@@ -317,7 +305,7 @@
 
     <script src="../../js/data.js"></script>
     <script src="../../js/ui.js"></script>
-    
+    <script src="../../js/player.js"></script>
     <script src="../../js/song-renderer.js"></script>
     <script src="../../js/supabase-auth.js"></script>
     <script src="../../js/app.js"></script>
@@ -332,5 +320,4 @@
     </div>
 
 </body>
-
 </html>

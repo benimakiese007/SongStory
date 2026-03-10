@@ -4,12 +4,13 @@
  */
 
 const CMS_CONFIG = {
-    tabs: ['dashboard', 'songs', 'artists', 'covers', 'moderation'],
+    tabs: ['dashboard', 'songs', 'artists', 'covers', 'pp', 'moderation'],
     titles: {
         dashboard: 'Tableau de Bord',
         songs: 'Gestion des Titres',
         artists: 'Gestion des Artistes',
         covers: 'Galerie des Covers',
+        pp: 'Galerie Photos Profil',
         moderation: 'Modération des Contributions'
     }
 };
@@ -29,6 +30,7 @@ async function initCMS() {
     updateDashboardStats();
     renderSongsTable();
     renderArtistsGrid();
+    renderPPGallery();
     renderModerationFull();
     switchTab('dashboard');
 }
@@ -133,6 +135,7 @@ function switchTab(tabId) {
     });
 
     if (tabId === 'covers') renderCoversGallery();
+    if (tabId === 'pp') renderPPGallery();
 }
 
 /**
@@ -236,11 +239,11 @@ function renderArtistsGrid() {
         <div class="bg-zinc-900/30 border border-white/5 p-6 rounded-2xl group hover:border-amber-500/20 transition-all">
             <div class="flex items-center gap-4 mb-4">
                 <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center border border-white/10 overflow-hidden">
-                    <iconify-icon icon="solar:user-bold" width="32" class="text-zinc-600"></iconify-icon>
+                    ${a.photo_url ? `<img src="${a.photo_url}" class="w-full h-full object-cover">` : `<iconify-icon icon="solar:user-bold" width="32" class="text-zinc-600"></iconify-icon>`}
                 </div>
                 <div>
                     <h5 class="text-white font-bold">${a.name}</h5>
-                    <p class="text-xs text-zinc-500">${a.country} • ${a.genre}</p>
+                    <p class="text-xs text-zinc-500">${a.country || ''} • ${a.genre || ''}</p>
                 </div>
             </div>
             <div class="flex items-center justify-between pt-4 border-t border-white/5">
@@ -372,6 +375,61 @@ async function deleteCover(filename) {
         if (resp.ok) {
             showToast("Cover supprimée.");
             renderCoversGallery();
+        }
+    } catch (err) {
+        showToast("Erreur lors de la suppression.");
+    }
+}
+
+async function renderPPGallery() {
+    const gallery = document.getElementById('pp-gallery');
+    if (!gallery) return;
+
+    try {
+        const resp = await fetch(`${API_URL}/list-pp`);
+        const pps = await resp.json();
+
+        if (pps.length === 0) {
+            gallery.innerHTML = `<div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                <iconify-icon icon="solar:user-circle-bold-duotone" width="48" class="text-zinc-800 mb-2"></iconify-icon>
+                <p class="text-zinc-600">Aucune photo de profil trouvée.</p>
+            </div>`;
+            return;
+        }
+
+        gallery.innerHTML = pps.map(p => `
+            <div class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden group relative aspect-square">
+                <img src="${p.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 gap-2">
+                    <p class="text-[10px] text-white font-medium truncate w-full text-center">${p.filename}</p>
+                    <div class="flex gap-2">
+                        <button onclick="copyToClipboardText('${p.url.replace(/'/g, "\\'")}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
+                            <iconify-icon icon="solar:copy-bold" width="16"></iconify-icon>
+                        </button>
+                        <button onclick="deletePP('${p.filename.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
+                            <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error("Error loading PPs:", err);
+    }
+}
+
+async function deletePP(filename) {
+    if (!confirm(`Supprimer définitivement la photo "${filename}" ?`)) return;
+
+    try {
+        const resp = await fetch(`${API_URL}/delete-pp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename })
+        });
+        if (resp.ok) {
+            showToast("Photo supprimée.");
+            renderPPGallery();
         }
     } catch (err) {
         showToast("Erreur lors de la suppression.");
@@ -523,6 +581,27 @@ function openModal(type, data = null) {
                         <label class="block text-xs text-zinc-500 mb-1">Influence</label>
                         <textarea id="f-influence" rows="3" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white outline-none focus:border-amber-500/50 leading-relaxed">${a.influence || ''}</textarea>
                     </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-zinc-500 mb-1">Photo de l'artiste</label>
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-full bg-zinc-950 border border-white/5 overflow-hidden flex items-center justify-center shrink-0">
+                                <img id="photo-preview" src="${a.photo_url || ''}" class="w-full h-full object-cover ${a.photo_url ? '' : 'hidden'}">
+                                <iconify-icon id="photo-icon" icon="solar:user-circle-linear" class="text-zinc-800 ${a.photo_url ? 'hidden' : ''}" width="32"></iconify-icon>
+                            </div>
+                            <div class="flex-1">
+                                <input type="file" id="f-photoFile" accept="image/*" class="hidden" onchange="previewPhoto(this)">
+                                <button type="button" onclick="document.getElementById('f-photoFile').click()" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-2 text-white text-sm hover:border-amber-500/50 transition-all text-left">
+                                    <iconify-icon icon="solar:cloud-upload-bold" class="mr-2"></iconify-icon>
+                                    ${a.photo_url ? 'Changer la photo...' : 'Choisir une photo...'}
+                                </button>
+                                <input type="hidden" id="f-photoUrl" value="${a.photo_url || ''}">
+                                <button type="button" onclick="openPPGalleryPicker()" class="w-full mt-2 bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-zinc-400 text-xs hover:text-white hover:border-white/10 transition-all text-left">
+                                    <iconify-icon icon="solar:gallery-bold-duotone" class="mr-2"></iconify-icon>
+                                    Parcourir la galerie...
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Action Buttons Injected via HTML -->
             </form>
@@ -607,6 +686,21 @@ async function handleFormSubmit(e, formType) {
         const id = document.getElementById('f-id').value.trim();
         const isEditing = ARTISTS_DATA_DB.some(a => a.id === id);
 
+        // Upload photo if new file selected
+        let photoUrl = document.getElementById('f-photoUrl').value;
+        const fileInput = document.getElementById('f-photoFile');
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const base64 = await toBase64(file);
+            const uploadResp = await fetch(`${API_URL}/upload-artist`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: file.name, base64 })
+            });
+            const uploadResult = await uploadResp.json();
+            photoUrl = uploadResult.url;
+        }
+
         const artistObj = {
             id,
             name: document.getElementById('f-name').value.trim(),
@@ -615,6 +709,7 @@ async function handleFormSubmit(e, formType) {
             bio: document.getElementById('f-bio').value.trim(),
             influence: document.getElementById('f-influence').value.trim(),
             url: `artists/${id}.html`,
+            photo_url: photoUrl,
             tags: document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(t => t)
         };
 
@@ -674,6 +769,22 @@ function previewCover(input) {
         if (currentTab === 'covers') {
             uploadStandaloneCover(input.files[0]);
         }
+    }
+}
+
+function previewPhoto(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById('photo-preview');
+            const icon = document.getElementById('photo-icon');
+            if (preview && icon) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                icon.classList.add('hidden');
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
     }
 }
 
@@ -746,6 +857,62 @@ function selectCoverForSong(url) {
     }
     
     const picker = document.getElementById('gallery-picker');
+    if (picker) picker.remove();
+}
+
+async function openPPGalleryPicker() {
+    const galleryContainer = document.createElement('div');
+    galleryContainer.id = 'pp-gallery-picker';
+    galleryContainer.className = 'fixed inset-0 bg-black/90 backdrop-blur-xl z-[70] flex flex-col p-8';
+    galleryContainer.innerHTML = `
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl text-white font-bold">Sélectionner une Photo de Profil</h3>
+            <button onclick="document.getElementById('pp-gallery-picker').remove()" class="text-zinc-500 hover:text-white">
+                <iconify-icon icon="solar:close-circle-bold" width="32"></iconify-icon>
+            </button>
+        </div>
+        <div id="pp-gallery-picker-list" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 overflow-y-auto flex-1 pb-8">
+            <div class="col-span-full py-10 text-center animate-pulse text-zinc-500">Chargement...</div>
+        </div>
+    `;
+    document.body.appendChild(galleryContainer);
+
+    try {
+        const resp = await fetch(`${API_URL}/list-pp`);
+        const pps = await resp.json();
+        const list = document.getElementById('pp-gallery-picker-list');
+        
+        if (pps.length === 0) {
+            list.innerHTML = `<p class="col-span-full text-center text-zinc-500 py-20">Aucune photo dans la galerie.</p>`;
+            return;
+        }
+
+        list.innerHTML = pps.map(p => `
+            <div onclick="selectPhotoForArtist('${p.url.replace(/'/g, "\\'")}',)" class="bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-amber-500/50 transition-all aspect-square relative group">
+                <img src="${p.url}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <p class="absolute bottom-2 left-2 right-2 text-[10px] text-white/80 truncate">${p.filename}</p>
+            </div>
+        `).join('');
+    } catch (err) {
+        galleryContainer.remove();
+        showToast("Erreur de chargement.");
+    }
+}
+
+function selectPhotoForArtist(url) {
+    const preview = document.getElementById('photo-preview');
+    const icon = document.getElementById('photo-icon');
+    const hidden = document.getElementById('f-photoUrl');
+    
+    if (preview && hidden) {
+        preview.src = url;
+        preview.classList.remove('hidden');
+        if (icon) icon.classList.add('hidden');
+        hidden.value = url;
+    }
+    
+    const picker = document.getElementById('pp-gallery-picker');
     if (picker) picker.remove();
 }
 

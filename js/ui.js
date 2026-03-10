@@ -417,6 +417,8 @@ const SongStoryUI = {
     initTransitions() {
         if (!('startViewTransition' in document)) return;
         document.addEventListener('click', (e) => {
+            // Skip if already handled by SPA router
+            if (e.defaultPrevented) return;
             const a = e.target.closest('a[href]');
             if (!a || a.href.startsWith('http') || a.href.includes('#') || a.target === '_blank') return;
             e.preventDefault();

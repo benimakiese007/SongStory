@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -204,6 +204,10 @@
                     <iconify-icon icon="solar:gallery-bold-duotone"></iconify-icon>
                     Covers
                 </button>
+                <button onclick="switchTab('pp')" class="nav-link" id="btn-pp">
+                    <iconify-icon icon="solar:user-circle-bold-duotone"></iconify-icon>
+                    Photos Profil
+                </button>
                 <div class="pt-4 pb-2 px-4 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Communauté
                 </div>
                 <button onclick="switchTab('moderation')" class="nav-link" id="btn-moderation">
@@ -378,6 +382,20 @@
                     </div>
 
                     <div id="covers-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+
+                <!-- Profile Pictures Management Section -->
+                <section id="view-pp" class="hidden">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-white font-bold text-lg">Galerie des Photos Profil</h3>
+                            <p class="text-xs text-zinc-500 mt-1">Gérez les photos de profil de vos artistes.</p>
+                        </div>
+                    </div>
+
+                    <div id="pp-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         <!-- Populated via JS -->
                     </div>
                 </section>

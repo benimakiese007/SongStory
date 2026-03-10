@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -10,7 +10,6 @@
     <meta property="og:title" content="Youssoupha — Profil Artiste | SongStory">
     <meta property="og:description" content="Découvrez Youssoupha : biographie, carrière et morceaux analysés.">
     <meta property="og:type" content="profile">
-    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,33 +34,38 @@
         <div id="search-results"></div>
     </div>
 
-        <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2">
                     <a href="../index.html" class="flex items-center gap-2"><img src="../Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto"><span class="sr-only">SONGSTORY</span></a>
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
-                        <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
-                        <a href="../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
-                        <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
-                        <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
-                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À propos</a>
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
                     </div>
                 </div>
 
-                <!-- Search & Actions -->
                 <div class="flex items-center gap-3">
-                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
                         <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
-                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
                     </button>
-                    <!-- Nav auth slot -->
                     <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
                         <div class="switch-thumb">
                             <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
@@ -69,7 +73,8 @@
                         </div>
                     </button>
                     <div class="nav-auth-slot"></div>
-                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
                 </div>
@@ -86,20 +91,16 @@
         </div>
     </div>
 
-    <section class="artist-hero">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="artist-avatar mx-auto">
-                <iconify-icon icon="solar:user-bold" width="48" class="text-zinc-500"></iconify-icon>
-            </div>
-            <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Youssoupha</h1>
-            <p class="text-lg text-zinc-500 font-light mb-2">Rap Conscient · France / RDC</p>
-            <div class="flex items-center justify-center gap-3 text-xs text-zinc-600">
-                <span>1 analyse disponible</span>
-                <span>·</span>
-                <span>Actif depuis 1999</span>
-            </div>
+    <!-- ARTIST_INFO_START -->
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+            <img src="../Images/Profile Picture - Artist/Youssoupha PP.webp" alt="Youssoupha" class="w-full h-full object-cover">
         </div>
-    </section>
+        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Youssoupha</h1>
+        <p class="text-lg text-zinc-500 font-light mb-6">Rap Conscient • France / RDC</p>
+        <p class="text-base text-zinc-400 leading-relaxed">Surnommé le "Lyriciste Bantou", il est réputé pour la richesse de son vocabulaire et son écriture très ciselée.</p>
+    </div>
+    <!-- ARTIST_INFO_END -->
 
     <main class="pb-24">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,27 +112,26 @@
                         Biographie
                     </h2>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-6">
-                        Youssoupha Mabiki, né en 1979 à Kinshasa, surnommé le "Lyriciste Bantou", est réputé pour la
-                        richesse de son vocabulaire et son écriture très ciselée.
+                        Youssoupha Mabiki, né en 1979 à Kinshasa, est l'un des lyricistes les plus respectés du rap francophone. Fils du musicien Tabu Ley Rochereau, il a grandi entre le Congo et la France, forgeant une écriture exigeante qui allie virtuosité technique et conscience politique.
                     </p>
                     <h3 class="text-sm text-white font-medium mb-2">Influence</h3>
                     <p class="reveal text-sm text-zinc-400 leading-relaxed mb-8">
-                        Il a ramené la virtuosité lexicale au premier plan et défendu une vision humaniste et critique
-                        du rap, n'hésitant pas à s'engager publiquement contre la discrimination.
+                        À travers son label Bomayé Musik, Youssoupha a non seulement marqué le rap par ses propres albums mais a aussi propulsé une nouvelle génération d'artistes. Sa vision d'un rap "intelligent" et accessible a redéfini le genre dans les années 2010.
                     </p>
 
                     <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <a href="../single-song.html?id=menace-de-mort" class="recommendation-card">
-                        <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
-                        </div>
-                        <div>
-                            <div class="rec-title">Menace de mort</div>
-                            <div class="rec-artist">2011 • Rap • Noir D****</div>
-                        </div>
-                    </a>
+                    <div class="space-y-4">
+                        <a href="../songs/youssoupha/menace-de-mort.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Menace de mort</div>
+                                <div class="rec-artist">2011 • Rap • Noir D****</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <div>
@@ -142,21 +142,27 @@
                     <div class="artist-timeline">
                         <div class="reveal timeline-item">
                             <div class="timeline-year">1979</div>
-                            <div class="timeline-event">Naissance à Kinshasa, Zaïre (aujourd'hui RDC)</div>
+                            <div class="timeline-event">Naissance à Kinshasa, Zaïre (aujourd'hui RDC).</div>
                         </div>
                         <div class="reveal timeline-item">
                             <div class="timeline-year">2007</div>
-                            <div class="timeline-event">Sortie de son premier album, "À chaque frère"</div>
+                            <div class="timeline-event">Sortie du premier album "À chaque frère", acclamé pour son lyrisme.</div>
                         </div>
                         <div class="reveal timeline-item highlight">
                             <div class="timeline-year">2011</div>
-                            <div class="timeline-event">La controverse "Menace de mort" suite aux propos d'Éric Zemmour
-                            </div>
+                            <div class="timeline-event">Sortie de "Noir D****", album culte certifié disque de platine.</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2012</div>
+                            <div class="timeline-event">Triomphe aux Victoires de la Musique.</div>
                         </div>
                         <div class="reveal timeline-item">
-                            <div class="timeline-year">2012</div>
-                            <div class="timeline-event">Sortie de "Noir D****", l'album de la consécration (disque de
-                                platine)</div>
+                            <div class="timeline-year">2015</div>
+                            <div class="timeline-event">"Love Musik", exploration de sonorités plus variées.</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">Retour aux sources avec "Neptune Terminus".</div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +171,7 @@
     </main>
 
     <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
-        <p>© 2026 SongStory. Tous droits réservés.</p>
+        <p>© 2025 SongStory. Tous droits réservés.</p>
     </footer>
 
     <script src="../js/data.js"></script>
@@ -173,7 +179,6 @@
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
-
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/app.js"></script>
 </body>

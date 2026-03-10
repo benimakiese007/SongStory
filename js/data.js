@@ -125,7 +125,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/6:16 in LA Cover.webp",
+        "cover_url": "Images/Title Cover/6 16 in LA.webp",
         "tags": [],
         "description": ""
     },
@@ -153,7 +153,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Meet the Grahams Cover.webp",
+        "cover_url": "Images/Title Cover/Meet the Graham Cover.webp",
         "tags": [],
         "description": ""
     },
@@ -195,7 +195,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Don",
+        "cover_url": "Images/Title Cover/Don't Laïk Cover.webp",
         "tags": [],
         "description": ""
     },
@@ -212,10 +212,257 @@ let SONGS_DATA = [
         "cover_url": "Images/Title Cover/Menace De Mort Cover.webp",
         "tags": [],
         "description": ""
+    },
+    {
+        "id": "this-is-america",
+        "title": "This Is America",
+        "artist_id": "childish-gambino",
+        "genre": "Hip-Hop",
+        "year": 2018,
+        "url": "songs/this-is-america.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/This Is America Cover.webp",
+        "tags": [],
+        "description": ""
+    },
+    {
+        "id": "demain-cest-loin",
+        "title": "Demain c'est loin",
+        "artist_id": "iam",
+        "genre": "Rap",
+        "year": 1997,
+        "url": "songs/demain-cest-loin.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Demain C'est Loin Cover.webp",
+        "tags": [],
+        "description": ""
+    },
+    {
+        "id": "laisse-pas-trainer-ton-fils",
+        "title": "Laisse pas traîner ton fils",
+        "artist_id": "supreme-ntm",
+        "genre": "Rap",
+        "year": 1998,
+        "url": "songs/laisse-pas-trainer-ton-fils.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Laisse Pas Trainer Ton Fils Cover.webp",
+        "tags": [],
+        "description": ""
+    },
+    {
+        "id": "solaar-pleure",
+        "title": "Solaar pleure",
+        "artist_id": "mc-solaar",
+        "genre": "Rap",
+        "year": 2001,
+        "url": "songs/solaar-pleure.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Solaar Pleure Cover.webp",
+        "tags": [],
+        "description": ""
+    },
+    {
+        "id": "notes-pour-trop-tard",
+        "title": "Notes pour trop tard",
+        "artist_id": "orelsan",
+        "genre": "Rap",
+        "year": 2017,
+        "url": "songs/notes-pour-trop-tard.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Notes Pour Trop Tard Cover.webp",
+        "tags": [],
+        "description": ""
     }
 ];
 
-let ARTISTS_DATA = [];
+let ARTISTS_DATA = [
+    {
+        "id": "kendrick-lamar",
+        "name": "Kendrick Lamar",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "L'un des paroliers les plus influents de sa génération, connu pour ses récits complexes et ses thèmes sociaux.",
+        "influence": "",
+        "url": "artists/kendrick-lamar.html",
+        "photo_url": "Images/Profile Picture - Artist/Kendrick Lamar PP.webp",
+        "tags": []
+    },
+    {
+        "id": "drake",
+        "name": "Drake",
+        "genre": "Hip-Hop/R&B",
+        "country": "Canada",
+        "bio": "La superstar mondiale qui domine les charts avec son mélange unique de rap mélodique et de R&B.",
+        "influence": "",
+        "url": "artists/drake.html",
+        "photo_url": "Images/Profile Picture - Artist/Drake PP.webp",
+        "tags": []
+    },
+    {
+        "id": "eminem",
+        "name": "Eminem",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "Le génie technique du Rap de Détroit, célèbre pour ses rimes complexes et son alter ego Slim Shady.",
+        "influence": "",
+        "url": "artists/eminem.html",
+        "photo_url": "Images/Profile Picture - Artist/Eminem PP.webp",
+        "tags": []
+    },
+    {
+        "id": "nas",
+        "name": "Nas",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.",
+        "influence": "",
+        "url": "artists/nas.html",
+        "photo_url": "Images/Profile Picture - Artist/Nas PP.webp",
+        "tags": []
+    },
+    {
+        "id": "tupac-shakur",
+        "name": "2Pac",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "L'icône éternelle qui a donné une voix aux sans-voix à travers sa poésie et son charisme unique.",
+        "influence": "",
+        "url": "artists/tupac-shakur.html",
+        "photo_url": "Images/Profile Picture - Artist/2Pac PP.webp",
+        "tags": []
+    },
+    {
+        "id": "jay-z",
+        "name": "Jay-Z",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "L'entrepreneur et lyriciste hors pair qui a transformé le hip-hop en un empire mondial.",
+        "influence": "",
+        "url": "artists/jay-z.html",
+        "photo_url": "Images/Profile Picture - Artist/Jay-Z PP.webp",
+        "tags": []
+    },
+    {
+        "id": "kanye-west",
+        "name": "Kanye West",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "L'un des producteurs et artistes les plus innovants du 21ème siècle, repoussant sans cesse les limites du son.",
+        "influence": "",
+        "url": "artists/kanye-west.html",
+        "photo_url": "Images/Profile Picture - Artist/YE PP.webp",
+        "tags": []
+    },
+    {
+        "id": "childish-gambino",
+        "name": "Childish Gambino",
+        "genre": "Hip-Hop/Soul",
+        "country": "USA",
+        "bio": "L'artiste polyvalent qui explore les thèmes de l'identité noire avec une créativité sans limites.",
+        "influence": "",
+        "url": "artists/childish-gambino.html",
+        "photo_url": "Images/Profile Picture - Artist/Childish Gambino PP.webp",
+        "tags": []
+    },
+    {
+        "id": "iam",
+        "name": "IAM",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "Le groupe mythique de Marseille qui a élevé le rap français au rang d'art poétique et philosophique.",
+        "influence": "",
+        "url": "artists/iam.html",
+        "photo_url": "Images/Profile Picture - Artist/IAM PP.webp",
+        "tags": []
+    },
+    {
+        "id": "supreme-ntm",
+        "name": "Suprême NTM",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "L'énergie brute du 93, incarnant la contestation sociale et la puissance scénique du rap français.",
+        "influence": "",
+        "url": "artists/supreme-ntm.html",
+        "photo_url": "Images/Profile Picture - Artist/Supreme NTM PP.webp",
+        "tags": []
+    },
+    {
+        "id": "mc-solaar",
+        "name": "MC Solaar",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "Le poète du rap français, pionnier du lyrisme et du style \"cool\" qui a marqué toute une époque.",
+        "influence": "",
+        "url": "artists/mc-solaar.html",
+        "photo_url": "Images/Profile Picture - Artist/MC Solaar PP.webp",
+        "tags": []
+    },
+    {
+        "id": "orelsan",
+        "name": "Orelsan",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "Le storyteller de la classe moyenne française, maître de l'autodérision et de la mélancolie du quotidien.",
+        "influence": "",
+        "url": "artists/orelsan.html",
+        "photo_url": "Images/Profile Picture - Artist/Orelsan PP.webp",
+        "tags": []
+    },
+    {
+        "id": "kery-james",
+        "name": "Kery James",
+        "genre": "Rap Conscient",
+        "country": "France",
+        "bio": "Une figure majeure du rap français, pilier du rap politique et engagé depuis plus de deux décennies.",
+        "influence": "",
+        "url": "artists/kery-james.html",
+        "photo_url": "Images/Profile Picture - Artist/Kery James PP.webp",
+        "tags": []
+    },
+    {
+        "id": "medine",
+        "name": "Médine",
+        "genre": "Rap Conscient",
+        "country": "France",
+        "bio": "Reconnu pour sa poésie et son intelligence lyricale, il se définit comme un \"arabophone de la laïcité\".",
+        "influence": "",
+        "url": "artists/medine.html",
+        "photo_url": "Images/Profile Picture - Artist/Medine PP.webp",
+        "tags": []
+    },
+    {
+        "id": "youssoupha",
+        "name": "Youssoupha",
+        "genre": "Rap Conscient",
+        "country": "France / RDC",
+        "bio": "Surnommé le \"Lyriciste Bantou\", il est réputé pour la richesse de son vocabulaire et son écriture très ciselée.",
+        "influence": "",
+        "url": "artists/youssoupha.html",
+        "photo_url": "Images/Profile Picture - Artist/Youssoupha PP.webp",
+        "tags": []
+    },
+    {
+        "id": "j-cole",
+        "name": "J. Cole",
+        "genre": "Hip-Hop",
+        "country": "USA",
+        "bio": "Le conteur de Fayetteville, reconnu pour son introspection et son refus des artifices du star-system.",
+        "influence": "",
+        "url": "artists/j-cole.html",
+        "photo_url": "Images/Profile Picture - Artist/J.Cole PP.webp",
+        "tags": []
+    }
+];
 
 let GLOSSARY = {};
 

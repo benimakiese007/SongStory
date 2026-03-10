@@ -100,6 +100,72 @@ const SongStoryRenderer = {
     },
 
     renderHeader() {
+        // --- Premium Header Dynamic Injection/Update ---
+        const currentSong = this.currentSong;
+        if (!currentSong) return;
+
+        // 1. Look for the cover img tag
+        const coverImg = document.querySelector('main img[alt*="Cover"]');
+        const correctCoverSrc = `../../${currentSong.cover_url}`;
+
+        if (coverImg) {
+            // Update existing cover (useful for Family Matters fix)
+            coverImg.src = correctCoverSrc;
+        } else {
+            // Inject Premium Header structure if missing (e.g., Euphoria, Stan)
+            const mainEl = document.querySelector('main');
+            const mainContainer = mainEl?.querySelector('.max-w-7xl');
+            const headerSection = mainContainer?.firstElementChild;
+
+            if (headerSection && !headerSection.classList.contains('flex-col')) {
+                // This is an old-style header (simple mb-12 div)
+                const premiumHeaderHTML = `
+                <div class="flex flex-col md:flex-row gap-8 md:items-end mb-16">
+                    <!-- Cover Image -->
+                    <div class="w-full md:w-80 flex-shrink-0 group">
+                        <div class="aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl relative">
+                            <img src="${correctCoverSrc}" alt="${currentSong.title} Cover"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="flex-grow pb-2">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-medium uppercase tracking-widest">
+                                ${currentSong.genre || 'Analyse'}
+                            </span>
+                            <span class="text-zinc-800">•</span>
+                            <a href="../../artists/${currentSong.artist_id}.html"
+                                class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de ${currentSong.artist_id} →</a>
+                        </div>
+
+                        <h1 id="song-title" class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-4">${currentSong.title}</h1>
+
+                        <div class="flex items-center gap-4 text-zinc-500 font-light">
+                            <span class="text-xl">${currentSong.artist_id}</span>
+                            <span class="text-zinc-800">•</span>
+                            <span class="text-xl">${currentSong.year}</span>
+                        </div>
+
+                        <div class="mt-8 flex flex-wrap gap-4 items-center">
+                            <p class="text-sm text-zinc-600">${currentSong.description || ''}</p>
+                            <button id="karaoke-toggle" class="karaoke-toggle-btn active shrink-0 text-xs">
+                                <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                                <span>Masquer les Décryptages</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+
+                // Replace the old header (usually the first child of the main container)
+                headerSection.innerHTML = premiumHeaderHTML;
+                // Add necessary layout class to the replaced element's parent if needed, 
+                // but here it's better to just replace the inner content to keep existing hooks if any.
+                // Re-running some initializations might be needed if IDs changed, but we keep song-title and karaoke-toggle IDs.
+            }
+        }
+
         // Title and artist are statically in HTML — only manage the favorites button
         const metaEl = document.getElementById('song-meta');
         const favs = JSON.parse(localStorage.getItem('ss_favorites') || '[]');
