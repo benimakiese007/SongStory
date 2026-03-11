@@ -4,6 +4,20 @@
 
 let SONGS_DATA = [
     {
+        "id": "dead-presidents-ii",
+        "title": "Dead Presidents II",
+        "artist_id": "jay-z",
+        "genre": "Rap",
+        "year": 1996,
+        "url": "songs/jay-z/dead-presidents-ii.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Dead Presidents II Cover.webp",
+        "tags": ["Classique", "New York", "Mafioso Rap"],
+        "description": "Considéré comme l'un des plus grands morceaux de rap de tous les temps, ce titre définit l'esthétique du premier album de Jay-Z."
+    },
+    {
         "id": "back-to-back",
         "title": "Back to Back",
         "artist_id": "drake",

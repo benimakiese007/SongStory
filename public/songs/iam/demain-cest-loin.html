@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demain, C'est Loin - IAM - SongStory</title>
+    <meta name="description"
+        content="Analyse de Demain, C'est Loin d'IAM. Le chef-d'œuvre absolu du rap français, une fresque sociale de 9 minutes extraite de L'Ecole du Micro d'Argent.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+    
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../../index.html" class="flex items-center gap-2">
+                        <img src="../../Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">🏆 Monument du Rap Français — 1997</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../../artists/iam.html" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Profil d'IAM →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Demain, C'est Loin</h1>
+                <p class="text-xl text-zinc-500 font-light">IAM • L'École du Micro d'Argent • 1997</p>
+                <p class="text-sm text-zinc-600 mt-2">Production : IAM / Imhotep • Durée : 9:02 • Le constat glacé de la banlieue</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn active">
+                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                        <span>Masquer les Décryptages</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper" class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : L'Observateur -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">L'encre coule, le sang se répand</p>
+                            <p class="group-hover:text-white transition-colors">La feuille buvard absorbe l'émotion</p>
+                            <p class="group-hover:text-white transition-colors">Sac d'image dans ma mémoire</p>
+                            <p class="group-hover:text-white transition-colors">Je parle de ce que mes proches vivent et de ce que je vois</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Incipit : Le Témoignage comme Devoir</span>
+                            <p>Akhenaton ouvre ce monument en se positionnant comme un témoin oculaire ("ce que je vois"). L'encre et le sang sont liés dès le départ, suggérant que l'écriture est une nécessité vitale face à la violence. Le "sac d'images" annonce la structure cinématographique du morceau : une succession de tableaux hyper-réalistes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Le Champ de Béton -->
+                    <div class="reveal story-block" data-time="40">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Pousse pousser au milieu d'un champs de béton</p>
+                            <p class="group-hover:text-white transition-colors">Grandir dans un parking et voir les grands faire rentrer les ronds</p>
+                            <p class="group-hover:text-white transition-colors">La pauvreté, ça fait gamberger en deux temps trois mouvements</p>
+                            <p class="group-hover:text-white transition-colors">On coupe, on compresse, on découpe, on emballe, on vend</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Environnement Hostile : L'Économie Parallèle</span>
+                            <p>Dénué de refrain, le morceau martèle le quotidien. L'image du "champ de béton" souligne l'absence de nature et d'horizon. La pauvreté est décrite comme un accélérateur de décision : le passage au trafic n'est pas un choix moral, mais une réponse mécanique à la précarité.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Le Miroir de Scarface -->
+                    <div class="reveal story-block" data-time="100">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Tomber les femmes à l'aise comme many</p>
+                            <p class="group-hover:text-white transition-colors">Sur Scarface, je suis comme tout le monde je délire bien</p>
+                            <p class="group-hover:text-white transition-colors">Dieu merci, j'ai grandi, je suis plus malin, lui il crève à la fin</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Mythes de Rue & Lucidité</span>
+                            <p>Shurik'n évoque l'influence massive du film "Scarface" sur l'imaginaire des cités. Mais là où beaucoup ne voient que la gloire éphémère de Tony Montana, lui souligne la chute inévitable ("lui il crève à la fin"). C'est une mise en garde contre la fascination pour le crime.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : L'Évasion Mentale -->
+                    <div class="reveal story-block" data-time="180">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Fausse diversion, un jour tu pètes les plombs</p>
+                            <p class="group-hover:text-white transition-colors">Les plombs, certains chanceux en ont dans la cervelle</p>
+                            <p class="group-hover:text-white transition-colors">D'autres se les envoient pour une poignée de biftons, guerre fraternelle</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Double Sens des "Plombs"</span>
+                            <p>Magnifique jeu de mots sur le mot "plomb" : avoir du plomb dans la cervelle (sagesse) face à se prendre du plomb (balles). IAM dépeint une guerre fratricide où la violence détruit ceux qui partagent pourtant la même condition.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : Le Zoo Social -->
+                    <div class="reveal story-block" data-time="240">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Politiciens et journalistes en visite au zoo</p>
+                            <p class="group-hover:text-white transition-colors">On pète la Veuve Cliquot, parqués comme à Mexico</p>
+                            <p class="group-hover:text-white transition-colors">Personnes honnêtes ignorées, superflics, Zorros</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Métaphore du Zoo : Regard Extérieur vs Réalité</span>
+                            <p>C'est l'une des critiques sociales les plus acerbes du rap français. IAM fustige le voyeurisme des médias et des politiques qui ne viennent en banlieue que pour le spectacle, ignorant les "personnes honnêtes" qui constituent pourtant la majorité des habitants.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 : Demain est un Loto -->
+                    <div class="reveal story-block" data-time="320">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Une fois tu gagnes, mille fois tu perds</p>
+                            <p class="group-hover:text-white transition-colors">Le futur c'est un loto</p>
+                            <p class="group-hover:text-white transition-colors">Je dédie mes textes en qualité d'ex-voto, mec</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">L'Incertitude du Lendemain</span>
+                            <p>Le futur n'est pas un projet, c'est un jeu de hasard. Le mot "ex-voto" (offrande à un saint en remerciement d'un vœu exaucé) donne une dimension presque religieuse à l'écriture : ses textes sont des offrandes pour protéger ceux qui restent.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 : La Fin du Voyage -->
+                    <div class="reveal story-block" data-time="480">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Te bas pour du laiton, est-ce que ça rapporte</p>
+                            <p class="group-hover:text-white transition-colors">Regrette pas les biftons quand la bac frappe à la porte</p>
+                            <p class="group-hover:text-white transition-colors">Je pense pas à demain, parce que demain c'est loin</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Conclusion : Le Vide de l'Avenir</span>
+                            <p>Le morceau se termine par le titre éponyme. Ce n'est pas une paresse, mais un constat de survie : quand le présent est trop brutal, imaginer l'avenir est un luxe inaccessible. "Demain c'est loin" est devenu l'hymne de la résignation lucide.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+        <p class="text-zinc-500 text-sm">SongStory • IAM "Demain, C'est Loin" • 1997</p>
+    </footer>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/search.js"></script>
+</body>
+
+</html>
