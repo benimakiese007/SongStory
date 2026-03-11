@@ -2,7 +2,34 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+const crypto = require('crypto');
+
 const PORT = 3000;
+
+// --- Sécurité & Authentification ---
+// Mot de passe pour accéder au CMS. Définissable via variable d'environnement ou 'PHOENIX_SECRET' par défaut.
+const CMS_PASSWORD = process.env.CMS_PASSWORD || 'PHOENIX_SECRET';
+const VALID_TOKENS = new Set(); // Stocke les jetons de session en mémoire
+
+// Middleware d'autorisation
+function isAuthorized(req) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return false;
+    const token = authHeader.split(' ')[1]; // Format "Bearer <token>"
+    return VALID_TOKENS.has(token);
+}
+
+// Validation de fichiers
+const ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
+function getSafeFileName(filename) {
+    const baseName = path.basename(filename); // Empêche le path traversal (../../../)
+    const ext = path.extname(baseName).toLowerCase();
+    
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        throw new Error('Type de fichier non autorisé.');
+    }
+    return baseName;
+}
 
 const server = http.createServer((req, res) => {
     // CORS headers
@@ -16,10 +43,38 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // API: Login
+    if (req.url === '/api/login' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { password } = JSON.parse(body);
+                if (password === CMS_PASSWORD) {
+                    const token = crypto.randomBytes(32).toString('hex');
+                    VALID_TOKENS.add(token);
+                    
+                    // Optionnel: Nettoyage basique des tokens (expire après 24h)
+                    setTimeout(() => VALID_TOKENS.delete(token), 24 * 60 * 60 * 1000);
+                    
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, token }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, error: 'Mot de passe incorrect' }));
+                }
+            } catch (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Requête invalide' }));
+            }
+        });
+        return;
+    }
+
     // API: Get current data
     if (req.url === '/api/data' && req.method === 'GET') {
         try {
-            const dataPath = path.join(__dirname, 'js', 'data.js');
+            const dataPath = path.join(__dirname, 'public', 'js', 'data.js');
             const content = fs.readFileSync(dataPath, 'utf-8');
 
             // Use Function constructor to safely evaluate the data.js file content
@@ -42,6 +97,12 @@ const server = http.createServer((req, res) => {
     }
     // API: Save data and update HTML cards
     else if (req.url === '/api/save-song' && req.method === 'POST') {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorisé' }));
+            return;
+        }
+
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -49,7 +110,7 @@ const server = http.createServer((req, res) => {
                 const { song, songs, artists, glossary } = JSON.parse(body);
 
                 // 1. Update data.js
-                const dataPath = path.join(__dirname, 'js', 'data.js');
+                const dataPath = path.join(__dirname, 'public', 'js', 'data.js');
                 let content = `/**\n * SongStory — Static-First Data Layer\n */\n\n`;
                 content += `let SONGS_DATA = ${JSON.stringify(songs, null, 4)};\n\n`;
                 content += `let ARTISTS_DATA = ${JSON.stringify(artists, null, 4)};\n\n`;
@@ -76,21 +137,30 @@ const server = http.createServer((req, res) => {
     }
     // API: Upload Cover
     else if (req.url === '/api/upload-cover' && req.method === 'POST') {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorisé' }));
+            return;
+        }
+
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
             try {
                 const { filename, base64 } = JSON.parse(body);
+                
+                const safeFileName = getSafeFileName(filename);
+                
                 // Unified cover storage
-                const coverDir = path.join(__dirname, 'Images', 'Title Cover');
+                const coverDir = path.join(__dirname, 'public', 'Images', 'Title Cover');
                 if (!fs.existsSync(coverDir)) fs.mkdirSync(coverDir, { recursive: true });
 
-                const filePath = path.join(coverDir, filename);
+                const filePath = path.join(coverDir, safeFileName);
                 const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
                 fs.writeFileSync(filePath, base64Data, 'base64');
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ url: `Images/Title Cover/${filename}` }));
+                res.end(JSON.stringify({ url: `Images/Title Cover/${safeFileName}` }));
             } catch (err) {
                 console.error(err);
                 res.writeHead(500);
@@ -101,7 +171,7 @@ const server = http.createServer((req, res) => {
     // API: List Covers
     else if (req.url === '/api/list-covers' && req.method === 'GET') {
         try {
-            const coverDir = path.join(__dirname, 'Images', 'Title Cover');
+            const coverDir = path.join(__dirname, 'public', 'Images', 'Title Cover');
             if (!fs.existsSync(coverDir)) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify([]));
@@ -123,7 +193,7 @@ const server = http.createServer((req, res) => {
     // API: List Profile Pictures
     else if (req.url === '/api/list-pp' && req.method === 'GET') {
         try {
-            const ppDir = path.join(__dirname, 'Images', 'Profile Picture - Artist');
+            const ppDir = path.join(__dirname, 'public', 'Images', 'Profile Picture - Artist');
             if (!fs.existsSync(ppDir)) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify([]));
@@ -144,12 +214,19 @@ const server = http.createServer((req, res) => {
     }
     // API: Delete Profile Picture
     else if (req.url === '/api/delete-pp' && req.method === 'POST') {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorisé' }));
+            return;
+        }
+
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
             try {
                 const { filename } = JSON.parse(body);
-                const filePath = path.join(__dirname, 'Images', 'Profile Picture - Artist', filename);
+                const safeFileName = path.basename(filename);
+                const filePath = path.join(__dirname, 'public', 'Images', 'Profile Picture - Artist', safeFileName);
                 if (fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
                 }
@@ -164,21 +241,30 @@ const server = http.createServer((req, res) => {
     }
     // API: Upload Artist Photo
     else if (req.url === '/api/upload-artist' && req.method === 'POST') {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorisé' }));
+            return;
+        }
+        
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
             try {
                 const { filename, base64 } = JSON.parse(body);
+                
+                const safeFileName = getSafeFileName(filename);
+                
                 // Unified artist storage
-                const artistDir = path.join(__dirname, 'Images', 'Profile Picture - Artist');
+                const artistDir = path.join(__dirname, 'public', 'Images', 'Profile Picture - Artist');
                 if (!fs.existsSync(artistDir)) fs.mkdirSync(artistDir, { recursive: true });
 
-                const filePath = path.join(artistDir, filename);
+                const filePath = path.join(artistDir, safeFileName);
                 const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
                 fs.writeFileSync(filePath, base64Data, 'base64');
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ url: `Images/Profile Picture - Artist/${filename}` }));
+                res.end(JSON.stringify({ url: `Images/Profile Picture - Artist/${safeFileName}` }));
             } catch (err) {
                 console.error(err);
                 res.writeHead(500);
@@ -188,12 +274,19 @@ const server = http.createServer((req, res) => {
     }
     // API: Delete Cover
     else if (req.url === '/api/delete-cover' && req.method === 'POST') {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorisé' }));
+            return;
+        }
+
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
             try {
                 const { filename } = JSON.parse(body);
-                const filePath = path.join(__dirname, 'Images', 'Title Cover', filename);
+                const safeFileName = path.basename(filename);
+                const filePath = path.join(__dirname, 'public', 'Images', 'Title Cover', safeFileName);
                 if (fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
                 }
@@ -216,7 +309,7 @@ function updateStaticCards(song) {
     const files = ['index.html', 'library.html'];
 
     files.forEach(file => {
-        const filePath = path.join(__dirname, file);
+        const filePath = path.join(__dirname, 'public', file);
         if (!fs.existsSync(filePath)) return;
 
         let content = fs.readFileSync(filePath, 'utf-8');
@@ -242,7 +335,7 @@ function updateStaticCards(song) {
 }
 
 function updateArtistCards(artists) {
-    const filePath = path.join(__dirname, 'artists.html');
+    const filePath = path.join(__dirname, 'public', 'artists.html');
     if (!fs.existsSync(filePath)) return;
 
     let content = fs.readFileSync(filePath, 'utf-8');
@@ -262,7 +355,7 @@ function updateArtistCards(artists) {
 
 function updateIndividualArtistPage(artist) {
     if (!artist.id) return;
-    const filePath = path.join(__dirname, 'artists', `${artist.id}.html`);
+    const filePath = path.join(__dirname, 'public', 'artists', `${artist.id}.html`);
     if (!fs.existsSync(filePath)) return;
 
     let content = fs.readFileSync(filePath, 'utf-8');

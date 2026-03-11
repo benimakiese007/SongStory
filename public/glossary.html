@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossaire - SongStory</title>
+    <meta name="description"
+        content="Découvrez les termes techniques et les figures de style utilisées dans le rap et la musique.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="Images/Logo/Song Story Logo png.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Images/Logo/Song Story Logo png.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Images/Logo/Song Story Logo png.png">
+    <meta name="theme-color" content="#09090b">
+    
+    <!-- Theme & Utils -->
+    <script src="js/utils.js"></script>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center gap-2"><img src="Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto"><span class="sr-only">SONGSTORY</span></a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html" class="nav-link-desktop">Découvrir</a>
+                        <a href="library.html" class="nav-link-desktop">Bibliothèque</a>
+                        <a href="artists.html" class="nav-link-desktop">Artistes</a>
+                        <a href="timeline.html" class="nav-link-desktop">Timeline</a>
+                        <a href="glossary.html" class="nav-link-desktop nav-link-desktop-active">Glossaire</a>
+                        <a href="about.html" class="nav-link-desktop">À propos</a>
+                    </div>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" role="navigation" aria-label="Menu mobile">
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
+            <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
+            <a href="glossary.html" class="text-white text-lg font-medium">Glossaire</a>
+            <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
+    <main class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="mb-16 text-center">
+                <h1 class="text-4xl md:text-5xl text-white font-medium tracking-tighter mb-4">Le Glossaire Musical</h1>
+                <p class="text-zinc-500 text-lg font-light max-w-2xl mx-auto">
+                    Décryptage des termes techniques, des figures de style et du jargon utilisés dans nos analyses.
+                </p>
+            </header>
+
+            <div id="glossary-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Les termes seront injectés ici par JS -->
+                <div class="animate-pulse space-y-4">
+                    <div class="h-12 bg-zinc-900 rounded-xl"></div>
+                    <div class="h-12 bg-zinc-900 rounded-xl"></div>
+                    <div class="h-12 bg-zinc-900 rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/router.js"></script>
+
+    <script>
+        async function loadGlossary() {
+            const grid = document.getElementById('glossary-grid');
+            if (!grid) return;
+
+            let terms = [];
+            let glossaryData = {};
+
+            if (window.ss_supabase) {
+                try {
+                    const { data, error } = await window.ss_supabase.from('glossary').select('*').order('term');
+                    if (!error && data) {
+                        terms = data.map(item => item.term);
+                        data.forEach(item => glossaryData[item.term] = item.definition);
+                    }
+                } catch (err) {
+                    console.warn('Supabase request failed, falling back to local data:', err);
+                }
+            }
+
+            if (terms.length === 0 && typeof GLOSSARY !== 'undefined') {
+                glossaryData = GLOSSARY;
+                terms = Object.keys(GLOSSARY).sort();
+            }
+
+            if (terms.length === 0) return;
+
+            grid.innerHTML = '';
+            terms.forEach(term => {
+                const def = glossaryData[term];
+                const card = document.createElement('div');
+                card.className = 'reveal bg-zinc-950/40 border border-white/10 p-6 rounded-2xl hover:bg-zinc-900/50 transition-all shadow-xl';
+                card.innerHTML = `
+                    <h3 class="text-amber-400 font-medium text-lg mb-2 capitalize">${term}</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">${def}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGlossary);
+    </script>
+
+    <script src="js/supabase-auth.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

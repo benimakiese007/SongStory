@@ -3,8 +3,8 @@ import re
 import json
 
 base_dir = r"c:\Users\tmaut\Downloads\THE PHOENIX\SongStory"
-songs_dir = os.path.join(base_dir, "songs")
-data_file = os.path.join(base_dir, "js", "data.js")
+songs_dir = os.path.join(base_dir, "public", "songs")
+data_file = os.path.join(base_dir, "public", "js", "data.js")
 
 def get_song_info(file_path):
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:

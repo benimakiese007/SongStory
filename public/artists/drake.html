@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drake - SongStory</title>
+    <meta name="description"
+        content="Profil de Drake sur SongStory. Biographie, timeline de carrière et analyses de morceaux.">
+    <meta property="og:title" content="Drake — Profil Artiste | SongStory">
+    <meta property="og:description" content="Découvrez Drake : biographie, carrière et morceaux analysés.">
+    <meta property="og:type" content="profile">
+    <meta name="twitter:card" content="summary_large_image">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <div id="search-overlay" role="dialog" aria-modal="true">
+        <iconify-icon icon="solar:magnifer-linear" class="search-overlay-icon" width="22"
+            style="position:absolute;left:calc(50% - 320px);top:98px;"></iconify-icon>
+        <input id="search-overlay-input" type="text" placeholder="Rechercher un titre, artiste, thème…"
+            autocomplete="off" aria-label="Recherche">
+        <button id="close-search-btn"
+            style="position:absolute;top:28px;right:32px;color:#71717a;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;">
+            <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon> Fermer
+        </button>
+        <div id="search-results"></div>
+    </div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="flex items-center gap-2"><img src="../Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto"><span class="sr-only">SONGSTORY</span></a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../index.html"
+                            class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../library.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../artists.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../timeline.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../glossary.html"
+                            class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                        <a href="../about.html" class="text-zinc-400 text-sm hover:text-white transition-colors">À
+                            propos</a>
+                    </div>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-3">
+                    <button
+                        class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                        <span
+                            class="hidden sm:inline text-xs text-zinc-600 border border-white/10 rounded px-1.5 py-0.5">/</span>
+                    </button>
+                    <!-- Nav auth slot -->
+                    <button class="theme-switch" aria-label="Passer en mode clair" role="switch" aria-checked="false">
+                        <div class="switch-thumb">
+                            <iconify-icon icon="solar:sun-bold" class="sun-icon"></iconify-icon>
+                            <iconify-icon icon="solar:moon-bold" class="moon-icon"></iconify-icon>
+                        </div>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false"
+                        aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu">
+        <div class="flex flex-col gap-6">
+            <a href="../index.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Découvrir</a>
+            <a href="../library.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Bibliothèque</a>
+            <a href="../artists.html" class="text-white text-lg font-medium">Artistes</a>
+            <a href="../about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
+        </div>
+    </div>
+
+    <!-- ARTIST_INFO_START -->
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+            <img src="../Images/Profile Picture - Artist/Drake PP.webp" alt="Drake" class="w-full h-full object-cover">
+        </div>
+        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Drake</h1>
+        <p class="text-lg text-zinc-500 font-light mb-6">Hip-Hop/R&B • Canada</p>
+        <p class="text-base text-zinc-400 leading-relaxed">La superstar mondiale qui domine les charts avec son mélange unique de rap mélodique et de R&B.</p>
+    </div>
+    <!-- ARTIST_INFO_END -->
+
+    <main class="pb-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:document-text-linear" class="text-amber-400"
+                            width="18"></iconify-icon>
+                        Biographie
+                    </h2>
+                    <p class="reveal text-sm text-zinc-400 leading-relaxed mb-6">
+                        Aubrey Drake Graham, né en 1986 à Toronto, est l'un des artistes les plus vendus de l'histoire. Après s'être fait connaître comme acteur dans la série "Degrassi", il a révolutionné le rap avec sa signature mélodique unique.
+                    </p>
+                    <h3 class="text-sm text-white font-medium mb-2">Influence</h3>
+                    <p class="reveal text-sm text-zinc-400 leading-relaxed mb-8">
+                        Drake a redéfini les frontières entre le rap et le chant, apportant une vulnérabilité émotionnelle inédite au mainstream. Son influence sur la culture streaming et sa capacité à créer des tendances mondiales sont inégalées.
+                    </p>
+
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
+                        Analyses disponibles
+                    </h2>
+                    <div class="space-y-4">
+                        <a href="../songs/drake/back-to-back.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Back to Back</div>
+                                <div class="rec-artist">2015 • Hip-Hop • Diss Track</div>
+                            </div>
+                        </a>
+                        <a href="../songs/drake/push-ups.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Push Ups</div>
+                                <div class="rec-artist">2024 • Hip-Hop • Beef 2024</div>
+                            </div>
+                        </a>
+                        <a href="../songs/drake/taylor-made-freestyle.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Taylor Made Freestyle</div>
+                                <div class="rec-artist">2024 • Hip-Hop • Diss Track</div>
+                            </div>
+                        </a>
+                        <a href="../songs/drake/family-matters.html" class="recommendation-card">
+                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
+                            <div>
+                                <div class="rec-title">Family Matters</div>
+                                <div class="rec-artist">2024 • Hip-Hop • Beef 2024</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-6 flex items-center gap-2">
+                        <iconify-icon icon="solar:calendar-linear" class="text-amber-400" width="18"></iconify-icon>
+                        Carrière
+                    </h2>
+                    <div class="artist-timeline">
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">1986</div>
+                            <div class="timeline-event">Naissance à Toronto, Canada.</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2001</div>
+                            <div class="timeline-event">Débuts en tant qu'acteur dans "Degrassi: The Next Generation".</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2009</div>
+                            <div class="timeline-event">Signe chez Young Money Entertainment après la mixtape "So Far Gone".</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2011</div>
+                            <div class="timeline-event">Sortie de "Take Care", album pivot récompensé d'un Grammy.</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2018</div>
+                            <div class="timeline-event">"Scorpion" bat des records de streaming avec "God's Plan".</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-event">Rivalité historique avec Kendrick Lamar marquant l'année rap.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/seo.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/player.js"></script>
+
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>
