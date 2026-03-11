@@ -18,6 +18,20 @@ let SONGS_DATA = [
         "description": "Considéré comme l'un des plus grands morceaux de rap de tous les temps, ce titre définit l'esthétique du premier album de Jay-Z."
     },
     {
+        "id": "demain-cest-loin",
+        "title": "Demain, C'est Loin",
+        "artist_id": "iam",
+        "genre": "Rap",
+        "year": 1997,
+        "url": "songs/iam/demain-cest-loin.html",
+        "audio_url": "",
+        "spotify_id": "",
+        "apple_music_id": "",
+        "cover_url": "Images/Title Cover/Demain, C'est Loin Cover.webp",
+        "tags": ["Classique", "Marseille", "Rap Conscient"],
+        "description": "Le morceau le plus emblématique du rap français, une immersion brutale et poétique dans le quotidien des quartiers nord de Marseille."
+    },
+    {
         "id": "back-to-back",
         "title": "Back to Back",
         "artist_id": "drake",
