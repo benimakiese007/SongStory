@@ -20,9 +20,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" sizes="180x180" href="Images/Logo/Logo Song Story PWA.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="Images/Logo/Logo Song Story PWA.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Images/Logo/Logo Song Story PWA.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logo/logo-song-story-pwa.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo/logo-song-story-pwa.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logo/logo-song-story-pwa.png">
     <meta name="theme-color" content="#09090b">
     
     <!-- Theme & Utils -->
@@ -54,7 +54,7 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
                     <a href="index.html" class="flex items-center gap-2">
-                        <img src="Images/Logo/Song Story Logo png.png" alt="SongStory Logo" class="h-8 w-auto">
+                        <img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
                         <span class="sr-only">SONGSTORY</span>
                     </a>
                 </div>
@@ -109,391 +109,10 @@
                 <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-6">Artistes</h1>
                 <p class="text-lg text-zinc-500 max-w-2xl mx-auto font-light">Rencontrez les voix qui façonnent notre
                     bibliothèque.</p>
+                    <div id="artists-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Artists will be rendered here dynamically -->
             </div>
-
-            <div id="artists-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Artist: kendrick-lamar -->
-                <a href="artists/kendrick-lamar.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Kendrick Lamar PP.webp" alt="Kendrick Lamar" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Kendrick Lamar</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'un des paroliers les plus influents de sa génération, connu pour ses récits complexes et ses thèmes sociaux.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: kendrick-lamar -->
-
-                <!-- Artist: drake -->
-                <a href="artists/drake.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Drake PP.webp" alt="Drake" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Drake</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop/R&B · Canada</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">La superstar mondiale qui domine les charts avec son mélange unique de rap mélodique et de R&B.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: drake -->
-
-                <!-- Artist: eminem -->
-                <a href="artists/eminem.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Eminem PP.webp" alt="Eminem" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Eminem</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le génie technique du Rap de Détroit, célèbre pour ses rimes complexes et son alter ego Slim Shady.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: eminem -->
-
-                <!-- Artist: nas -->
-                <a href="artists/nas.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Nas PP.webp" alt="Nas" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Nas</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: nas -->
-
-                <!-- Artist: tupac-shakur -->
-                <a href="artists/tupac-shakur.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/2Pac PP.webp" alt="2Pac" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                2Pac</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'icône éternelle qui a donné une voix aux sans-voix à travers sa poésie et son charisme unique.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: tupac-shakur -->
-
-                <!-- Artist: jay-z -->
-                <a href="artists/jay-z.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Jay-Z PP.webp" alt="Jay-Z" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Jay-Z</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'entrepreneur et lyriciste hors pair qui a transformé le hip-hop en un empire mondial.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: jay-z -->
-
-                <!-- Artist: j-cole -->
-                <a href="artists/j-cole.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/J.Cole PP.webp" alt="J. Cole" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                J. Cole</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le conteur de Fayetteville, reconnu pour son introspection et son refus des artifices du star-system.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: j-cole -->
-
-                <!-- Artist: kanye-west -->
-                <a href="artists/kanye-west.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/YE PP.webp" alt="Kanye West" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Kanye West</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'un des producteurs et artistes les plus innovants du 21ème siècle, repoussant sans cesse les limites du son.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: kanye-west -->
-
-                <!-- Artist: childish-gambino -->
-                <a href="artists/childish-gambino.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Childish Gambino PP.webp" alt="Childish Gambino" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Childish Gambino</h3>
-                            <p class="text-zinc-500 text-sm">Hip-Hop/Soul · USA</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'artiste polyvalent qui explore les thèmes de l'identité noire avec une créativité sans limites.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: childish-gambino -->
-
-                <!-- Artist: iam -->
-                <a href="artists/iam.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/IAM PP.webp" alt="IAM" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                IAM</h3>
-                            <p class="text-zinc-500 text-sm">Rap · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le groupe mythique de Marseille qui a élevé le rap français au rang d'art poétique et philosophique.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: iam -->
-
-                <!-- Artist: supreme-ntm -->
-                <a href="artists/supreme-ntm.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Supreme NTM PP.webp" alt="Suprême NTM" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Suprême NTM</h3>
-                            <p class="text-zinc-500 text-sm">Rap · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">L'énergie brute du 93, incarnant la contestation sociale et la puissance scénique du rap français.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: supreme-ntm -->
-
-                <!-- Artist: mc-solaar -->
-                <a href="artists/mc-solaar.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/MC Solaar PP.webp" alt="MC Solaar" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                MC Solaar</h3>
-                            <p class="text-zinc-500 text-sm">Rap · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le poète du rap français, pionnier du lyrisme et du style "cool" qui a marqué toute une époque.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: mc-solaar -->
-
-                <!-- Artist: orelsan -->
-                <a href="artists/orelsan.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Orelsan PP.webp" alt="Orelsan" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Orelsan</h3>
-                            <p class="text-zinc-500 text-sm">Rap · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Le storyteller de la classe moyenne française, maître de l'autodérision et de la mélancolie du quotidien.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: orelsan -->
-
-                <!-- Artist: kery-james -->
-                <a href="artists/kery-james.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Kery James PP.webp" alt="Kery James" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Kery James</h3>
-                            <p class="text-zinc-500 text-sm">Rap Conscient · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Une figure majeure du rap français, pilier du rap politique et engagé depuis plus de deux décennies.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: kery-james -->
-
-                <!-- Artist: medine -->
-                <a href="artists/medine.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Medine PP.webp" alt="Médine" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Médine</h3>
-                            <p class="text-zinc-500 text-sm">Rap Conscient · France</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Reconnu pour sa poésie et son intelligence lyricale, il se définit comme un "arabophone de la laïcité".</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
-                <!-- End Artist: medine -->
-
-                <!-- Artist: youssoupha -->
-                <a href="artists/youssoupha.html"
-                    class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
-                    style="text-decoration:none;">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
-                            <img src="Images/Profile Picture - Artist/Youssoupha PP.webp" alt="Youssoupha" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h3 class="text-white font-medium text-lg group-hover:text-amber-400 transition-colors">
-                                Youssoupha</h3>
-                            <p class="text-zinc-500 text-sm">Rap Conscient · France / RDC</p>
-                        </div>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-4">Surnommé le "Lyriciste Bantou", il est réputé pour la richesse de son vocabulaire et son écriture très ciselée.</p>
-                    <div class="flex items-center justify-between text-xs text-zinc-600">
-                        <span>0 analyse(s) disponible(s)</span>
-                        <iconify-icon icon="solar:arrow-right-linear"
-                            class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                            width="16"></iconify-icon>
-                    </div>
-                </a>
+            </a>
                 <!-- End Artist: youssoupha -->
             </div>
 
@@ -519,6 +138,31 @@
 
     <script src="js/pwa.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('artists-grid');
+            if (!grid) return;
+
+            function renderArtists() {
+                grid.innerHTML = '';
+                ARTISTS_DATA.forEach(artist => {
+                    // Calculate analysis count dynamically
+                    const count = SONGS_DATA.filter(s => s.artist_id === artist.id || s.artist === artist.id).length;
+                    const artistWithCount = { ...artist, songs_count: count };
+                    
+                    const cardHtml = SongStoryUtils.generateArtistCard(artistWithCount, { isSubDir: false });
+                    grid.insertAdjacentHTML('beforeend', cardHtml);
+                });
+
+                // Re-init reveal animations
+                if (typeof SongStoryUI !== 'undefined') {
+                    SongStoryUI.initScrollAnimations();
+                }
+            }
+
+            renderArtists();
+        });
+    </script>
     <script src="js/app.js"></script>
 </body>
 

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Pour Trop Tard - Orelsan - SongStory</title>
+    <meta name="description"
+        content="Analyse de Notes Pour Trop Tard d'Orelsan. Un morceau d'une introspection rare où l'artiste s'adresse à son 'moi' plus jeune, clôturant l'album-la-fete-est-finie.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../../index.html" class="flex items-center gap-2">
+                        <img src="../../images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
+                        <span class="sr-only">SONGSTORY</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                    </div>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Ouvrir la recherche">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-zinc-500 font-medium">Introspection Moderne • 2017</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../../artists/orelsan.html" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Profil d'Orelsan →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Notes Pour Trop Tard</h1>
+
+                <p class="text-xl text-zinc-500 font-light">Orelsan (feat. Ibeyi) • La fête est finie • 2017</p>
+                <p class="text-sm text-zinc-600 mt-2">Production : Skread • Une lettre ouverte poignante à soi-même</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn active">
+                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                        <span>Masquer les Décryptages</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper" class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Le Passage à l'âge Adulte -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">J'avais ton âge, y a à peu près ton âge</p>
+                            <p class="group-hover:text-white transition-colors">Le passage à l'âge adulte est glissant dans les virages</p>
+                            <p class="group-hover:text-white transition-colors">Maintenant t'es dans l'grand bain, devine comment on nage</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Le Grand Saut</span>
+                            <p>Orelsan entame sa lettre par une métaphore aquatique. L'âge adulte n'est pas une transition douce, mais une immersion forcée dans un "grand bain" sans manuel d'utilisation. La sensation de décalage et l'absence de "stage" pour devenir un homme sont des thèmes centraux qui résonnent avec toute une génération.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : La Solitude et l'Incompréhension -->
+                    <div class="reveal story-block" data-time="45">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Si t'as l'impression qu'personne te comprend, c'est parce que personne te comprend</p>
+                            <p class="group-hover:text-white transition-colors">C'est plus facile à vivre une fois qu't'en es conscient</p>
+                            <p class="group-hover:text-white transition-colors">Souvent seul avec tes problèmes, souvent, c'est toi l'problème</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Acceptation de l'Isolement</span>
+                            <p>L'artiste brise le cliché du "on te comprend". Il affirme que l'incompréhension est une réalité structurelle de l'adolescence et de la jeunesse. En acceptant cette solitude, on enlève un poids. La lucidité d'Orelsan pointe aussi la responsabilité individuelle : parfois, l'obstacle, c'est nous-mêmes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Désillusions et Amours -->
+                    <div class="reveal story-block" data-time="120">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">T'es plus intelligent qu'avant, mais t'es toujours très con</p>
+                            <p class="group-hover:text-white transition-colors">C'est toujours le même style de fille dont tu tombes amoureux</p>
+                            <p class="group-hover:text-white transition-colors">Tu sais, le style de fille qui t'rend malheureux</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Les Schémas Répétitifs</span>
+                            <p>Orelsan manie l'autodérision pour souligner la lenteur de l'apprentissage émotionnel. On croit gagner en maturité, mais on retombe souvent dans les mêmes pièges sentimentaux. Il décrit cette tendance à être attiré par ce qui nous détruit, un classique de la psychologie humaine magnifiquement résumé ici.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Ambition et Passion -->
+                    <div class="reveal story-block" data-time="240">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">T'as juste besoin d'une passion</p>
+                            <p class="group-hover:text-white transition-colors">Tous les trucs où les gens disent "Tu perds ton temps"</p>
+                            <p class="group-hover:text-white transition-colors">Faut que tu t'mettes à fond dedans et qu'tu t'accroches longtemps</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Éloge de la Curiosité</span>
+                            <p>C'est peut-être le conseil le plus précieux du morceau. Orelsan encourage à suivre ses instincts créatifs, même s'ils semblent absurdes ou improductifs aux yeux des autres. C'est l'obstination dans ces "pertes de temps" qui finit par forger une carrière et une identité unique.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : La Réalité de la Vie -->
+                    <div class="reveal story-block" data-time="300">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Arrête de passer ta vie à fuir, angoissé par l'avenir</p>
+                            <p class="group-hover:text-white transition-colors">Des proches un peu pressés partiront avant toi</p>
+                            <p class="group-hover:text-white transition-colors">Le seul remède, c'est l'temps</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-red-500 font-medium block mb-1">L'Épreuve du Deuil et de l'Attente</span>
+                            <p>La fin du morceau est plus sombre mais profondément humaine. Orelsan évoque la mort et les mauvaises nouvelles qui frappent sans prévenir. Face à l'inéluctable, il ne reste que la présence et la patience. "Le seul remède, c'est l'temps" clôture cette fresque avec une note de résilience universelle.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+        <p class="text-zinc-500 text-sm">SongStory • Orelsan "Notes Pour Trop Tard" • 2017</p>
+    </footer>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/search.js"></script>
+</body>
+
+</html>

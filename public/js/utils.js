@@ -16,8 +16,13 @@ const SongStoryUtils = {
      */
     resolvePath(url) {
         if (!url) return '';
-        const isSubDir = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
-        return (isSubDir ? '../../' : '') + url;
+        const path = window.location.pathname;
+        const isSongPage = path.includes('/songs/');
+        const isArtistPage = path.includes('/artists/');
+        
+        if (isSongPage) return '../../' + url;
+        if (isArtistPage) return '../' + url;
+        return url;
     },
 
     /**
@@ -25,8 +30,16 @@ const SongStoryUtils = {
      */
     generateSongCard(song, options = {}) {
         const isHome = options.layout === 'home';
-        const baseUrl = isHome ? '' : (options.isSubDir ? '../../' : '');
-        const songUrl = `${baseUrl}songs/${song.id}.html`;
+        
+        // Determine base URL based on current page location
+        let baseUrl = '';
+        if (!isHome) {
+            const path = window.location.pathname;
+            if (path.includes('/songs/')) baseUrl = '../../';
+            else if (path.includes('/artists/')) baseUrl = '../';
+        }
+
+        const songUrl = baseUrl + (song.url || `songs/${song.id}.html`);
         const coverUrl = song.cover_url ? (baseUrl + song.cover_url) : '';
         
         let coverHtml = '';
@@ -87,7 +100,9 @@ ${coverHtml}
      * Template for Artist Cards
      */
     generateArtistCard(artist, options = {}) {
-        const baseUrl = options.isSubDir ? '../' : '';
+        const path = window.location.pathname;
+        const baseUrl = path.includes('/songs/') ? '../../' : (path.includes('/artists/') ? '../' : '');
+        
         let avatarHtml;
         if (artist.photo_url) {
             avatarHtml = `                        <div class="artist-avatar" style="width:64px;height:64px;margin-bottom:0;overflow:hidden;">
@@ -99,7 +114,9 @@ ${coverHtml}
                         </div>`;
         }
 
-        return `                <a href="${baseUrl}artists/${artist.id}.html"
+        const artistUrl = baseUrl + (artist.url || `artists/${artist.id}.html`);
+
+        return `                <a href="${artistUrl}"
                     class="reveal visible artist-card group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all"
                     style="text-decoration:none;">
                     <div class="flex items-center gap-4 mb-4">

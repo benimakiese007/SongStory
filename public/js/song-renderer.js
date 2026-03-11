@@ -46,14 +46,7 @@ const SongStoryRenderer = {
         // If no explicit theme color, try to extract it from the image
         if (!color && typeof SongStoryUI !== 'undefined') {
             const img = new Image();
-            img.crossOrigin = "Anonymous";
-            // Use artist thumb as proxy for album art if needed
-            const imgSrc = this.currentSong.image || `Images/artists/${this.currentSong.artistId}.jpg`;
-
-            try {
-                color = await this.extractDominantColor(imgSrc);
-            } catch (e) {
-                console.warn("Could not extract color:", e);
+            img.crossOrigin = "Anonymous"------------//-use-artist-thumb-as-proxy-for-album-art-if-needed------------const-imgsrc--this.currentsong.image || `images/artists/this.currentsong.artistid.jpg------------try-----------------color--await-this.extractdominantcolorimgsrc-------------catch-e-----------------console.warn("Could not extract color:", e);
             }
         }
 

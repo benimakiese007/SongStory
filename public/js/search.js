@@ -107,8 +107,8 @@ const SongStorySearch = {
             return;
         }
 
-        const isSubpage = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
-        const base = isSubpage ? '../' : '';
+        const isSubDir = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
+        const base = isSubDir ? (window.location.pathname.includes('/songs/') ? '../../' : '../') : '';
         const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
         let songResults = [];

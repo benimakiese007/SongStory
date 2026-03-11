@@ -1,0 +1,15 @@
+{
+  "name": "songstory",
+  "version": "1.0.0",
+  "description": "SongStory — Analyse de paroles et d'histoires de chansons",
+  "main": "cms-server.js",
+  "scripts": {
+    "start": "node cms-server.js",
+    "dev": "node cms-server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

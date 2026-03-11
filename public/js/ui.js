@@ -238,14 +238,16 @@ const SongStoryUI = {
                 img.crossOrigin = "Anonymous";
                 await new Promise(r => { img.onload = r; img.src = imgSrc; });
 
-                // Draw and blur (simple stack blur-like effect)
+                // Draw and blur simple StackBlur-like effect
                 ctx.filter = 'blur(40px) brightness(0.4)';
                 ctx.drawImage(img, -100, -100, W + 200, H + 200);
                 ctx.filter = 'none';
             } else {
                 const grad = ctx.createLinearGradient(0, 0, W, H);
-                grad.addColorStop(0, '#09090b'); grad.addColorStop(1, '#18181b');
-                ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+                grad.addColorStop(0, '#09090b');
+                grad.addColorStop(1, '#18181b');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, W, H);
             }
 
             // 2. Glassmorphic Overlay
@@ -259,16 +261,22 @@ const SongStoryUI = {
             // 3. Brand Watermark
             ctx.fillStyle = 'rgba(251, 191, 36, 0.8)';
             ctx.font = 'bold 32px Inter';
-            ctx.fillText('SONGSTORY.', 140, 160);
+            ctx.fillText('SongStory.', 140, 160);
 
             // 4. Quote Text
             ctx.fillStyle = '#fff';
             ctx.font = 'italic 500 56px Inter';
-
-            let words = quote.split(' '), line = '', lines = [], maxW = W - 280;
+            let words = quote.split(' ');
+            let line = '';
+            let lines = [];
+            let maxW = W - 280;
             words.forEach(w => {
-                if (ctx.measureText(line + w).width > maxW) { lines.push(line); line = w + ' '; }
-                else line += w + ' ';
+                if (ctx.measureText(line + w + ' ').width < maxW) {
+                    line += w + ' ';
+                } else {
+                    lines.push(line);
+                    line = w + ' ';
+                }
             });
             lines.push(line);
 
@@ -291,17 +299,22 @@ const SongStoryUI = {
                 const b = btn.closest('.story-block');
                 const songTitle = document.getElementById('song-title')?.textContent || 'Song';
                 const artistName = document.getElementById('song-meta')?.textContent.split('•')[0].trim() || 'Artist';
-                const imgSrc = SongStoryRenderer.currentSong?.image || `Images/artists/${SongStoryRenderer.currentSong?.artistId}.jpg`;
+                let imgSrc = null;
+                if (typeof SongStoryRenderer !== 'undefined' && SongStoryRenderer.currentSong) {
+                    imgSrc = SongStoryRenderer.currentSong.cover_url || `images/covers/${SongStoryRenderer.currentSong.id}-cover.webp`;
+                }
 
-                await generate(b?.querySelector('.lyrics-text')?.textContent || '', songTitle, artistName, imgSrc);
+                await generate(b.querySelector('.lyrics-text')?.textContent || '', songTitle, artistName, imgSrc);
                 modal.classList.add('open');
             });
         });
 
-        document.getElementById('close-share-modal')?.addEventListener('click', () => modal.classList.remove('open'));
+        document.getElementById('close-share-modal')?.addEventListener('click', () => { modal.classList.remove('open'); });
         document.getElementById('download-share-btn')?.addEventListener('click', () => {
             const a = document.createElement('a');
-            a.href = canvas.toDataURL(); a.download = 'songstory.png'; a.click();
+            a.href = canvas.toDataURL();
+            a.download = 'songstory.png';
+            a.click();
         });
     },
 
@@ -310,13 +323,15 @@ const SongStoryUI = {
             document.documentElement.setAttribute('data-theme', t);
             document.querySelectorAll('.theme-switch').forEach(sw => sw.setAttribute('aria-checked', t === 'light'));
         };
+
         const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         apply(saved);
 
         document.querySelectorAll('.theme-switch').forEach(sw => {
             sw.addEventListener('click', () => {
                 const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                apply(next); localStorage.setItem('theme', next);
+                apply(next);
+                localStorage.setItem('theme', next);
             });
         });
     },
@@ -326,23 +341,16 @@ const SongStoryUI = {
             document.body.classList.remove('layout-classic', 'layout-immersive');
             document.body.classList.add(`layout-${layout}`);
 
-            // Update toggle buttons if they exist
             document.querySelectorAll('.layout-switch').forEach(btn => {
                 const icon = btn.querySelector('iconify-icon');
                 if (icon) {
                     icon.setAttribute('icon', layout === 'classic' ? 'solar:maximize-linear' : 'solar:quit-full-screen-linear');
                 }
-                btn.title = layout === 'classic' ? 'Passer en mode Immersif' : 'Retour au mode Classique';
+                btn.title = layout === 'classic' ? 'Passer en mode immersif' : 'Retour au mode classique';
             });
-
-            // If we switch to classic, we should make sure the analysis card is ready
-            if (layout === 'classic' && typeof SongStoryPlayer !== 'undefined') {
-                // Trigger a refresh of markers if needed
-            }
         };
 
-        // Default is classic as requested
-        const saved = localStorage.getItem('ss-layout-pref') || 'classic';
+        const saved = localStorage.getItem('ss_layout_pref') || 'classic';
         apply(saved);
 
         document.addEventListener('click', (e) => {
@@ -351,7 +359,7 @@ const SongStoryUI = {
                 const current = document.body.classList.contains('layout-classic') ? 'classic' : 'immersive';
                 const next = current === 'classic' ? 'immersive' : 'classic';
                 apply(next);
-                localStorage.setItem('ss-layout-pref', next);
+                localStorage.setItem('ss_layout_pref', next);
             }
         });
     },
@@ -364,20 +372,9 @@ const SongStoryUI = {
             return;
         }
 
-        // Apply provided color
         root.style.setProperty('--amber-400', color);
+        root.style.setProperty('--amber-500', color);
 
-        // Use a temporary div to get RGB values if color is in another format
-        const temp = document.createElement('div');
-        temp.style.color = color;
-        document.body.appendChild(temp);
-        const rgb = window.getComputedStyle(temp).color;
-        document.body.removeChild(temp);
-
-        // Set amber-500 as a slightly darker/more opaque version for consistent UI
-        root.style.setProperty('--amber-500', rgb);
-
-        // Inject a dynamic style for specific overrides if needed
         let dynamicStyle = document.getElementById('dynamic-accent-style');
         if (!dynamicStyle) {
             dynamicStyle = document.createElement('style');
@@ -417,7 +414,6 @@ const SongStoryUI = {
     initTransitions() {
         if (!('startViewTransition' in document)) return;
         document.addEventListener('click', (e) => {
-            // Skip if already handled by SPA router
             if (e.defaultPrevented) return;
             const a = e.target.closest('a[href]');
             if (!a || a.href.startsWith('http') || a.href.includes('#') || a.target === '_blank') return;

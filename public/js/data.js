@@ -13,7 +13,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Dead Presidents II Cover.webp",
+        "cover_url": "images/covers/dead-presidents-ii-cover.webp",
         "tags": ["Classique", "New York", "Mafioso Rap"],
         "description": "Considéré comme l'un des plus grands morceaux de rap de tous les temps, ce titre définit l'esthétique du premier album de Jay-Z."
     },
@@ -27,7 +27,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Demain, C'est Loin Cover.webp",
+        "cover_url": "images/covers/demain-cest-loin-cover.webp",
         "tags": ["Classique", "Marseille", "Rap Conscient"],
         "description": "Le morceau le plus emblématique du rap français, une immersion brutale et poétique dans le quotidien des quartiers nord de Marseille."
     },
@@ -41,8 +41,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Back to Back Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/back-to-back-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -55,8 +55,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Family Matters Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/family-matters-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -69,8 +69,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Push Ups Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/push-ups-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -83,8 +83,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Taylor Made Freestyle Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/taylor-made-freestyle-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -97,8 +97,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Stan Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/stan-cover.webp",
+        "tags": ["storytelling"],
         "description": ""
     },
     {
@@ -111,8 +111,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/7 Minutes Drill Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/7-minutes-drill-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -125,7 +125,7 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Might Delete Later (Excuses) Cover.webp",
+        "cover_url": "images/covers/might-delete-later-excuses-cover.webp",
         "tags": [],
         "description": ""
     },
@@ -139,8 +139,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Power Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/power-cover.webp",
+        "tags": ["storytelling"],
         "description": ""
     },
     {
@@ -153,8 +153,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/6 16 in LA.webp",
-        "tags": [],
+        "cover_url": "images/covers/6-16-in-la.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -167,8 +167,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Euphoria Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/euphoria-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -181,8 +181,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Meet the Graham Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/meet-the-graham-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -195,8 +195,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Not Like Us Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/not-like-us-cover.webp",
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -209,8 +209,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Lettre à la République Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/lettre-a-la-republique-cover.webp",
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
     {
@@ -223,8 +223,8 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Don't Laïk Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/dont-laik-cover.webp",
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
     {
@@ -237,10 +237,87 @@ let SONGS_DATA = [
         "audio_url": "",
         "spotify_id": "",
         "apple_music_id": "",
-        "cover_url": "Images/Title Cover/Menace De Mort Cover.webp",
-        "tags": [],
+        "cover_url": "images/covers/menace-de-mort-cover.webp",
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
+    {
+        "id": "solaar-pleure",
+        "title": "Solaar Pleure",
+        "artist_id": "mc-solaar",
+        "genre": "Rap",
+        "year": 2001,
+        "url": "songs/mc-solaar/solaar-pleure.html",
+        "cover_url": "images/covers/solaar-pleure-cover.webp",
+        "tags": ["Classique", "Poésie"],
+        "description": "Un retour mystique et philosophique du poète du rap français."
+    },
+    {
+        "id": "hit-em-up",
+        "title": "Hit 'Em Up",
+        "artist_id": "tupac-shakur",
+        "genre": "Rap",
+        "year": 1996,
+        "url": "songs/2pac/hit-em-up.html",
+        "cover_url": "images/covers/hit-em-up-cover.webp",
+        "tags": ["Beef", "West Coast", "Diss Track"],
+        "description": "Le diss track le plus féroce de l'histoire du hip-hop."
+    },
+    {
+        "id": "ny-state-of-mind",
+        "title": "NY State of Mind",
+        "artist_id": "nas",
+        "genre": "Rap",
+        "year": 1994,
+        "url": "songs/nas/ny-state-of-mind.html",
+        "cover_url": "images/covers/ny-state-of-mind-cover.webp",
+        "tags": ["Classique", "Storytelling", "New York"],
+        "description": "Une immersion cinématographique dans les rues de Queensbridge."
+    },
+    {
+        "id": "this-is-america",
+        "title": "This Is America",
+        "artist_id": "childish-gambino",
+        "genre": "Rap",
+        "year": 2018,
+        "url": "songs/childish-gambino/this-is-america.html",
+        "cover_url": "images/covers/this-is-america-cover.webp",
+        "tags": ["Social", "Provocateur"],
+        "description": "Une critique virulente de la société américaine moderne."
+    },
+    {
+        "id": "alright",
+        "title": "Alright",
+        "artist_id": "kendrick-lamar",
+        "genre": "Rap",
+        "year": 2015,
+        "url": "songs/kendrick-lamar/alright.html",
+        "cover_url": "images/covers/alright-cover.webp",
+        "tags": ["Hymne", "Espoir"],
+        "description": "Un cri de ralliement pour la résilience et le changement."
+    },
+    {
+        "id": "notes-pour-trop-tard",
+        "title": "Notes Pour Trop Tard",
+        "artist_id": "orelsan",
+        "genre": "Rap",
+        "year": 2017,
+        "url": "songs/orelsan/notes-pour-trop-tard.html",
+        "cover_url": "images/covers/notes-pour-trop-tard-cover.webp",
+        "tags": ["Introspection", "Storytelling"],
+        "description": "Une lettre poignante adressée à son moi plus jeune."
+    },
+    {
+        "id": "laisse-pas-traisner-ton-fils",
+        "title": "Laisse Pas Traîner Ton Fils",
+        "artist_id": "supreme-ntm",
+        "genre": "Rap",
+        "year": 1998,
+        "url": "songs/supreme-ntm/laisse-pas-traisner-ton-fils.html",
+        "cover_url": "images/covers/laisse-pas-traisner-ton-fils-cover.webp",
+        "tags": ["Classique", "Social"],
+        "description": "Un plaidoyer puissant sur la responsabilité parentale."
+    }
 ];
 
 let ARTISTS_DATA = [
@@ -252,7 +329,7 @@ let ARTISTS_DATA = [
         "bio": "L'un des paroliers les plus influents de sa génération, connu pour ses récits complexes et ses thèmes sociaux.",
         "influence": "",
         "url": "artists/kendrick-lamar.html",
-        "photo_url": "Images/Profile Picture - Artist/Kendrick Lamar PP.webp",
+        "photo_url": "images/artists/kendrick-lamar-pp.webp",
         "tags": []
     },
     {
@@ -263,7 +340,7 @@ let ARTISTS_DATA = [
         "bio": "La superstar mondiale qui domine les charts avec son mélange unique de rap mélodique et de R&B.",
         "influence": "",
         "url": "artists/drake.html",
-        "photo_url": "Images/Profile Picture - Artist/Drake PP.webp",
+        "photo_url": "images/artists/drake-pp.webp",
         "tags": []
     },
     {
@@ -274,7 +351,7 @@ let ARTISTS_DATA = [
         "bio": "Le génie technique du Rap de Détroit, célèbre pour ses rimes complexes et son alter ego Slim Shady.",
         "influence": "",
         "url": "artists/eminem.html",
-        "photo_url": "Images/Profile Picture - Artist/Eminem PP.webp",
+        "photo_url": "images/artists/eminem-pp.webp",
         "tags": []
     },
     {
@@ -285,7 +362,7 @@ let ARTISTS_DATA = [
         "bio": "Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.",
         "influence": "",
         "url": "artists/nas.html",
-        "photo_url": "Images/Profile Picture - Artist/Nas PP.webp",
+        "photo_url": "images/artists/nas-pp.webp",
         "tags": []
     },
     {
@@ -296,7 +373,7 @@ let ARTISTS_DATA = [
         "bio": "L'icône éternelle qui a donné une voix aux sans-voix à travers sa poésie et son charisme unique.",
         "influence": "",
         "url": "artists/tupac-shakur.html",
-        "photo_url": "Images/Profile Picture - Artist/2Pac PP.webp",
+        "photo_url": "images/artists/2pac-pp.webp",
         "tags": []
     },
     {
@@ -307,7 +384,7 @@ let ARTISTS_DATA = [
         "bio": "L'entrepreneur et lyriciste hors pair qui a transformé le hip-hop en un empire mondial.",
         "influence": "",
         "url": "artists/jay-z.html",
-        "photo_url": "Images/Profile Picture - Artist/Jay-Z PP.webp",
+        "photo_url": "images/artists/jay-z-pp.webp",
         "tags": []
     },
     {
@@ -318,7 +395,7 @@ let ARTISTS_DATA = [
         "bio": "L'un des producteurs et artistes les plus innovants du 21ème siècle, repoussant sans cesse les limites du son.",
         "influence": "",
         "url": "artists/kanye-west.html",
-        "photo_url": "Images/Profile Picture - Artist/YE PP.webp",
+        "photo_url": "images/artists/ye-pp.webp",
         "tags": []
     },
     {
@@ -329,7 +406,7 @@ let ARTISTS_DATA = [
         "bio": "L'artiste polyvalent qui explore les thèmes de l'identité noire avec une créativité sans limites.",
         "influence": "",
         "url": "artists/childish-gambino.html",
-        "photo_url": "Images/Profile Picture - Artist/Childish Gambino PP.webp",
+        "photo_url": "images/artists/childish-gambino-pp.webp",
         "tags": []
     },
     {
@@ -340,7 +417,7 @@ let ARTISTS_DATA = [
         "bio": "Le groupe mythique de Marseille qui a élevé le rap français au rang d'art poétique et philosophique.",
         "influence": "",
         "url": "artists/iam.html",
-        "photo_url": "Images/Profile Picture - Artist/IAM PP.webp",
+        "photo_url": "images/artists/iam-pp.webp",
         "tags": []
     },
     {
@@ -351,7 +428,7 @@ let ARTISTS_DATA = [
         "bio": "L'énergie brute du 93, incarnant la contestation sociale et la puissance scénique du rap français.",
         "influence": "",
         "url": "artists/supreme-ntm.html",
-        "photo_url": "Images/Profile Picture - Artist/Supreme NTM PP.webp",
+        "photo_url": "images/artists/supreme-ntm-pp.webp",
         "tags": []
     },
     {
@@ -362,7 +439,7 @@ let ARTISTS_DATA = [
         "bio": "Le poète du rap français, pionnier du lyrisme et du style \"cool\" qui a marqué toute une époque.",
         "influence": "",
         "url": "artists/mc-solaar.html",
-        "photo_url": "Images/Profile Picture - Artist/MC Solaar PP.webp",
+        "photo_url": "images/artists/mc-solaar-pp.webp",
         "tags": []
     },
     {
@@ -373,7 +450,7 @@ let ARTISTS_DATA = [
         "bio": "Le storyteller de la classe moyenne française, maître de l'autodérision et de la mélancolie du quotidien.",
         "influence": "",
         "url": "artists/orelsan.html",
-        "photo_url": "Images/Profile Picture - Artist/Orelsan PP.webp",
+        "photo_url": "images/artists/orelsan-pp.webp",
         "tags": []
     },
     {
@@ -384,7 +461,7 @@ let ARTISTS_DATA = [
         "bio": "Une figure majeure du rap français, pilier du rap politique et engagé depuis plus de deux décennies.",
         "influence": "",
         "url": "artists/kery-james.html",
-        "photo_url": "Images/Profile Picture - Artist/Kery James PP.webp",
+        "photo_url": "images/artists/kery-james-pp.webp",
         "tags": []
     },
     {
@@ -395,7 +472,7 @@ let ARTISTS_DATA = [
         "bio": "Reconnu pour sa poésie et son intelligence lyricale, il se définit comme un \"arabophone de la laïcité\".",
         "influence": "",
         "url": "artists/medine.html",
-        "photo_url": "Images/Profile Picture - Artist/Medine PP.webp",
+        "photo_url": "images/artists/medine-pp.webp",
         "tags": []
     },
     {
@@ -406,7 +483,7 @@ let ARTISTS_DATA = [
         "bio": "Surnommé le \"Lyriciste Bantou\", il est réputé pour la richesse de son vocabulaire et son écriture très ciselée.",
         "influence": "",
         "url": "artists/youssoupha.html",
-        "photo_url": "Images/Profile Picture - Artist/Youssoupha PP.webp",
+        "photo_url": "images/artists/youssoupha-pp.webp",
         "tags": []
     },
     {
@@ -417,7 +494,7 @@ let ARTISTS_DATA = [
         "bio": "Le conteur de Fayetteville, reconnu pour son introspection et son refus des artifices du star-system.",
         "influence": "",
         "url": "artists/j-cole.html",
-        "photo_url": "Images/Profile Picture - Artist/J.Cole PP.webp",
+        "photo_url": "images/artists/j.cole-pp.webp",
         "tags": []
     }
 ];
