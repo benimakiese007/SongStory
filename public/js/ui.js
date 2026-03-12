@@ -17,6 +17,54 @@ const SongStoryUI = {
         this.initLayout();
         this.initTOC();
         this.initTransitions();
+        this.upgradeRecommendationCards();
+
+        // Re-run if data is dynamically loaded via Supabase
+        window.addEventListener('ss:dataready', () => {
+            this.upgradeRecommendationCards();
+        });
+    },
+
+    /**
+     * Upgrades static recommendation cards by injecting cover images
+     * from SONGS_DATA.
+     */
+    upgradeRecommendationCards() {
+        if (typeof SONGS_DATA === 'undefined') return;
+
+        const cards = document.querySelectorAll('.recommendation-card');
+        cards.forEach(card => {
+            const href = card.getAttribute('href');
+            if (!href) return;
+
+            // Extract song ID from href (e.g., "../songs/drake/push-ups.html" -> "push-ups")
+            const parts = href.split('/');
+            const filename = parts[parts.length - 1];
+            const songId = filename.replace('.html', '');
+
+            const song = SONGS_DATA.find(s => s.id === songId);
+            if (song && song.cover_url) {
+                const thumbDiv = card.querySelector('.rec-thumb');
+                if (thumbDiv && !thumbDiv.querySelector('img')) {
+                    
+                    let normalizedCoverUrl = song.cover_url;
+                    if (!normalizedCoverUrl.startsWith('http')) {
+                        if (typeof SongStoryUtils !== 'undefined' && typeof SongStoryUtils.resolvePath === 'function') {
+                            normalizedCoverUrl = SongStoryUtils.resolvePath(song.cover_url);
+                        } else {
+                            // Fallback if Utils is somehow not loaded
+                            const isSubDir = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
+                            const pathPrefix = isSubDir ? (window.location.pathname.includes('/songs/') ? '../../' : '../') : '';
+                            normalizedCoverUrl = pathPrefix + song.cover_url;
+                        }
+                    }
+
+                    thumbDiv.innerHTML = `<img src="${normalizedCoverUrl}" alt="${song.title} Cover" loading="lazy">`;
+                    // Remove the icon-specific color class to let the image fill nicely
+                    thumbDiv.classList.remove('text-zinc-600');
+                }
+            }
+        });
     },
 
     /**

@@ -14,7 +14,11 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/dead-presidents-ii-cover.webp",
-        "tags": ["Classique", "New York", "Mafioso Rap"],
+        "tags": [
+            "Classique",
+            "New York",
+            "Mafioso Rap"
+        ],
         "description": "Considéré comme l'un des plus grands morceaux de rap de tous les temps, ce titre définit l'esthétique du premier album de Jay-Z."
     },
     {
@@ -28,7 +32,11 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/demain-cest-loin-cover.webp",
-        "tags": ["Classique", "Marseille", "Rap Conscient"],
+        "tags": [
+            "Classique",
+            "Marseille",
+            "Rap Conscient"
+        ],
         "description": "Le morceau le plus emblématique du rap français, une immersion brutale et poétique dans le quotidien des quartiers nord de Marseille."
     },
     {
@@ -42,7 +50,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/back-to-back-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -56,7 +66,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/family-matters-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -70,7 +82,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/push-ups-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -84,7 +98,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/taylor-made-freestyle-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -98,7 +114,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/stan-cover.webp",
-        "tags": ["storytelling"],
+        "tags": [
+            "storytelling"
+        ],
         "description": ""
     },
     {
@@ -112,7 +130,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/7-minutes-drill-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -140,7 +160,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/power-cover.webp",
-        "tags": ["storytelling"],
+        "tags": [
+            "storytelling"
+        ],
         "description": ""
     },
     {
@@ -154,7 +176,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/6-16-in-la.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -168,7 +192,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/euphoria-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -182,7 +208,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/meet-the-graham-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -196,7 +224,9 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/not-like-us-cover.webp",
-        "tags": ["beef"],
+        "tags": [
+            "beef"
+        ],
         "description": ""
     },
     {
@@ -210,7 +240,10 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/lettre-a-la-republique-cover.webp",
-        "tags": ["politique", "rap conscient"],
+        "tags": [
+            "politique",
+            "rap conscient"
+        ],
         "description": ""
     },
     {
@@ -224,7 +257,10 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/dont-laik-cover.webp",
-        "tags": ["politique", "rap conscient"],
+        "tags": [
+            "politique",
+            "rap conscient"
+        ],
         "description": ""
     },
     {
@@ -238,7 +274,10 @@ let SONGS_DATA = [
         "spotify_id": "",
         "apple_music_id": "",
         "cover_url": "images/covers/menace-de-mort-cover.webp",
-        "tags": ["politique", "rap conscient"],
+        "tags": [
+            "politique",
+            "rap conscient"
+        ],
         "description": ""
     },
     {
@@ -249,18 +288,25 @@ let SONGS_DATA = [
         "year": 2001,
         "url": "songs/mc-solaar/solaar-pleure.html",
         "cover_url": "images/covers/solaar-pleure-cover.webp",
-        "tags": ["Classique", "Poésie"],
+        "tags": [
+            "Classique",
+            "Poésie"
+        ],
         "description": "Un retour mystique et philosophique du poète du rap français."
     },
     {
         "id": "hit-em-up",
         "title": "Hit 'Em Up",
-        "artist_id": "tupac-shakur",
+        "artist_id": "2pac",
         "genre": "Rap",
         "year": 1996,
         "url": "songs/2pac/hit-em-up.html",
         "cover_url": "images/covers/hit-em-up-cover.webp",
-        "tags": ["Beef", "West Coast", "Diss Track"],
+        "tags": [
+            "Beef",
+            "West Coast",
+            "Diss Track"
+        ],
         "description": "Le diss track le plus féroce de l'histoire du hip-hop."
     },
     {
@@ -271,7 +317,11 @@ let SONGS_DATA = [
         "year": 1994,
         "url": "songs/nas/ny-state-of-mind.html",
         "cover_url": "images/covers/ny-state-of-mind-cover.webp",
-        "tags": ["Classique", "Storytelling", "New York"],
+        "tags": [
+            "Classique",
+            "Storytelling",
+            "New York"
+        ],
         "description": "Une immersion cinématographique dans les rues de Queensbridge."
     },
     {
@@ -282,19 +332,25 @@ let SONGS_DATA = [
         "year": 2018,
         "url": "songs/childish-gambino/this-is-america.html",
         "cover_url": "images/covers/this-is-america-cover.webp",
-        "tags": ["Social", "Provocateur"],
+        "tags": [
+            "Social",
+            "Provocateur"
+        ],
         "description": "Une critique virulente de la société américaine moderne."
     },
     {
-        "id": "alright",
         "title": "Alright",
         "artist_id": "kendrick-lamar",
-        "genre": "Rap",
         "year": 2015,
-        "url": "songs/kendrick-lamar/alright.html",
-        "cover_url": "images/covers/alright-cover.webp",
-        "tags": ["Hymne", "Espoir"],
-        "description": "Un cri de ralliement pour la résilience et le changement."
+        "duration": "",
+        "cover_url": "images/covers/Alright Cover.webp",
+        "genre": "Rap",
+        "tags": [
+            "Hymne",
+            "Espoir"
+        ],
+        "description": "Un cri de ralliement pour la résilience et le changement.",
+        "id": "alright"
     },
     {
         "id": "notes-pour-trop-tard",
@@ -304,7 +360,10 @@ let SONGS_DATA = [
         "year": 2017,
         "url": "songs/orelsan/notes-pour-trop-tard.html",
         "cover_url": "images/covers/notes-pour-trop-tard-cover.webp",
-        "tags": ["Introspection", "Storytelling"],
+        "tags": [
+            "Introspection",
+            "Storytelling"
+        ],
         "description": "Une lettre poignante adressée à son moi plus jeune."
     },
     {
@@ -315,7 +374,10 @@ let SONGS_DATA = [
         "year": 1998,
         "url": "songs/supreme-ntm/laisse-pas-traisner-ton-fils.html",
         "cover_url": "images/covers/laisse-pas-traisner-ton-fils-cover.webp",
-        "tags": ["Classique", "Social"],
+        "tags": [
+            "Classique",
+            "Social"
+        ],
         "description": "Un plaidoyer puissant sur la responsabilité parentale."
     }
 ];
@@ -366,7 +428,7 @@ let ARTISTS_DATA = [
         "tags": []
     },
     {
-        "id": "tupac-shakur",
+        "id": "2pac",
         "name": "2Pac",
         "genre": "Hip-Hop",
         "country": "USA",
@@ -499,17 +561,50 @@ let ARTISTS_DATA = [
     }
 ];
 
-let GLOSSARY = {
-    "métaphore": "Figure de style qui désigne une chose par le nom d'une autre en établissant une comparaison implicite.",
-    "allitération": "Répétition d'un même son consonantique en début de mots proches, créant un effet sonore volontaire.",
-    "flow": "En rap, le flow désigne la manière dont l'artiste place ses syllabes sur le rythme : la fluidité, le rythme et l'intonation de sa voix.",
-    "bpm": "Beats Per Minute : unité de mesure du tempo d'un morceau. Plus le BPM est élevé, plus la musique est rapide.",
-    "sample": "Extrait d'un enregistrement existant réutilisé et intégré dans une nouvelle composition musicale.",
-    "hook": "Le refrain d'un morceau, conçu pour être accrocheur et mémorable.",
-    "storytelling": "Technique narrative en musique où l'artiste raconte une histoire, souvent autobiographique.",
-    "polyphonie": "Superposition de plusieurs voies ou lignes mélodiques indépendantes dans une même composition musicale.",
-    "ostinato": "Motif musical court répété de manière continue tout au long d'un morceau.",
-    "laïcité": "Principe de séparation de la société civile et de la société religieuse. Souvent détournée politiquement dans le contexte culturel contemporain."
+let GLOSSARY = {};
+
+// ─── Supabase Integration ───────────────────────────────
+
+window.loadAppDataFromSupabase = async () => {
+    if (!window.ss_supabase) {
+        console.warn("Supabase client not found. Using static fallback.");
+        return;
+    }
+
+    try {
+        const { data: songs, error: sErr } = await window.ss_supabase
+            .from('songs')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        const { data: artists, error: aErr } = await window.ss_supabase
+            .from('artists')
+            .select('*')
+            .order('name', { ascending: true });
+
+        if (sErr || aErr) throw (sErr || aErr);
+
+        if (songs && songs.length > 0) SONGS_DATA = songs;
+        if (artists && artists.length > 0) ARTISTS_DATA = artists;
+
+        console.log("Data successfully synced from Supabase.");
+        
+        // Dispatch event for UI updates
+        window.dispatchEvent(new CustomEvent('ss:dataready'));
+    } catch (e) {
+        console.error("Supabase sync failed:", e);
+    }
 };
 
-window.loadAppDataFromSupabase = async () => console.log('Static mode enabled - No Supabase sync needed.');
+// Auto-run sync if on main site. CMS handles its own sync.
+if (!window.location.pathname.includes('admin.html')) {
+    // Wait for Supabase client to be ready (usually fast but async script load)
+    const checkSupabase = setInterval(() => {
+        if (window.ss_supabase) {
+            window.loadAppDataFromSupabase();
+            clearInterval(checkSupabase);
+        }
+    }, 100);
+    // Timeout after 3s
+    setTimeout(() => clearInterval(checkSupabase), 3000);
+}

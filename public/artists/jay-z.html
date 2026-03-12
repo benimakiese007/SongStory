@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -92,15 +92,15 @@
     </div>
 
     <!-- ARTIST_INFO_START -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
-            <img src="../images/artists/jay-z-pp.webp" alt="Jay-Z" class="w-full h-full object-cover">
-        </div>
-        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Jay-Z</h1>
-        <p class="text-lg text-zinc-500 font-light mb-6">Hip-Hop • USA</p>
-        <p class="text-base text-zinc-400 leading-relaxed">L'un des plus grands rappeurs et entrepreneurs de l'histoire, symbole de l'ascension sociale par le hip-hop.</p>
-    </div>
-    <!-- ARTIST_INFO_END -->
+            <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+                    <img src="../images/artists/jay-z-pp.webp" alt="Jay-Z" class="w-full h-full object-cover">
+                </div>
+                <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Jay-Z</h1>
+                <p class="text-lg text-zinc-500 font-light mb-6">Hip-Hop • USA</p>
+                <p class="text-base text-zinc-400 leading-relaxed">L'entrepreneur et lyriciste hors pair qui a transformé le hip-hop en un empire mondial.</p>
+            </div>
+            <!-- ARTIST_INFO_END -->
 
     <main class="pb-24">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,18 +123,8 @@
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <div class="space-y-4">
-                        <!-- Dead Presidents II -->
-                        <a href="../songs/jay-z/dead-presidents-ii.html" class="flex items-center gap-4 bg-zinc-900/30 border border-white/5 p-4 rounded-2xl hover:bg-zinc-900/50 hover:border-white/10 transition-all group">
-                            <div class="w-16 h-16 bg-zinc-800 rounded-lg overflow-hidden shrink-0 border border-white/5">
-                                <img src="../images/covers/dead-presidents-ii-cover.webp" alt="Dead Presidents II" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="text-white font-medium truncate group-hover:text-amber-400 transition-colors">Dead Presidents II</h4>
-                                <p class="text-xs text-zinc-500 mt-1">1996 • Album : Reasonable Doubt</p>
-                            </div>
-                            <iconify-icon icon="solar:play-bold" class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity" width="20"></iconify-icon>
-                        </a>
+                    <div id="artist-songs-grid" class="space-y-4">
+                        <p class="text-sm text-zinc-500 italic">Chargement des analyses...</p>
                     </div>
                 </div>
 
@@ -180,6 +170,7 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/seo.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>

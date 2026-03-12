@@ -97,7 +97,7 @@
     </div>
 
     <!-- ARTIST_INFO_START -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
         <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
             <img src="../images/artists/drake-pp.webp" alt="Drake" class="w-full h-full object-cover">
         </div>
@@ -128,35 +128,8 @@
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <div class="space-y-4">
-                        <a href="../songs/drake/back-to-back.html" class="recommendation-card">
-                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
-                            <div>
-                                <div class="rec-title">Back to Back</div>
-                                <div class="rec-artist">2015 • Hip-Hop • Diss Track</div>
-                            </div>
-                        </a>
-                        <a href="../songs/drake/push-ups.html" class="recommendation-card">
-                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
-                            <div>
-                                <div class="rec-title">Push Ups</div>
-                                <div class="rec-artist">2024 • Hip-Hop • Beef 2024</div>
-                            </div>
-                        </a>
-                        <a href="../songs/drake/taylor-made-freestyle.html" class="recommendation-card">
-                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
-                            <div>
-                                <div class="rec-title">Taylor Made Freestyle</div>
-                                <div class="rec-artist">2024 • Hip-Hop • Diss Track</div>
-                            </div>
-                        </a>
-                        <a href="../songs/drake/family-matters.html" class="recommendation-card">
-                            <div class="rec-thumb"><iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon></div>
-                            <div>
-                                <div class="rec-title">Family Matters</div>
-                                <div class="rec-artist">2024 • Hip-Hop • Beef 2024</div>
-                            </div>
-                        </a>
+                    <div id="artist-songs-grid" class="space-y-4">
+                        <p class="text-sm text-zinc-500 italic">Chargement des analyses...</p>
                     </div>
                 </div>
 
@@ -202,6 +175,7 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/seo.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>

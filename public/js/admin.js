@@ -1,6 +1,6 @@
 /**
- * SongStory CMS Logic
- * Handles dashboard data, moderation, and navigation.
+ * SongStory CMS Logic — Supabase Edition
+ * Handles dashboard data, moderation, and navigation via Supabase.
  */
 
 const CMS_CONFIG = {
@@ -18,14 +18,15 @@ const CMS_CONFIG = {
 let currentTab = 'dashboard';
 let currentModFilter = 'pending';
 
-const API_URL = 'http://localhost:3000/api';
+let SONGS_DATA_DB = [];
+let ARTISTS_DATA_DB = [];
+let CONTRIBS_DATA_DB = [];
 
 async function initCMS() {
-    checkServerStatus();
-    setInterval(checkServerStatus, 5000);
+    checkSupabaseStatus();
 
-    // Initial load from server
-    await syncFromServer(true);
+    // Initial load from Supabase
+    await syncFromSupabase(true);
 
     updateDashboardStats();
     renderSongsTable();
@@ -35,10 +36,10 @@ async function initCMS() {
     switchTab('dashboard');
 }
 
-async function checkServerStatus() {
+async function checkSupabaseStatus() {
     try {
-        const resp = await fetch(`${API_URL}/data`);
-        updateStatus(resp.ok);
+        const user = await SupabaseCMS.getUser();
+        updateStatus(!!user);
     } catch (e) {
         updateStatus(false);
     }
@@ -51,24 +52,25 @@ function updateStatus(online) {
 
     if (online) {
         dot.className = 'w-1.5 h-1.5 rounded-full bg-green-500';
-        text.textContent = 'Server Online';
+        text.textContent = 'Supabase Connecté';
         text.className = 'text-[10px] font-bold text-green-500 uppercase tracking-widest';
     } else {
         dot.className = 'w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse';
-        text.textContent = 'Server Offline';
+        text.textContent = 'Non connecté';
         text.className = 'text-[10px] font-bold text-zinc-500 uppercase tracking-widest';
     }
 }
 
-async function syncFromServer(silent = false) {
+async function syncFromSupabase(silent = false) {
     try {
-        const resp = await fetch(`${API_URL}/data`);
-        if (!resp.ok) throw new Error("Server error");
-        const data = await resp.json();
-        SONGS_DATA_DB = data.songs;
-        ARTISTS_DATA_DB = data.artists;
-        window.SONGS_DATA = data.songs;
-        window.ARTISTS_DATA = data.artists;
+        const [songs, artists] = await Promise.all([
+            SupabaseCMS.getAllSongs(),
+            SupabaseCMS.getAllArtists()
+        ]);
+        SONGS_DATA_DB = songs;
+        ARTISTS_DATA_DB = artists;
+        window.SONGS_DATA = songs;
+        window.ARTISTS_DATA = artists;
 
         updateDashboardStats();
         if (currentTab === 'songs') renderSongsTable();
@@ -79,22 +81,6 @@ async function syncFromServer(silent = false) {
         console.error("Sync Error:", err);
         if (!silent) showToast("Erreur de synchronisation.");
     }
-}
-
-let SONGS_DATA_DB = [];
-let ARTISTS_DATA_DB = [];
-let CONTRIBS_DATA_DB = [];
-
-async function loadAllSongs() {
-    await syncFromServer();
-}
-
-async function loadAllArtists() {
-    await syncFromServer();
-}
-
-async function loadAllContributions() {
-    CONTRIBS_DATA_DB = [];
 }
 
 /**
@@ -161,9 +147,6 @@ function updateDashboardStats() {
                 <p class="text-xs text-zinc-500">${s.artist_id} • ${s.year}</p>
             </div>
             <div class="flex items-center gap-2">
-                <button class="text-zinc-600 hover:text-amber-500" onclick="generateStaticHTML('${s.id}')" title="Générer HTML">
-                    <iconify-icon icon="solar:code-bold" width="18"></iconify-icon>
-                </button>
                 <button class="text-zinc-600 hover:text-white" onclick="editSong('${s.id}')" title="Éditer">
                     <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
                 </button>
@@ -211,12 +194,6 @@ function renderSongsTable() {
             <td class="px-6 py-4 text-sm text-zinc-400">${s.year}</td>
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                    <button class="p-2 text-zinc-500 hover:text-amber-500" title="Générer HTML" onclick="generateStaticHTML('${s.id}')">
-                        <iconify-icon icon="solar:code-bold" width="18"></iconify-icon>
-                    </button>
-                    <button class="p-2 text-zinc-500 hover:text-amber-500" title="Gérer le contenu" onclick="manageSongContent('${s.id}')">
-                        <iconify-icon icon="solar:notes-bold" width="18"></iconify-icon>
-                    </button>
                     <button class="p-2 text-zinc-500 hover:text-white" title="Editer" onclick="editSong('${s.id}')">
                         <iconify-icon icon="solar:pen-bold" width="18"></iconify-icon>
                     </button>
@@ -328,8 +305,7 @@ async function renderCoversGallery() {
     if (!gallery) return;
 
     try {
-        const resp = await fetch(`${API_URL}/list-covers`);
-        const covers = await resp.json();
+        const covers = await SupabaseCMS.listImages('covers');
 
         if (covers.length === 0) {
             gallery.innerHTML = `<div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
@@ -348,7 +324,7 @@ async function renderCoversGallery() {
                         <button onclick="copyToClipboardText('${c.url.replace(/'/g, "\\'")}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
                             <iconify-icon icon="solar:copy-bold" width="16"></iconify-icon>
                         </button>
-                        <button onclick="deleteCover('${c.filename.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
+                        <button onclick="deleteCover('${c.path.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
                             <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
                         </button>
                     </div>
@@ -360,21 +336,12 @@ async function renderCoversGallery() {
     }
 }
 
-async function deleteCover(filename) {
-    if (!confirm(`Supprimer la cover ${filename} ?`)) return;
+async function deleteCover(path) {
+    if (!confirm(`Supprimer cette cover ?`)) return;
     try {
-        const resp = await fetch(`${API_URL}/delete-cover`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-            },
-            body: JSON.stringify({ filename })
-        });
-        if (resp.ok) {
-            showToast("Cover supprimée !");
-            renderCoversGallery();
-        }
+        await SupabaseCMS.deleteImage(path);
+        showToast("Cover supprimée !");
+        renderCoversGallery();
     } catch (e) {
         showToast("Erreur lors de la suppression.");
     }
@@ -385,8 +352,7 @@ async function renderPPGallery() {
     if (!gallery) return;
 
     try {
-        const resp = await fetch(`${API_URL}/list-pp`);
-        const pps = await resp.json();
+        const pps = await SupabaseCMS.listImages('artists');
 
         if (pps.length === 0) {
             gallery.innerHTML = `<div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
@@ -405,7 +371,7 @@ async function renderPPGallery() {
                         <button onclick="copyToClipboardText('${p.url.replace(/'/g, "\\'")}')" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white" title="Copier l'URL">
                             <iconify-icon icon="solar:copy-bold" width="16"></iconify-icon>
                         </button>
-                        <button onclick="deletePP('${p.filename.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
+                        <button onclick="deletePP('${p.path.replace(/'/g, "\\'")}')" class="p-2 bg-red-500/20 hover:bg-red-500/40 rounded-lg text-red-400" title="Supprimer">
                             <iconify-icon icon="solar:trash-bin-trash-bold" width="16"></iconify-icon>
                         </button>
                     </div>
@@ -417,21 +383,12 @@ async function renderPPGallery() {
     }
 }
 
-async function deletePP(filename) {
-    if (!confirm(`Supprimer la photo ${filename} ?`)) return;
+async function deletePP(path) {
+    if (!confirm(`Supprimer cette photo ?`)) return;
     try {
-        const resp = await fetch(`${API_URL}/delete-pp`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-            },
-            body: JSON.stringify({ filename })
-        });
-        if (resp.ok) {
-            showToast("Photo supprimée !");
-            renderPPGallery();
-        }
+        await SupabaseCMS.deleteImage(path);
+        showToast("Photo supprimée !");
+        renderPPGallery();
     } catch (e) {
         showToast("Erreur lors de la suppression.");
     }
@@ -461,7 +418,7 @@ function openModal(type, id = null) {
                             <input type="text" name="artist_id" value="${song ? song.artist_id : ''}" placeholder="ID de l'artiste (ex: booba)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white" required>
                             <div class="grid grid-cols-2 gap-3">
                                 <input type="number" name="year" value="${song ? song.year : 2024}" placeholder="Année" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                                <input type="text" name="duration" value="${song ? song.duration : ''}" placeholder="Durée (ex: 3:45)" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                                <input type="text" name="duration" value="${song?.duration || ''}" placeholder="Durée (ex: 3:45)" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
                             </div>
                         </div>
                     </div>
@@ -488,9 +445,13 @@ function openModal(type, id = null) {
                         <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Détails</label>
                         <div class="space-y-3">
                             <input type="text" name="genre" value="${song ? song.genre : 'Rap'}" placeholder="Genre" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                            <input type="text" name="tags" value="${song ? song.tags?.join(', ') : ''}" placeholder="Tags (séparés par virgule)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                            <input type="text" name="tags" value="${song ? (song.tags || []).join(', ') : ''}" placeholder="Tags (séparés par virgule)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
                             <textarea name="description" placeholder="Courte description" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-24">${song ? song.description : ''}</textarea>
                         </div>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">
+                        <button type="button" onclick="closeModal()" class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
+                        <button type="submit" class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Enregistrer</button>
                     </div>
                 </div>
             </form>
@@ -531,6 +492,10 @@ function openModal(type, id = null) {
                         </div>
                     </div>
                     <textarea name="bio" placeholder="Biographie" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-24">${artist ? artist.bio : ''}</textarea>
+                    <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">
+                        <button type="button" onclick="closeModal()" class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
+                        <button type="submit" class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Enregistrer</button>
+                    </div>
                 </div>
             </form>
         `;
@@ -542,50 +507,32 @@ function closeModal() {
 }
 
 /**
- * API Actions
+ * API Actions (Supabase)
  */
 async function saveSong(event, originalId) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    
+
     // Process tags
-    data.tags = data.tags.split(',').map(t => t.trim()).filter(Boolean);
-    data.year = parseInt(data.year);
+    data.tags = (data.tags || "").split(',').map(t => t.trim()).filter(Boolean);
+    data.year = parseInt(data.year) || 2024;
     
     // Manual ID if new
     if (!originalId) {
-        data.id = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        data.id = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     } else {
         data.id = originalId;
     }
 
-    const newSongs = [...SONGS_DATA_DB];
-    const idx = newSongs.findIndex(s => s.id === data.id);
-    if (idx > -1) newSongs[idx] = data;
-    else newSongs.unshift(data);
-
     try {
-        const resp = await fetch(`${API_URL}/save-song`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-            },
-            body: JSON.stringify({ 
-                song: data,
-                songs: newSongs,
-                artists: ARTISTS_DATA_DB 
-            })
-        });
-
-        if (resp.ok) {
-            showToast("Titre enregistré avec succès !");
-            closeModal();
-            syncFromServer();
-        }
+        await SupabaseCMS.upsertSong(data);
+        showToast("Titre enregistré !");
+        closeModal();
+        await syncFromSupabase();
     } catch (e) {
-        showToast("Erreur lors de la sauvegarde.");
+        console.error("Save error:", e);
+        showToast(`Erreur : ${e.message}`);
     }
 }
 
@@ -593,137 +540,69 @@ async function saveArtist(event, originalId) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    
-    const newArtists = [...ARTISTS_DATA_DB];
-    if (originalId) {
-        const idx = newArtists.findIndex(a => a.id === originalId);
-        newArtists[idx] = { ...newArtists[idx], ...data };
-    } else {
-        newArtists.unshift({ ...data, songs: [] });
-    }
 
     try {
-        const resp = await fetch(`${API_URL}/save-song`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-            },
-            body: JSON.stringify({ 
-                songs: SONGS_DATA_DB,
-                artists: newArtists 
-            })
-        });
-
-        if (resp.ok) {
-            showToast("Artiste enregistré !");
-            closeModal();
-            syncFromServer();
-        }
+        await SupabaseCMS.upsertArtist(data);
+        showToast("Artiste enregistré !");
+        closeModal();
+        await syncFromSupabase();
     } catch (e) {
-        showToast("Erreur lors de la sauvegarde.");
+        console.error("Save error:", e);
+        showToast(`Erreur : ${e.message}`);
     }
 }
 
 async function uploadCover(input) {
     if (!input.files || !input.files[0]) return;
     const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-        const base64 = e.target.result;
-        try {
-            const resp = await fetch(`${API_URL}/upload-cover`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-                },
-                body: JSON.stringify({ filename: file.name, base64 })
-            });
-            const result = await resp.json();
-            if (result.url) {
-                document.getElementById('f-coverUrl').value = result.url;
-                const preview = document.getElementById('cover-preview');
-                preview.src = result.url;
-                preview.classList.remove('hidden');
-                document.getElementById('cover-icon').classList.add('hidden');
-                showToast("Image uploadée !");
-            }
-        } catch (err) {
-            showToast("Erreur d'upload.");
-        }
-    };
-    reader.readAsDataURL(file);
+    try {
+        const result = await SupabaseCMS.uploadImage('covers', file);
+        document.getElementById('f-coverUrl').value = result.url;
+        const preview = document.getElementById('cover-preview');
+        preview.src = result.url;
+        preview.classList.remove('hidden');
+        document.getElementById('cover-icon').classList.add('hidden');
+        showToast("Image uploadée !");
+    } catch (err) {
+        console.error("Upload error:", err);
+        showToast("Erreur d'upload.");
+    }
 }
 
 async function uploadArtist(input) {
     if (!input.files || !input.files[0]) return;
     const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-        const base64 = e.target.result;
-        try {
-            const resp = await fetch(`${API_URL}/upload-artist`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-                },
-                body: JSON.stringify({ filename: file.name, base64 })
-            });
-            const result = await resp.json();
-            if (result.url) {
-                document.getElementById('f-ppUrl').value = result.url;
-                const preview = document.getElementById('pp-preview');
-                preview.src = result.url;
-                preview.classList.remove('hidden');
-                document.getElementById('pp-icon').classList.add('hidden');
-                showToast("Photo uploadée !");
-            }
-        } catch (err) {
-            showToast("Erreur d'upload.");
-        }
-    };
-    reader.readAsDataURL(file);
+    try {
+        const result = await SupabaseCMS.uploadImage('artists', file);
+        document.getElementById('f-ppUrl').value = result.url;
+        const preview = document.getElementById('pp-preview');
+        preview.src = result.url;
+        preview.classList.remove('hidden');
+        document.getElementById('pp-icon').classList.add('hidden');
+        showToast("Photo uploadée !");
+    } catch (err) {
+        console.error("Upload error:", err);
+        showToast("Erreur d'upload.");
+    }
 }
 
 async function deleteItem(type, id) {
     if (!confirm(`Confirmer la suppression de cet élément (${type}) ?`)) return;
 
-    let newSongs = [...SONGS_DATA_DB];
-    let newArtists = [...ARTISTS_DATA_DB];
-
-    if (type === 'song') {
-        newSongs = newSongs.filter(s => s.id !== id);
-    } else {
-        newArtists = newArtists.filter(a => a.id !== id);
-    }
-
     try {
-        const resp = await fetch(`${API_URL}/save-song`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('ss_token')}`
-            },
-            body: JSON.stringify({ 
-                songs: newSongs,
-                artists: newArtists 
-            })
-        });
-
-        if (resp.ok) {
-            showToast("Supprimé !");
-            syncFromServer();
+        if (type === 'song') {
+            await SupabaseCMS.deleteSong(id);
+        } else {
+            await SupabaseCMS.deleteArtist(id);
         }
+        showToast("Supprimé !");
+        await syncFromSupabase();
     } catch (e) {
         showToast("Erreur lors de la suppression.");
     }
 }
 
 async function takeCmsAction(id, status) {
-    // This function originally interacted with Supabase
-    // For now, we simulate success as the local server doesn't handle contributions yet
     showToast(`Action ${status} enregistrée (simulation)`);
 }
 
@@ -748,8 +627,7 @@ async function openGalleryPicker() {
     document.body.appendChild(galleryContainer);
 
     try {
-        const resp = await fetch(`${API_URL}/list-covers`);
-        const covers = await resp.json();
+        const covers = await SupabaseCMS.listImages('covers');
         const list = document.getElementById('gallery-picker-list');
         
         if (covers.length === 0) {
@@ -803,8 +681,7 @@ async function openPPGalleryPicker() {
     document.body.appendChild(galleryContainer);
 
     try {
-        const resp = await fetch(`${API_URL}/list-pp`);
-        const pps = await resp.json();
+        const pps = await SupabaseCMS.listImages('artists');
         const list = document.getElementById('pp-gallery-picker-list');
         
         if (pps.length === 0) {
@@ -852,58 +729,6 @@ function editArtist(id) {
     openModal('edit-artist', id);
 }
 
-function generateStaticHTML(id) {
-    const song = SONGS_DATA_DB.find(s => s.id === id);
-    if (!song) return;
-
-    const modal = document.getElementById('code-modal-container');
-    const codeHome = document.getElementById('code-home');
-    const codeLibrary = document.getElementById('code-library');
-
-    // Simple templates for manual update
-    const homeHtml = `<!-- ${song.title} -->
-<article onclick="window.location.href='songs/${song.id}.html'" class="reveal chapter-card visible group relative flex flex-col items-start justify-between p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:bg-zinc-900/50 hover:border-white/10 transition-all cursor-pointer">
-    <div class="w-full aspect-[16/9] bg-zinc-900 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-white/5">
-        <img src="${song.cover_url}" alt="${song.title} Cover" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
-        <div class="absolute bottom-3 left-3 flex gap-2">
-            <span class="bg-zinc-950/80 backdrop-blur text-white text-xs px-2 py-1 rounded-md border border-white/10">${song.genre}</span>
-        </div>
-    </div>
-    <div class="flex items-center gap-2 text-xs text-zinc-500 mb-2">
-        <span>${song.artist_id}</span><span>•</span><span>${song.year}</span>
-    </div>
-    <h3 class="text-lg text-white font-medium tracking-tight mb-2 group-hover:text-amber-400 transition-colors leading-snug">${song.title}</h3>
-    <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">${song.description || ''}</p>
-</article>
-<!-- End ${song.title} -->`;
-
-    const libHtml = `<!-- ${song.title} -->
-<a href="songs/${song.id}.html" class="song-card reveal visible group bg-zinc-900/30 border border-white/5 rounded-2xl p-6 hover:bg-zinc-900/50 hover:border-white/10 transition-all" data-genre="${song.genre}" data-tags="${song.tags.join(',')}">
-    <div class="aspect-video w-full mb-4 overflow-hidden rounded-xl border border-white/5 bg-zinc-900">
-        <img src="${song.cover_url}" alt="${song.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-    </div>
-    <div class="flex items-center justify-between mb-4">
-        <div class="px-2 py-1 rounded-md bg-amber-400/10 text-amber-400 text-[10px] font-medium uppercase tracking-wider">${song.genre}</div>
-        <span class="text-zinc-600 text-[10px] font-medium">${song.year}</span>
-    </div>
-    <h3 class="text-white font-medium text-lg leading-tight group-hover:text-amber-400 transition-colors mb-1">${song.title}</h3>
-    <p class="text-zinc-500 text-sm mb-4">${song.artist_id}</p>
-    <div class="flex flex-wrap gap-2 mb-4">
-        ${song.tags.map(t => `<span class="px-2 py-0.5 rounded-full bg-zinc-800/50 text-zinc-500 text-[10px]">${t}</span>`).join('\n        ')}
-    </div>
-    <div class="flex items-center justify-between pt-4 border-t border-white/5">
-        <span class="text-[10px] text-zinc-600">${song.duration}</span>
-        <iconify-icon icon="solar:play-bold" class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity" width="16"></iconify-icon>
-    </div>
-</a>
-<!-- End ${song.title} -->`;
-
-    codeHome.value = homeHtml;
-    codeLibrary.value = libHtml;
-    modal.classList.remove('hidden');
-}
-
 /**
  * Utility functions
  */
@@ -940,7 +765,13 @@ function showToast(message) {
     }, 3000);
 }
 
-// Start CMS
-if (document.getElementById('admin-view') && !document.getElementById('admin-view').classList.contains('hidden')) {
-    initCMS();
-}
+// Start CMS — wait for auth check
+document.addEventListener('DOMContentLoaded', async () => {
+    const session = await SupabaseCMS.getSession();
+    if (session) {
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('admin-view').classList.remove('hidden');
+        document.getElementById('admin-view').style.display = 'flex';
+        initCMS();
+    }
+});

@@ -29,7 +29,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         SongStoryAuth.initNavUI();
     }
 
-    // 4. Analysis Block Highlights (Specific to Song Pages)
+    // 5. Dynamic Artist Songs (on Artist Pages)
+    const handleArtistPage = () => {
+        const path = window.location.pathname;
+        if (path.includes('/artists/')) {
+            const filename = path.split('/').pop().replace('.html', '');
+            
+            // Resolve the true artist_id from ARTISTS_DATA using the url field
+            // e.g. url: "artists/tupac-shakur.html" maps to id: "2pac"
+            let artistId = filename;
+            if (typeof ARTISTS_DATA !== 'undefined') {
+                const artist = ARTISTS_DATA.find(a => 
+                    (a.url && a.url.includes(filename + '.html')) || a.id === filename
+                );
+                if (artist) artistId = artist.id;
+            }
+
+            if (typeof SongStoryUtils !== 'undefined' && typeof SongStoryUtils.renderArtistSongs === 'function') {
+                SongStoryUtils.renderArtistSongs(artistId);
+            }
+        }
+    };
+
+    // Trigger immediately if data might already be there (static fallback)
+    handleArtistPage();
+
+    // Also trigger when Supabase data is ready
+    window.addEventListener('ss:dataready', handleArtistPage);
+
+    // 6. Analysis Block Highlights (Specific to Song Pages)
     const storyBlocks = document.querySelectorAll('.story-block');
     const analysisCard = document.getElementById('dynamic-analysis-card');
     const analysisPlaceholder = document.getElementById('analysis-placeholder');

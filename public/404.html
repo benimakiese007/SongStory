@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée — SongStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .error-glow {
+            box-shadow: 0 0 50px rgba(251, 191, 36, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-400 antialiased flex flex-col min-h-screen">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-md w-full text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-amber-500/10 border border-amber-500/20 mb-8 error-glow">
+                <iconify-icon icon="solar:ghost-line-duotone" class="text-amber-400" width="40"></iconify-icon>
+            </div>
+            <h1 class="text-6xl text-white font-medium tracking-tighter mb-4">404</h1>
+            <p class="text-xl text-zinc-300 font-medium mb-6">Oups ! Ce morceau est introuvable.</p>
+            <p class="text-zinc-500 mb-10 leading-relaxed">Il semble que le lien que vous avez suivi soit cassé ou que la page ait été déplacée vers un autre univers musical.</p>
+            <a href="index.html" class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-zinc-950 px-8 py-3 rounded-xl font-medium transition-all">
+                Retour à l'accueil
+                <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
+            </a>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center text-xs text-zinc-600 border-t border-white/5">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

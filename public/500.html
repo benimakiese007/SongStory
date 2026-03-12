@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur Serveur — SongStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .error-glow {
+            box-shadow: 0 0 50px rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-400 antialiased flex flex-col min-h-screen">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-md w-full text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-red-500/10 border border-red-500/20 mb-8 error-glow">
+                <iconify-icon icon="solar:danger-triangle-line-duotone" class="text-red-400" width="40"></iconify-icon>
+            </div>
+            <h1 class="text-6xl text-white font-medium tracking-tighter mb-4">500</h1>
+            <p class="text-xl text-zinc-300 font-medium mb-6">Dissonance Momentanée.</p>
+            <p class="text-zinc-500 mb-10 leading-relaxed">Une erreur interne est survenue sur nos serveurs. Nos ingénieurs du son sont sur le coup pour accorder à nouveau le système.</p>
+            <button onclick="location.reload()" class="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-8 py-3 rounded-xl font-medium transition-all">
+                Réessayer
+                <iconify-icon icon="solar:refresh-linear" width="18"></iconify-icon>
+            </button>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center text-xs text-zinc-600 border-t border-white/5">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

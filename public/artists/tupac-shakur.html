@@ -92,7 +92,7 @@
     </div>
 
     <!-- ARTIST_INFO_START -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
         <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
             <img src="../images/artists/2pac-pp.webp" alt="2Pac" class="w-full h-full object-cover">
         </div>
@@ -123,8 +123,8 @@
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <div class="space-y-4">
-                        <p class="text-sm text-zinc-500 italic">Bientôt disponible.</p>
+                    <div id="artist-songs-grid" class="space-y-4">
+                        <p class="text-sm text-zinc-500 italic">Chargement des analyses...</p>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
                         </div>
                         <div class="reveal timeline-item highlight">
                             <div class="timeline-year">2017</div>
-                            <div class="timeline-event">Intronisation posthume au Rock & Roll Hall of Fame.</div>
+                            <div class="timeline-event">Intronisation posthume au Rock &amp; Roll Hall of Fame.</div>
                         </div>
                     </div>
                 </div>
@@ -170,6 +170,7 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/seo.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>

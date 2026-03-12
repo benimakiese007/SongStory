@@ -133,6 +133,60 @@ ${avatarHtml}
                         <iconify-icon icon="solar:arrow-right-linear" class="text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity" width="16"></iconify-icon>
                     </div>
                 </a>`;
+    },
+
+    /**
+     * Dynamically populates the artist's song list.
+     */
+    renderArtistSongs(artistId, containerId = 'artist-songs-grid') {
+        const grid = document.getElementById(containerId);
+        if (!grid || typeof SONGS_DATA === 'undefined') return;
+
+        // Filter songs for this artist
+        const artistSongs = SONGS_DATA.filter(song => 
+            (song.artist_id === artistId) || (song.artistId === artistId)
+        );
+
+        if (artistSongs.length === 0) {
+            grid.innerHTML = '<p class="text-sm text-zinc-500 italic">Bientôt disponible.</p>';
+            return;
+        }
+
+        grid.innerHTML = '';
+        artistSongs.forEach(song => {
+            // Use the same recommendation-card style if we want to match Kendrick's original design,
+            // or generateSongCard for a more consistent look.
+            // Let's create a specific small card for artist pages if needed, 
+            // but generateSongCard is already quite good.
+            // However, the artist pages use a specific "recommendation-card" style in HTML.
+            // Let's add support for it in utils.
+            const cardHtml = this.generateArtistAnalysisCard(song);
+            grid.insertAdjacentHTML('beforeend', cardHtml);
+        });
+
+        // Re-init reveal animations
+        if (typeof SongStoryUI !== 'undefined') {
+            SongStoryUI.initScrollAnimations();
+        }
+    },
+
+    /**
+     * Specific card for Artist Page "Analyses Disponibles" section
+     */
+    generateArtistAnalysisCard(song) {
+        const baseUrl = '../'; // Artist pages are always in /artists/
+        const songUrl = baseUrl + (song.url || `songs/${song.id}.html`);
+        
+        return `
+            <a href="${songUrl}" class="recommendation-card reveal visible">
+                <div class="rec-thumb">
+                    <iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                </div>
+                <div>
+                    <div class="rec-title">${song.title}</div>
+                    <div class="rec-artist">${song.year} • ${song.genre} • ${song.tags ? song.tags.slice(0, 2).join(', ') : ''}</div>
+                </div>
+            </a>`;
     }
 };
 

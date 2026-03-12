@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -92,15 +92,15 @@
     </div>
 
     <!-- ARTIST_INFO_START -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20">
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
-            <img src="../images/artists/nas-pp.webp" alt="Nas" class="w-full h-full object-cover">
-        </div>
-        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Nas</h1>
-        <p class="text-lg text-zinc-500 font-light mb-6">Hip-Hop • USA</p>
-        <p class="text-base text-zinc-400 leading-relaxed">Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.</p>
-    </div>
-    <!-- ARTIST_INFO_END -->
+            <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+                    <img src="../images/artists/nas-pp.webp" alt="Nas" class="w-full h-full object-cover">
+                </div>
+                <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Nas</h1>
+                <p class="text-lg text-zinc-500 font-light mb-6">Hip-Hop • USA</p>
+                <p class="text-base text-zinc-400 leading-relaxed">Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.</p>
+            </div>
+            <!-- ARTIST_INFO_END -->
 
     <main class="pb-24">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,8 +123,8 @@
                         <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
                         Analyses disponibles
                     </h2>
-                    <div class="space-y-4">
-                        <p class="text-sm text-zinc-500 italic">Bientôt disponible.</p>
+                    <div id="artist-songs-grid" class="space-y-4">
+                        <p class="text-sm text-zinc-500 italic">Chargement des analyses...</p>
                     </div>
                 </div>
 
@@ -166,6 +166,7 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/seo.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="../js/ui.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/player.js"></script>
