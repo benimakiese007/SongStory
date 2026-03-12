@@ -177,10 +177,19 @@ ${avatarHtml}
         const baseUrl = '../'; // Artist pages are always in /artists/
         const songUrl = baseUrl + (song.url || `songs/${song.id}.html`);
         
+        const coverUrl = song.cover_url || song.image;
+        const resolvedCover = coverUrl ? this.resolvePath(coverUrl) : null;
+        
+        const coverHtml = resolvedCover 
+            ? `<img src="${resolvedCover}" alt="${song.title} Cover" loading="lazy">`
+            : `<iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>`;
+            
+        const thumbClass = resolvedCover ? 'rec-thumb' : 'rec-thumb text-zinc-600';
+        
         return `
             <a href="${songUrl}" class="recommendation-card reveal visible">
-                <div class="rec-thumb">
-                    <iconify-icon icon="solar:music-note-linear" width="20"></iconify-icon>
+                <div class="${thumbClass}">
+                    ${coverHtml}
                 </div>
                 <div>
                     <div class="rec-title">${song.title}</div>

@@ -45,8 +45,11 @@ const SongStoryRenderer = {
 
         // If no explicit theme color, try to extract it from the image
         if (!color && typeof SongStoryUI !== 'undefined') {
-            const img = new Image();
-            img.crossOrigin = "Anonymous"------------//-use-artist-thumb-as-proxy-for-album-art-if-needed------------const-imgsrc--this.currentsong.image || `images/artists/this.currentsong.artistid.jpg------------try-----------------color--await-this.extractdominantcolorimgsrc-------------catch-e-----------------console.warn("Could not extract color:", e);
+            const imgSrc = this.currentSong.cover_url || this.currentSong.image || `../../images/artists/${this.currentSong.artist_id}-pp.webp`;
+            try {
+                color = await this.extractDominantColor(imgSrc);
+            } catch (e) {
+                console.warn("Could not extract color:", e);
             }
         }
 
@@ -106,19 +109,26 @@ const SongStoryRenderer = {
         // Better: use the absolute-from-root path if possible, or calculate depth.
         const isSubDir = window.location.pathname.includes('/songs/') || window.location.pathname.includes('/artists/');
         const pathPrefix = isSubDir ? '../../' : '';
-        const correctCoverSrc = pathPrefix + currentSong.cover_url;
+        const rawCover = currentSong.cover_url || currentSong.image;
+        const correctCoverSrc = (typeof SongStoryUtils !== 'undefined') 
+            ? SongStoryUtils.resolvePath(rawCover) 
+            : (rawCover && !rawCover.startsWith('http') ? pathPrefix + rawCover : rawCover);
 
         if (coverImg) {
-            // Update existing cover (useful for Family Matters fix)
+            // Update existing cover (useful for modern pages)
             coverImg.src = correctCoverSrc;
         } else {
-            // Inject Premium Header structure if missing (e.g., Euphoria, Stan)
+            // Inject Premium Header structure if missing (e.g., Jay-Z, Kendrick older pages)
             const mainEl = document.querySelector('main');
             const mainContainer = mainEl?.querySelector('.max-w-7xl');
-            const headerSection = mainContainer?.firstElementChild;
+            // Try to find the old-style header (usually a div with mb-12 or the first block)
+            const headerSection = mainContainer?.querySelector('.mb-12') || mainContainer?.firstElementChild;
 
             if (headerSection && !headerSection.classList.contains('flex-col')) {
-                // This is an old-style header (simple mb-12 div)
+                const artistName = (typeof ARTISTS_DATA !== 'undefined' && currentSong.artist_id)
+                    ? (ARTISTS_DATA.find(a => a.id === currentSong.artist_id)?.name || currentSong.artist_id)
+                    : currentSong.artist_id;
+
                 const premiumHeaderHTML = `
                 <div class="flex flex-col md:flex-row gap-8 md:items-end mb-16">
                     <!-- Cover Image -->
@@ -137,19 +147,21 @@ const SongStoryRenderer = {
                             </span>
                             <span class="text-zinc-800">•</span>
                             <a href="../../artists/${currentSong.artist_id}.html"
-                                class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de ${currentSong.artist_id} →</a>
+                                class="text-xs text-zinc-500 hover:text-white transition-colors">Voir le profil de ${artistName} →</a>
                         </div>
 
                         <h1 id="song-title" class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-4">${currentSong.title}</h1>
 
                         <div class="flex items-center gap-4 text-zinc-500 font-light">
-                            <span class="text-xl">${currentSong.artist_id}</span>
+                            <span class="text-xl">${artistName}</span>
                             <span class="text-zinc-800">•</span>
                             <span class="text-xl">${currentSong.year}</span>
                         </div>
 
                         <div class="mt-8 flex flex-wrap gap-4 items-center">
-                            <p class="text-sm text-zinc-600">${currentSong.description || ''}</p>
+                            <div class="w-full mb-4">
+                                <p class="text-sm text-zinc-400 leading-relaxed">${currentSong.description || ''}</p>
+                            </div>
                             <button id="karaoke-toggle" class="karaoke-toggle-btn active shrink-0 text-xs">
                                 <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
                                 <span>Masquer les Décryptages</span>
@@ -158,11 +170,9 @@ const SongStoryRenderer = {
                     </div>
                 </div>`;
 
-                // Replace the old header (usually the first child of the main container)
                 headerSection.innerHTML = premiumHeaderHTML;
-                // Add necessary layout class to the replaced element's parent if needed, 
-                // but here it's better to just replace the inner content to keep existing hooks if any.
-                // Re-running some initializations might be needed if IDs changed, but we keep song-title and karaoke-toggle IDs.
+                // Add class to avoid double-injection
+                headerSection.classList.add('flex-col');
             }
         }
 

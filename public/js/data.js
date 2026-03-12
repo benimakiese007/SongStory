@@ -10,16 +10,9 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 1996,
         "url": "songs/jay-z/dead-presidents-ii.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/dead-presidents-ii-cover.webp",
-        "tags": [
-            "Classique",
-            "New York",
-            "Mafioso Rap"
-        ],
-        "description": "Considéré comme l'un des plus grands morceaux de rap de tous les temps, ce titre définit l'esthétique du premier album de Jay-Z."
+        "tags": ["Classique", "New York", "Mafioso Rap"],
+        "description": "L'un des plus grands morceaux de l'histoire du hip-hop, extrait de l'album Reasonable Doubt."
     },
     {
         "id": "demain-cest-loin",
@@ -28,15 +21,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 1997,
         "url": "songs/iam/demain-cest-loin.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/demain-cest-loin-cover.webp",
-        "tags": [
-            "Classique",
-            "Marseille",
-            "Rap Conscient"
-        ],
+        "tags": ["Classique", "Marseille", "Rap Conscient"],
         "description": "Le morceau le plus emblématique du rap français, une immersion brutale et poétique dans le quotidien des quartiers nord de Marseille."
     },
     {
@@ -44,16 +30,11 @@ let SONGS_DATA = [
         "title": "Back to Back",
         "artist_id": "drake",
         "genre": "Rap",
-        "year": 2024,
+        "year": 2015,
         "url": "songs/drake/back-to-back.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/back-to-back-cover.webp",
-        "tags": [
-            "beef"
-        ],
-        "description": ""
+        "tags": ["Beef", "Diss Track"],
+        "description": "Le diss track massif qui a redéfini les règles du beef à l'ère des réseaux sociaux."
     },
     {
         "id": "family-matters",
@@ -62,14 +43,9 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/drake/family-matters.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/family-matters-cover.webp",
-        "tags": [
-            "beef"
-        ],
-        "description": ""
+        "tags": ["beef", "2024"],
+        "description": "La réponse massive de Drake au conflit de 2024."
     },
     {
         "id": "push-ups",
@@ -78,14 +54,9 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/drake/push-ups.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/push-ups-cover.webp",
-        "tags": [
-            "beef"
-        ],
-        "description": ""
+        "tags": ["beef"],
+        "description": "Le premier coup de semonce officiel de Drake dans le beef de 2024."
     },
     {
         "id": "taylor-made-freestyle",
@@ -94,14 +65,9 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/drake/taylor-made-freestyle.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/taylor-made-freestyle-cover.webp",
-        "tags": [
-            "beef"
-        ],
-        "description": ""
+        "tags": ["beef", "IA"],
+        "description": "Le morceau controversé utilisant l'IA pour imiter Tupac et Snoop Dogg."
     },
     {
         "id": "stan",
@@ -110,14 +76,9 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2000,
         "url": "songs/eminem/stan.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/stan-cover.webp",
-        "tags": [
-            "storytelling"
-        ],
-        "description": ""
+        "tags": ["storytelling"],
+        "description": "Un chef-d'œuvre de narration explorant l'obsession d'un fan."
     },
     {
         "id": "7-minute-drill",
@@ -126,13 +87,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/j-cole/7-minute-drill.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/7-minutes-drill-cover.webp",
-        "tags": [
-            "beef"
-        ],
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -142,9 +98,6 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/j-cole/might-delete-later.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/might-delete-later-excuses-cover.webp",
         "tags": [],
         "description": ""
@@ -156,13 +109,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2010,
         "url": "songs/kanye-west/power.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/power-cover.webp",
-        "tags": [
-            "storytelling"
-        ],
+        "tags": ["storytelling"],
         "description": ""
     },
     {
@@ -172,13 +120,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/kendrick-lamar/6-16-in-LA.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/6-16-in-la.webp",
-        "tags": [
-            "beef"
-        ],
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -188,13 +131,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/kendrick-lamar/euphoria.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/euphoria-cover.webp",
-        "tags": [
-            "beef"
-        ],
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -204,13 +142,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/kendrick-lamar/meet-the-grahams.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/meet-the-graham-cover.webp",
-        "tags": [
-            "beef"
-        ],
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -220,13 +153,8 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2024,
         "url": "songs/kendrick-lamar/not-like-us.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/not-like-us-cover.webp",
-        "tags": [
-            "beef"
-        ],
+        "tags": ["beef"],
         "description": ""
     },
     {
@@ -236,14 +164,8 @@ let SONGS_DATA = [
         "genre": "Rap Conscient",
         "year": 2012,
         "url": "songs/kery-james/lettre-a-la-republique.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/lettre-a-la-republique-cover.webp",
-        "tags": [
-            "politique",
-            "rap conscient"
-        ],
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
     {
@@ -253,14 +175,8 @@ let SONGS_DATA = [
         "genre": "Rap Conscient",
         "year": 2012,
         "url": "songs/medine/dont-laik.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/dont-laik-cover.webp",
-        "tags": [
-            "politique",
-            "rap conscient"
-        ],
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
     {
@@ -270,14 +186,8 @@ let SONGS_DATA = [
         "genre": "Rap Conscient",
         "year": 2009,
         "url": "songs/youssoupha/menace-de-mort.html",
-        "audio_url": "",
-        "spotify_id": "",
-        "apple_music_id": "",
         "cover_url": "images/covers/menace-de-mort-cover.webp",
-        "tags": [
-            "politique",
-            "rap conscient"
-        ],
+        "tags": ["politique", "rap conscient"],
         "description": ""
     },
     {
@@ -288,10 +198,7 @@ let SONGS_DATA = [
         "year": 2001,
         "url": "songs/mc-solaar/solaar-pleure.html",
         "cover_url": "images/covers/solaar-pleure-cover.webp",
-        "tags": [
-            "Classique",
-            "Poésie"
-        ],
+        "tags": ["Classique", "Poésie"],
         "description": "Un retour mystique et philosophique du poète du rap français."
     },
     {
@@ -302,11 +209,7 @@ let SONGS_DATA = [
         "year": 1996,
         "url": "songs/2pac/hit-em-up.html",
         "cover_url": "images/covers/hit-em-up-cover.webp",
-        "tags": [
-            "Beef",
-            "West Coast",
-            "Diss Track"
-        ],
+        "tags": ["Beef", "West Coast", "Diss Track"],
         "description": "Le diss track le plus féroce de l'histoire du hip-hop."
     },
     {
@@ -317,11 +220,7 @@ let SONGS_DATA = [
         "year": 1994,
         "url": "songs/nas/ny-state-of-mind.html",
         "cover_url": "images/covers/ny-state-of-mind-cover.webp",
-        "tags": [
-            "Classique",
-            "Storytelling",
-            "New York"
-        ],
+        "tags": ["Classique", "Storytelling", "New York"],
         "description": "Une immersion cinématographique dans les rues de Queensbridge."
     },
     {
@@ -332,25 +231,19 @@ let SONGS_DATA = [
         "year": 2018,
         "url": "songs/childish-gambino/this-is-america.html",
         "cover_url": "images/covers/this-is-america-cover.webp",
-        "tags": [
-            "Social",
-            "Provocateur"
-        ],
+        "tags": ["Social", "Provocateur"],
         "description": "Une critique virulente de la société américaine moderne."
     },
     {
+        "id": "alright",
         "title": "Alright",
         "artist_id": "kendrick-lamar",
-        "year": 2015,
-        "duration": "",
-        "cover_url": "images/covers/Alright Cover.webp",
         "genre": "Rap",
-        "tags": [
-            "Hymne",
-            "Espoir"
-        ],
-        "description": "Un cri de ralliement pour la résilience et le changement.",
-        "id": "alright"
+        "year": 2015,
+        "url": "songs/kendrick-lamar/alright.html",
+        "cover_url": "images/covers/Alright Cover.webp",
+        "tags": ["Hymne", "Espoir"],
+        "description": "Un cri de ralliement pour la résilience et le changement."
     },
     {
         "id": "notes-pour-trop-tard",
@@ -360,10 +253,7 @@ let SONGS_DATA = [
         "year": 2017,
         "url": "songs/orelsan/notes-pour-trop-tard.html",
         "cover_url": "images/covers/notes-pour-trop-tard-cover.webp",
-        "tags": [
-            "Introspection",
-            "Storytelling"
-        ],
+        "tags": ["Introspection", "Storytelling"],
         "description": "Une lettre poignante adressée à son moi plus jeune."
     },
     {
@@ -374,10 +264,7 @@ let SONGS_DATA = [
         "year": 1998,
         "url": "songs/supreme-ntm/laisse-pas-traisner-ton-fils.html",
         "cover_url": "images/covers/laisse-pas-traisner-ton-fils-cover.webp",
-        "tags": [
-            "Classique",
-            "Social"
-        ],
+        "tags": ["Classique", "Social"],
         "description": "Un plaidoyer puissant sur la responsabilité parentale."
     }
 ];
