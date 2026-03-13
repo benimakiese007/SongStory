@@ -242,58 +242,7 @@
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
     <script src="js/router.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const select = document.getElementById('input-song');
-            if (typeof SONGS_DATA !== 'undefined') {
-                SONGS_DATA.forEach(s => {
-                    const opt = document.createElement('option');
-                    opt.value = s.id;
-                    opt.textContent = `${s.title} — ${s.artist}`;
-                    select.appendChild(opt);
-                });
-            }
-
-            // Pré-sélection via URL param (?song=...)
-            const urlParams = new URLSearchParams(window.location.search);
-            const preSong = urlParams.get('song');
-            if (preSong) select.value = preSong;
-        });
-
-        function selectType(btn) {
-            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('input-type').value = btn.dataset.type;
-        }
-
-        function submitForm() {
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.textContent = 'Envoi…';
-
-            const user = SongStoryAuth.getUser();
-
-            const res = SongStoryContrib.submit({
-                songId: document.getElementById('input-song').value,
-                type: document.getElementById('input-type').value,
-                lineRef: document.getElementById('input-ref').value,
-                text: document.getElementById('input-text').value,
-                author: user ? user.name : 'Anonyme'
-            });
-
-            setTimeout(() => {
-                if (res.ok) {
-                    document.getElementById('contrib-form').classList.add('hidden');
-                    document.getElementById('success-msg').classList.remove('hidden');
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = 'Envoyer la suggestion';
-                    alert(res.error);
-                }
-            }, 600);
-        }
-    </script>
+    <script src="js/pwa.js"></script>
     <script src="js/app.js"></script>
 </body>
 

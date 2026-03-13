@@ -138,31 +138,7 @@
 
     <script src="js/pwa.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('artists-grid');
-            if (!grid) return;
-
-            function renderArtists() {
-                grid.innerHTML = '';
-                ARTISTS_DATA.forEach(artist => {
-                    // Calculate analysis count dynamically
-                    const count = SONGS_DATA.filter(s => s.artist_id === artist.id || s.artist === artist.id).length;
-                    const artistWithCount = { ...artist, songs_count: count };
-                    
-                    const cardHtml = SongStoryUtils.generateArtistCard(artistWithCount, { isSubDir: false });
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
-                });
-
-                // Re-init reveal animations
-                if (typeof SongStoryUI !== 'undefined') {
-                    SongStoryUI.initScrollAnimations();
-                }
-            }
-
-            renderArtists();
-        });
-    </script>
+    <script src="js/pwa.js"></script>
     <script src="js/app.js"></script>
 </body>
 

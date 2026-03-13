@@ -519,27 +519,6 @@
     <script src="js/contribute.js"></script>
     <script src="js/admin.js"></script>
 
-    <script>
-        async function loginWithGoogle() {
-            const err = document.getElementById('login-err');
-            err.classList.add('hidden');
-            try {
-                const { error } = await SupabaseCMS.signInWithGoogle();
-                if (error) {
-                    err.textContent = error.message || 'Erreur de connexion';
-                    err.classList.remove('hidden');
-                }
-            } catch (e) {
-                err.textContent = 'Erreur de connexion';
-                err.classList.remove('hidden');
-            }
-        }
-
-        function logout() {
-            SupabaseCMS.signOut().then(() => location.reload());
-        }
-    </script>
-
     <script src="js/app.js"></script>
 </body>
 

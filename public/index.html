@@ -255,30 +255,6 @@
     <script src="js/router.js"></script>
 
     <script src="js/pwa.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('latest-grid');
-            if (!grid) return;
-
-            function renderLatest() {
-                grid.innerHTML = '';
-                // Limit to 6 latest songs
-                const latestSongs = SONGS_DATA.slice(0, 6);
-                
-                latestSongs.forEach(song => {
-                    const cardHtml = SongStoryUtils.generateSongCard(song, { layout: 'home' });
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
-                });
-
-                // Re-init reveal animations
-                if (typeof SongStoryUI !== 'undefined') {
-                    SongStoryUI.initScrollAnimations();
-                }
-            }
-
-            renderLatest();
-        });
-    </script>
     <script src="js/app.js"></script>
 </body>
 

@@ -193,66 +193,6 @@
     <script src="js/player.js"></script>
     <script src="js/router.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const pills = document.querySelectorAll('.filter-pill');
-            const collectionPills = document.querySelectorAll('.filter-pill-collection');
-            const grid = document.getElementById('songs-grid');
-
-            function renderSongs(filter = 'all') {
-                const favs = JSON.parse(localStorage.getItem('ss_favorites') || '[]');
-                grid.innerHTML = '';
-                
-                const filteredSongs = SONGS_DATA.filter(song => {
-                    const cardGenre = song.genre ? song.genre.toLowerCase() : '';
-                    const cardTags = song.tags ? song.tags.map(t => t.toLowerCase()) : [];
-                    
-                    if (filter === 'all') return true;
-                    if (filter === 'favorites') return favs.includes(song.id);
-                    if (filter === 'rock') return cardGenre.includes('rock') || cardTags.includes('rock');
-                    if (filter === 'rap') return cardGenre.includes('rap') || cardTags.includes('rap');
-                    if (filter === 'beef') return cardTags.includes('beef');
-                    if (filter === 'storytelling') return cardTags.includes('storytelling');
-                    if (filter === 'classique') return cardTags.includes('classic') || cardTags.includes('classique');
-                    if (filter === 'mélancolie') return cardTags.includes('mélancolie');
-                    if (filter === 'politique') return cardTags.includes('politique');
-                    return false;
-                });
-
-                filteredSongs.forEach(song => {
-                    const cardHtml = SongStoryUtils.generateSongCard(song, { isSubDir: false });
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
-                });
-
-                // Re-init reveal animations
-                if (typeof SongStoryUI !== 'undefined') {
-                    SongStoryUI.initScrollAnimations();
-                    SongStoryUI.initTilt();
-                }
-            }
-
-            pills.forEach(pill => {
-                pill.addEventListener('click', () => {
-                    pills.forEach(p => p.classList.remove('active'));
-                    pill.classList.add('active');
-                    renderSongs(pill.dataset.filter);
-                });
-            });
-
-            collectionPills.forEach(cp => {
-                cp.addEventListener('click', () => {
-                    const filter = cp.dataset.filter;
-                    const mainPill = Array.from(pills).find(p => p.dataset.filter === filter);
-                    if (mainPill) mainPill.click();
-                    else renderSongs(filter);
-                    cp.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                });
-            });
-
-            // Initial render
-            renderSongs('all');
-        });
-    </script>
     <script src="js/pwa.js"></script>
     <script src="js/app.js"></script>
 </body>

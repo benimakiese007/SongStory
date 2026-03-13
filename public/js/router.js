@@ -165,11 +165,13 @@ const SongStoryRouter = {
             SongStoryAuth.initNavUI();
         }
 
-        // Specific page scripts
-        if (path.includes('single-song.html')) {
-            if (typeof renderSong === 'function') {
-                renderSong();
-            }
+        // Unified Page Initialization
+        if (typeof SongStoryApp !== 'undefined' && typeof SongStoryApp.initPage === 'function') {
+            SongStoryApp.initPage(path);
+        }
+
+        // Additional song-specific legacy triggers
+        if (path.includes('/songs/') || path.includes('single-song.html')) {
             this._attachAnalysisEvents();
         }
     },
