@@ -241,7 +241,7 @@ let SONGS_DATA = [
         "genre": "Rap",
         "year": 2015,
         "url": "songs/kendrick-lamar/alright.html",
-        "cover_url": "images/covers/Alright Cover.webp",
+        "cover_url": "images/covers/alright-cover.webp",
         "tags": ["Hymne", "Espoir"],
         "description": "Un cri de ralliement pour la résilience et le changement."
     },
