@@ -1,42 +1,26 @@
 [
   {
-    "term": "métaphore",
-    "definition": "Figure de style qui désigne une chose par le nom d'une autre en établissant une comparaison implicite."
+    "term": "beef",
+    "definition": "Un conflit ouvert entre deux ou plusieurs artistes, s'exprimant généralement à travers des diss tracks."
   },
   {
-    "term": "allitération",
-    "definition": "Répétition d'un même son consonantique en début de mots proches, créant un effet sonore volontaire."
+    "term": "diss track",
+    "definition": "Un morceau de musique spécifiquement créé pour attaquer ou ridiculiser un autre artiste."
   },
   {
     "term": "flow",
-    "definition": "En rap, le flow désigne la manière dont l'artiste place ses syllabes sur le rythme : la fluidité, le rythme et l'intonation de sa voix."
+    "definition": "Le rythme, la cadence et l'articulation d'un rappeur sur une instru."
   },
   {
-    "term": "bpm",
-    "definition": "Beats Per Minute : unité de mesure du tempo d'un morceau. Plus le BPM est élevé, plus la musique est rapide."
-  },
-  {
-    "term": "sample",
-    "definition": "Extrait d'un enregistrement existant réutilisé et intégré dans une nouvelle composition musicale."
-  },
-  {
-    "term": "hook",
-    "definition": "Le refrain d'un morceau, conçu pour être accrocheur et mémorable."
+    "term": "ghostwriter",
+    "definition": "Une personne qui écrit des paroles pour un autre artiste sans être créditée publiquement."
   },
   {
     "term": "storytelling",
-    "definition": "Technique narrative en musique où l'artiste raconte une histoire, souvent autobiographique."
+    "definition": "L'art de raconter une histoire à travers les paroles d'une chanson."
   },
   {
-    "term": "polyphonie",
-    "definition": "Superposition de plusieurs voies ou lignes mélodiques indépendantes dans une même composition musicale."
-  },
-  {
-    "term": "ostinato",
-    "definition": "Motif musical court répété de manière continue tout au long d'un morceau."
-  },
-  {
-    "term": "laïcité",
-    "definition": "Principe de séparation de la société civile et de la société religieuse. Souvent détournée politiquement dans le contexte culturel contemporain."
+    "term": "punchline",
+    "definition": "Une phrase forte, souvent humoristique ou percutante, destinée à marquer l'auditeur."
   }
 ]

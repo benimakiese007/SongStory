@@ -118,6 +118,8 @@ function switchTab(tabId) {
         if (el) el.classList.toggle('hidden', t !== tabId);
     });
 
+    if (tabId === 'songs') renderSongsTable();
+    if (tabId === 'artists') renderArtistsGrid();
     if (tabId === 'covers') renderCoversGallery();
     if (tabId === 'pp') renderPPGallery();
 }
@@ -446,7 +448,9 @@ function openModal(type, id = null) {
                         <div class="space-y-3">
                             <input type="text" name="genre" value="${song ? song.genre : 'Rap'}" placeholder="Genre" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
                             <input type="text" name="tags" value="${song ? (song.tags || []).join(', ') : ''}" placeholder="Tags (séparés par virgule)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                            <textarea name="description" placeholder="Courte description" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-24">${song ? song.description : ''}</textarea>
+                            <textarea name="description" placeholder="Courte description" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-20">${song ? song.description : ''}</textarea>
+                            <label class="block text-[10px] font-bold text-zinc-600 uppercase mt-2">Paroles / Texte complet (pour analyse AI)</label>
+                            <textarea name="lyrics" placeholder="Collez ici le texte complet..." class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-40 font-mono text-xs">${song?.lyrics || ''}</textarea>
                         </div>
                     </div>
                     <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">

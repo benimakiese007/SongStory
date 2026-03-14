@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SongStory - Diagnostic Supabase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="bg-zinc-950 text-zinc-400 p-8 font-mono text-xs">
+    <h1 class="text-xl text-white font-bold mb-6">Diagnostic Connectivité Supabase</h1>
+    
+    <div id="results" class="space-y-6">
+        <p class="animate-pulse">Initialisation du diagnostic...</p>
+    </div>
+
+    <script>
+        async function runDiag() {
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            const log = (msg, status = 'info') => {
+                const colors = { info: 'text-zinc-500', success: 'text-green-500', error: 'text-red-500' };
+                results.innerHTML += `<div class="${colors[status]}">[${status.toUpperCase()}] ${msg}</div>`;
+            };
+
+            const client = window.ss_supabase;
+            if (!client) {
+                log('Client Supabase non trouvé dans window.ss_supabase', 'error');
+                return;
+            }
+            log('Client Supabase initialisé.', 'success');
+
+            log('Vérification de la session...');
+            const { data: { session } } = await client.auth.getSession();
+            if (session) {
+                log(`Session active pour : ${session.user.email}`, 'success');
+            } else {
+                log('Aucune session active (Lecture publique uniquement).', 'info');
+            }
+
+            log('Interrogation de la table "artists"...');
+            const { data: artists, error: aError } = await client.from('artists').select('id, name').limit(5);
+            if (aError) {
+                log(`Erreur table artists : ${aError.message}`, 'error');
+            } else {
+                log(`Table artists OK (${artists.length} entrées trouvées).`, 'success');
+                artists.forEach(a => log(` -> Artiste : ${a.name} (${a.id})`));
+            }
+
+            log('Interrogation de la table "songs"...');
+            const { data: songs, error: sError } = await client.from('songs').select('id, title').limit(5);
+            if (sError) {
+                log(`Erreur table songs : ${sError.message}`, 'error');
+            } else {
+                log(`Table songs OK (${songs.length} entrées trouvées).`, 'success');
+                songs.forEach(s => log(` -> Titre : ${s.title} (${s.id})`));
+            }
+        }
+
+        runDiag();
+    </script>
+</body>
+</html>

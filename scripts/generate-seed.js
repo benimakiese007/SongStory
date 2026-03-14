@@ -30,7 +30,7 @@ function jsonToInsert(tableName, data) {
         return `(${vals.join(', ')})`;
     });
 
-    sql += values.join(',\n') + ';\n\n';
+    sql += values.join(',\n') + ' ON CONFLICT DO NOTHING;\n\n';
     return sql;
 }
 

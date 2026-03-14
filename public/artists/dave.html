@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dave - Artiste | SongStory</title>
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Découvrez l'univers de Dave, le prodige de Streatham, et ses analyses de paroles sur SongStory.">
+    
+    <!-- CSS & Fonts -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/artist-layout.css">
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+
+<body class="bg-zinc-950 text-zinc-400">
+    <!-- Premium Header Background -->
+    <div class="fixed top-0 left-0 w-full h-[60vh] -z-10 opacity-20 blur-3xl saturate-200 pointer-events-none" id="premium-bg"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-all duration-500">
+                    <iconify-icon icon="solar:music-note-bold" class="text-black" width="20"></iconify-icon>
+                </div>
+                <span class="text-white font-black tracking-tighter text-xl">SONGSTORY</span>
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="../library.html" class="text-sm font-medium hover:text-white transition-colors">Bibliothèque</a>
+                <a href="../artists.html" class="text-sm font-medium hover:text-white transition-colors">Artistes</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+                <!-- Artist Profile -->
+                <aside class="w-full md:w-80 sticky top-32">
+                    <div class="w-full aspect-square rounded-3xl overflow-hidden border border-white/5 mb-8 group relative shadow-2xl shadow-amber-500/5">
+                        <img src="../images/artists/dave-pp.webp" alt="Dave" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <h1 class="text-4xl font-black text-white tracking-tighter mb-2">Dave</h1>
+                    <p class="text-amber-500 font-bold text-xs uppercase tracking-widest mb-6">Rap • UK</p>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">
+                        Le prodige de Streatham, connu pour son intelligence lyricale hors norme et ses récits poignants sur la société, l'identité et la politique britannique.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5">
+                            <iconify-icon icon="mdi:instagram"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5">
+                            <iconify-icon icon="mdi:spotify"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5">
+                            <iconify-icon icon="mdi:twitter"></iconify-icon>
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- Artist Content -->
+                <section class="flex-1">
+                    <div class="mb-12">
+                        <h2 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                            <iconify-icon icon="solar:music-library-bold" class="text-amber-500"></iconify-icon>
+                            Titres Analysés
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="artist-songs-grid">
+                            <!-- Song Card -->
+                            <a href="../songs/dave/both-sides-of-a-smile.html" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all group">
+                                <div class="w-16 h-16 rounded-xl overflow-hidden border border-white/10">
+                                    <img src="../images/covers/both-sides-of-a-smile-cover.webp" alt="Both Sides Of A Smile" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-bold group-hover:text-amber-500 transition-colors">Both Sides Of A Smile</h3>
+                                    <p class="text-xs text-zinc-500">2021 • feat. James Blake</p>
+                                </div>
+                                <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-700 group-hover:text-white transition-all"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                            <iconify-icon icon="solar:history-bold" class="text-amber-500"></iconify-icon>
+                            Timeline & Impact
+                        </h2>
+                        <div class="space-y-6 border-l border-white/5 pl-8">
+                            <div class="reveal timeline-item">
+                                <div class="timeline-year">2019</div>
+                                <div class="timeline-event text-zinc-400">Sortie de "Psychodrama", album acclamé par la critique et lauréat du Mercury Prize.</div>
+                            </div>
+                            <div class="reveal timeline-item highlight">
+                                <div class="timeline-year">2021</div>
+                                <div class="timeline-event text-white">Sortie de "We're All Alone In This Together", incluant la collaboration épique avec James Blake.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

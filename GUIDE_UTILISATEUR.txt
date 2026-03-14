@@ -1,0 +1,59 @@
+================================================================================
+                    SONGSTORY - GUIDE D'AJOUT DE CONTENU
+================================================================================
+
+Ce document vous explique comment ajouter de nouveaux artistes et de nouveaux
+morceaux sur la plateforme SongStory.
+
+--------------------------------------------------------------------------------
+1. LE WORKFLOW (VOTRE TRAVAIL ET LE MIEN)
+--------------------------------------------------------------------------------
+
+Le travail est réparti de la manière suivante :
+
+VOUS :
+- Fournissez le texte (paroles) complet du morceau.
+- Fournissez les images (Photo de profil pour l'artiste, Cover pour le titre).
+- Fournissez les infos de base (Titre, Année, Genre).
+
+MOI (L'IA Antigravity) :
+- Je lis vos informations depuis le CMS ou le Chat.
+- Je génère les "Décryptages" (analyse ligne par ligne).
+- Je crée la page static HTML (ex: songs/iam/demain-cest-loin.html).
+- Je mets à jour la base de données locale (data.js) et Cloud (Supabase).
+
+--------------------------------------------------------------------------------
+2. COMMENT AJOUTER UN MORCEAU (OPTION CMS)
+--------------------------------------------------------------------------------
+
+J'ai mis à jour le CMS pour que vous puissiez tout préparer :
+
+1. Ouvrez la page Admin (/public/admin.html).
+2. Cliquez sur "Nouveau Titre".
+3. Remplissez les champs habituels (Titre, Artiste, Année).
+4. COLLEZ LE TEXTE COMPLET dans le nouveau champ "Paroles / Texte complet".
+5. Enregistrez.
+6. Dites-moi dans le chat : "Je viens d'ajouter un nouveau morceau [Nom] dans le CMS, peux-tu le traiter ?"
+
+--------------------------------------------------------------------------------
+3. COMMENT AJOUTER UN MORCEAU (OPTION CHAT)
+--------------------------------------------------------------------------------
+
+Si vous préférez rester ici, envoyez-moi simplement un message avec :
+- Le titre et l'artiste.
+- Le texte complet (copier-coller).
+- L'image de la cover (si vous l'avez).
+
+--------------------------------------------------------------------------------
+4. GESTION DES IMAGES
+--------------------------------------------------------------------------------
+
+- Les Covers doivent idéalement se trouver dans : public/images/covers/
+- Les Photos de Profil dans : public/images/artists/
+- Le CMS permet aussi de les uploader directement vers Supabase.
+
+--------------------------------------------------------------------------------
+CONTACT / SUPPORT
+--------------------------------------------------------------------------------
+Demandez-moi simplement dans le chat si vous avez un doute !
+================================================================================
