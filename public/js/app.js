@@ -10,25 +10,28 @@ const SongStoryApp = {
      */
     initPage(path = window.location.pathname) {
         try {
-            if (path.endsWith('/') || path.includes('index.html')) {
+            // Clean up path for comparison (remove .html and trailing slash)
+            const cleanPath = path.replace('.html', '').replace(/\/$/, '') || '/';
+            
+            if (cleanPath === '/' || cleanPath.includes('index')) {
                 this.handleHomePage();
-            } else if (path.includes('artists.html')) {
+            } else if (cleanPath === '/artists' || cleanPath.endsWith('/artists')) {
                 this.handleArtistsIndexPage();
-            } else if (path.includes('/artists/')) {
+            } else if (cleanPath.includes('/artists/')) {
                 this.handleArtistPage();
-            } else if (path.includes('timeline.html')) {
+            } else if (cleanPath.endsWith('/timeline')) {
                 this.handleTimelinePage();
-            } else if (path.includes('glossary.html')) {
+            } else if (cleanPath.endsWith('/glossary')) {
                 this.handleGlossaryPage();
-            } else if (path.includes('contribute.html')) {
+            } else if (cleanPath.endsWith('/contribute')) {
                 this.handleContributePage();
-            } else if (path.includes('account.html')) {
+            } else if (cleanPath.endsWith('/account')) {
                 this.handleAccountPage();
-            } else if (path.includes('admin.html')) {
+            } else if (cleanPath.endsWith('/admin')) {
                 this.handleAdminPage();
-            } else if (path.includes('library.html')) {
+            } else if (cleanPath.endsWith('/library')) {
                 this.handleLibraryPage();
-            } else if (path.includes('/songs/') || path.includes('single-song.html')) {
+            } else if (cleanPath.includes('/songs/') || cleanPath.includes('single-song')) {
                 this.handleSongPage();
             }
         } catch (error) {

@@ -81,9 +81,18 @@ self.addEventListener('fetch', (event) => {
                     return networkResponse;
                 })
                 .catch(() => {
-                    // Si réseau échoue, tente le cache
+                    // Si réseau échoue, tente le cache (gère les clean URLs)
                     return caches.match(request).then(cachedResponse => {
-                        return cachedResponse || caches.match('/index.html') || fetch(request);
+                        if (cachedResponse) return cachedResponse;
+                        
+                        // Si /library, teste /library.html
+                        const url = new URL(request.url);
+                        if (!url.pathname.endsWith('.html')) {
+                            return caches.match(url.pathname + '.html');
+                        }
+                        return null;
+                    }).then(response => {
+                        return response || caches.match('/index.html');
                     });
                 })
         );

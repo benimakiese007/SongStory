@@ -39,20 +39,14 @@ const SongStoryRouter = {
         e.stopPropagation(); // Prevent initTransitions from also handling this click
 
         // Prevent reloading the exact same page
-        const currentPath = window.location.pathname + window.location.search;
-        let newPath = link.pathname + link.search;
+        const normalize = p => p.replace('.html', '').replace(/\/$/, '') || '/';
+        const currentPath = normalize(window.location.pathname);
+        const newPathRaw = link.pathname + link.search;
+        const newPathNormalized = normalize(link.pathname);
 
-        // Handle relative paths (e.g., 'library.html' vs '/library.html')
-        // For local file testing or simple server
-        if (href && !href.startsWith('/')) {
-            const pathParts = window.location.pathname.split('/');
-            pathParts.pop(); // remove current file
-            newPath = pathParts.join('/') + '/' + href;
-        }
+        if (newPathNormalized === currentPath) return;
 
-        if (newPath === currentPath) return;
-
-        await this.loadPage(newPath, true);
+        await this.loadPage(newPathRaw, true);
     },
 
     async loadPage(path, pushToHistory = true) {
