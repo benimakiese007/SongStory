@@ -22,6 +22,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/ui.js"></script>
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -335,6 +337,61 @@
                         </div>
                     </div>
 
+                    <!-- Nouveaux encarts : Diagnostics & Perf -->
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-3 bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <h4 class="text-white font-medium mb-6 flex items-center gap-2">
+                                <iconify-icon icon="solar:stethoscope-bold-duotone" class="text-amber-500"></iconify-icon>
+                                Santé de la base
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="bg-zinc-950 border border-white/5 rounded-xl p-4 flex items-center justify-between group hover:border-amber-500/30 transition-all cursor-pointer" onclick="switchTab('songs')">
+                                    <div>
+                                        <p class="text-xs text-zinc-500 font-medium mb-1 uppercase tracking-wider text-[10px]">Titres sans cover</p>
+                                        <p class="text-2xl text-white font-bold" id="diag-missing-covers">0</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center">
+                                        <iconify-icon icon="solar:gallery-remove-bold"></iconify-icon>
+                                    </div>
+                                </div>
+                                <div class="bg-zinc-950 border border-white/5 rounded-xl p-4 flex items-center justify-between group hover:border-amber-500/30 transition-all cursor-pointer" onclick="switchTab('artists')">
+                                    <div>
+                                        <p class="text-xs text-zinc-500 font-medium mb-1 uppercase tracking-wider text-[10px]">Artistes sans photo</p>
+                                        <p class="text-2xl text-white font-bold" id="diag-missing-pp">0</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 flex items-center justify-center">
+                                        <iconify-icon icon="solar:user-cross-bold"></iconify-icon>
+                                    </div>
+                                </div>
+                                <div class="bg-zinc-950 border border-white/5 rounded-xl p-4 flex items-center justify-between group hover:border-amber-500/30 transition-all cursor-pointer" onclick="switchTab('songs')">
+                                    <div>
+                                        <p class="text-xs text-zinc-500 font-medium mb-1 uppercase tracking-wider text-[10px]">Analyse incomplète</p>
+                                        <p class="text-2xl text-white font-bold" id="diag-missing-lyrics">0</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-yellow-500/10 text-yellow-500 flex items-center justify-center">
+                                        <iconify-icon icon="solar:document-text-bold"></iconify-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                            <h4 class="text-white font-medium mb-4 flex items-center gap-2 w-full justify-center">
+                                <iconify-icon icon="solar:server-square-update-bold-duotone" class="text-blue-500"></iconify-icon>
+                                Supabase
+                            </h4>
+                            <div class="relative w-24 h-24 flex items-center justify-center mb-4">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="none"></circle>
+                                    <circle cx="48" cy="48" r="40" stroke="#3b82f6" stroke-width="8" fill="none" stroke-dasharray="251" stroke-dashoffset="60" class="transition-all duration-1000"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-xl font-bold text-white text-center" id="perf-health">OK</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-500">Performances base & API au vert</p>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
                             <h4 class="text-white font-medium mb-6 flex items-center gap-2">
@@ -356,10 +413,83 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Seed Button -->
+                    <div id="seed-banner" class="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-6 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-white font-medium flex items-center gap-2 mb-1">
+                                <iconify-icon icon="solar:database-bold-duotone" class="text-amber-500"></iconify-icon>
+                                Importer les données statiques
+                            </h4>
+                            <p class="text-xs text-zinc-500">Insérer les 25 titres depuis data.js vers Supabase (première utilisation).</p>
+                        </div>
+                        <button onclick="seedSongsFromStatic()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2 shrink-0">
+                            <iconify-icon icon="solar:upload-bold" width="16"></iconify-icon>
+                            Importer
+                        </button>
+                    </div>
+
+                    <!-- Phase 2 : Analytics & Logs -->
+                    <div id="dashboard-phase2" class="space-y-8 hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Analytics Chart -->
+                            <div class="lg:col-span-2 bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                                <h4 class="text-white font-medium mb-6 flex items-center gap-2">
+                                    <iconify-icon icon="solar:chart-square-bold-duotone" class="text-blue-400"></iconify-icon>
+                                    Trafic & Audience
+                                </h4>
+                                <div class="h-[300px] w-full">
+                                    <canvas id="analyticsChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Top Content -->
+                            <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                                <h4 class="text-white font-medium mb-6 flex items-center gap-2">
+                                    <iconify-icon icon="solar:fire-bold-duotone" class="text-orange-500"></iconify-icon>
+                                    Analyses les plus consultées
+                                </h4>
+                                <div class="space-y-4" id="top-content-list">
+                                    <!-- Populated via JS -->
+                                    <div class="animate-pulse flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-zinc-800 rounded"></div>
+                                        <div class="flex-1 h-3 bg-zinc-800 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Logs -->
+                        <div class="bg-zinc-900/20 border border-white/5 rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h4 class="text-white font-medium flex items-center gap-2">
+                                    <iconify-icon icon="solar:history-bold-duotone" class="text-zinc-500"></iconify-icon>
+                                    Journal d'Activité CMS
+                                </h4>
+                                <span class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Temps réel</span>
+                            </div>
+                            <div class="space-y-px" id="activity-logs">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- Songs Management Section -->
-                <section id="view-songs" class="hidden">
+                <section id="view-songs" class="hidden space-y-6">
+                    <!-- Global Filters & Search -->
+                    <div class="flex flex-col md:flex-row gap-4 items-center justify-between bg-zinc-900/40 p-4 rounded-2xl border border-white/5">
+                        <div class="relative w-full md:w-96">
+                            <iconify-icon icon="solar:magnifer-bold" class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"></iconify-icon>
+                            <input type="text" id="song-search" placeholder="Rechercher un titre, un artiste, un genre..." 
+                                class="w-full bg-zinc-950 border border-white/5 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white focus:border-amber-500/50 focus:outline-none transition-all"
+                                oninput="handleSongSearch(this.value)">
+                        </div>
+                        <div id="active-filters" class="flex items-center gap-2">
+                            <!-- Filter badges injected here -->
+                        </div>
+                    </div>
+
                     <div class="bg-zinc-900/20 border border-white/5 rounded-2xl overflow-hidden">
                         <table class="w-full text-left border-collapse">
                             <thead>
@@ -379,7 +509,19 @@
                 </section>
 
                 <!-- Artists Management Section -->
-                <section id="view-artists" class="hidden">
+                <section id="view-artists" class="hidden space-y-6">
+                    <div class="flex items-center justify-between bg-zinc-900/40 p-4 rounded-2xl border border-white/5">
+                        <div class="flex items-center gap-4">
+                            <button onclick="seedArtistsFromStatic()" class="bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 border border-white/5">
+                                 <iconify-icon icon="solar:import-bold" width="14"></iconify-icon>
+                                 Importer les Artistes (data.js)
+                            </button>
+                            <button onclick="cleanupDuplicateArtists()" class="bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 border border-white/5">
+                                 <iconify-icon icon="solar:broom-bold" width="14"></iconify-icon>
+                                 Nettoyer les Doublons
+                            </button>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="artists-grid">
                         <!-- Populated via JS -->
                     </div>
@@ -406,7 +548,7 @@
                             <h3 class="text-white font-bold text-lg">Galerie des Covers</h3>
                             <p class="text-xs text-zinc-500 mt-1">Gérez les images de couverture pour vos titres.</p>
                         </div>
-                        <button onclick="document.getElementById('f-coverFile').click()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+                        <button onclick="document.getElementById('f-coverFileGlobal').click()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-2">
                              <iconify-icon icon="solar:upload-bold" width="16"></iconify-icon>
                              Uploader une Cover
                         </button>
@@ -424,12 +566,18 @@
                             <h3 class="text-white font-bold text-lg">Galerie des Photos Profil</h3>
                             <p class="text-xs text-zinc-500 mt-1">Gérez les photos de profil de vos artistes.</p>
                         </div>
+                        <button onclick="document.getElementById('f-ppFileGlobal').click()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+                             <iconify-icon icon="solar:upload-bold" width="16"></iconify-icon>
+                             Uploader une Photo
+                        </button>
                     </div>
 
                     <div id="pp-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         <!-- Populated via JS -->
                     </div>
                 </section>
+
+                <!-- Phase 2 moved inside view-dashboard section -->
             </div>
         </main>
     </div>
@@ -513,6 +661,10 @@
     </div>
 
     <!-- Scripts -->
+    <!-- Hidden Global Uploaders -->
+    <input type="file" id="f-coverFileGlobal" class="hidden" accept="image/*" multiple onchange="handleGlobalUpload(this, 'covers')">
+    <input type="file" id="f-ppFileGlobal" class="hidden" accept="image/*" multiple onchange="handleGlobalUpload(this, 'artists')">
+
     <script src="js/supabase-client.js"></script>
     <script src="js/supabase-cms.js"></script>
     <script src="js/data.js"></script>

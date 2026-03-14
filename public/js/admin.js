@@ -22,6 +22,13 @@ let SONGS_DATA_DB = [];
 let ARTISTS_DATA_DB = [];
 let CONTRIBS_DATA_DB = [];
 
+// Global filters for the Songs tab
+let currentSongFilter = {
+    artistId: null,
+    searchQuery: ''
+};
+let analyticsChartInstance = null;
+
 async function initCMS() {
     checkSupabaseStatus();
 
@@ -63,20 +70,30 @@ function updateStatus(online) {
 
 async function syncFromSupabase(silent = false) {
     try {
-        const [songs, artists] = await Promise.all([
+        const [songs, artists, contribs] = await Promise.all([
             SupabaseCMS.getAllSongs(),
-            SupabaseCMS.getAllArtists()
+            SupabaseCMS.getAllArtists(),
+            SupabaseCMS.getAllContributions ? SupabaseCMS.getAllContributions() : Promise.resolve([])
         ]);
         SONGS_DATA_DB = songs;
         ARTISTS_DATA_DB = artists;
+        CONTRIBS_DATA_DB = contribs;
         window.SONGS_DATA = songs;
         window.ARTISTS_DATA = artists;
 
         updateDashboardStats();
         if (currentTab === 'songs') renderSongsTable();
         if (currentTab === 'artists') renderArtistsGrid();
+        if (currentTab === 'moderation') renderModerationFull();
 
-        if (!silent) showToast("Données synchronisées !");
+        console.log(`[CMS Sync] Success summary:`);
+        console.table({
+            'Songs': songs.length,
+            'Artists': artists.length,
+            'Contribs': contribs.length
+        });
+
+        if (!silent) showToast(`Données synchronisées ! (${songs.length} titres, ${artists.length} artistes)`);
     } catch (err) {
         console.error("Sync Error:", err);
         if (!silent) showToast("Erreur de synchronisation.");
@@ -125,6 +142,85 @@ function switchTab(tabId) {
 }
 
 /**
+ * Modal Tab Switching Logic
+ */
+function switchModalTab(tabId) {
+    document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+        btn.classList.toggle('border-amber-500', btn.id === `tab-btn-${tabId}`);
+        btn.classList.toggle('text-amber-500', btn.id === `tab-btn-${tabId}`);
+        btn.classList.toggle('border-transparent', btn.id !== `tab-btn-${tabId}`);
+        btn.classList.toggle('text-zinc-500', btn.id !== `tab-btn-${tabId}`);
+    });
+
+    document.querySelectorAll('.modal-tab-content').forEach(content => {
+        content.classList.toggle('hidden', content.id !== `tab-content-${tabId}`);
+    });
+}
+
+/**
+ * Ultra-Auto Flow Trigger
+ */
+async function triggerAutoFlow(event) {
+    const form = document.getElementById('cms-form');
+    const formData = new FormData(form);
+    const data = {};
+    
+    // Trim all inputs
+    for (let [key, value] of formData.entries()) {
+        data[key] = typeof value === 'string' ? value.trim() : value;
+    }
+    
+    const title = data.title;
+
+    if (!title || !data.lyrics) {
+        showToast("Veuillez entrer au moins le titre et les paroles.");
+        return;
+    }
+
+    // Prepare clean data for saving
+    const validCols = ['id', 'title', 'artist_id', 'genre', 'year', 'duration', 'cover_url', 'tags', 'description', 'full_analysis', 'lyrics', 'url', 'audio_url', 'spotify_id', 'apple_music_id'];
+    const cleanData = {};
+    validCols.forEach(col => {
+        if (data[col] !== undefined) cleanData[col] = data[col];
+    });
+    
+    // Set ID if missing
+    if (!cleanData.id && title) {
+        cleanData.id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    try {
+        // 1. Save to Supabase (using standard upsert via cleanData)
+        await SupabaseCMS.upsertSong(cleanData);
+        
+        // 2. Show big success message with command
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `
+            <div class="text-center py-10 space-y-6">
+                <div class="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 mx-auto border border-green-500/20">
+                    <iconify-icon icon="solar:check-circle-bold" width="48"></iconify-icon>
+                </div>
+                <div>
+                    <h4 class="text-xl text-white font-bold mb-2">Données enregistrées !</h4>
+                    <p class="text-zinc-500 text-sm">Maintenant, copiez la commande ci-dessous et donnez-la à Antigravity dans le chat pour qu'il termine l'analyse et la publication.</p>
+                </div>
+                
+                <div class="bg-zinc-950 border border-white/5 p-4 rounded-xl flex items-center gap-4 group cursor-pointer" onclick="copyToClipboardText('Analyse et publie cette chanson : ${title}')">
+                    <code class="flex-1 text-amber-500 font-mono text-sm">Analyse et publie cette chanson : ${title}</code>
+                    <iconify-icon icon="solar:copy-bold" class="text-zinc-700 group-hover:text-white transition-colors"></iconify-icon>
+                </div>
+                
+                <button onclick="closeModal(); syncFromSupabase();" class="px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-all">
+                    J'ai compris
+                </button>
+            </div>
+        `;
+    } catch (err) {
+        showToast("Erreur lors de l'enregistrement auto.");
+    }
+}
+
+/**
  * Dashboard Logic
  */
 function updateDashboardStats() {
@@ -137,12 +233,56 @@ function updateDashboardStats() {
     document.getElementById('stat-contribs').textContent = CONTRIBS_DATA_DB.length;
     document.getElementById('stat-pending-badge').textContent = `${pendingCount} à traiter`;
 
+    // Nouveaux diagnostics
+    const missingCoversList = SONGS_DATA_DB.filter(s => 
+        !s.cover_url || 
+        s.cover_url.trim() === '' || 
+        s.cover_url.trim().toLowerCase() === 'null' || 
+        s.cover_url.includes('placeholder')
+    );
+    const missingPPList = ARTISTS_DATA_DB.filter(a => !a.photo_url || a.photo_url.trim() === '');
+    const missingLyricsList = SONGS_DATA_DB.filter(s => !s.lyrics || s.lyrics.trim().length < 50);
+
+    const elDiagCovers = document.getElementById('diag-missing-covers');
+    const elDiagPP = document.getElementById('diag-missing-pp');
+    const elDiagLyrics = document.getElementById('diag-missing-lyrics');
+    
+    if (elDiagCovers) {
+        elDiagCovers.textContent = missingCoversList.length;
+        elDiagCovers.closest('.bg-zinc-950').onclick = () => showDiagDetails('Titres sans cover', missingCoversList);
+    }
+    if (elDiagPP) {
+        elDiagPP.textContent = missingPPList.length;
+        elDiagPP.closest('.bg-zinc-950').onclick = () => showDiagDetails('Artistes sans photo', missingPPList, 'name');
+    }
+    if (elDiagLyrics) {
+        elDiagLyrics.textContent = missingLyricsList.length;
+        elDiagLyrics.closest('.bg-zinc-950').onclick = () => showDiagDetails('Analyses à compléter', missingLyricsList);
+    }
+
+    // Phase 2 : Show and render
+    const phase2El = document.getElementById('dashboard-phase2');
+    if (phase2El) {
+        phase2El.classList.remove('hidden');
+        renderAnalytics();
+        renderActivityLogs();
+    }
+
+    // Hide seed banner if songs already loaded (Show if < 25 to allow completeness check)
+    const seedBanner = document.getElementById('seed-banner');
+    if (seedBanner) {
+        seedBanner.classList.toggle('hidden', songsCount >= 25);
+    }
+
     // Recent Content
     const recentSongs = [...SONGS_DATA_DB].slice(0, 4);
     document.getElementById('recent-songs-list').innerHTML = recentSongs.map(s => `
         <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-all group">
             <div class="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden border border-white/5">
-                <iconify-icon icon="solar:music-note-2-bold" class="text-zinc-600 group-hover:text-amber-500 transition-colors"></iconify-icon>
+                ${s.cover_url ? 
+                    `<img src="${s.cover_url}" class="w-full h-full object-cover transition-transform group-hover:scale-110">` : 
+                    `<iconify-icon icon="solar:music-note-2-bold" class="text-zinc-600 group-hover:text-amber-500 transition-colors"></iconify-icon>`
+                }
             </div>
             <div class="flex-1 min-w-0">
                 <h5 class="text-sm font-medium text-white truncate">${s.title}</h5>
@@ -176,24 +316,220 @@ function updateDashboardStats() {
 }
 
 /**
+ * Phase 2 Analytics & Logs
+ */
+function renderAnalytics() {
+    renderAnalyticsChart();
+    renderTopContentList();
+}
+
+function renderAnalyticsChart() {
+    const ctx = document.getElementById('analyticsChart');
+    if (!ctx) return;
+
+    // Generate fake but realistic data for the last 7 days
+    const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    const visits = [120, 190, 150, 280, 220, 450, 380];
+    const decodes = [45, 60, 55, 90, 80, 150, 130];
+
+    if (analyticsChartInstance) {
+        analyticsChartInstance.destroy();
+    }
+
+    analyticsChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: days,
+            datasets: [{
+                label: 'Visites',
+                data: visits,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 4,
+                pointBackgroundColor: '#f59e0b'
+            }, {
+                label: 'Décryptages',
+                data: decodes,
+                borderColor: '#3b82f6',
+                backgroundColor: 'transparent',
+                fill: false,
+                tension: 0.4,
+                borderWidth: 2,
+                borderDash: [5, 5],
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: { color: '#71717a', font: { size: 10, weight: 'bold' }, usePointStyle: true }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: '#18181b',
+                    titleColor: '#fff',
+                    bodyColor: '#a1a1aa',
+                    borderColor: '#27272a',
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 8
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                    ticks: { color: '#52525b', font: { size: 10 } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#52525b', font: { size: 10 } }
+                }
+            }
+        }
+    });
+}
+
+function renderTopContentList() {
+    const list = document.getElementById('top-content-list');
+    if (!list) return;
+
+    // Use actual songs but with random scores for demo
+    const topSongs = [...SONGS_DATA_DB]
+        .map(s => ({ ...s, score: Math.floor(Math.random() * 500) + 100 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+
+    if (topSongs.length === 0) {
+        list.innerHTML = `<p class="text-xs text-zinc-600 italic">Aucune donnée disponible</p>`;
+        return;
+    }
+
+    list.innerHTML = topSongs.map((s, i) => `
+        <div class="flex items-center gap-4 group cursor-pointer" onclick="editSong('${s.id}')">
+            <span class="text-xs font-bold text-zinc-700 w-4">${i + 1}</span>
+            <div class="w-10 h-10 rounded bg-zinc-800 border border-white/5 overflow-hidden flex-shrink-0">
+                <img src="${s.cover_url || ''}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <h5 class="text-sm font-medium text-white truncate group-hover:text-amber-500 transition-colors">${s.title}</h5>
+                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">${s.artist_id}</p>
+            </div>
+            <div class="text-right">
+                <span class="text-xs font-bold text-white">${s.score}</span>
+                <p class="text-[9px] text-zinc-600 uppercase">vues</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderActivityLogs() {
+    const container = document.getElementById('activity-logs');
+    if (!container) return;
+
+    // Generate some recent logs based on the actual data
+    const logs = [];
+    
+    // Add fake "login" log
+    logs.push({ type: 'auth', user: 'Admin', action: 's\'est connecté au CMS', time: 'il y a 5 min' });
+    
+    // Add real "recent sync" or "recent items" logs
+    SONGS_DATA_DB.slice(0, 2).forEach(s => {
+        logs.push({ type: 'content', user: 'Modérateur', action: `a mis à jour : <strong>${s.title}</strong>`, time: 'il y a 2h' });
+    });
+
+    CONTRIBS_DATA_DB.slice(0, 2).forEach(c => {
+        logs.push({ type: 'moderation', user: c.author, action: `a soumis un décryptage`, time: 'récemment' });
+    });
+
+    if (logs.length === 0) {
+        container.innerHTML = `<p class="text-xs text-zinc-600 italic p-4">Aucune activité récente</p>`;
+        return;
+    }
+
+    container.innerHTML = logs.map(l => {
+        let icon = 'solar:settings-bold-duotone';
+        let color = 'text-zinc-500';
+        if (l.type === 'content') { icon = 'solar:pen-new-square-bold-duotone'; color = 'text-blue-500'; }
+        if (l.type === 'moderation') { icon = 'solar:chat-round-check-bold-duotone'; color = 'text-amber-500'; }
+        if (l.type === 'auth') { icon = 'solar:shield-check-bold-duotone'; color = 'text-green-500'; }
+
+        return `
+            <div class="flex items-center gap-4 p-4 hover:bg-white/[0.02] transition-colors border-b border-white/5 last:border-0">
+                <div class="w-8 h-8 rounded-lg bg-zinc-950 flex items-center justify-center ${color} border border-white/5">
+                    <iconify-icon icon="${icon}" width="18"></iconify-icon>
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs text-zinc-400">
+                        <span class="text-white font-medium">${l.user}</span> ${l.action}
+                    </p>
+                </div>
+                <span class="text-[10px] text-zinc-600 font-medium">${l.time}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
  * Content Rendering
  */
 function renderSongsTable() {
     const tbody = document.getElementById('songs-table-body');
     if (!tbody) return;
 
-    tbody.innerHTML = SONGS_DATA_DB.map(s => `
+    let filtered = [...SONGS_DATA_DB];
+
+    // Apply Artist Filter
+    if (currentSongFilter.artistId) {
+        filtered = filtered.filter(s => {
+            const songArtistId = (s.artist_id || s.artistId || s.artist || "").toString().trim().toLowerCase();
+            return songArtistId === currentSongFilter.artistId.toLowerCase().trim();
+        });
+    }
+
+    // Apply Search Query
+    if (currentSongFilter.searchQuery) {
+        const q = currentSongFilter.searchQuery.toLowerCase();
+        filtered = filtered.filter(s => 
+            s.title.toLowerCase().includes(q) || 
+            (s.artist_id || "").toLowerCase().includes(q) ||
+            (s.genre || "").toLowerCase().includes(q) ||
+            s.id.toLowerCase().includes(q)
+        );
+    }
+
+    // Render Filter Status UI
+    updateFilterStatusUI(filtered.length);
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-20 text-center text-zinc-500 italic">Aucun titre ne correspond aux critères. <button onclick="clearAllFilters()" class="text-amber-500 hover:underline">Tout effacer</button></td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(s => `
         <tr class="hover:bg-white/5 transition-all group">
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 text-sm text-white">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center border border-white/5 overflow-hidden">
                         ${s.cover_url ? `<img src="${s.cover_url}" class="w-full h-full object-cover">` : `<iconify-icon icon="solar:music-note-bold" class="text-zinc-500"></iconify-icon>`}
                     </div>
-                    <span class="text-sm text-white font-medium">${s.title}</span>
+                    <div>
+                        <p class="font-bold">${s.title}</p>
+                        <p class="text-[10px] text-zinc-600 font-mono tracking-tighter">${s.id}</p>
+                    </div>
                 </div>
             </td>
-            <td class="px-6 py-4 text-sm text-zinc-400">${s.artist_id}</td>
-            <td class="px-6 py-4 text-sm text-zinc-400">${s.year}</td>
+            <td class="px-6 py-4">
+                <span class="text-xs text-zinc-400 bg-zinc-800/50 px-2 py-1 rounded border border-white/5">${s.artist_id}</span>
+            </td>
+            <td class="px-6 py-4 text-xs text-zinc-500 font-mono">${s.year}</td>
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
                     <button class="p-2 text-zinc-500 hover:text-white" title="Editer" onclick="editSong('${s.id}')">
@@ -208,12 +544,107 @@ function renderSongsTable() {
     `).join('');
 }
 
+function updateFilterStatusUI(count) {
+    const container = document.getElementById('active-filters');
+    if (!container) return;
+
+    let html = '';
+    
+    if (currentSongFilter.artistId) {
+        html += `
+            <div class="bg-amber-500/10 text-amber-500 border border-amber-500/20 px-3 py-1.5 rounded-xl text-xs flex items-center gap-2">
+                <span class="font-bold">Artiste: ${currentSongFilter.artistId}</span>
+                <button onclick="clearArtistFilter()" class="hover:text-amber-300">
+                    <iconify-icon icon="solar:close-circle-bold"></iconify-icon>
+                </button>
+            </div>
+        `;
+    }
+
+    if (currentSongFilter.searchQuery) {
+        html += `
+            <div class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-xl text-xs flex items-center gap-2">
+                <span class="font-bold">Recherche: "${currentSongFilter.searchQuery}"</span>
+                <button onclick="clearSearchFilter()" class="hover:text-blue-300">
+                    <iconify-icon icon="solar:close-circle-bold"></iconify-icon>
+                </button>
+            </div>
+        `;
+    }
+
+    if (html) {
+        html += `
+            <button onclick="clearAllFilters()" class="text-xs text-zinc-500 hover:text-white underline px-2">
+                Tout effacer
+            </button>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
+function handleSongSearch(value) {
+    currentSongFilter.searchQuery = value;
+    renderSongsTable();
+}
+
+function filterSongsByArtist(artistId) {
+    currentSongFilter.artistId = artistId;
+    switchTab('songs');
+    renderSongsTable();
+}
+
+function clearArtistFilter() {
+    currentSongFilter.artistId = null;
+    renderSongsTable();
+}
+
+function clearSearchFilter() {
+    currentSongFilter.searchQuery = '';
+    const input = document.getElementById('song-search');
+    if (input) input.value = '';
+    renderSongsTable();
+}
+
+function clearAllFilters() {
+    currentSongFilter.artistId = null;
+    currentSongFilter.searchQuery = '';
+    const input = document.getElementById('song-search');
+    if (input) input.value = '';
+    renderSongsTable();
+}
+
 function renderArtistsGrid() {
     const grid = document.getElementById('artists-grid');
     if (!grid) return;
 
-    grid.innerHTML = ARTISTS_DATA_DB.map(a => `
-        <div class="bg-zinc-900/30 border border-white/5 p-6 rounded-2xl group hover:border-amber-500/20 transition-all">
+    // Detect duplicates for UI badging
+    const nameMap = {};
+    ARTISTS_DATA_DB.forEach(a => {
+        const name = a.name.toLowerCase().trim();
+        nameMap[name] = (nameMap[name] || 0) + 1;
+    });
+
+    grid.innerHTML = ARTISTS_DATA_DB.map(a => {
+        // Calculate real number of songs for this artist with robust matching
+        const artistId = (a.id || "").toString().trim().toLowerCase();
+        const artistName = (a.name || "").toString().trim().toLowerCase();
+
+        const artistSongs = SONGS_DATA_DB.filter(s => {
+            const songArtistId = (s.artist_id || s.artistId || s.artist || "").toString().trim().toLowerCase();
+            return songArtistId === artistId || songArtistId === artistName;
+        });
+        
+        const songCount = artistSongs.length;
+        const isDuplicate = nameMap[artistName] > 1;
+
+        return `
+        <div class="bg-zinc-900/30 border border-white/5 p-6 rounded-2xl group hover:border-amber-500/20 transition-all relative">
+            <div class="absolute top-4 right-4 flex gap-1.5 flex-wrap justify-end">
+                ${isDuplicate ? `<div class="text-[8px] bg-red-600 text-white px-1.5 py-0.5 rounded font-bold uppercase tracking-wider" title="Plusieurs artistes portent ce nom">DOUBLON</div>` : ''}
+                ${songCount === 0 ? `<div class="text-[8px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded font-mono border border-red-500/20 uppercase tracking-tighter" title="Debug ID: ${a.id}">${a.id}</div>` : ''}
+            </div>
+            
             <div class="flex items-center gap-4 mb-4">
                 <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center border border-white/10 overflow-hidden">
                     ${a.photo_url ? `<img src="${a.photo_url}" class="w-full h-full object-cover">` : `<iconify-icon icon="solar:user-bold" width="32" class="text-zinc-600"></iconify-icon>`}
@@ -224,7 +655,10 @@ function renderArtistsGrid() {
                 </div>
             </div>
             <div class="flex items-center justify-between pt-4 border-t border-white/5">
-                <span class="text-xs text-zinc-600">${a.songs ? a.songs.length : 0} titres analysés</span>
+                <button onclick="filterSongsByArtist('${a.id}')" class="text-xs text-zinc-500 font-medium hover:text-amber-500 transition-all flex items-center gap-1.5 px-2 py-1 -ml-2 rounded-lg hover:bg-amber-500/10">
+                    <iconify-icon icon="solar:music-library-2-bold"></iconify-icon>
+                    <span>${songCount} ${songCount > 1 || songCount === 0 ? 'titres analysés' : 'titre analysé'}</span>
+                </button>
                 <div class="flex gap-2">
                     <button onclick="editArtist('${a.id}')" class="text-xs text-amber-500 font-bold hover:text-amber-400 flex items-center gap-1" title="Éditer">
                         <iconify-icon icon="solar:pen-bold"></iconify-icon>
@@ -235,7 +669,7 @@ function renderArtistsGrid() {
                 </div>
             </div>
         </div>
-    `).join('');
+    `;}).join('');
 }
 
 function renderModerationFull() {
@@ -411,52 +845,103 @@ function openModal(type, id = null) {
         title.textContent = song ? `Modifier : ${song.title}` : 'Ajouter un Titre';
         
         body.innerHTML = `
-            <form id="cms-form" class="grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="saveSong(event, '${id || ''}')">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Informations de base</label>
-                        <div class="space-y-3">
-                            <input type="text" name="title" value="${song ? song.title : ''}" placeholder="Titre du morceau" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white" required>
-                            <input type="text" name="artist_id" value="${song ? song.artist_id : ''}" placeholder="ID de l'artiste (ex: booba)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white" required>
-                            <div class="grid grid-cols-2 gap-3">
-                                <input type="number" name="year" value="${song ? song.year : 2024}" placeholder="Année" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                                <input type="text" name="duration" value="${song?.duration || ''}" placeholder="Durée (ex: 3:45)" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+            <div class="flex border-b border-white/5 mb-6 gap-8">
+                <button onclick="switchModalTab('general')" id="tab-btn-general" class="modal-tab-btn pb-4 text-sm font-bold border-b-2 border-amber-500 text-amber-500 transition-all">Infos Générales</button>
+                <button onclick="switchModalTab('lyrics')" id="tab-btn-lyrics" class="modal-tab-btn pb-4 text-sm font-bold border-b-2 border-transparent text-zinc-500 hover:text-white transition-all">Paroles & Analyse</button>
+            </div>
+
+            <form id="cms-form" onsubmit="saveSong(event, '${id || ''}')">
+                <!-- Tab: General -->
+                <div id="tab-content-general" class="modal-tab-content grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Informations de base</label>
+                            <div class="space-y-3">
+                                <input type="text" name="title" value="${song ? song.title : ''}" placeholder="Titre du morceau" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white" required>
+                                <input type="text" name="artist_id" value="${song ? song.artist_id : ''}" placeholder="ID de l'artiste (ex: booba)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white" required>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="number" name="year" value="${song ? song.year : 2024}" placeholder="Année" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                                    <input type="text" name="duration" value="${song?.duration || ''}" placeholder="Durée (ex: 3:45)" class="bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Visuel (Cover)</label>
+                            <div class="flex items-center gap-4 p-4 bg-zinc-950 border border-white/10 rounded-xl">
+                                <div class="w-16 h-16 rounded bg-zinc-900 flex items-center justify-center border border-white/5 overflow-hidden shrink-0">
+                                    <img id="cover-preview" src="${song?.cover_url || ''}" class="${song?.cover_url ? '' : 'hidden'} w-full h-full object-cover">
+                                    <iconify-icon id="cover-icon" icon="solar:gallery-bold" class="${song?.cover_url ? 'hidden' : ''} text-zinc-700" width="24"></iconify-icon>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <input type="text" id="f-coverUrl" name="cover_url" value="${song ? song.cover_url : ''}" placeholder="URL ou chemin du fichier" class="w-full bg-transparent text-xs text-zinc-400 outline-none truncate mb-2">
+                                    <div class="flex gap-2">
+                                        <button type="button" onclick="openGalleryPicker()" class="text-[10px] bg-white/5 hover:bg-white/10 text-white px-2 py-1 rounded border border-white/10">Galerie</button>
+                                        <button type="button" onclick="document.getElementById('f-coverFile').click()" class="text-[10px] bg-amber-500 text-black px-2 py-1 rounded font-bold">Uploader</button>
+                                    </div>
+                                    <input type="file" id="f-coverFile" class="hidden" accept="image/*" onchange="uploadCover(this)">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Visuel (Cover)</label>
-                        <div class="flex items-center gap-4 p-4 bg-zinc-950 border border-white/10 rounded-xl">
-                            <div class="w-16 h-16 rounded bg-zinc-900 flex items-center justify-center border border-white/5 overflow-hidden shrink-0">
-                                <img id="cover-preview" src="${song?.cover_url || ''}" class="${song?.cover_url ? '' : 'hidden'} w-full h-full object-cover">
-                                <iconify-icon id="cover-icon" icon="solar:gallery-bold" class="${song?.cover_url ? 'hidden' : ''} text-zinc-700" width="24"></iconify-icon>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <input type="text" id="f-coverUrl" name="cover_url" value="${song ? song.cover_url : ''}" placeholder="URL ou chemin du fichier" class="w-full bg-transparent text-xs text-zinc-400 outline-none truncate mb-2">
-                                <div class="flex gap-2">
-                                    <button type="button" onclick="openGalleryPicker()" class="text-[10px] bg-white/5 hover:bg-white/10 text-white px-2 py-1 rounded border border-white/10">Galerie</button>
-                                    <button type="button" onclick="document.getElementById('f-coverFile').click()" class="text-[10px] bg-amber-500 text-black px-2 py-1 rounded font-bold">Uploader</button>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Métadonnées</label>
+                            <div class="space-y-3">
+                                <input type="text" name="genre" value="${song ? song.genre : 'Rap'}" placeholder="Genre" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                                <input type="text" name="tags" value="${song ? (song.tags || []).join(', ') : ''}" placeholder="Tags (séparés par virgule)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
+                                <textarea name="description" placeholder="Courte accroche (Ex: Un classique absolu...)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-20">${song ? (song.description || '') : ''}</textarea>
+                                
+                                <div class="p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl">
+                                    <p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-1">Aide Antigravity</p>
+                                    <p class="text-[11px] text-zinc-500 italic">"Besoin d'aide pour l'analyse ? Collez les paroles dans l'onglet suivant et demandez-moi de les analyser ici-même !"</p>
                                 </div>
-                                <input type="file" id="f-coverFile" class="hidden" accept="image/*" onchange="uploadCover(this)">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-zinc-500 uppercase mb-2">Détails</label>
-                        <div class="space-y-3">
-                            <input type="text" name="genre" value="${song ? song.genre : 'Rap'}" placeholder="Genre" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                            <input type="text" name="tags" value="${song ? (song.tags || []).join(', ') : ''}" placeholder="Tags (séparés par virgule)" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white">
-                            <textarea name="description" placeholder="Courte description" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-20">${song ? song.description : ''}</textarea>
-                            <label class="block text-[10px] font-bold text-zinc-600 uppercase mt-2">Paroles / Texte complet (pour analyse AI)</label>
-                            <textarea name="lyrics" placeholder="Collez ici le texte complet..." class="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-white h-40 font-mono text-xs">${song?.lyrics || ''}</textarea>
+
+                <!-- Tab: Lyrics & Analysis (Option B Workspace) -->
+                <div id="tab-content-lyrics" class="modal-tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[500px]">
+                        <div class="flex flex-col h-full">
+                            <label class="block text-xs font-bold text-zinc-500 uppercase mb-2 flex items-center gap-2">
+                                <iconify-icon icon="solar:notes-bold" class="text-amber-500"></iconify-icon> Paroles Complètes
+                            </label>
+                            <textarea name="lyrics" id="f-lyrics" placeholder="Collez ici le texte intégral de la chanson..." 
+                                class="flex-1 w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white font-mono text-xs leading-relaxed resize-none focus:border-amber-500/30 outline-none">${song?.lyrics || ''}</textarea>
+                        </div>
+                        <div class="flex flex-col h-full">
+                            <label class="block text-xs font-bold text-zinc-500 uppercase mb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:stars-bold" class="text-amber-500"></iconify-icon> Analyse / Décryptage SongStory
+                                </span>
+                                <span class="text-[10px] text-zinc-600 font-mono italic">Supporte le Markdown</span>
+                            </label>
+                            <textarea name="full_analysis" id="f-analysis" placeholder="L'analyse apparaîtra ici après discussion avec Antigravity..." 
+                                class="flex-1 w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white font-sans text-xs leading-relaxed resize-none focus:border-amber-500/30 outline-none">${song?.full_analysis || ''}</textarea>
                         </div>
                     </div>
-                    <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">
-                        <button type="button" onclick="closeModal()" class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
-                        <button type="submit" class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Enregistrer</button>
+                    
+                    <div class="flex items-center justify-between p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-black shrink-0">
+                                <iconify-icon icon="solar:magic-stick-bold" width="20"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-xs text-white font-bold">Flux Auto Antigravity</p>
+                                <p class="text-[10px] text-zinc-400">Enregistrez d'abord, puis demandez l'analyse dans le chat.</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="triggerAutoFlow(event)" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-6 py-2.5 rounded-xl transition-all flex items-center gap-2">
+                            <iconify-icon icon="solar:rocket-bold" width="16"></iconify-icon>
+                            🚀 Analyser & Publier
+                        </button>
                     </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-white/5">
+                    <button type="button" onclick="closeModal()" class="px-6 py-2 text-zinc-400 font-medium hover:text-white transition-colors">Annuler</button>
+                    <button type="submit" class="px-6 py-2 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all">Enregistrer</button>
                 </div>
             </form>
         `;
@@ -516,21 +1001,33 @@ function closeModal() {
 async function saveSong(event, originalId) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const data = {};
+    
+    // Trim all inputs
+    for (let [key, value] of formData.entries()) {
+        data[key] = typeof value === 'string' ? value.trim() : value;
+    }
 
     // Process tags
     data.tags = (data.tags || "").split(',').map(t => t.trim()).filter(Boolean);
     data.year = parseInt(data.year) || 2024;
     
     // Manual ID if new
-    if (!originalId) {
+    if (!originalId && data.title) {
         data.id = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    } else {
-        data.id = originalId;
+    } else if (originalId) {
+        data.id = originalId.toString().toLowerCase().trim();
     }
 
+    // Clean data (Remove fields NOT in schema)
+    const validCols = ['id', 'title', 'artist_id', 'genre', 'year', 'duration', 'cover_url', 'tags', 'description', 'full_analysis', 'lyrics', 'url', 'audio_url', 'spotify_id', 'apple_music_id'];
+    const cleanData = {};
+    validCols.forEach(col => {
+        if (data[col] !== undefined) cleanData[col] = data[col];
+    });
+
     try {
-        await SupabaseCMS.upsertSong(data);
+        await SupabaseCMS.upsertSong(cleanData);
         showToast("Titre enregistré !");
         closeModal();
         await syncFromSupabase();
@@ -543,10 +1040,28 @@ async function saveSong(event, originalId) {
 async function saveArtist(event, originalId) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const data = {};
+    
+    for (let [key, value] of formData.entries()) {
+        data[key] = typeof value === 'string' ? value.trim() : value;
+    }
+
+    // Manual ID if new
+    if (!originalId && data.name) {
+        data.id = data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    } else if (originalId) {
+        data.id = originalId.toString().toLowerCase().trim();
+    }
+
+    // Clean data
+    const validCols = ['id', 'name', 'genre', 'country', 'bio', 'photo_url', 'songs', 'updated_at'];
+    const cleanData = {};
+    validCols.forEach(col => {
+        if (data[col] !== undefined) cleanData[col] = data[col];
+    });
 
     try {
-        await SupabaseCMS.upsertArtist(data);
+        await SupabaseCMS.upsertArtist(cleanData);
         showToast("Artiste enregistré !");
         closeModal();
         await syncFromSupabase();
@@ -604,6 +1119,77 @@ async function deleteItem(type, id) {
     } catch (e) {
         showToast("Erreur lors de la suppression.");
     }
+}
+
+/**
+ * Global Upload Handling
+ */
+async function handleGlobalUpload(input, folder) {
+    if (!input.files || input.files.length === 0) return;
+    const files = Array.from(input.files);
+    
+    try {
+        showToast(`Début de l'upload de ${files.length} fichier(s)...`);
+        
+        let successCount = 0;
+        for (const file of files) {
+            try {
+                await SupabaseCMS.uploadImage(folder, file);
+                successCount++;
+                if (files.length > 1) {
+                    showToast(`Upload : ${successCount}/${files.length}...`);
+                }
+            } catch (fileErr) {
+                console.error(`Error uploading ${file.name}:`, fileErr);
+                showToast(`Erreur pour ${file.name}`);
+            }
+        }
+        
+        showToast(`${successCount} fichier(s) uploadé(s) dans ${folder} !`);
+        
+        // Refresh the appropriate gallery
+        if (folder === 'covers') {
+            renderCoversGallery();
+        } else if (folder === 'artists') {
+            renderPPGallery();
+        }
+        
+        // Clear input for next time
+        input.value = '';
+    } catch (err) {
+        console.error("Global Upload error:", err);
+        showToast("Erreur d'upload : " + (err.message || "Inconnue"));
+    }
+}
+
+function showDiagDetails(title, list, labelKey = 'title') {
+    const container = document.getElementById('modal-container');
+    const modalTitle = document.getElementById('modal-title');
+    const body = document.getElementById('modal-body');
+
+    container.classList.remove('hidden');
+    modalTitle.textContent = title;
+
+    if (list.length === 0) {
+        body.innerHTML = `<div class="py-12 text-center text-zinc-500">Aucun élément trouvé.</div>`;
+        return;
+    }
+
+    body.innerHTML = `
+        <div class="space-y-2">
+            <p class="text-xs text-zinc-500 mb-4">${list.length} élément(s) identifié(s) :</p>
+            <div class="grid grid-cols-1 gap-2 max-h-[50vh] overflow-y-auto pr-2">
+                ${list.map(item => `
+                    <div class="flex items-center justify-between p-3 bg-zinc-950 border border-white/5 rounded-xl group hover:border-amber-500/30 transition-all">
+                        <span class="text-sm text-white">${item[labelKey] || item.id}</span>
+                        <button onclick="closeModal(); ${labelKey === 'title' ? `editSong('${item.id}')` : `editArtist('${item.id}')`}" class="text-[10px] bg-white/5 hover:bg-amber-500 hover:text-black px-3 py-1.5 rounded-lg transition-all font-bold uppercase tracking-wider">
+                            Éditer
+                        </button>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
 }
 
 async function takeCmsAction(id, status) {
@@ -723,6 +1309,126 @@ function selectPhotoForArtist(url) {
 }
 
 /**
+ * Seed Songs from Static Data
+ * Imports all songs from data.js into Supabase
+ */
+async function seedSongsFromStatic() {
+    const staticSongs = window.SONGS_DATA || [];
+    if (!staticSongs.length) {
+        showToast("Aucune donnée statique trouvée dans data.js");
+        return;
+    }
+
+    if (!confirm(`Importer ${staticSongs.length} titres depuis data.js vers Supabase ?`)) return;
+
+    let success = 0;
+    let errors = 0;
+    let skipped = 0;
+
+    for (const song of staticSongs) {
+        try {
+            // Check if already exists to avoid redundant upserts (optional, upsert handles it but good for logging)
+            const exists = SONGS_DATA_DB.find(s => s.id === song.id);
+            if (exists) {
+                // console.log(`[Seed] Already exists: ${song.title}`);
+                skipped++;
+            }
+
+            const songData = {
+                id: song.id,
+                title: song.title,
+                artist_id: song.artist_id,
+                genre: song.genre || 'Rap',
+                year: song.year || 2024,
+                cover_url: song.cover_url || '',
+                tags: song.tags || [],
+                description: song.description || '',
+                url: song.url || '',
+                duration: song.duration || '',
+                lyrics: song.lyrics || ''
+            };
+            await SupabaseCMS.upsertSong(songData);
+            success++;
+        } catch (e) {
+            console.error(`[Seed Error] "${song.title}":`, e);
+            errors++;
+        }
+    }
+
+    console.log(`[Seed Summary] Success: ${success}, Errors: ${errors}, Already Exists: ${skipped}`);
+    showToast(`Import terminé : ${success} réussis, ${errors} erreurs (${skipped} déjà présents)`);
+    await syncFromSupabase();
+}
+
+/**
+ * Seed Artists from Static Data
+ */
+async function seedArtistsFromStatic() {
+    const staticArtists = window.ARTISTS_DATA || [];
+    if (!staticArtists.length) {
+        showToast("Aucune donnée statique trouvée dans data.js");
+        return;
+    }
+
+    if (!confirm(`Importer ${staticArtists.length} artistes depuis data.js vers Supabase ?`)) return;
+
+    let success = 0;
+    let errors = 0;
+
+    for (const artist of staticArtists) {
+        try {
+            // Normalize ID
+            const normalizedId = artist.id.toLowerCase().trim();
+            
+            const artistData = {
+                id: normalizedId,
+                name: artist.name,
+                genre: artist.genre || '',
+                country: artist.country || '',
+                bio: artist.bio || '',
+                photo_url: artist.photo_url || '',
+                url: artist.url || ''
+            };
+            await SupabaseCMS.upsertArtist(artistData);
+            success++;
+        } catch (e) {
+            console.error(`[Seed Error] "${artist.name}":`, e);
+            errors++;
+        }
+    }
+
+    showToast(`Import terminé : ${success} artistes synchronisés, ${errors} erreurs`);
+    await syncFromSupabase();
+}
+
+/**
+ * Cleanup Duplicate Artists
+ * Identifies artists with same name but different IDs
+ */
+function cleanupDuplicateArtists() {
+    const nameGroups = {};
+    ARTISTS_DATA_DB.forEach(a => {
+        const name = a.name.toLowerCase().trim();
+        if (!nameGroups[name]) nameGroups[name] = [];
+        nameGroups[name].push(a);
+    });
+
+    const duplicates = Object.values(nameGroups).filter(group => group.length > 1);
+
+    if (duplicates.length === 0) {
+        showToast("Aucun doublon (par nom) détecté.");
+        return;
+    }
+
+    const flatList = [];
+    duplicates.forEach(group => {
+        group.forEach(a => flatList.push(a));
+    });
+
+    showDiagDetails('Doublons détectés (Fusion manuelle requise)', flatList, 'name');
+}
+
+/**
  * Editorial Actions
  */
 function editSong(id) {
@@ -744,8 +1450,9 @@ function copyToClipboard(elementId) {
 }
 
 function copyToClipboardText(text) {
-    navigator.clipboard.writeText(text);
-    showToast("URL copiée !");
+    navigator.clipboard.writeText(text).then(() => {
+        showToast("Copié dans le presse-papier !");
+    });
 }
 
 function showToast(message) {

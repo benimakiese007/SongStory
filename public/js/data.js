@@ -507,15 +507,32 @@ window.loadAppDataFromSupabase = async () => {
     }
 
     try {
-        const { data: songs, error: sErr } = await window.ss_supabase
+        let songsResult = await window.ss_supabase
             .from('songs')
             .select('*')
             .order('created_at', { ascending: false });
+        
+        // Fallback if created_at column doesn't exist
+        if (songsResult.error) {
+            console.warn('Songs sort fallback:', songsResult.error.message);
+            songsResult = await window.ss_supabase.from('songs').select('*');
+        }
 
-        const { data: artists, error: aErr } = await window.ss_supabase
+        let artistsResult = await window.ss_supabase
             .from('artists')
             .select('*')
-            .order('name', { ascending: true });
+            .order('updated_at', { ascending: false });
+        
+        // Fallback if updated_at column doesn't exist
+        if (artistsResult.error) {
+            console.warn('Artists sort fallback:', artistsResult.error.message);
+            artistsResult = await window.ss_supabase.from('artists').select('*');
+        }
+
+        const songs = songsResult.data;
+        const artists = artistsResult.data;
+        const sErr = songsResult.error;
+        const aErr = artistsResult.error;
 
         if (sErr || aErr) throw (sErr || aErr);
 

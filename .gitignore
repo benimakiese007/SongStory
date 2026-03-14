@@ -4,3 +4,5 @@ tmp/package-lock.json
 .DS_Store
 Thumbs.db
 .env
+.vscode/
+git_status.txt

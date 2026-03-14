@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black - Dave - SongStory</title>
+    <meta name="description"
+        content="Analyse de Black de Dave. Un manifeste puissant sur l'identité noire, extrait du chef-d'oeuvre Psychodrama (2019).">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+    
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../../index.html" class="flex items-center gap-2">
+                        <img src="../../images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">✨ Chef-d'oeuvre Moderne — 2019</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../../artists/dave.html" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Profil de Dave →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-bold tracking-tighter mb-2">Black</h1>
+                <p class="text-xl text-zinc-500 font-light">Dave • Psychodrama • 2019</p>
+                <p class="text-sm text-zinc-600 mt-2">Production : Fraser T. Smith • Genre : Conscious Rap • Lauréat Mercury Prize</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn active">
+                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                        <span>Masquer les Décryptages</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper" class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Block 1 : Geopolitique -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Black is people namin' your countries on what they trade most</p>
+                            <p class="group-hover:text-white transition-colors">Coast of Ivory, Gold Coast, and the Grain Coast</p>
+                            <p class="group-hover:text-white transition-colors">But most importantly to show how deep all this pain goes</p>
+                            <p class="group-hover:text-white transition-colors">West Africa, Benin, they called it slave coast</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Géopolitique & Histoire Coloniale</span>
+                            <p>Dave ouvre son manifeste par un rappel cinglant de la colonisation. Il souligne comment les identités nationales africaines ont été réduites à de simples labels commerciaux par les puissances européennes, déshumanisant des millions d'individus en les identifiant aux ressources qu'ils étaient contraints de produire ou, pire, à leur propre statut de marchandise ("slave coast").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 : Appropriation -->
+                    <div class="reveal story-block" data-time="30">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Black is so confusing, 'cause the culture?</p>
+                            <p class="group-hover:text-white transition-colors">They're in love with it</p>
+                            <p class="group-hover:text-white transition-colors">They take our features when they want and have their fun with it</p>
+                            <p class="group-hover:text-white transition-colors">Never seem to help with all the things we know would come with it</p>
+                            <p class="group-hover:text-white transition-colors">Loud in our laughter, silent in our suffering</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Injustice de l'Appropriation Culturelle</span>
+                            <p>L'artiste dénonce ici le paradoxe du monde moderne : une fascination pour l'esthétique, la musique et le style noirs ("They're in love with it"), alors que les personnes qui portent cette culture restent marginalisées. C'est le constat amer d'une société qui consomme la culture noire sans jamais s'engager contre les injustices qui pèsent sur ses créateurs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 : Justice -->
+                    <div class="reveal story-block" data-time="70">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Black is bein' strong inside and facing defeat</p>
+                            <p class="group-hover:text-white transition-colors">Poverty made me a beast, I battled the law in the streets</p>
+                            <p class="group-hover:text-white transition-colors">We all struggled / But your struggle ain't a struggle like me</p>
+                            <p class="group-hover:text-white transition-colors">Well how could it be when your people gave us the odds that we beat?</p>
+                            <p class="group-hover:text-white transition-colors">Black is being guilty until proven that you're innocent</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">La Présomption de Culpabilité</span>
+                            <p>Dans ce bloc, Dave aborde la fracture sociale et judiciaire. Il inverse le principe fondamental du droit ("coupable jusqu'à preuve du contraire") pour décrire la réalité vécue par les jeunes noirs. Il rappelle que la réussite noire ne se mesure pas seulement au talent, mais à la capacité de surmonter des statistiques et des barrières systémiques dressées pour les voir échouer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : Fierté -->
+                    <div class="reveal story-block" data-time="110">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Black is like the sweetest fuckin' flavour</p>
+                            <p class="group-hover:text-white transition-colors">Here's a taste of it</p>
+                            <p class="group-hover:text-white transition-colors">But black is all I know</p>
+                            <p class="group-hover:text-white transition-colors">There ain't a thing that I would change in it</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Épilogue : Fierté Absolute et Inconditionnelle</span>
+                            <p>Malgré le poids de l'histoire et les défis du présent, Dave conclut sur une célébration vibrante. L'identité noire n'est pas qu'un fardeau, c'est une richesse, une "saveur" douce et profonde qu'il revendique avec force. Le morceau se termine sur un cri de résilience : il ne changerait absolument rien à son identité, transformant la stigmatisation en une source de puissance inépuisable.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+        <p class="text-zinc-500 text-sm">SongStory • Dave "Black" • 2019</p>
+    </footer>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/seo.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/supabase-auth.js"></script>
+    <script src="../../js/pwa.js"></script>
+    <script src="../../js/spotify.js"></script>
+    <script src="../../js/applemusic.js"></script>
+    <script src="../../js/streaming.js"></script>
+    <script src="../../js/contribute.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/player.js"></script>
+    <script src="../../js/song-renderer.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

@@ -1,139 +1,304 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Both Sides Of A Smile - Dave (ft. James Blake) | SongStory</title>
-    <!-- Meta tags SEO -->
-    <meta name="description" content="Découvrez le décryptage profond de 'Both Sides Of A Smile', la collaboration épique entre Dave et James Blake sur l'album 'We're All Alone In This Together'.">
-    
-    <!-- CSS & Fonts -->
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/animations.css">
-    <link rel="stylesheet" href="../../css/player.css">
-    <link rel="stylesheet" href="../../css/song-layout.css">
-    
-    <!-- Iconify -->
+    <title>Both Sides Of A Smile - Dave ft. James Blake - SongStory</title>
+    <meta name="description"
+        content="Découvrez le décryptage profond de 'Both Sides Of A Smile', la collaboration épique entre Dave et James Blake sur l'album 'We're All Alone In This Together'.">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#09090b">
 </head>
 
-<body class="bg-zinc-950 text-zinc-400 selection:bg-amber-500/30 selection:text-amber-200">
-    <!-- Premium Header Background -->
-    <div class="fixed top-0 left-0 w-full h-[60vh] -z-10 opacity-20 blur-3xl saturate-200 pointer-events-none" id="premium-bg"></div>
-
-    <!-- Main Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="../../index.html" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-all duration-500">
-                    <iconify-icon icon="solar:music-note-bold" class="text-black" width="20"></iconify-icon>
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+    
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../../index.html" class="flex items-center gap-2">
+                        <img src="../../images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto">
+                    </a>
                 </div>
-                <span class="text-white font-black tracking-tighter text-xl">SONGSTORY</span>
-            </a>
-            <div class="flex items-center gap-6">
-                <a href="../../library.html" class="text-sm font-medium hover:text-white transition-colors">Bibliothèque</a>
-                <a href="../../artists.html" class="text-sm font-medium hover:text-white transition-colors">Artistes</a>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="pt-32 pb-24 px-6">
-        <div class="max-w-4xl mx-auto">
-            <!-- Header Section -->
-            <header class="mb-16">
-                <div class="flex flex-col md:flex-row gap-8 items-end">
-                    <div class="w-64 h-64 rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10 group relative">
-                        <img src="../../images/covers/both-sides-of-a-smile-cover.webp" alt="Cover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 flex flex-col md:flex-row gap-8 items-start md:items-center">
+                <div class="w-64 h-64 rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10 shrink-0">
+                    <img src="../../images/covers/both-sides-of-a-smile-cover.webp" alt="Cover" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">STORYTELLING</span>
+                        <span class="text-xs text-zinc-600">•</span>
+                        <a href="../../artists/dave.html" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Profil de Dave →</a>
                     </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="px-3 py-1 bg-amber-500/10 text-amber-500 rounded-full text-[10px] font-bold uppercase tracking-widest border border-amber-500/20">Storytelling</span>
-                            <span class="text-zinc-600">•</span>
-                            <span class="text-xs font-medium text-zinc-500">2021</span>
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-4 leading-none">Both Sides <span class="text-amber-500">Of A Smile</span></h1>
-                        <p class="text-xl text-zinc-400 font-medium">Dave <span class="text-zinc-600 font-normal">ft. James Blake</span></p>
+                    <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Both Sides, Of A Smile</h1>
+                    <p class="text-xl text-zinc-500 font-light">Dave ft. James Blake • 2021</p>
+                    <p class="text-sm text-zinc-600 mt-2">Le poids de la culpabilité, le succès amer et les fondations brisées</p>
+                    <div class="mt-6">
+                        <button id="karaoke-toggle" class="karaoke-toggle-btn active">
+                            <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                            <span>Masquer les Décryptages</span>
+                        </button>
                     </div>
                 </div>
-            </header>
+            </div>
 
-            <!-- Story Analysis Container -->
-            <div id="story-container" class="space-y-12">
-                <div class="story-timeline border-l border-white/5 pl-8 space-y-12">
-                    
-                    <!-- Block 1 : La Dualité du Sourire -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper" class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
                     <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">And then, the finer details, who's your Juliet?</p>
+                            <p class="group-hover:text-white transition-colors">What's the dynamic in the situation between the two leads?</p>
+                            <p class="group-hover:text-white transition-colors">You know, I guess we're all just</p>
+                            <p class="group-hover:text-white transition-colors">We're all just, like, looking for a happy ending somewhere</p>
+                            <p class="group-hover:text-white transition-colors">Hey, it's okay (it's okay)</p>
+                            <p class="group-hover:text-white transition-colors">I don't care if no one knows my name</p>
+                            <p class="group-hover:text-white transition-colors">Pain, it's all the same (all the same)</p>
+                            <p class="group-hover:text-white transition-colors">Even if you think it's all in vain</p>
+                        </div>
+                        <div class="analysis-content-visible mt-4">
+                            <span class="text-white font-medium block mb-1">L'Introduction : La Quête Universelle</span>
+                            <p>L'intro ouvre le morceau sous la forme d'une interview fictive ou d'une réflexion cinématographique. Les questions sur la "dynamique" et la "Juliet" plantent le décor de l'amour torturé. La quête universelle d'une "fin heureuse" traduit l'anxiété humaine fondamentale de trouver la paix dans un monde dominé par la douleur ("Pain, it's all the same").</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 1 : La Dualité du Sourire -->
+                    <div class="reveal story-block" data-time="20">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
                             <p class="group-hover:text-white transition-colors italic">'Cause I am turning hurt</p>
                             <p class="group-hover:text-white transition-colors italic">Into rose, into rose, into rose, oh-oh</p>
-                            <p class="group-hover:text-white transition-colors font-medium">On both sides of a smile</p>
+                            <p class="group-hover:text-white transition-colors italic">Into rose, into rose, into rose</p>
+                            <p class="group-hover:text-white transition-colors">How could we let it slide?</p>
+                            <p class="group-hover:text-white transition-colors">Hmm, mm-mm-mm</p>
+                            <p class="group-hover:text-white transition-colors">Looking back at our lives</p>
+                            <p class="group-hover:text-white transition-colors">The future's just a lie</p>
+                            <p class="group-hover:text-white transition-colors">We'll be there, you and I</p>
+                            <p class="group-hover:text-white transition-colors">Hmm, mm-mm-mm</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">On both sides of a smile</p>
+                            <p class="group-hover:text-white transition-colors">Yeah</p>
                         </div>
-                        <div class="analysis-content-visible">
+                        <div class="analysis-content-visible mt-4">
                             <span class="text-amber-400 font-medium block mb-1">La Fragilité du Succès</span>
                             <p>Le morceau s'ouvre sur la voix céleste de James Blake. Le "sourire" ici est une façade : Dave explore comment, derrière la réussite et l'image publique (le smile), se cachent une douleur et un traumatisme qu'il tente de transformer en art (the rose).</p>
                         </div>
                     </div>
 
-                    <!-- Block 2 : Les Sacs Designer comme Rachat -->
-                    <div class="reveal story-block" data-time="45">
+                    <!-- Block 2 : L'Inversion des Valeurs -->
+                    <div class="reveal story-block" data-time="40">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">You find asylum in the countries that you fly me</p>
-                            <p class="group-hover:text-white transition-colors">And carry all of your guilt in designers bags that you buy me, David</p>
+                            <p class="group-hover:text-white transition-colors">You keep the bread all to yourself and you get mold from it</p>
+                            <p class="group-hover:text-white transition-colors">You give a good girl a rose and you get gold from it</p>
+                            <p class="group-hover:text-white transition-colors">Have a child with a rat and you'll get a mouse from it</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">You give a woman a brick and you'll get a house from it</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">The first time splittin' up always the hardest thing</p>
                         </div>
-                        <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Le Prix de la Culpabilité</span>
-                            <p>Dans ce premier couplet, nous entendons la voix de la partenaire de Dave. Elle dénonce l'utilisation de la richesse comme compensation émotionnelle. Les cadeaux de luxe servent de "bagages" pour transporter la culpabilité d'un homme qui fuit ses responsabilités dans le voyage.</p>
-                        </div>
-                    </div>
-
-                    <!-- Block 3 : La Sagesse de la Rue -->
-                    <div class="reveal story-block" data-time="80">
-                        <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">You give a woman a brick and you'll get a house from it</p>
-                            <p class="group-hover:text-white transition-colors">The first time splittin' up always the hardest thing</p>
-                        </div>
-                        <div class="analysis-content-visible">
+                        <div class="analysis-content-visible mt-4">
                             <span class="text-amber-400 font-medium block mb-1">L'Inversion des Valeurs</span>
                             <p>Dave utilise une métaphore puissante sur la création et la transformation. Si une femme peut transformer une brique en maison, il réfléchit ici au fait que son style de vie a au contraire détruit la fondation de son couple.</p>
                         </div>
                     </div>
 
-                    <!-- Block 4 : L'Origine de Santan -->
-                    <div class="reveal story-block" data-time="150">
+                    <div class="reveal story-block" data-time="55">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">Come up off the drugs and bank scams</p>
-                            <p class="group-hover:text-white transition-colors font-medium">How the fuck you think I got the name Santan?</p>
-                        </div>
-                        <div class="analysis-content-visible">
-                            <span class="text-white font-medium block mb-1">Santan Dave</span>
-                            <p>Dave rappelle ses origines et son passé lié à la "rue" et aux activités illicites (bank scams). Le nom "Santan" fait d'ailleurs référence à une zone spécifique de Streatham et à ce passé qu'il a réussi à laisser derrière lui grâce à la musique.</p>
+                            <p class="group-hover:text-white transition-colors">Love's a film and I'm just flickin' through the parts I'm in</p>
+                            <p class="group-hover:text-white transition-colors">I told her, "I don't wanna argue in this car I'm in"</p>
+                            <p class="group-hover:text-white transition-colors">And that's when she hit me with a</p>
+                            <p class="group-hover:text-white transition-colors">"Well, I don't get why you would tell me you want me to be your wifey</p>
+                            <p class="group-hover:text-white transition-colors">When you wanna be Romeo, have me here for the rodeo</p>
+                            <p class="group-hover:text-white transition-colors">I don't believe you when you gas me up and hype me</p>
+                            <p class="group-hover:text-white transition-colors">'Cause you're lusting and these women you're fucking look nothing like me, David</p>
                         </div>
                     </div>
 
-                    <!-- Block 5 : L'Arche de Noé -->
-                    <div class="reveal story-block" data-time="180">
+                    <!-- Block 3 : Le Prix de la Culpabilité -->
+                    <div class="reveal story-block" data-time="75">
                         <div class="lyrics-text space-y-2 cursor-pointer group">
-                            <p class="group-hover:text-white transition-colors">We're both fightin' the sea, this is Noah's ark</p>
-                            <p class="group-hover:text-white transition-colors">Most things that last have the slowest start</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">You find asylum in the countries that you fly me</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">And carry all of your guilt in designers bags that you buy me, David</p>
+                            <p class="group-hover:text-white transition-colors">I ain't askin' you to be someone you wasn't"</p>
                         </div>
-                        <div class="analysis-content-visible">
+                        <div class="analysis-content-visible mt-4">
+                            <span class="text-white font-medium block mb-1">Le Prix de la Culpabilité</span>
+                            <p>Dans ce premier couplet, nous entendons la voix de la partenaire de Dave. Elle dénonce l'utilisation de la richesse comme compensation émotionnelle. Les cadeaux de luxe servent de "bagages" pour transporter la culpabilité d'un homme qui fuit ses responsabilités dans le voyage.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I just wanna fuck with the person I fell in love with, but uh</p>
+                            <p class="group-hover:text-white transition-colors">Petite waist, sweet face, I'll find another man</p>
+                            <p class="group-hover:text-white transition-colors">You must have forgotten who the fuck I am</p>
+                            <p class="group-hover:text-white transition-colors">There's plenty niggas waitin' for chances</p>
+                            <p class="group-hover:text-white transition-colors">Ask me if I'm taken, I say, "Taken for granted"</p>
+                            <p class="group-hover:text-white transition-colors">But you know this already</p>
+                            <p class="group-hover:text-white transition-colors">'Cause we've spoken already</p>
+                            <p class="group-hover:text-white transition-colors">Want me to wait 'cause you ain't ready</p>
+                            <p class="group-hover:text-white transition-colors">Now we're both in our 20s</p>
+                            <p class="group-hover:text-white transition-colors">I'd date a man before I wait for a man, this ends here</p>
+                            <p class="group-hover:text-white transition-colors">'Cause I'll be damned if I give a fucking loser my best years</p>
+                            <p class="group-hover:text-white transition-colors">Got my own car, own money and my own body</p>
+                            <p class="group-hover:text-white transition-colors">If I show body, this for me, this ain't for nobody</p>
+                            <p class="group-hover:text-white transition-colors">I'ma change the lock on the door, think I'm a homebody?</p>
+                            <p class="group-hover:text-white transition-colors">You won't have a house to fucking live in</p>
+                            <p class="group-hover:text-white transition-colors">'Cause you taught me you don't listen</p>
+                            <p class="group-hover:text-white transition-colors">There's a difference in mistakes and in decisions, David</p>
+                            <p class="group-hover:text-white transition-colors">The first time was the worst time</p>
+                            <p class="group-hover:text-white transition-colors">It didn't hurt like the second or the third time</p>
+                            <p class="group-hover:text-white transition-colors">She put her life on pause</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="140">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">'Cause I am turning hurt</p>
+                            <p class="group-hover:text-white transition-colors">Into rose, into rose, into rose, oh-oh</p>
+                            <p class="group-hover:text-white transition-colors">Into rose, into rose, into rose</p>
+                            <p class="group-hover:text-white transition-colors">How could we let it slide?</p>
+                            <p class="group-hover:text-white transition-colors">Hmm, mm-mm-mm</p>
+                            <p class="group-hover:text-white transition-colors">Looking back at our lives</p>
+                            <p class="group-hover:text-white transition-colors">The future's just a lie</p>
+                            <p class="group-hover:text-white transition-colors">We'll be there, you and I</p>
+                            <p class="group-hover:text-white transition-colors">Hmm, mm-mm-mm</p>
+                            <p class="group-hover:text-white transition-colors">On both sides of a smile</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Yeah</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="170">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">I just came to the area I grew up in</p>
+                            <p class="group-hover:text-white transition-colors">They can't even see the car but from the engine, they know it's me</p>
+                            <p class="group-hover:text-white transition-colors">From no fixed abode to the coast of Greece</p>
+                            <p class="group-hover:text-white transition-colors">I'm most at home in the places I ain't supposed to be</p>
+                            <p class="group-hover:text-white transition-colors">I grew up seeing mommy count pennies</p>
+                            <p class="group-hover:text-white transition-colors">Tryna buy a train ticket, but forget sayin' "Woe is me"</p>
+                            <p class="group-hover:text-white transition-colors">Now I'm in L.A. with the open sea</p>
+                            <p class="group-hover:text-white transition-colors">They both feel like things I wasn't supposed to see</p>
+                            <p class="group-hover:text-white transition-colors">Used to be my post, we was close</p>
+                            <p class="group-hover:text-white transition-colors">Now we argue to the rhythm of a broken beat</p>
+                            <p class="group-hover:text-white transition-colors">To the beat of a broken heart</p>
+                            <p class="group-hover:text-white transition-colors">Napoleon Bonaparte meets Joan of Arc</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 4 : L'Arche de Noé -->
+                    <div class="reveal story-block" data-time="200">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">We're both fightin' the sea, this is Noah's ark</p>
+                            <p class="group-hover:text-white transition-colors">We're lovers with a broken past, grow apart</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">Most things that last have the slowest start</p>
+                        </div>
+                        <div class="analysis-content-visible mt-4">
                             <span class="text-amber-400 font-medium block mb-1">Survivre au Déluge</span>
                             <p>Le morceau se termine sur une vision mélancolique du couple comparé à l'Arche de Noé : un refuge fragile au milieu d'une mer agitée par les erreurs, la célébrité et le passé. Dave admet que la solidité demande du temps, chose qu'il a peut-être épuisé.</p>
                         </div>
                     </div>
 
+                    <div class="reveal story-block" data-time="215">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">A lotta pain and a lotta tears</p>
+                            <p class="group-hover:text-white transition-colors">The only reason that I lie, it's 'cause of what I fear</p>
+                            <p class="group-hover:text-white transition-colors">My girl knows that I'm a fan of charity</p>
+                            <p class="group-hover:text-white transition-colors">But there's some information I ain't never gonna volunteer</p>
+                            <p class="group-hover:text-white transition-colors">I wish that I could pay for my sins with a lump sum</p>
+                            <p class="group-hover:text-white transition-colors">Restore her belief in me with a trust fund</p>
+                            <p class="group-hover:text-white transition-colors">The money can't buy nothing when the love's done</p>
+                            <p class="group-hover:text-white transition-colors">I used to cheat with Americans for a living</p>
+                            <p class="group-hover:text-white transition-colors">I felt nervous every time I got a call from a plus one</p>
+                            <p class="group-hover:text-white transition-colors">It takes years to build when you love one</p>
+                            <p class="group-hover:text-white transition-colors">Two and half minutes and it's undone</p>
+                            <p class="group-hover:text-white transition-colors">Bought my girl a Birkin and she told me that these bitches can't chat to her</p>
+                            <p class="group-hover:text-white transition-colors">I'm tellin' her that they never could</p>
+                            <p class="group-hover:text-white transition-colors">You know you love her when you're doin' shit you never would</p>
+                        </div>
+                    </div>
+
+                    <!-- Block 5 : L'Origine de Santan -->
+                    <div class="reveal story-block" data-time="245">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">Come up off the drugs and bank scams</p>
+                            <p class="group-hover:text-white transition-colors font-medium text-amber-500">How the fuck you think I got the name Santan?</p>
+                        </div>
+                        <div class="analysis-content-visible mt-4">
+                            <span class="text-white font-medium block mb-1">Santan Dave</span>
+                            <p>Dave rappelle ses origines et son passé lié à la "rue" et aux activités illicites (bank scams). Le nom "Santan" fait d'ailleurs référence à une zone spécifique de Streatham et à ce passé qu'il a réussi à laisser derrière lui grâce à la musique.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="260">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Run up on me and get a skin tan</p>
+                            <p class="group-hover:text-white transition-colors">Only when you're gone, they feel your impact</p>
+                            <p class="group-hover:text-white transition-colors">19, I had dreams of a wedding ring</p>
+                            <p class="group-hover:text-white transition-colors">So focused on running our race</p>
+                            <p class="group-hover:text-white transition-colors">You can ask James Blake, I ain't see the colour in anything</p>
+                            <p class="group-hover:text-white transition-colors">And then the world got darker than it's ever been</p>
+                            <p class="group-hover:text-white transition-colors">Real estate, I buss a smile</p>
+                            <p class="group-hover:text-white transition-colors">International, that's how I'm comin' now</p>
+                            <p class="group-hover:text-white transition-colors">Mortgage on the yard like 22 hundred</p>
+                            <p class="group-hover:text-white transition-colors">But the rent's got it covered by a country mile</p>
+                            <p class="group-hover:text-white transition-colors">Feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">Feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">(It feels like my luck's-)</p>
+                            <p class="group-hover:text-white transition-colors">It feels like my luck's been runnin' out</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                            <p class="group-hover:text-white transition-colors">Mm-hmm-hmm, mm, mm, mm, mm, mm</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <!-- Footer Section -->
-            <footer class="mt-24 pt-12 border-t border-white/5 text-center">
-                <p class="text-xs text-zinc-600 uppercase tracking-widest font-bold">Analyse Propulsée par SongStory AI</p>
-            </footer>
         </div>
     </main>
 
-    <!-- Scripts -->
+    <footer class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+        <p class="text-zinc-500 text-sm">SongStory • Dave "Both Sides Of A Smile" • 2021</p>
+    </footer>
+
     <script src="../../js/data.js"></script>
     <script src="../../js/utils.js"></script>
     <script src="../../js/seo.js"></script>
@@ -149,14 +314,6 @@
     <script src="../../js/song-renderer.js"></script>
     <script src="../../js/search.js"></script>
     <script src="../../js/app.js"></script>
-
-    <!-- Decrypt Bubble -->
-    <div id="decrypt-bubble" class="decrypt-bubble">
-        <div class="bubble-header items-center gap-3">
-            <iconify-icon icon="solar:info-circle-linear" class="text-amber-400" width="18"></iconify-icon>
-            <span>Décryptage SongStory</span>
-        </div>
-        <div id="bubble-content" class="bubble-content"></div>
-    </div>
 </body>
+
 </html>

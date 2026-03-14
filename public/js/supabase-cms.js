@@ -50,12 +50,17 @@ const SupabaseCMS = (() => {
     async function getAllSongs() {
         const client = _client();
         if (!client) return [];
-        const { data, error } = await client
+        // Try with created_at sort, fallback to no sort if column missing
+        let result = await client
             .from('songs')
             .select('*')
             .order('created_at', { ascending: false });
-        if (error) { console.error('getAllSongs error:', error); return []; }
-        return data || [];
+        if (result.error) {
+            console.warn('getAllSongs: created_at sort failed, retrying without sort:', result.error.message);
+            result = await client.from('songs').select('*');
+        }
+        if (result.error) { console.error('getAllSongs error:', result.error); return []; }
+        return result.data || [];
     }
 
     async function upsertSong(song) {
@@ -81,12 +86,17 @@ const SupabaseCMS = (() => {
     async function getAllArtists() {
         const client = _client();
         if (!client) return [];
-        const { data, error } = await client
+        // Try with updated_at sort, fallback to no sort if column missing
+        let result = await client
             .from('artists')
             .select('*')
-            .order('name', { ascending: true });
-        if (error) { console.error('getAllArtists error:', error); return []; }
-        return data || [];
+            .order('updated_at', { ascending: false });
+        if (result.error) {
+            console.warn('getAllArtists: updated_at sort failed, retrying without sort:', result.error.message);
+            result = await client.from('artists').select('*');
+        }
+        if (result.error) { console.error('getAllArtists error:', result.error); return []; }
+        return result.data || [];
     }
 
     async function upsertArtist(artist) {
@@ -105,6 +115,17 @@ const SupabaseCMS = (() => {
         if (!client) throw new Error('Supabase non disponible.');
         const { error } = await client.from('artists').delete().eq('id', id);
         if (error) throw error;
+    }
+
+    async function getAllContributions() {
+        const client = _client();
+        if (!client) return [];
+        const { data, error } = await client
+            .from('contributions')
+            .select('*')
+            .order('submitted_at', { ascending: false });
+        if (error) { console.error('getAllContributions error:', error); return []; }
+        return data || [];
     }
 
     // ─── Storage (Images) ────────────────────────────────────
@@ -213,6 +234,8 @@ const SupabaseCMS = (() => {
         getAllSongs, upsertSong, deleteSong,
         // Artists
         getAllArtists, upsertArtist, deleteArtist,
+        // Contributions
+        getAllContributions,
         // Storage
         uploadImage, listImages, deleteImage, uploadImageFromBase64,
     };
