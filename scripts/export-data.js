@@ -10,17 +10,27 @@ const path = require('path');
 global.SONGS_DATA = [];
 global.ARTISTS_DATA = [];
 global.GLOSSARY = {};
+global.window = { location: { pathname: '' }, addEventListener: () => {} };
+global.document = { addEventListener: () => {} };
 
-const dataPath = path.join(__dirname, '..', 'js', 'data.js');
+const dataPath = path.join(__dirname, '..', 'public', 'js', 'data.js');
 const dataContent = fs.readFileSync(dataPath, 'utf8');
 
-// Strip 'const' to allow global assignment in eval
+// Strip 'const' or 'let' to allow global assignment in eval
 const executableContent = dataContent
-    .replace(/const SONGS_DATA/g, 'SONGS_DATA')
-    .replace(/const ARTISTS_DATA/g, 'ARTISTS_DATA')
-    .replace(/const GLOSSARY/g, 'GLOSSARY');
+    .replace(/^(const|let|var)\s+SONGS_DATA/gm, 'global.SONGS_DATA')
+    .replace(/^(const|let|var)\s+ARTISTS_DATA/gm, 'global.ARTISTS_DATA')
+    .replace(/^(const|let|var)\s+GLOSSARY/gm, 'global.GLOSSARY');
 
-eval(executableContent);
+try {
+    eval(executableContent);
+} catch (e) {
+    console.warn("Eval partially failed, but data might be loaded:", e.message);
+}
+// Fallback check
+if (global.SONGS_DATA.length === 0 && typeof SONGS_DATA !== 'undefined') global.SONGS_DATA = SONGS_DATA;
+if (global.ARTISTS_DATA.length === 0 && typeof ARTISTS_DATA !== 'undefined') global.ARTISTS_DATA = ARTISTS_DATA;
+if (Object.keys(global.GLOSSARY).length === 0 && typeof GLOSSARY !== 'undefined') global.GLOSSARY = GLOSSARY;
 
 const artists = global.ARTISTS_DATA.map(a => ({
     id: a.id,
@@ -28,26 +38,24 @@ const artists = global.ARTISTS_DATA.map(a => ({
     genre: a.genre,
     country: a.country,
     bio: a.bio,
-    influence: a.influence,
-    url: a.url,
-    tags: a.tags
+    photo_url: a.photo_url,
+    url: a.url
 }));
 
 const songs = global.SONGS_DATA.map(s => ({
     id: s.id,
     title: s.title,
-    artist_id: s.artistId,
+    artist_id: s.artist_id,
     genre: s.genre,
     year: s.year,
+    cover_url: s.cover_url,
     tags: s.tags,
     description: s.description,
     url: s.url,
     audio_url: s.audio,
     spotify_id: s.spotifyId,
     apple_music_id: s.appleMusicId,
-    album: s.album,
-    duration: s.duration,
-    bpm: s.bpm
+    duration: s.duration
 }));
 
 const songContents = [];

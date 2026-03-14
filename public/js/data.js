@@ -266,6 +266,17 @@ let SONGS_DATA = [
         "cover_url": "images/covers/laisse-pas-traisner-ton-fils-cover.webp",
         "tags": ["Classique", "Social"],
         "description": "Un plaidoyer puissant sur la responsabilité parentale."
+    },
+    {
+        "id": "both-sides-of-a-smile",
+        "title": "Both Sides Of A Smile",
+        "artist_id": "dave",
+        "genre": "Rap",
+        "year": 2021,
+        "url": "songs/dave/both-sides-of-a-smile.html",
+        "cover_url": "images/covers/both-sides-of-a-smile-cover.webp",
+        "tags": ["Storytelling", "James Blake"],
+        "description": "Une collaboration profonde explorant la dualité de la réussite et de la souffrance."
     }
 ];
 
@@ -445,6 +456,15 @@ let ARTISTS_DATA = [
         "url": "artists/j-cole.html",
         "photo_url": "images/artists/j.cole-pp.webp",
         "tags": []
+    },
+    {
+        "id": "dave",
+        "name": "Dave",
+        "genre": "Rap",
+        "country": "UK",
+        "bio": "Le prodige de Streatham, connu pour son intelligence lyricale hors norme et ses récits poignants sur la société et l'identité.",
+        "photo_url": "images/artists/dave-pp.webp",
+        "url": "artists/dave.html"
     }
 ];
 

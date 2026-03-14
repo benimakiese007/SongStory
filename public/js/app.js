@@ -466,9 +466,6 @@ const SongStoryApp = {
     },
 
     handleAdminPage() {
-        if (typeof SupabaseCMS !== 'undefined') {
-            SupabaseCMS.init();
-        }
 
         window.loginWithGoogle = async () => {
             const err = document.getElementById('login-err');

@@ -1,86 +1,146 @@
 [
   {
+    "id": "kendrick-lamar",
+    "name": "Kendrick Lamar",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "L'un des paroliers les plus influents de sa génération, connu pour ses récits complexes et ses thèmes sociaux.",
+    "photo_url": "images/artists/kendrick-lamar-pp.webp",
+    "url": "artists/kendrick-lamar.html"
+  },
+  {
+    "id": "drake",
+    "name": "Drake",
+    "genre": "Hip-Hop/R&B",
+    "country": "Canada",
+    "bio": "La superstar mondiale qui domine les charts avec son mélange unique de rap mélodique et de R&B.",
+    "photo_url": "images/artists/drake-pp.webp",
+    "url": "artists/drake.html"
+  },
+  {
+    "id": "eminem",
+    "name": "Eminem",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "Le génie technique du Rap de Détroit, célèbre pour ses rimes complexes et son alter ego Slim Shady.",
+    "photo_url": "images/artists/eminem-pp.webp",
+    "url": "artists/eminem.html"
+  },
+  {
+    "id": "nas",
+    "name": "Nas",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "Le poète de Queensbridge, considéré comme l'un des plus grands paroliers de tous les temps.",
+    "photo_url": "images/artists/nas-pp.webp",
+    "url": "artists/nas.html"
+  },
+  {
+    "id": "2pac",
+    "name": "2Pac",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "L'icône éternelle qui a donné une voix aux sans-voix à travers sa poésie et son charisme unique.",
+    "photo_url": "images/artists/2pac-pp.webp",
+    "url": "artists/tupac-shakur.html"
+  },
+  {
+    "id": "jay-z",
+    "name": "Jay-Z",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "L'entrepreneur et lyriciste hors pair qui a transformé le hip-hop en un empire mondial.",
+    "photo_url": "images/artists/jay-z-pp.webp",
+    "url": "artists/jay-z.html"
+  },
+  {
+    "id": "kanye-west",
+    "name": "Kanye West",
+    "genre": "Hip-Hop",
+    "country": "USA",
+    "bio": "L'un des producteurs et artistes les plus innovants du 21ème siècle, repoussant sans cesse les limites du son.",
+    "photo_url": "images/artists/ye-pp.webp",
+    "url": "artists/kanye-west.html"
+  },
+  {
+    "id": "childish-gambino",
+    "name": "Childish Gambino",
+    "genre": "Hip-Hop/Soul",
+    "country": "USA",
+    "bio": "L'artiste polyvalent qui explore les thèmes de l'identité noire avec une créativité sans limites.",
+    "photo_url": "images/artists/childish-gambino-pp.webp",
+    "url": "artists/childish-gambino.html"
+  },
+  {
+    "id": "iam",
+    "name": "IAM",
+    "genre": "Rap",
+    "country": "France",
+    "bio": "Le groupe mythique de Marseille qui a élevé le rap français au rang d'art poétique et philosophique.",
+    "photo_url": "images/artists/iam-pp.webp",
+    "url": "artists/iam.html"
+  },
+  {
+    "id": "supreme-ntm",
+    "name": "Suprême NTM",
+    "genre": "Rap",
+    "country": "France",
+    "bio": "L'énergie brute du 93, incarnant la contestation sociale et la puissance scénique du rap français.",
+    "photo_url": "images/artists/supreme-ntm-pp.webp",
+    "url": "artists/supreme-ntm.html"
+  },
+  {
+    "id": "mc-solaar",
+    "name": "MC Solaar",
+    "genre": "Rap",
+    "country": "France",
+    "bio": "Le poète du rap français, pionnier du lyrisme et du style \"cool\" qui a marqué toute une époque.",
+    "photo_url": "images/artists/mc-solaar-pp.webp",
+    "url": "artists/mc-solaar.html"
+  },
+  {
+    "id": "orelsan",
+    "name": "Orelsan",
+    "genre": "Rap",
+    "country": "France",
+    "bio": "Le storyteller de la classe moyenne française, maître de l'autodérision et de la mélancolie du quotidien.",
+    "photo_url": "images/artists/orelsan-pp.webp",
+    "url": "artists/orelsan.html"
+  },
+  {
     "id": "kery-james",
     "name": "Kery James",
     "genre": "Rap Conscient",
     "country": "France",
-    "bio": "Alix Mathurin, dit Kery James, est une des figures historiques du rap français originel, pilier de la Mafia K'1 Fry, devenu la référence majeure du rap conscient politique en France.",
-    "influence": "Reconnu pour ses textes denses abordant le contexte social des banlieues, l'histoire coloniale de la France, et l'exigence morale.",
-    "url": "artists/kery-james.html",
-    "tags": [
-      "rap",
-      "conscient",
-      "politique"
-    ]
-  },
-  {
-    "id": "youssoupha",
-    "name": "Youssoupha",
-    "genre": "Rap",
-    "country": "France / RDC",
-    "bio": "Youssoupha Mabiki, né en 1979 à Kinshasa, est un rappeur dont le style allie une immense richesse lexicale à une approche humaniste.",
-    "influence": "Surnommé le 'Lyriciste Bantou', il a défendu un rap technique, porteur de sens, en réhabilitant la poésie au cœur du rap commercial français.",
-    "url": "artists/youssoupha.html",
-    "tags": [
-      "rap",
-      "conscient",
-      "lyriciste"
-    ]
+    "bio": "Une figure majeure du rap français, pilier du rap politique et engagé depuis plus de deux décennies.",
+    "photo_url": "images/artists/kery-james-pp.webp",
+    "url": "artists/kery-james.html"
   },
   {
     "id": "medine",
     "name": "Médine",
     "genre": "Rap Conscient",
     "country": "France",
-    "bio": "Médine Zaouiche, venu du Havre, est l'un des paroliers les plus tranchants du rap français. Il emploie souvent l'ironie et le sarcasme pour dénoncer l'islamophobie et le racisme.",
-    "influence": "Il pousse ses auditeurs et la société française dans leurs derniers retranchements intellectuels avec un lexique ultra-violent mais métaphorique.",
-    "url": "artists/medine.html",
-    "tags": [
-      "rap",
-      "laïcité",
-      "provocation"
-    ]
+    "bio": "Reconnu pour sa poésie et son intelligence lyricale, il se définit comme un \"arabophone de la laïcité\".",
+    "photo_url": "images/artists/medine-pp.webp",
+    "url": "artists/medine.html"
   },
   {
-    "id": "eminem",
-    "name": "Eminem",
-    "genre": "Rap",
-    "country": "États-Unis",
-    "bio": "Marshall Mathers est sans conteste l'un des rappeurs les plus influents au monde, alliant virtuosité technique, shock value, et introspection brutale.",
-    "influence": "Il a introduit une approche psychologique au rap à la première personne, brisant les digues entre le hip-hop et la culture de masse globale.",
-    "url": "artists/eminem.html",
-    "tags": [
-      "rap",
-      "storytelling",
-      "technique"
-    ]
+    "id": "youssoupha",
+    "name": "Youssoupha",
+    "genre": "Rap Conscient",
+    "country": "France / RDC",
+    "bio": "Surnommé le \"Lyriciste Bantou\", il est réputé pour la richesse de son vocabulaire et son écriture très ciselée.",
+    "photo_url": "images/artists/youssoupha-pp.webp",
+    "url": "artists/youssoupha.html"
   },
   {
-    "id": "kanye-west",
-    "name": "Kanye West",
+    "id": "j-cole",
+    "name": "J. Cole",
     "genre": "Hip-Hop",
-    "country": "États-Unis",
-    "bio": "Ye, ex-Kanye West, est un producteur, rappeur et créateur de mode qui a profondément bouleversé le paysage culturel moderne.",
-    "influence": "Il a abattu les frontières du gangsta rap pour y injecter doutes existentiels, mode, électronique et folie des grandeurs.",
-    "url": "artists/kanye-west.html",
-    "tags": [
-      "hip-hop",
-      "production",
-      "ego"
-    ]
-  },
-  {
-    "id": "drake",
-    "name": "Drake",
-    "genre": "Hip-Hop",
-    "country": "Canada",
-    "bio": "Aubrey Drake Graham est un rappeur, chanteur et acteur canadien qui a dominé les charts mondiaux depuis les années 2010.",
-    "influence": "Il a popularisé le mélange de rap mélancolique et de R&B, influençant une génération entière d'artistes avec son approche émotionnelle et introspective.",
-    "url": "artists/drake.html",
-    "tags": [
-      "hip-hop",
-      "r&b",
-      "melancholy"
-    ]
+    "country": "USA",
+    "bio": "Le conteur de Fayetteville, reconnu pour son introspection et son refus des artifices du star-system.",
+    "photo_url": "images/artists/j.cole-pp.webp",
+    "url": "artists/j-cole.html"
   }
 ]

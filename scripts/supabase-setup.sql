@@ -18,8 +18,9 @@ CREATE TABLE IF NOT EXISTS songs (
   audio_url TEXT,
   spotify_id TEXT,
   apple_music_id TEXT,
+  lyrics TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
-);
+ );
 
 -- 2. Artists table
 CREATE TABLE IF NOT EXISTS artists (
