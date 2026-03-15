@@ -31,6 +31,9 @@
     <div id="toc-sidebar" class="toc-sidebar"></div>
     <div class="glossary-tooltip"></div>
     <div id="reading-progress"></div>
+    <button id="reading-mode-exit" class="acc-btn" title="Quitter le mode lecture (Esc)">
+        <iconify-icon icon="solar:close-square-linear" width="20"></iconify-icon>
+    </button>
 
     <!-- Search Overlay -->
     <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche">
@@ -53,6 +56,12 @@
                 </button>
             </div>
             <canvas id="share-canvas-preview"></canvas>
+            <div style="display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;">
+                <button class="share-theme-btn" data-theme="default" style="padding:6px 12px;border-radius:8px;background:#27272a;color:#fff;font-size:11px;border:1px solid #3f3f46;cursor:pointer;white-space:nowrap;">Aurora</button>
+                <button class="share-theme-btn" data-theme="midnight" style="padding:6px 12px;border-radius:8px;background:#09090b;color:#fbbf24;font-size:11px;border:1px solid #fbbf24;cursor:pointer;white-space:nowrap;">Midnight</button>
+                <button class="share-theme-btn" data-theme="classic" style="padding:6px 12px;border-radius:8px;background:#fff;color:#000;font-size:11px;border:1px solid #000;cursor:pointer;white-space:nowrap;">Journal</button>
+                <button class="share-theme-btn" data-theme="glass" style="padding:6px 12px;border-radius:8px;background:rgba(255,255,255,0.05);color:#fff;font-size:11px;border:1px solid rgba(255,255,255,0.1);cursor:pointer;white-space:nowrap;">Crystal</button>
+            </div>
             <button id="download-share-btn">
                 <iconify-icon icon="solar:download-linear" width="16"></iconify-icon> Télécharger l'image
             </button>
@@ -63,7 +72,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 flex items-center gap-2">
-                    <a href="index.html" class="flex items-center gap-2"><img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto"><span class="sr-only">SONGSTORY</span></a>
+                    <a href="index.html" class="flex items-center gap-2"><img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto" loading="lazy"><span class="sr-only">SONGSTORY</span></a>
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
@@ -73,6 +82,7 @@
                         <a href="artists.html" class="nav-link-desktop">Artistes</a>
                         <a href="timeline.html" class="nav-link-desktop">Timeline</a>
                         <a href="glossary.html" class="nav-link-desktop">Glossaire</a>
+                        <a href="forum.html" class="nav-link-desktop">Forum</a>
                         <a href="about.html" class="nav-link-desktop">À propos</a>
                     </div>
                 </div>
@@ -109,6 +119,7 @@
             <a href="artists.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Artistes</a>
             <a href="timeline.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Timeline</a>
             <a href="glossary.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Glossaire</a>
+            <a href="forum.html" class="text-zinc-400 text-lg hover:text-white transition-colors">Forum</a>
             <a href="about.html" class="text-zinc-400 text-lg hover:text-white transition-colors">À propos</a>
         </div>
     </div>
@@ -132,6 +143,18 @@
                         <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon><span>Masquer les
                             Décryptages</span>
                     </button>
+                    <!-- Accessibility Toolbar -->
+                    <div class="accessibility-toolbar">
+                        <button id="font-decrease" class="acc-btn" title="Diminuer la taille du texte">
+                            <iconify-icon icon="solar:text-square-linear" width="14"></iconify-icon>
+                        </button>
+                        <button id="font-increase" class="acc-btn" title="Augmenter la taille du texte">
+                            <iconify-icon icon="solar:text-square-bold" width="18"></iconify-icon>
+                        </button>
+                        <button id="reading-mode-toggle" class="acc-btn" title="Mode Lecture (Alt+R)">
+                            <iconify-icon icon="solar:notes-linear" width="18"></iconify-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -194,6 +217,50 @@
                 </a>
             </div>
 
+            <!-- Rating & Comments Section -->
+            <section id="interactions-section" class="mt-16 bg-zinc-900/40 border border-white/10 rounded-3xl p-8 md:p-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Rating Form -->
+                    <div id="rating-form-container">
+                        <h3 class="text-2xl text-white font-medium mb-2">Laissez votre avis</h3>
+                        <p class="text-zinc-500 text-sm mb-8">Partagez votre ressenti sur cette analyse et ce morceau.</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-xs text-zinc-600 uppercase tracking-widest mb-3">Votre note</label>
+                                <div id="star-rating" class="flex gap-2">
+                                    <button data-star="1" class="star-btn text-zinc-800 hover:text-amber-400/50 transition-colors"><iconify-icon icon="solar:star-bold" width="32"></iconify-icon></button>
+                                    <button data-star="2" class="star-btn text-zinc-800 hover:text-amber-400/50 transition-colors"><iconify-icon icon="solar:star-bold" width="32"></iconify-icon></button>
+                                    <button data-star="3" class="star-btn text-zinc-800 hover:text-amber-400/50 transition-colors"><iconify-icon icon="solar:star-bold" width="32"></iconify-icon></button>
+                                    <button data-star="4" class="star-btn text-zinc-800 hover:text-amber-400/50 transition-colors"><iconify-icon icon="solar:star-bold" width="32"></iconify-icon></button>
+                                    <button data-star="5" class="star-btn text-zinc-800 hover:text-amber-400/50 transition-colors"><iconify-icon icon="solar:star-bold" width="32"></iconify-icon></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-zinc-600 uppercase tracking-widest mb-3">Votre commentaire</label>
+                                <textarea id="interaction-comment" rows="4" placeholder="Qu'avez-vous appris ? Qu'est-ce qui vous a marqué ?" class="w-full bg-zinc-950 border border-white/5 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-amber-400/50 transition-all resize-none"></textarea>
+                            </div>
+                            <button id="submit-interaction-btn" class="w-full py-4 bg-white text-zinc-950 rounded-2xl font-semibold hover:bg-zinc-200 transition-colors">Publier mon avis</button>
+                        </div>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div>
+                        <div class="flex items-center justify-between mb-8">
+                            <h4 class="text-white font-medium">Avis de la communauté</h4>
+                            <div id="average-display" class="flex items-center gap-2 text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full text-xs font-semibold">
+                                <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
+                                <span id="avg-rating-value">--</span>/5
+                            </div>
+                        </div>
+                        <div id="interactions-list" class="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                            <!-- Interactions will be rendered here -->
+                             <p class="text-zinc-600 text-sm italic py-10 text-center">Aucun avis pour le moment.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Recommendations -->
             <section class="mt-24 border-t border-white/5 pt-16">
                 <h3 class="text-lg text-white font-medium tracking-tight mb-6">À écouter ensuite</h3>
@@ -221,6 +288,8 @@
     <script src="js/search.js"></script>
     <script src="js/player.js"></script>
     <script src="js/song-renderer.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/annotations.js"></script>
     <script src="js/router.js"></script>
 
     <script src="js/app.js"></script>

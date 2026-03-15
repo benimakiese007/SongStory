@@ -31,6 +31,8 @@ const SongStoryApp = {
                 this.handleAdminPage();
             } else if (cleanPath.endsWith('/library')) {
                 this.handleLibraryPage();
+            } else if (cleanPath.endsWith('/forum')) {
+                this.handleForumPage();
             } else if (cleanPath.includes('/songs/') || cleanPath.includes('single-song')) {
                 this.handleSongPage();
             }
@@ -52,6 +54,46 @@ const SongStoryApp = {
 
         if (typeof SongStoryUI !== 'undefined') {
             SongStoryUI.initScrollAnimations();
+        }
+        this.renderRecommendations();
+    },
+
+    renderRecommendations() {
+        const forYouSection = document.getElementById('for-you');
+        const grid = document.getElementById('for-you-grid');
+        if (!forYouSection || !grid || typeof SONGS_DATA === 'undefined') return;
+
+        const history = JSON.parse(localStorage.getItem('ss_history') || '[]');
+        if (history.length < 1) {
+            forYouSection.classList.add('hidden');
+            return;
+        }
+
+        // 1. Logic: Find top genres from history
+        const genreMap = {};
+        history.forEach(id => {
+            const song = SONGS_DATA.find(s => s.id === id);
+            if (song && song.genre) {
+                genreMap[song.genre] = (genreMap[song.genre] || 0) + 1;
+            }
+        });
+
+        const topGenre = Object.entries(genreMap).sort((a, b) => b[1] - a[1])[0]?.[0];
+
+        // 2. Filter songs: same genre, not in history
+        let recs = SONGS_DATA.filter(s => s.genre === topGenre && !history.includes(s.id));
+        
+        if (recs.length < 3) {
+            recs = recs.concat(SONGS_DATA.filter(s => !history.includes(s.id) && s.genre !== topGenre)).slice(0, 3);
+        }
+
+        if (recs.length > 0) {
+            forYouSection.classList.remove('hidden');
+            grid.innerHTML = '';
+            recs.slice(0, 3).forEach(song => {
+                const cardHtml = SongStoryUtils.generateSongCard(song, { layout: 'home' });
+                grid.insertAdjacentHTML('beforeend', cardHtml);
+            });
         }
     },
 
@@ -164,30 +206,62 @@ const SongStoryApp = {
 
     handleTimelinePage() {
         const container = document.getElementById('timeline-container');
-        if (!container || typeof BEEF_TIMELINE === 'undefined') return;
+        const timelines = window.TIMELINES_DATA;
+        if (!container || typeof timelines === 'undefined') {
+            console.error('[SongStoryApp] Timeline data not found');
+            return;
+        }
+
+        // Determine which timeline to show
+        const hash = window.location.hash.replace('#', '');
+        const currentId = timelines[hash] ? hash : 'kendrick-drake';
+        const data = timelines[currentId];
+
+        // Update UI elements
+        const titleEl = document.getElementById('timeline-title');
+        const subtitleEl = document.getElementById('timeline-subtitle');
+        if (titleEl) titleEl.textContent = data.title;
+        if (subtitleEl) subtitleEl.textContent = data.subtitle;
+
+        // Update Active Selection UI
+        document.querySelectorAll('.timeline-pill').forEach(p => {
+            p.classList.toggle('active', p.dataset.timeline === currentId);
+        });
+
+        // Update Filters UI
+        this.updateTimelineFilters(currentId, data);
 
         container.innerHTML = '';
-        BEEF_TIMELINE.forEach((event, i) => {
+        data.events.forEach((event, i) => {
             const isLeft = i % 2 === 0;
             const side = event.side;
-            const dotClass = side === 'kendrick' ? 'dot-kendrick' : side === 'drake' ? 'dot-drake' : side === 'both' ? 'dot-both' : 'dot-context';
-            const cardClass = side === 'kendrick' ? 'kendrick' : side === 'drake' ? 'drake' : side === 'both' ? 'both' : '';
+            
+            // Map generic sides to existing classes for styling
+            const styleSide = (side === 'side1' || side === 'kendrick') ? 'kendrick' : 
+                             (side === 'side2' || side === 'drake') ? 'drake' : 
+                             side;
+
+            const dotClass = styleSide === 'kendrick' ? 'dot-kendrick' : styleSide === 'drake' ? 'dot-drake' : styleSide === 'both' ? 'dot-both' : 'dot-context';
+            const cardClass = styleSide === 'kendrick' ? 'kendrick' : styleSide === 'drake' ? 'drake' : styleSide === 'both' ? 'both' : '';
             const tagClass = event.tag === 'track' ? 'tag-track' : event.tag === 'tweet' ? 'tag-tweet' : event.tag === 'interview' ? 'tag-interview' : event.tag === 'victory' ? 'tag-victory' : 'tag-event';
             const tagLabel = event.tag === 'track' ? '🎵 Morceau' : event.tag === 'tweet' ? '🐦 Tweet' : event.tag === 'interview' ? '🎤 Interview' : event.tag === 'victory' ? '🏆 Victoire' : '📅 Événement';
 
             const div = document.createElement('div');
             div.className = `timeline-event ${isLeft ? 'left' : 'right'} relative`;
-            div.dataset.side = side;
+            div.dataset.side = styleSide;
             div.dataset.tag = event.tag;
 
+            // Use timeline color for "both" side actors if applicable
+            const actorColor = styleSide === 'kendrick' ? '#a855f7' : styleSide === 'drake' ? '#fbbf24' : styleSide === 'both' ? (data.color || '#dc2626') : '#6b7280';
+
             div.innerHTML = `
-                <div class="timeline-dot ${dotClass}"></div>
-                <div class="event-card ${cardClass} ${isLeft ? '' : 'right'}">
+                <div class="timeline-dot ${dotClass}" style="${side === 'both' ? `background: ${data.color}; border-color: ${data.color}; box-shadow: 0 0 8px ${data.color}66;` : ''}"></div>
+                <div class="event-card ${cardClass} ${isLeft ? '' : 'right'}" style="${side === 'both' ? `border-left-color: ${data.color}; border-right-color: ${data.color};` : ''}">
                     <div class="flex items-start justify-between gap-3 mb-2 flex-wrap">
                         <span class="text-xs text-zinc-600 font-medium">${event.date}</span>
                         <span class="event-tag ${tagClass}">${tagLabel}</span>
                     </div>
-                    <div class="text-xs font-medium mb-1" style="color: ${side === 'kendrick' ? '#a855f7' : side === 'drake' ? '#fbbf24' : side === 'both' ? '#f87171' : '#6b7280'}">${event.actor}</div>
+                    <div class="text-xs font-medium mb-1" style="color: ${actorColor}">${event.actor}</div>
                     <h3 class="text-white text-sm font-medium leading-snug mb-2">${event.title}</h3>
                     <p class="text-zinc-500 text-xs leading-relaxed">${event.text}</p>
                     ${event.link ? `<a href="${event.link}" class="inline-flex items-center gap-1 text-amber-400 text-xs mt-3 hover:text-amber-300 transition-colors">
@@ -205,12 +279,40 @@ const SongStoryApp = {
         events.forEach(e => obs.observe(e));
     },
 
+    updateTimelineFilters(timelineId, data) {
+        const actor1 = document.getElementById('filter-actor-1');
+        const actor2 = document.getElementById('filter-actor-2');
+        if (!actor1 || !actor2) return;
+
+        let names = [data.actor1 || 'Kendrick Lamar', data.actor2 || 'Drake'];
+
+        actor1.querySelector('.actor-name').textContent = names[0];
+        actor2.querySelector('.actor-name').textContent = names[1];
+        
+        // Also update filter UI state
+        document.querySelectorAll('#timeline-filters .filter-pill').forEach(p => p.classList.remove('active'));
+        document.querySelector('#timeline-filters [data-filter="all"]')?.classList.add('active');
+    },
+
+    switchTimeline(id) {
+        window.location.hash = id;
+        this.handleTimelinePage();
+        // Reset scroll to top of timeline section
+        const titleEl = document.getElementById('timeline-title');
+        if (titleEl) {
+            window.scrollTo({ top: titleEl.offsetTop - 150, behavior: 'smooth' });
+        }
+    },
+
     filterTimeline(btn, filter) {
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        // Reset other filters in the same container
+        btn.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
+
         document.querySelectorAll('.timeline-event').forEach(el => {
             const side = el.dataset.side;
             const tag = el.dataset.tag;
+            // 'kendrick' is used as alias for side 1, 'drake' for side 2
             let show = filter === 'all' ||
                 (filter === 'kendrick' && (side === 'kendrick' || side === 'both')) ||
                 (filter === 'drake' && (side === 'drake' || side === 'both')) ||
@@ -500,7 +602,26 @@ const SongStoryApp = {
             renderSong();
         }
         
-        // Router handles _attachAnalysisEvents if needed, or we can do it here
+        // Track history
+        const id = window.location.pathname.split('/').pop().replace('.html', '');
+        if (id && id !== 'single-song') {
+            this.saveToHistory(id);
+        }
+    },
+
+    saveToHistory(id) {
+        let history = JSON.parse(localStorage.getItem('ss_history') || '[]');
+        if (!history.includes(id)) {
+            history.unshift(id); // Add to start
+            if (history.length > 20) history.pop(); // Cap at 20
+            localStorage.setItem('ss_history', JSON.stringify(history));
+        }
+    },
+
+    handleForumPage() {
+        if (typeof SongStoryForum !== 'undefined') {
+            SongStoryForum.init();
+        }
     }
 };
 

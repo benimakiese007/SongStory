@@ -23,6 +23,9 @@
     --text-secondary: var(--zinc-400);
     --text-muted: var(--zinc-500);
     --nav-bg: rgba(9, 9, 11, 0.8);
+
+    /* Accessibility Tokens */
+    --lyrics-font-size: 1.125rem; /* Default for classic, immersive has its own */
 }
 
 /* ── Light Theme ─────────────────────────────── */
@@ -578,6 +581,63 @@ body.karaoke-mode.layout-classic .analysis-content-visible {
 
 .layout-immersive .analysis-content-visible {
     display: none !important;
+}
+
+/* ── Reading Mode & Accessibility ── */
+body.is-reading-mode nav,
+body.is-reading-mode footer,
+body.is-reading-mode .side-analysis-sidebar,
+body.is-reading-mode #contribute-section,
+body.is-reading-mode #interactions-section,
+body.is-reading-mode #recommendations-grid,
+body.is-reading-mode .mt-24.border-t {
+    display: none !important;
+}
+
+body.is-reading-mode main {
+    padding-top: 4rem !important;
+}
+
+#reading-mode-exit {
+    display: none;
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1001;
+}
+
+body.is-reading-mode #reading-mode-exit {
+    display: block;
+}
+
+.accessibility-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.acc-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--border-medium);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.acc-btn:hover {
+    border-color: var(--amber-400);
+    color: var(--amber-400);
+}
+
+.layout-classic .lyric-line {
+    font-size: var(--lyrics-font-size) !important;
 }
 
 /* ── Apple Music Style Lyrics ────────────────── */

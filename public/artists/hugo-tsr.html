@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugo TSR - Artiste - SongStory</title>
+    <meta name="description" content="Profil artiste de Hugo TSR sur SongStory. Le rappeur indépendant du 18ème arrondissement, maître du flow multisyllabique.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../index.html" class="flex items-center gap-2">
+                        <img src="../images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto" loading="lazy">
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Découvrir</a>
+                    <a href="../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                    <a href="../artists.html" class="text-white text-sm font-medium">Artistes</a>
+                    <a href="../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                    <a href="../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors" aria-label="Rechercher">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ARTIST_INFO_START -->
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 pt-20 px-4">
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden shrink-0 mx-auto mb-6">
+            <img src="../images/artists/hugo-tsr-pp.webp" alt="Hugo TSR" class="w-full h-full object-cover">
+        </div>
+        <h1 class="text-4xl md:text-6xl text-white font-medium tracking-tighter mb-3">Hugo TSR</h1>
+        <p class="text-lg text-zinc-500 font-light mb-6">Rap • France</p>
+        <p class="text-base text-zinc-400 leading-relaxed">Le 'maître de cérémonie' du 18ème arrondissement, connu pour son indépendance totale, ses flows multisyllabiques et ses chroniques sociales d'une grande justesse.</p>
+    </div>
+    <!-- ARTIST_INFO_END -->
+
+    <main class="pb-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:document-text-linear" class="text-amber-400" width="18"></iconify-icon>
+                        Biographie
+                    </h2>
+                    <p class="reveal text-sm text-zinc-400 leading-relaxed mb-6">
+                        Hugo TSR (The Sole Reason) est un rappeur indépendant parisien, originaire du 18ème arrondissement. Depuis ses débuts au milieu des années 2000, il incarne un rap exigeant, refusant les compromis commerciaux. Sa technique — rimes multisyllabiques, flow dense et imagerie précise — le place parmi les rares artistes à avoir construit une œuvre cohérente hors du système.
+                    </p>
+                    <h3 class="text-sm text-white font-medium mb-2">Influence</h3>
+                    <p class="reveal text-sm text-zinc-400 leading-relaxed mb-8">
+                        Son album "Fenêtre sur rue" (2012) est une référence du boom bap français, comparé aux grandes chroniques urbaines américaines. Il a influencé une génération de rappeurs indépendants qui valorisent le texte et l'authenticité par-dessus la visibilité médiatique.
+                    </p>
+
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:music-note-linear" class="text-amber-400" width="18"></iconify-icon>
+                        Analyses disponibles
+                    </h2>
+                    <div id="artist-songs-grid" class="space-y-4">
+                        <p class="text-sm text-zinc-500 italic">Chargement des analyses...</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-lg text-white font-medium tracking-tight mb-6 flex items-center gap-2">
+                        <iconify-icon icon="solar:calendar-linear" class="text-amber-400" width="18"></iconify-icon>
+                        Carrière
+                    </h2>
+                    <div class="artist-timeline">
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">~1985</div>
+                            <div class="timeline-event">Naissance à Paris, grandit dans le 18ème arrondissement.</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2006</div>
+                            <div class="timeline-event">Débuts dans le rap underground parisien avec des freestyles remarqués.</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2009</div>
+                            <div class="timeline-event">Premiers projets indépendants, construction d'une fanbase fidèle dans le milieu underground.</div>
+                        </div>
+                        <div class="reveal timeline-item highlight">
+                            <div class="timeline-year">2012</div>
+                            <div class="timeline-event">"Fenêtre sur rue" — son chef-d'œuvre. Un album de boom bap pur, chronique du 18ème arrondissement.</div>
+                        </div>
+                        <div class="reveal timeline-item">
+                            <div class="timeline-year">2015+</div>
+                            <div class="timeline-event">Continue à sortir de la musique en toute indépendance, refusant tout compromis commercial.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 text-center text-xs text-zinc-600">
+        <p>© 2025 SongStory. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/seo.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/player.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

@@ -17,6 +17,7 @@ const SongStoryUI = {
         this.initLayout();
         this.initTOC();
         this.initTransitions();
+        this.initAccessibility();
         this.upgradeRecommendationCards();
 
         // Re-run if data is dynamically loaded via Supabase
@@ -275,44 +276,56 @@ const SongStoryUI = {
         const canvas = document.getElementById('share-canvas-preview');
         if (!modal || !canvas) return;
 
-        const generate = async (quote, song, artist, imgSrc) => {
+        const generate = async (quote, song, artist, imgSrc, theme = 'default') => {
             const ctx = canvas.getContext('2d');
             const W = 1080, H = 1350; // Vertical format for Stories
             canvas.width = W; canvas.height = H;
 
-            // 1. Draw Background Image (Blurred)
-            if (imgSrc) {
-                const img = new Image();
-                img.crossOrigin = "Anonymous";
-                await new Promise(r => { img.onload = r; img.src = imgSrc; });
-
-                // Draw and blur simple StackBlur-like effect
-                ctx.filter = 'blur(40px) brightness(0.4)';
-                ctx.drawImage(img, -100, -100, W + 200, H + 200);
-                ctx.filter = 'none';
-            } else {
-                const grad = ctx.createLinearGradient(0, 0, W, H);
-                grad.addColorStop(0, '#09090b');
-                grad.addColorStop(1, '#18181b');
-                ctx.fillStyle = grad;
+            // 1. Draw Background
+            if (theme === 'midnight') {
+                ctx.fillStyle = '#09090b';
                 ctx.fillRect(0, 0, W, H);
+            } else if (theme === 'classic') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, W, H);
+            } else {
+                if (imgSrc) {
+                    const img = new Image();
+                    img.crossOrigin = "Anonymous";
+                    await new Promise(r => { img.onload = r; img.src = imgSrc; });
+                    ctx.filter = theme === 'glass' ? 'blur(60px) brightness(0.3)' : 'blur(40px) brightness(0.4)';
+                    ctx.drawImage(img, -100, -100, W + 200, H + 200);
+                    ctx.filter = 'none';
+                } else {
+                    const grad = ctx.createLinearGradient(0, 0, W, H);
+                    grad.addColorStop(0, '#09090b');
+                    grad.addColorStop(1, '#18181b');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, W, H);
+                }
             }
 
-            // 2. Glassmorphic Overlay
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.roundRect(80, 80, W - 160, H - 160, 40);
-            ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+            // 2. Overlay / Frame
+            if (theme === 'classic') {
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 40;
+                ctx.strokeRect(0, 0, W, H);
+            } else {
+                ctx.fillStyle = theme === 'glass' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.05)';
+                ctx.roundRect(80, 80, W - 160, H - 160, 40);
+                ctx.fill();
+                ctx.strokeStyle = theme === 'midnight' ? 'rgba(251, 191, 36, 0.2)' : 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
 
             // 3. Brand Watermark
-            ctx.fillStyle = 'rgba(251, 191, 36, 0.8)';
+            ctx.fillStyle = theme === 'classic' ? '#000' : 'rgba(251, 191, 36, 0.8)';
             ctx.font = 'bold 32px Inter';
             ctx.fillText('SongStory.', 140, 160);
 
             // 4. Quote Text
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = theme === 'classic' ? '#000' : '#fff';
             ctx.font = 'italic 500 56px Inter';
             let words = quote.split(' ');
             let line = '';
@@ -335,12 +348,14 @@ const SongStoryUI = {
 
             // 5. Song Info
             ctx.font = '600 36px Inter';
-            ctx.fillStyle = '#fbbf24';
+            ctx.fillStyle = theme === 'classic' ? '#000' : '#fbbf24';
             ctx.fillText(song, 140, H - 220);
             ctx.font = '400 28px Inter';
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fillStyle = theme === 'classic' ? '#666' : 'rgba(255, 255, 255, 0.6)';
             ctx.fillText(artist, 140, H - 180);
         };
+
+        let currentQuoteData = null;
 
         document.querySelectorAll('.share-quote-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
@@ -351,10 +366,21 @@ const SongStoryUI = {
                 if (typeof SongStoryRenderer !== 'undefined' && SongStoryRenderer.currentSong) {
                     imgSrc = SongStoryRenderer.currentSong.cover_url || `images/covers/${SongStoryRenderer.currentSong.id}-cover.webp`;
                 }
+                
+                currentQuoteData = { quote: b.querySelector('.lyrics-text')?.textContent || '', title: songTitle, artist: artistName, img: imgSrc };
 
-                await generate(b.querySelector('.lyrics-text')?.textContent || '', songTitle, artistName, imgSrc);
+                await generate(currentQuoteData.quote, songTitle, artistName, imgSrc);
                 modal.classList.add('open');
             });
+        });
+
+        // Theme Switchers
+        document.addEventListener('click', async (e) => {
+            const themeBtn = e.target.closest('.share-theme-btn');
+            if (themeBtn && currentQuoteData) {
+                const theme = themeBtn.dataset.theme;
+                await generate(currentQuoteData.quote, currentQuoteData.title, currentQuoteData.artist, currentQuoteData.img, theme);
+            }
         });
 
         document.getElementById('close-share-modal')?.addEventListener('click', () => { modal.classList.remove('open'); });
@@ -468,5 +494,49 @@ const SongStoryUI = {
             e.preventDefault();
             document.startViewTransition(() => { window.location.href = a.href; });
         });
+    },
+
+    initAccessibility() {
+        const root = document.documentElement;
+        const body = document.body;
+        
+        // 1. Typography Controls
+        const updateFontSize = (delta) => {
+            const current = parseFloat(getComputedStyle(root).getPropertyValue('--lyrics-font-size')) || 1.125;
+            const next = Math.max(0.8, Math.min(2.5, current + delta));
+            root.style.setProperty('--lyrics-font-size', `${next}rem`);
+            localStorage.setItem('ss_font_size', next);
+        };
+
+        const savedSize = localStorage.getItem('ss_font_size');
+        if (savedSize) root.style.setProperty('--lyrics-font-size', `${savedSize}rem`);
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#font-increase')) updateFontSize(0.125);
+            if (e.target.closest('#font-decrease')) updateFontSize(-0.125);
+            if (e.target.closest('#reading-mode-toggle')) this.toggleReadingMode(true);
+            if (e.target.closest('#reading-mode-exit')) this.toggleReadingMode(false);
+        });
+
+        // 2. Keyboard Shortcuts for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.altKey && e.key === 'r') this.toggleReadingMode();
+            if (e.key === 'Escape' && body.classList.contains('is-reading-mode')) this.toggleReadingMode(false);
+        });
+    },
+
+    toggleReadingMode(force) {
+        const body = document.body;
+        const isReading = force !== undefined ? force : !body.classList.contains('is-reading-mode');
+        
+        if (isReading) {
+            body.classList.add('is-reading-mode');
+            // Notify user of shortcut to exit
+            console.log('[SongStoryUI] Entering Reading Mode. Press Esc to exit.');
+        } else {
+            body.classList.remove('is-reading-mode');
+        }
+        
+        localStorage.setItem('ss_reading_mode', isReading);
     }
 };

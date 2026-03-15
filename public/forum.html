@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - SongStory</title>
+    <meta name="description" content="Discutez de vos chansons et artistes préférés sur le forum SongStory.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo/song-story-logo-png.png">
+    <meta name="theme-color" content="#09090b">
+    <script src="js/utils.js"></script>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family: 'Inter', sans-serif;">
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="index.html" class="flex items-center gap-2"><img src="images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto" loading="lazy"><span class="sr-only">SONGSTORY</span></a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html" class="nav-link-desktop">Découvrir</a>
+                        <a href="library.html" class="nav-link-desktop">Bibliothèque</a>
+                        <a href="artists.html" class="nav-link-desktop">Artistes</a>
+                        <a href="timeline.html" class="nav-link-desktop">Timeline</a>
+                        <a href="glossary.html" class="nav-link-desktop">Glossaire</a>
+                        <a href="forum.html" class="nav-link-desktop nav-link-desktop-active">Forum</a>
+                        <a href="about.html" class="nav-link-desktop">À propos</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="nav-auth-slot"></div>
+                    <button id="mobile-menu-btn" class="text-zinc-400 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+                        <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-12 min-h-screen">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Forum Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                <div>
+                    <h1 class="text-3xl md:text-4xl text-white font-medium tracking-tighter mb-2">Forum Communautaire</h1>
+                    <p class="text-zinc-500">Un espace pour parler musique, textes et culture.</p>
+                </div>
+                <button id="new-thread-btn" class="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-400 text-zinc-950 rounded-xl font-medium hover:bg-amber-300 transition-colors">
+                    <iconify-icon icon="solar:pen-new-square-linear" width="20"></iconify-icon>
+                    Nouveau sujet
+                </button>
+            </div>
+
+            <!-- New Thread Modal (Hidden by default) -->
+            <div id="new-thread-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                <div class="bg-zinc-900 border border-white/10 w-full max-w-lg rounded-3xl p-8 shadow-2xl">
+                    <h3 class="text-xl text-white font-medium mb-6">Lancer une discussion</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-zinc-500 uppercase tracking-widest mb-2">Titre du sujet</label>
+                            <input type="text" id="thread-title" placeholder="De quoi voulez-vous parler ?" class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400/50 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-zinc-500 uppercase tracking-widest mb-2">Message initial</label>
+                            <textarea id="thread-content" rows="4" placeholder="Développez votre idée ici..." class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400/50 transition-colors resize-none"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <button id="cancel-thread-btn" class="flex-1 px-4 py-3 border border-white/10 rounded-xl text-zinc-400 hover:bg-white/5 transition-colors">Annuler</button>
+                        <button id="submit-thread-btn" class="flex-1 px-4 py-3 bg-amber-400 text-zinc-950 rounded-xl font-medium hover:bg-amber-300 transition-colors">Publier le sujet</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thread View (Hidden by default) -->
+            <div id="thread-view-container" class="hidden">
+                <button id="back-to-list-btn" class="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-8">
+                    <iconify-icon icon="solar:arrow-left-linear" width="18"></iconify-icon>
+                    Retour à la liste
+                </button>
+                <div id="thread-header" class="mb-12">
+                    <h2 id="viewing-thread-title" class="text-2xl md:text-3xl text-white font-medium mb-2">Titre du sujet</h2>
+                    <p id="viewing-thread-meta" class="text-sm text-zinc-500">Par <span class="text-amber-400" id="thread-author-name">Auteur</span> • <span id="thread-date">Date</span></p>
+                </div>
+                <div id="posts-list" class="space-y-6 mb-12">
+                    <!-- Posts will be rendered here -->
+                </div>
+                <!-- Reply Section -->
+                <div id="reply-section" class="border-t border-white/5 pt-12">
+                    <h4 class="text-white font-medium mb-6">Votre réponse</h4>
+                    <div class="bg-zinc-900 border border-white/10 rounded-2xl p-6">
+                        <textarea id="reply-content" rows="4" placeholder="Écrivez votre réponse ici..." class="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400/50 transition-colors resize-none mb-4"></textarea>
+                        <div class="flex justify-end">
+                            <button id="submit-reply-btn" class="px-6 py-2.5 bg-zinc-800 text-white rounded-xl font-medium hover:bg-zinc-700 transition-colors border border-white/5">Envoyer la réponse</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thread List -->
+            <div id="thread-list-container" class="space-y-4">
+                <div class="py-20 text-center" id="forum-loader">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-amber-400 border-r-2 border-transparent mb-4"></div>
+                    <p class="text-zinc-500">Chargement des discussions...</p>
+                </div>
+                <!-- Threads will be rendered here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-cms.js"></script>
+    <script src="js/supabase-auth.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/forum.js"></script>
+</body>
+
+</html>

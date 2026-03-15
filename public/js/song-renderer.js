@@ -10,10 +10,26 @@ const SongStoryRenderer = {
         const params = new URLSearchParams(window.location.search);
         const songId = params.get('id');
 
-        // --- REDIRECT: If we land on single-song.html?id=X, send to the static songs/X.html ---
+        // --- REDIRECT: If we land on single-song.html?id=X, send to the static songs/artist/X.html ---
         if (songId && window.location.pathname.includes('single-song.html')) {
             const base = window.location.href.replace(/single-song\.html.*$/, '');
-            window.location.replace(`${base}songs/${songId}.html`);
+            
+            // Look up the song in SONGS_DATA to find the correct path
+            let targetPath = `songs/${songId}.html`; // Fallback (old behavior)
+            
+            if (typeof SONGS_DATA !== 'undefined') {
+                const song = SONGS_DATA.find(s => s.id === songId);
+                if (song) {
+                    if (song.url) {
+                        targetPath = song.url;
+                    } else {
+                        const artistSlug = (song.artist_id || song.artist || "unknown").toString().toLowerCase().trim();
+                        targetPath = `songs/${artistSlug}/${songId}.html`;
+                    }
+                }
+            }
+            
+            window.location.replace(`${base}${targetPath}`);
             return; // Stop here, the page will redirect
         }
 

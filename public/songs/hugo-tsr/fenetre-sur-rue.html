@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenêtre sur rue - Hugo TSR - SongStory</title>
+    <meta name="description"
+        content="Analyse de Fenêtre sur rue de Hugo TSR. Une chronique urbaine d'une précision chirurgicale sur le 18ème arrondissement.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#09090b">
+</head>
+
+<body class="bg-zinc-950 text-zinc-400 antialiased" style="font-family:'Inter',sans-serif;">
+    <div id="toc-sidebar" class="toc-sidebar"></div>
+    <div class="glossary-tooltip"></div>
+    <div id="reading-progress"></div>
+    
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-zinc-950/80 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="../../index.html" class="flex items-center gap-2">
+                        <img src="../../images/logo/song-story-logo-png.png" alt="SongStory Logo" class="h-8 w-auto" loading="lazy">
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="../../index.html" class="text-white text-sm hover:text-amber-400 transition-colors">Découvrir</a>
+                        <a href="../../library.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Bibliothèque</a>
+                        <a href="../../artists.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Artistes</a>
+                        <a href="../../timeline.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Timeline</a>
+                        <a href="../../glossary.html" class="text-zinc-400 text-sm hover:text-white transition-colors">Glossaire</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="search-trigger text-zinc-400 hover:text-white transition-colors">
+                        <iconify-icon icon="solar:magnifer-linear" width="20"></iconify-icon>
+                    </button>
+                    <div class="nav-auth-slot"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-medium">🏙️ Chronique Urbaine — 2012</span>
+                    <span class="text-xs text-zinc-600">•</span>
+                    <a href="../../artists/hugo-tsr.html" class="text-xs text-zinc-500 hover:text-amber-400 transition-colors">Profil de Hugo TSR →</a>
+                </div>
+                <h1 class="text-3xl md:text-5xl text-white font-medium tracking-tighter mb-2">Fenêtre sur rue</h1>
+                <p class="text-xl text-zinc-500 font-light">Hugo TSR • Fenêtre sur rue • 2012</p>
+                <div class="mt-6">
+                    <button id="karaoke-toggle" class="karaoke-toggle-btn active">
+                        <iconify-icon icon="solar:eye-closed-linear" width="14"></iconify-icon>
+                        <span>Masquer les Décryptages</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+                <div id="narrative-wrapper" class="lg:col-span-12 font-serif text-lg md:text-xl leading-relaxed text-zinc-500 space-y-12">
+
+                    <!-- Verse 1 -->
+                    <div class="reveal story-block" data-time="0">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">J'suis cloué dans un appartement d'deux pièces,</p>
+                            <p class="group-hover:text-white transition-colors">N'ayant rien d'autre à faire que de regarder,</p>
+                            <p class="group-hover:text-white transition-colors">Par la fenêtre c'qui s'passe chez les voisins.</p>
+                            <p class="group-hover:text-white transition-colors">Il est quinze heures, j'suis réveillé par le bruit d'la vaisselle.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">L'Enfermement Volontaire : La Posture de l'Observateur</span>
+                            <p>Le morceau emprunte son titre au film d'Hitchcock. Ici, Hugo TSR s'établit comme le témoin immobile de son quartier. Le réveil à 15h souligne un rythme de vie marginal, loin du système conventionnel, propre à l'esthétique du "rap de chambre" ou de studio indépendant.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="30">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">La chambre a pas d'serrure mais c'est une cellule comme à Fresnes.</p>
+                            <p class="group-hover:text-white transition-colors">J'regarde pas la télé, moi, j'ai mieux qu'ça, j'ai ma f'nêtre.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Fenêtre contre l'Écran</span>
+                            <p>Hugo rejette la fiction télévisuelle pour la réalité crue de la rue. La comparaison avec Fresnes montre que même libre, la vie dans les quartiers peut être ressentie comme une forme d'incarcération sociale ou mentale.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chorus -->
+                    <div class="reveal story-block" data-time="90">
+                        <div class="lyrics-text space-y-2 cursor-pointer group font-bold text-zinc-300">
+                            <p class="group-hover:text-white transition-colors">Un car-flic, un bac, des "Paname, mec !" sur le parvis ça s'agite,</p>
+                            <p class="group-hover:text-white transition-colors">C'est grave la merde des batteries, peu importe c'est pas la fête.</p>
+                            <p class="group-hover:text-white transition-colors">Paris 18ème, que la télé vienne voir ma fenêtre.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-amber-400 font-medium block mb-1">Le Refrain : L'Identité du 18ème</span>
+                            <p>Le refrain capture l'agitation constante de Paris Nord. L'invitation à la télévision est ironique : Hugo sait que les médias ne montrent qu'une version déformée ou sensationnaliste de ce qu'il voit quotidiennement.</p>
+                        </div>
+                    </div>
+
+                    <!-- Verse 2 -->
+                    <div class="reveal story-block" data-time="150">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Il est 21h, je rentre chez moi j'ai pas de sous pour le grec,</p>
+                            <p class="group-hover:text-white transition-colors">Mais avec un bout d'steak, un paquet d'pâtes, je te fais un tour de maître.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Robustesse du Quotidien</span>
+                            <p>Cette ligne illustre parfaitement la "robustesse" évoquée par l'utilisateur. C'est l'art de faire beaucoup avec peu, la résilience de ceux qui vivent avec les moyens du bord mais conservent une certaine excellence ou fierté ("tour de maître").</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="200">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Les lampadaires s'allument, les enseignes s'éteignent.</p>
+                            <p class="group-hover:text-white transition-colors">Y'a cette fille qui ressemble à une ex, mais non c'est elle.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">Changement d'Ambiance : La Nuit Tombe</span>
+                            <p>Hugo TSR excelle dans la création d'images visuelles simples mais percutantes. Le passage du jour à la nuit change la faune et la dynamique du quartier, introduisant une touche de mélancolie personnelle.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal story-block" data-time="300">
+                        <div class="lyrics-text space-y-2 cursor-pointer group">
+                            <p class="group-hover:text-white transition-colors">Si je reste encore une heure, j'assisterai au réveil de ma ville.</p>
+                            <p class="group-hover:text-white transition-colors">Au réveil de ma ville, de ma ville, de ma ville.</p>
+                        </div>
+                        <div class="analysis-content-visible">
+                            <span class="text-white font-medium block mb-1">La Boucle Infinie</span>
+                            <p>Le morceau se termine sur l'idée d'un cycle qui recommence. L'observateur est resté là toute la nuit, voyant la ville s'endormir puis se réveiller, sans que rien ne semble changer fondamentalement dans la structure du quartier.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 text-center border-t border-white/5 pt-12 pb-8">
+        <p class="text-zinc-500 text-sm">SongStory • Hugo TSR "Fenêtre sur rue" • 2012</p>
+    </footer>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/seo.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/supabase-auth.js"></script>
+    <script src="../../js/pwa.js"></script>
+    <script src="../../js/spotify.js"></script>
+    <script src="../../js/applemusic.js"></script>
+    <script src="../../js/streaming.js"></script>
+    <script src="../../js/contribute.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/player.js"></script>
+    <script src="../../js/song-renderer.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

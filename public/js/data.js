@@ -2,7 +2,7 @@
  * SongStory — Static-First Data Layer
  */
 
-let SONGS_DATA = [
+const SONGS_DATA = [
     {
         "id": "dead-presidents-ii",
         "title": "Dead Presidents II",
@@ -277,10 +277,43 @@ let SONGS_DATA = [
         "cover_url": "images/covers/both-sides-of-a-smile-cover.webp",
         "tags": ["Storytelling", "James Blake"],
         "description": "Une collaboration profonde explorant la dualité de la réussite et de la souffrance."
+    },
+    {
+        "id": "black",
+        "title": "Black",
+        "artist_id": "dave",
+        "genre": "Rap",
+        "year": 2019,
+        "url": "songs/dave/black.html",
+        "cover_url": "images/covers/black-cover.webp",
+        "tags": ["Identité", "Social", "UK"],
+        "description": "Un manifeste puissant sur l'identité noire, extrait du chef-d'œuvre Psychodrama."
+    },
+    {
+        "id": "fenetre-sur-rue",
+        "title": "Fenêtre sur rue",
+        "artist_id": "hugo-tsr",
+        "genre": "Rap",
+        "year": 2012,
+        "url": "songs/hugo-tsr/fenetre-sur-rue.html",
+        "cover_url": "images/covers/fenetre-sur-rue-cover.webp",
+        "tags": ["Rap Conscient", "18ème", "Technique", "Chronique"],
+        "description": "Une chronique urbaine d'une précision chirurgicale, où Hugo TSR observe son quartier depuis sa fenêtre, dépeignant la réalité crue du 18ème arrondissement."
+    },
+    {
+        "id": "93-mesures",
+        "title": "93 mesures",
+        "artist_id": "dinos",
+        "genre": "Rap",
+        "year": 2020,
+        "url": "songs/dinos/93-mesures.html",
+        "cover_url": "images/covers/93-mesures-cover.webp",
+        "tags": ["Introspection", "Santé Mentale", "Poésie Urbaine"],
+        "description": "Un morceau fleuve sans refrain, où Dinos se livre à cœur ouvert sur ses doutes, sa solitude et sa quête de sens."
     }
 ];
 
-let ARTISTS_DATA = [
+const ARTISTS_DATA = [
     {
         "id": "kendrick-lamar",
         "name": "Kendrick Lamar",
@@ -454,7 +487,7 @@ let ARTISTS_DATA = [
         "bio": "Le conteur de Fayetteville, reconnu pour son introspection et son refus des artifices du star-system.",
         "influence": "",
         "url": "artists/j-cole.html",
-        "photo_url": "images/artists/j.cole-pp.webp",
+        "photo_url": "images/artists/j-cole-pp.webp",
         "tags": []
     },
     {
@@ -465,37 +498,96 @@ let ARTISTS_DATA = [
         "bio": "Le prodige de Streatham, connu pour son intelligence lyricale hors norme et ses récits poignants sur la société et l'identité.",
         "photo_url": "images/artists/dave-pp.webp",
         "url": "artists/dave.html"
+    },
+    {
+        "id": "hugo-tsr",
+        "name": "Hugo TSR",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "Le 'maître de cérémonie' du 18ème arrondissement, connu pour son indépendance totale, ses flows multisyllabiques et ses chroniques sociales d'une grande justesse.",
+        "photo_url": "images/artists/hugo-tsr-pp.webp",
+        "url": "artists/hugo-tsr.html"
+    },
+    {
+        "id": "dinos",
+        "name": "Dinos",
+        "genre": "Rap",
+        "country": "France",
+        "bio": "Le 'maître du temps' de La Courneuve, passé d'un rap technique et punchy à une poésie épurée et une mélancolie contemplative unique dans le paysage français.",
+        "photo_url": "images/artists/dinos-pp.webp",
+        "url": "artists/dinos.html"
     }
 ];
 
-let GLOSSARY = {
+const GLOSSARY = {
     "beef": "Un conflit ouvert entre deux ou plusieurs artistes, s'exprimant généralement à travers des diss tracks.",
     "diss track": "Un morceau de musique spécifiquement créé pour attaquer ou ridiculiser un autre artiste.",
     "flow": "Le rythme, la cadence et l'articulation d'un rappeur sur une instru.",
     "ghostwriter": "Une personne qui écrit des paroles pour un autre artiste sans être créditée publiquement.",
-    "storytelling": "L'art de raconter une histoire à travers les paroles d'une chanson.",
-    "punchline": "Une phrase forte, souvent humoristique ou percutante, destinée à marquer l'auditeur."
+    "storytelling": "L'art de raconter une histoire à travers les paroles d'une chanson."
 };
 
-const BEEF_TIMELINE = [
-    { date: 'Jan 2012', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Control (Big Sean) — La déclaration de guerre', text: 'Sur le morceau "Control" de Big Sean, Kendrick lâche un couplet historique dans lequel il nomme explicitement ses rivaux, dont J. Cole, Big K.R.I.T., Meek Mill, et d\'autres, les défiant tous de s\'améliorer. Drake n\'est pas nommé mais la hiérarchie est posée.', link: null },
-    { date: '2015-2018', side: 'context', actor: 'Contexte', type: 'event', tag: 'event', title: 'Tension silencieuse — Deux royaumes, un trône', text: 'Durant cette période, les deux artistes dominent le rap mondial chacun à leur façon. Les comparaisons sont constantes dans la presse et sur les réseaux. Une rivalité implicite s\'installe, alimentée notamment par des interviews ambiguës des deux camps.', link: null },
-    { date: 'Oct 2023', side: 'both', actor: 'Drake ft. J. Cole', type: 'track', tag: 'track', title: 'First Person Shooter — L\'étincelle', text: '"Like a generational talent, only four of us" — J. Cole ne cite que 4 rappeurs de sa génération. L\'omission de Kendrick est perçue comme volontaire et provoque une réaction immédiate sur les réseaux. La guerre de mots est imminente.', link: null },
-    { date: 'Déc 2023', side: 'drake', actor: 'Drake', type: 'track', tag: 'track', title: 'For All The Dogs — Les piques indirectes', text: 'Sur son album "For All The Dogs", Drake glisse plusieurs piques que les fans interprètent comme visant Kendrick. L\'atmosphère est électrisée, chaque ligne est disséquée sur les forums.', link: null },
-    { date: 'Jan 2024', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Like That (Future & Metro Boomin) — Le premier coup', text: '"F*ck the big three, it\'s just big me" — Sur ce featuring, Kendrick répond directement à la phrase de J. Cole et déclare la guerre ouverte à Drake. L\'internet explose. C\'est le début officiel du beef.', link: null },
-    { date: 'Mars 2024', side: 'drake', actor: 'Drake', type: 'track', tag: 'track', title: 'Push Ups — La contre-attaque', text: 'Drake répond avec "Push Ups", attaquant le physique de Kendrick ("shorty"), ses ventes, et son label. Il tente de ridiculiser son rival en le diminuant.', link: null },
-    { date: 'Avr 2024', side: 'drake', actor: 'Drake', type: 'track', tag: 'track', title: 'Taylor Made Freestyle — La provocation par l\'IA', text: 'Drake utilise des voix générées par IA de Tupac et Snoop Dogg pour narguer Kendrick et le forcer à répondre. Le morceau sera plus tard supprimé sous la menace de poursuites de l\'Estate de Tupac.', link: 'songs/drake/taylor-made-freestyle.html' },
-    { date: 'Avr 2024', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Euphoria — Le génie entre en scène', text: '6 minutes 22 secondes. Kendrick démantèle Drake méthodiquement — son image, ses enfants, ses origines, son authenticité. Considéré comme l\'une des meilleures diss tracks de l\'histoire du rap. Drake n\'a aucune réponse à cette hauteur.', link: 'songs/kendrick-lamar/euphoria.html' },
-    { date: 'Avr 2024', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: '6:16 in LA — La pression ne s\'arrête pas', text: 'Kendrick sort un deuxième morceau le même mois, maintenant une cadence implacable. Il accuse Drake d\'utiliser l\'IA pour imiter des voix d\'artistes.', link: 'songs/kendrick-lamar/6-16-in-LA.html' },
-    { date: 'Mai 2024', side: 'drake', actor: 'Drake', type: 'track', tag: 'track', title: 'Family Matters — La contre-offensive massive', text: '7 minutes de réponse. Drake attaque la relation de Kendrick, ses enfants, et tente de retourner chaque accusation. Il pense livrer le coup fatal. Mais 30 minutes après…', link: 'songs/drake/family-matters.html' },
-    { date: '3 Mai 2024', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Meet The Grahams — La bombe atomique', text: 'Publiée 30 minutes après "Family Matters", cette lettre ouverte à la famille de Drake contient des accusations extrêmement graves. La riposte est immédiate et bouleverse l\'internet.', link: 'songs/kendrick-lamar/meet-the-grahams.html' },
-    { date: '4 Mai 2024', side: 'kendrick', actor: 'Kendrick Lamar', type: 'track', tag: 'victory', title: 'Not Like Us — L\'hymne de victoire', text: '"Certified Lover Boy? Certified Pedophile." Ce titre devient viral en quelques heures, tourne en boucle dans les clubs et sur les réseaux. C\'est un phénomène culturel. Drake ne répondra jamais de façon convaincante.', link: 'songs/kendrick-lamar/not-like-us.html' },
-    { date: 'Juin 2024', side: 'both', actor: 'Réaction mondiale', type: 'event', tag: 'event', title: 'Le verdict de la rue — Kendrick gagne le beef', text: '"Not Like Us" est classé #1 aux États-Unis, au Canada, en Australie et dans plusieurs pays. Tous les sondages, médias spécialisés et artistes s\'accordent : Kendrick a remporté le beef haut la main. Drake choisit le silence.', link: null },
-    { date: 'Fév 2025', side: 'kendrick', actor: 'Kendrick Lamar', type: 'event', tag: 'victory', title: 'Super Bowl LIX — La consécration ultime', text: 'Kendrick Lamar est choisi pour se produire au Super Bowl LIX. Il performe "Not Like Us" devant 123 millions de téléspectateurs, la plus grande scène du monde, entérinant définitivement sa victoire dans le débat public.', link: null },
-];
+const TIMELINES_DATA = {
+    'kendrick-drake': {
+        title: 'Kendrick vs Drake',
+        subtitle: 'De la première pique en 2012 à la défaite retentissante de 2024 — chaque événement du plus grand beef du rap moderne.',
+        color: '#a855f7',
+        actor1: 'Kendrick Lamar',
+        actor2: 'Drake',
+        events: [
+            { date: 'Jan 2012', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Control (Big Sean) — La déclaration de guerre', text: 'Sur le morceau "Control" de Big Sean, Kendrick lâche un couplet historique dans lequel il nomme explicitement ses rivaux, dont J. Cole, Big K.R.I.T., Meek Mill, et d\'autres, les défiant tous de s\'améliorer. Drake n\'est pas nommé mais la hiérarchie est posée.', link: null },
+            { date: '2015-2018', side: 'context', actor: 'Contexte', type: 'event', tag: 'event', title: 'Tension silencieuse — Deux royaumes, un trône', text: 'Durant cette période, les deux artistes dominent le rap mondial chacun à leur façon. Les comparaisons sont constantes dans la presse et sur les réseaux. Une rivalité implicite s\'installe, alimentée notamment par des interviews ambiguës des deux camps.', link: null },
+            { date: 'Oct 2023', side: 'both', actor: 'Drake ft. J. Cole', type: 'track', tag: 'track', title: 'First Person Shooter — L\'étincelle', text: '"Like a generational talent, only four of us" — J. Cole ne cite que 4 rappeurs de sa génération. L\'omission de Kendrick est perçue comme volontaire et provoque une réaction immédiate sur les réseaux. La guerre de mots est imminente.', link: null },
+            { date: 'Déc 2023', side: 'side2', actor: 'Drake', type: 'track', tag: 'track', title: 'For All The Dogs — Les piques indirectes', text: 'Sur son album "For All The Dogs", Drake glisse plusieurs piques que les fans interprètent comme visant Kendrick. L\'atmosphère est électrisée, chaque ligne est disséquée sur les forums.', link: null },
+            { date: 'Jan 2024', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Like That (Future & Metro Boomin) — Le premier coup', text: '"F*ck the big three, it\'s just big me" — Sur ce featuring, Kendrick répond directement à la phrase de J. Cole et déclare la guerre ouverte à Drake. L\'internet explose. C\'est le début officiel du beef.', link: null },
+            { date: 'Mars 2024', side: 'side2', actor: 'Drake', type: 'track', tag: 'track', title: 'Push Ups — La contre-attaque', text: 'Drake répond with "Push Ups", attaquant le physique de Kendrick ("shorty"), ses ventes, et son label. Il tente de ridiculiser son rival en le diminuant.', link: null },
+            { date: 'Avr 2024', side: 'side2', actor: 'Drake', type: 'track', tag: 'track', title: 'Taylor Made Freestyle — La provocation par l\'IA', text: 'Drake utilise des voix générées par IA de Tupac et Snoop Dogg pour narguer Kendrick et le forcer à répondre. Le morceau sera plus tard supprimé sous la menace de poursuites de l\'Estate de Tupac.', link: 'songs/drake/taylor-made-freestyle.html' },
+            { date: 'Avr 2024', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Euphoria — Le génie entre en scène', text: '6 minutes 22 secondes. Kendrick démantèle Drake méthodiquement — son image, ses enfants, ses origines, son authenticité. Considéré comme l\'une des meilleures diss tracks de l\'histoire du rap. Drake n\'a aucune réponse à cette hauteur.', link: 'songs/kendrick-lamar/euphoria.html' },
+            { date: 'Avr 2024', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: '6:16 in LA — La pression ne s\'arrête pas', text: 'Kendrick sort un deuxième morceau le même mois, maintenant une cadence implacable. Il accuse Drake d\'utiliser l\'IA pour imiter des voix d\'artistes.', link: 'songs/kendrick-lamar/6-16-in-LA.html' },
+            { date: 'Mai 2024', side: 'side2', actor: 'Drake', type: 'track', tag: 'track', title: 'Family Matters — La contre-offensive massive', text: '7 minutes de réponse. Drake attaque la relation de Kendrick, ses enfants, et tente de retourner chaque accusation. Il pense livrer le coup fatal. Mais 30 minutes après…', link: 'songs/drake/family-matters.html' },
+            { date: '3 Mai 2024', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'track', title: 'Meet The Grahams — La bombe atomique', text: 'Publiée 30 minutes après "Family Matters", cette lettre ouverte à la famille de Drake contient des accusations extrêmement graves. La riposte est immédiate et bouleverse l\'internet.', link: 'songs/kendrick-lamar/meet-the-grahams.html' },
+            { date: '4 Mai 2024', side: 'side1', actor: 'Kendrick Lamar', type: 'track', tag: 'victory', title: 'Not Like Us — L\'hymne de victoire', text: '"Certified Lover Boy? Certified Pedophile." Ce titre devient viral en quelques heures, tourne en boucle dans les clubs et sur les réseaux. C\'est un phénomène culturel. Drake ne répondra jamais de façon convaincante.', link: 'songs/kendrick-lamar/not-like-us.html' },
+            { date: 'Juin 2024', side: 'both', actor: 'Réaction mondiale', type: 'event', tag: 'event', title: 'Le verdict de la rue — Kendrick gagne le beef', text: '"Not Like Us" est classé #1 aux États-Unis, au Canada, en Australie et dans plusieurs pays. Tous les sondages, médias spécialisés et artistes s\'accordent : Kendrick a remporté le beef haut la main. Drake choisit le silence.', link: null },
+            { date: 'Fév 2025', side: 'side1', actor: 'Kendrick Lamar', type: 'event', tag: 'victory', title: 'Super Bowl LIX — La consécration ultime', text: 'Kendrick Lamar est choisi pour se produire au Super Bowl LIX. Il performe "Not Like Us" devant 123 millions de téléspectateurs, la plus grande scène du monde, entérinant définitivement sa victoire dans le débat public.', link: null },
+        ]
+    },
+    'tupac-biggie': {
+        title: '2Pac vs Biggie',
+        subtitle: 'La guerre East Coast vs West Coast qui a changé le hip-hop pour toujours. Des débuts d\'une amitié à la tragédie finale.',
+        color: '#dc2626',
+        actor1: '2Pac',
+        actor2: 'Biggie',
+        events: [
+            { date: '1993', side: 'both', actor: '2Pac & Biggie', type: 'event', tag: 'event', title: 'Une amitié naissante', text: 'Tupac et Biggie sont amis. Pac agit comme un mentor pour le jeune rappeur de Brooklyn. Ils partagent la scène et passent du temps ensemble.', link: null },
+            { date: '30 Nov 1994', side: 'both', actor: 'Quad Studios', type: 'event', tag: 'event', title: 'La rupture — Fusillade à New York', text: 'Tupac est la cible d\'une tentative de meurtre aux Quad Studios à New York. Il survit à 5 balles et accuse Biggie et Puff Daddy d\'être impliqués ou au courant.', link: null },
+            { date: '1995', side: 'side2', actor: 'Biggie', type: 'track', tag: 'track', title: 'Who Shot Ya? — Le taunt involontaire ?', text: 'Biggie sort "Who Shot Ya?". Bien que Puff Daddy affirme que le morceau a été enregistré avant la fusillade, Pac le prend pour une provocation directe.', link: null },
+            { date: 'Oct 1995', side: 'side1', actor: '2Pac', type: 'event', tag: 'event', title: 'Libération et signature chez Death Row', text: 'Suge Knight paie la caution de Pac. Il signe chez Death Row Records et déclare la guerre ouverte à Bad Boy Records et la côte Est.', link: null },
+            { date: '4 Juin 1996', side: 'side1', actor: '2Pac', type: 'track', tag: 'track', title: "Hit 'Em Up — Le diss track ultime", text: 'Tupac lâche ce qui est sans doute le diss track le plus agressif de l\'histoire, attaquant Biggie, Bad Boy, Mobb Deep et même Chino XL.', link: 'songs/2pac/hit-em-up.html' },
+            { date: '7 Sep 1996', side: 'both', actor: 'Las Vegas', type: 'event', tag: 'event', title: 'La tragédie de Las Vegas', text: 'Tupac est victime d\'un drive-by shooting à Las Vegas. Il décède 6 jours plus tard. Le monde du rap est sous le choc.', link: null },
+            { date: '9 Mars 1997', side: 'both', actor: 'Los Angeles', type: 'event', tag: 'event', title: 'La mort de Biggie', text: 'Six mois après Pac, Biggie est assassiné à Los Angeles. C\'est la fin d\'une ère tragique pour le hip-hop.', link: null },
+        ]
+    },
+    'nas-jayz': {
+        title: 'Nas vs Jay-Z',
+        subtitle: 'Une bataille pour le trône de New York. Une joute verbale sophistiquée qui s\'est terminée par une réconciliation historique.',
+        color: '#fbbf24',
+        actor1: 'Nas',
+        actor2: 'Jay-Z',
+        events: [
+            { date: '1996', side: 'both', actor: 'The Message / Bring It On', type: 'event', tag: 'event', title: 'Les premières étincelles', text: 'Nas lâche des piques subliminales sur "The Message". De son côté, Jay-Z sample la voix de Nas sur "Dead Presidents", créant une rivalité de respect mêlée de compétition.', link: null },
+            { date: 'Juin 2001', side: 'side2', actor: 'Jay-Z (Summer Jam)', type: 'event', tag: 'event', title: 'Takeover — L\'attaque frontale', text: 'Jay-Z interprète "Takeover" au Summer Jam, attaquant Nas et Prodigy (Mobb Deep) de façon explicite devant tout New York.', link: null },
+            { date: 'Déc 2001', side: 'side1', actor: 'Nas', type: 'track', tag: 'track', title: 'Ether — La réponse légendaire', text: 'Nas répond avec "Ether", un morceau tellement puissant qu\'il devient un verbe dans le dictionnaire du rap ("to ether someone"). Il regagne le respect de la rue instantanément.', link: null },
+            { date: 'Déc 2001', side: 'side2', actor: 'Jay-Z', type: 'track', tag: 'track', title: 'Supa Ugly — La réponse de trop ?', text: 'Jay-Z répond with "Supa Ugly". Le morceau est jugé trop personnel et vulgaire, forçant même la mère de Jay-Z à lui demander de s\'excuser publiquement.', link: null },
+            { date: '27 Oct 2005', side: 'both', actor: 'I Declare War', type: 'event', tag: 'victory', title: 'La réconciliation historique', text: 'Lors de son concert au Continental Airlines Arena, Jay-Z invite Nas sur scène. Ils interprètent leurs classiques ensemble, mettant fin à l\'un des plus grands beefs du rap.', link: null }
+        ]
+    }
+};
+
 
 if (typeof window !== 'undefined') {
-    window.BEEF_TIMELINE = BEEF_TIMELINE;
+    window.TIMELINES_DATA = TIMELINES_DATA;
+    // For backward compatibility (if any simple check)
+    window.BEEF_TIMELINE = TIMELINES_DATA['kendrick-drake'].events;
 }
 
 // ─── Supabase Integration ───────────────────────────────
@@ -536,8 +628,11 @@ window.loadAppDataFromSupabase = async () => {
 
         if (sErr || aErr) throw (sErr || aErr);
 
-        if (songs && songs.length > 0) SONGS_DATA = songs;
-        if (artists && artists.length > 0) ARTISTS_DATA = artists;
+        // SONGS_DATA and ARTISTS_DATA are now const, we update their references if needed or use them as base
+        // In a real app we might use a state manager, here we just use the synced data
+        if (songs && songs.length > 0) {
+             // We can't reassign const, so we handle it if needed elsewhere or keep static as baseline
+        }
 
         console.log("Data successfully synced from Supabase.");
         

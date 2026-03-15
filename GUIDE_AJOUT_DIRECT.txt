@@ -1,0 +1,28 @@
+PROCÉDURE D'AJOUT DIRECT (VIA ANTIGRAVITY)
+===========================================
+
+À partir de maintenant, pour ajouter du contenu à SongStory sans passer par le CMS, 
+voici les informations que tu dois me donner dans le chat :
+
+1. TITRE DE LA CHANSON
+2. NOM DE L'ARTISTE
+3. PAROLES COMPLÈTES (Copy-paste)
+4. IMAGE DE COVER (Glisse le fichier ou donne-moi le lien)
+5. PHOTO DE L'ARTISTE (Si l'artiste n'existe pas encore)
+
+MA MISSION :
+------------
+Une fois que j'ai ces infos, je m'occupe de TOUT :
+- Mise à jour de 'public/js/data.js' (ajout JSON propre : artiste + chanson).
+- [NOUVEAU] Création de la page profil artiste 'public/artists/[id].html' si elle n'existe pas.
+- Création du fichier HTML d'analyse dans 'public/songs/[artiste]/[titre].html'.
+- Génération des visuels par IA si tu ne me donnes pas d'images.
+- Vérification que tout s'affiche correctement (liens, URLs).
+
+POURQUOI CE WORKFLOW ?
+----------------------
+- Plus rapide : Pas de formulaires à remplir un par un.
+- Plus puissant : Je peux rédiger l'analyse et les décryptages à ta place.
+- Plus propre : Je m'assure que les IDs et les URLs sont cohérents.
+
+Dès que tu as une idée, lance-moi les infos !

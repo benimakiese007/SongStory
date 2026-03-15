@@ -39,7 +39,8 @@ const SongStoryUtils = {
             else if (path.includes('/artists/')) baseUrl = '../';
         }
 
-        const songUrl = baseUrl + (song.url || `songs/${song.id}.html`);
+        const artistSlug = (song.artist_id || song.artist || "unknown").toString().toLowerCase().trim();
+        const songUrl = baseUrl + (song.url || `songs/${artistSlug}/${song.id}.html`);
         const coverUrl = song.cover_url ? (baseUrl + song.cover_url) : '';
         
         let coverHtml = '';
@@ -175,7 +176,8 @@ ${avatarHtml}
      */
     generateArtistAnalysisCard(song) {
         const baseUrl = '../'; // Artist pages are always in /artists/
-        const songUrl = baseUrl + (song.url || `songs/${song.id}.html`);
+        const artistSlug = (song.artist_id || song.artist || "unknown").toString().toLowerCase().trim();
+        const songUrl = baseUrl + (song.url || `songs/${artistSlug}/${song.id}.html`);
         
         const coverUrl = song.cover_url || song.image;
         const resolvedCover = coverUrl ? this.resolvePath(coverUrl) : null;

@@ -184,9 +184,13 @@ async function triggerAutoFlow(event) {
         if (data[col] !== undefined) cleanData[col] = data[col];
     });
     
-    // Set ID if missing
+    // Set ID and URL if missing
     if (!cleanData.id && title) {
         cleanData.id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+    
+    if (!cleanData.url && cleanData.id && cleanData.artist_id) {
+        cleanData.url = `songs/${cleanData.artist_id.toLowerCase().trim()}/${cleanData.id}.html`;
     }
 
     try {
@@ -1017,6 +1021,11 @@ async function saveSong(event, originalId) {
         data.id = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     } else if (originalId) {
         data.id = originalId.toString().toLowerCase().trim();
+    }
+
+    // Set URL if missing
+    if (!data.url && data.id && data.artist_id) {
+        data.url = `songs/${data.artist_id.toLowerCase().trim()}/${data.id}.html`;
     }
 
     // Clean data (Remove fields NOT in schema)
